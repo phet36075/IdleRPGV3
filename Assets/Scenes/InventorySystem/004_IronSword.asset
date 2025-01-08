@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae5c3e9a56f420458496b9305462e22, type: 3}
+  m_Name: 004_IronSword
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 0a4406af4ed2d844b8723ff3947c4369, type: 3}
+  id: 004
+  itemName: Iron Sword
+  description: 
+  maxStack: 1
+  gamePrefab: {fileID: 9138812136301910688, guid: 35434d7f846b1b642b81dac85ef17f74, type: 3}
