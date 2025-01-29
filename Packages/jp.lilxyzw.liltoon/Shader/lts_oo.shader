@@ -668,8 +668,10 @@ Shader "_lil/[Optional] lilToonOutlineOnly"
 
     SubShader
     {
-        Tags {"RenderType" = "Opaque" "Queue" = "Geometry"}
+        Tags {"RenderType" = "HDLitShader" "Queue" = "Geometry"}
         UsePass "Hidden/ltspass_opaque/FORWARD_OUTLINE"
+        UsePass "Hidden/ltspass_opaque/DEPTHONLY_OUTLINE"
+        UsePass "Hidden/ltspass_opaque/MOTIONVECTORS_OUTLINE"
         Pass
         {
             Tags { "LightMode" = "Never" }
@@ -741,7 +743,7 @@ Shader "_lil/[Optional] lilToonOutlineOnly"
             ENDHLSL
         }
     }
-    Fallback "Universal Render Pipeline/Unlit"
+    Fallback "HDRP/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }

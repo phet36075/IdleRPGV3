@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 9
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -21,13 +21,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Weaponmaterial
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: 4800000, guid: df12117ecd77c31469c224178886498e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _METALLICGLOSSMAP
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -36,8 +37,8 @@ Material:
     AllLockedGUIDS: 9fc3ca94a8848a74588e8b1ba358af88
     OriginalKeywords: POI_MATCAP0 VIGNETTE_MASKED _LIGHTINGMODE_REALISTIC
     OriginalShader: .poiyomi/Poiyomi 8.0/Poiyomi Outline
-    RenderType: Opaque
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -712,6 +713,7 @@ Material:
     - _AddBlendOp: 0
     - _AddBlendOpAlpha: 0
     - _AddDstBlend: 1
+    - _AddPrecomputedVelocity: 0
     - _AddSrcBlend: 1
     - _Add_Antipodean_RimLight: 0
     - _AlphaAlphaAdd: 0
@@ -2147,7 +2149,7 @@ Material:
     - _glitterFrequencyLinearEmissive: 20
     - _lilDirectionalLightStrength: 1
     - _lilShadowCasterBias: 0
-    - _lilToonVersion: 43
+    - _lilToonVersion: 44
     - footer_discord: 0
     - footer_github: 0
     - footer_patreon: 0
@@ -2703,3 +2705,4 @@ Material:
     - _egc6: {r: 1, g: 1, b: 1, a: 0}
     - _egc7: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

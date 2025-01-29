@@ -689,7 +689,7 @@ Shader "_lil/[Optional] lilToonFurOnlyTransparent"
 
     SubShader
     {
-        Tags {"RenderType" = "TransparentCutout" "Queue" = "Transparent"}
+        Tags {"RenderType" = "HDLitShader" "Queue" = "Transparent"}
         UsePass "Hidden/lilToonFur/FORWARD_FUR"
         Pass
         {
@@ -762,7 +762,7 @@ Shader "_lil/[Optional] lilToonFurOnlyTransparent"
             ENDHLSL
         }
     }
-    Fallback "Universal Render Pipeline/Unlit"
+    Fallback "HDRP/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
