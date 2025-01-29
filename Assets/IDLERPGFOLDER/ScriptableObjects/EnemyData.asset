@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8989e9eda936ad4498e9a95b08f51dd7, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  maxhealth: 1000
-  DefaultMaxHealth: 50
+  maxhealth: 100000
+  DefaultMaxHealth: 100000
   enemyName: Enemy
-  defense: 10
-  armorPenetration: 0
+  defense: 5
+  DefaultDefense: 5
+  armorPenetration: 5
+  DefaultArmorPenetration: 5
   isCritical: 0
   BaseAttack: 10
   DefaultBaseAttack: 10

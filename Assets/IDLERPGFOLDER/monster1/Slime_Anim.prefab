@@ -855,6 +855,8 @@ MonoBehaviour:
   CharacterHitEffect: {fileID: 776062255748010552}
   _damageDisplay: {fileID: 914702316595363713}
   _audioManager: {fileID: 3325628939318457549}
+  enemyElementType: 2
+  elementalResistances: []
 --- !u!114 &914702316595363713
 MonoBehaviour:
   m_ObjectHideFlags: 0

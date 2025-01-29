@@ -43,21 +43,20 @@ public class Skill1 : MonoBehaviour,ISkill
         if (!isOnCooldown)
         {
             isOnCooldown = true;
-            StartCoroutine(SkillSequence());
+            animator.SetTrigger("UseSkill");
+            lastUseTime = Time.time;
+           // StartCoroutine(SkillSequence());
         }
     }
     
-    
-    IEnumerator SkillSequence()
+
+    public void PerformLastHit()
     {
-        // เล่น animation
-        animator.SetTrigger("UseSkill");
-        lastUseTime = Time.time;
-        
-        // รอให้ animation เล่นจบ (สมมติว่าใช้เวลา 1 วินาที)
-        yield return new WaitForSeconds(2.8f);
-        
-        // คำนวณตำแหน่งและทิศทางสำหรับ effect
+        StartCoroutine(LastHit());
+    }
+
+    private IEnumerator LastHit()
+    {
         Vector3 effectPosition = transform.position + transform.forward * 2f;
         Quaternion effectRotation = transform.rotation;
         // แสดง effect
@@ -68,12 +67,13 @@ public class Skill1 : MonoBehaviour,ISkill
         for (int i = 0; i < numberOfHits; i++)
         {
             PerformSingleHit();
-            yield return new WaitForSeconds(timeBetweenHits);
+               yield return new WaitForSeconds(timeBetweenHits);
         }
-        actualCooldownStartTime = Time.time;
+       // actualCooldownStartTime = Time.time;
         // เริ่มคูลดาวน์
         StartCoroutine(Cooldown());
     }
+    
     private IEnumerator Cooldown()
     {
         isOnCooldown = true;
@@ -150,10 +150,9 @@ public class Skill1 : MonoBehaviour,ISkill
         {
             return 0f;
         }
-
-        float totalCooldownTime = skillDuration + cooldownTime;
+        
         float elapsedTime = Time.time - lastUseTime;
-        return 1f - Mathf.Clamp01(elapsedTime / totalCooldownTime);
+        return 1f - Mathf.Clamp01(elapsedTime / cooldownTime);
     }
     public float GetRemainingCooldownTime()
     {
@@ -161,18 +160,10 @@ public class Skill1 : MonoBehaviour,ISkill
         {
             return 0f;
         }
-
         float timeSinceUse = Time.time - lastUseTime;
-        if (timeSinceUse < skillDuration)
-        {
-            // สกิลยังทำงานอยู่
-            return cooldownTime + (skillDuration - timeSinceUse);
-        }
-        else
-        {
-            // สกิลจบแล้ว กำลังอยู่ใน cooldown จริงๆ
-            return cooldownTime - (Time.time - actualCooldownStartTime);
-        }
+        
+        return cooldownTime - timeSinceUse;
+
     }
    
     

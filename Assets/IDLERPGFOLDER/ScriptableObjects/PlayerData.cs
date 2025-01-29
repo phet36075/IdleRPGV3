@@ -38,6 +38,9 @@ public class PlayerData : ScriptableObject
     public float lightDamage = 1;
     public float darkDamage = 1;
     
+    [Header("Elemental")]
+    public ElementType elementType = ElementType.None;  // ธาตุเริ่มต้น
+    
     // public int stage = 1;
     // ชั่วคราว
     [Header("----UpgradeCost----")]

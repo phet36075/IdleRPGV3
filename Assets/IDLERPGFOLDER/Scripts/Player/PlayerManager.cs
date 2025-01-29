@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 public class PlayerManager : MonoBehaviour
 {
     public PlayerData playerData;
@@ -24,6 +27,10 @@ public class PlayerManager : MonoBehaviour
     public AudioManager audioManager;
 
     public bool isPlayerDie;
+    
+    
+    // ฟังก์ชันเปลี่ยนธาตุ
+   
     void Start()
     {
         StartCoroutine(RegenerateHp());
@@ -35,6 +42,20 @@ public class PlayerManager : MonoBehaviour
         _aiController = FindObjectOfType<AIController>();
        // _audioManager = FindObjectOfType<AudioManager>();
     }
+
+    private void Update()
+    {
+        // ตัวอย่างการกดปุ่มเปลี่ยนธาตุ
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // กด 1
+        {
+            ChangeWeaponElement(ElementType.Fire);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) // กด 2
+        {
+            ChangeWeaponElement(ElementType.Water);
+        }
+    }
+
     private IEnumerator RegenerateHp()
     {
         while (true)
@@ -120,6 +141,14 @@ public class PlayerManager : MonoBehaviour
     public void ChangeWeapon(float weaponDmg)
     {
         playerData.weaponDamage = weaponDmg;
+    }
+    
+    public void ChangeWeaponElement(ElementType newElement) 
+    {
+        // เปลี่ยนธาตุใน PlayerData
+        playerData.elementType = newElement;
+        
+       
     }
     void Die()
     {

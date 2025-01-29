@@ -68,14 +68,14 @@ public class SkillManager : MonoBehaviour
     }
     
 
-    public float GetSkillCooldownTime(int index)
+   /* public float GetSkillCooldownTime(int index)
     {
         if (index >= 0 && index < skills.Count)
         {
             return skills[index].GetCooldownTime();
         }
         return 0f;
-    }
+    }*/
     public float GetRemainingCooldownTime(int index)
     {
         if (index >= 0 && index < skills.Count)

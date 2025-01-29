@@ -46,17 +46,12 @@ public class PlayerAttack : MonoBehaviour
         {
             Attack();
         }
-
-       /* if (_isMovingToEnemy && _nearestEnemy != null)
-        {
-            MoveTowardsEnemy();
-        }*/
+        
         else
         {
             StopMoving();
         }
-
-        // อัพเดท animator ด้วยค่า Speed ปัจจุบัน
+        
        
     }
     public void Attack()
@@ -174,17 +169,18 @@ public class PlayerAttack : MonoBehaviour
         float effectDuration = 0.2f;
         Invoke("StopEffect", effectDuration);
 
-       
-       
+        
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRadius,enemyLayers);
         foreach (Collider enemy in hitEnemies)
         {
-            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
+            IDamageable target = enemy.GetComponent<IDamageable>();
+            if (target != null)
             {
                 PlayerManager playerManager = GetComponent<PlayerManager>();
                 float attackDamage = playerManager.CalculatePlayerAttackDamage();
-                enemyHealth.TakeDamage(attackDamage, playerManager.playerData.armorPenetration);
+                DamageData damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
+                target.TakeDamage(damageData);
+              
             }
         }
     }
@@ -198,8 +194,8 @@ public class PlayerAttack : MonoBehaviour
     public void EndAttack()
     {
         isAttacking = false;
-        _isMovingToEnemy = false;
-        _nearestEnemy = null;
+      //  _isMovingToEnemy = false;
+        //_nearestEnemy = null;
         StopMoving();
     }
     
@@ -208,9 +204,8 @@ public class PlayerAttack : MonoBehaviour
         isAttacking = true;
     }
 
-   
     
-    void OnTriggerEnter(Collider other)
+ /*   void OnTriggerEnter(Collider other)
     {
         if (isAttacking && other.CompareTag("Enemy"))
         {
@@ -223,7 +218,7 @@ public class PlayerAttack : MonoBehaviour
                 enemyHealth.TakeDamage(attackDamage, playerManager.playerData.armorPenetration);
             }
         }
-    }
+    }*/
 
     private void OnDrawGizmosSelected()
     {

@@ -39,30 +39,30 @@ public class Skill2 : MonoBehaviour,ISkill
     {
         if (!isOnCooldown)
         {
-            StartCoroutine(DashAttackCoroutine());
+            isOnCooldown = true;
+            lastUseTime = Time.time;
+
+            // เล่นอนิเมชั่น
+            animator.SetTrigger(dashAnimationTrigger);
+          //  StartCoroutine(DashAttackCoroutine());
         }
     }
-  
 
+    public void PerformDashAttack()
+    {
+        animator.speed = 2;
+        _aiController.isAIActive = false;
+        GameObject dashTraileffect = Instantiate(dashTrailEffect, transform.position, transform.rotation);
+        Destroy(dashTraileffect, 2f);
+        
+        StartCoroutine(DashAttackCoroutine());
+    }
+    
+  
+    
     private IEnumerator DashAttackCoroutine()
     {
-        isOnCooldown = true;
-        lastUseTime = Time.time;
-
-        // เล่นอนิเมชั่น
-        animator.SetTrigger(dashAnimationTrigger);
-
-        // รอให้อนิเมชั่นเริ่ม (ปรับตามความเหมาะสม)
-        yield return new WaitForSeconds(1f);
-
-        animator.speed = 2;
-        
-       // animator.applyRootMotion = false;
-        
-      // _aiController.GetComponent<NavMeshAgent>().enabled = false;
-      _aiController.isAIActive = false;
-      GameObject dashTraileffect = Instantiate(dashTrailEffect, transform.position, transform.rotation);
-      Destroy(dashTraileffect, 2f);
+       
         // เริ่มการพุ่ง
         Vector3 startPosition = transform.position;
         Vector3 endPosition = startPosition + transform.forward * dashDistance;
@@ -78,7 +78,7 @@ public class Skill2 : MonoBehaviour,ISkill
         // ตำแหน่งสุดท้าย
         transform.position = endPosition;
         
-     //   animator.applyRootMotion = true;
+        //   animator.applyRootMotion = true;
         
         animator.speed = 1;
         
@@ -91,12 +91,10 @@ public class Skill2 : MonoBehaviour,ISkill
         }
         
         // แสดง effect
-        
-        
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 3; i++)
         {
-           PerformSkillAfterDashhHit();
+            PerformSkillAfterDashhHit();
             yield return new WaitForSeconds(timeBetweenHits);
         } 
         
@@ -106,6 +104,8 @@ public class Skill2 : MonoBehaviour,ISkill
         actualCooldownStartTime = Time.time;
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;
+        
+       
     }
 
     void PerformSingleHit()
@@ -143,8 +143,8 @@ public class Skill2 : MonoBehaviour,ISkill
             } 
         }
     }
-    
-    
+
+   
     
     public bool IsOnCooldown()
     {
@@ -162,10 +162,9 @@ public class Skill2 : MonoBehaviour,ISkill
         {
             return 0f;
         }
-
-        float totalCooldownTime = skillDuration + cooldownTime;
+        
         float elapsedTime = Time.time - lastUseTime;
-        return 1f - Mathf.Clamp01(elapsedTime / totalCooldownTime);
+        return 1f - Mathf.Clamp01(elapsedTime / cooldownTime);
     }
 
     public float GetRemainingCooldownTime()
@@ -174,18 +173,10 @@ public class Skill2 : MonoBehaviour,ISkill
         {
             return 0f;
         }
-
         float timeSinceUse = Time.time - lastUseTime;
-        if (timeSinceUse < skillDuration)
-        {
-            // สกิลยังทำงานอยู่
-            return cooldownTime + (skillDuration - timeSinceUse);
-        }
-        else
-        {
-            // สกิลจบแล้ว กำลังอยู่ใน cooldown จริงๆ
-            return cooldownTime - (Time.time - actualCooldownStartTime);
-        }
+        
+        return cooldownTime - timeSinceUse;
+
     }
     
     private void OnDrawGizmos()

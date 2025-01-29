@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface ISkill
 {
+   
     void UseSkill();
     bool IsOnCooldown();
     float GetCooldownTime();

@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   DefaultMaxHealth: 500
-  maxHealth: 1250
+  maxHealth: 500
   currentHealth: 500
-  baseDamage: 40
+  baseDamage: 20
   DefaultbaseDamage: 20
-  weaponDamage: 35
+  weaponDamage: 5
   criticalChance: 0.05
   criticalDamage: 2
   defense: 5
   armorPenetration: 0
   damageVariation: 0.2
-  regenRate: 35
+  regenRate: 5
   moveSpeed: 2
   fireDamage: 1
   waterDamage: 1
@@ -31,12 +31,13 @@ MonoBehaviour:
   earthDamage: 1
   lightDamage: 1
   darkDamage: 1
-  WeaponupgradeCost: 1050
-  Weaponlevel: 7
-  healthUpgradeCost: 750
-  healthLevel: 6
-  regenRateCost: 600
-  regenRateLevel: 4
+  elementType: 1
+  WeaponupgradeCost: 100
+  Weaponlevel: 1
+  healthUpgradeCost: 100
+  healthLevel: 1
+  regenRateCost: 250
+  regenRateLevel: 1
   criticalRateCost: 1000
   criticalRateLevel: 1
   defenseCost: 125

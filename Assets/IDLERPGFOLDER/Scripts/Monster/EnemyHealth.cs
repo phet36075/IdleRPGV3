@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using System;
 using Random = UnityEngine.Random;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour,IDamageable
 {
     public float baseAttack= 1.0f;
     public float baseAttackMultiplier = 1.0f;
@@ -28,8 +28,12 @@ public class EnemyHealth : MonoBehaviour
     public float currentHealth;
     public float defense;
     public Slider healthBar;
+    
     public bool isDead = false;
-
+  
+  //isDead
+   // public bool isDead => currentHealth > 0;
+    
     public GameObject hitVFX;
     [Header("----------Animator----------")]
     public Animator animator;
@@ -48,6 +52,14 @@ public class EnemyHealth : MonoBehaviour
    private PlayerManager _playerManager;
    public DamageDisplay _damageDisplay;
    public AudioManager _audioManager;
+   
+   [Header("----------Elemental----------")]
+   [SerializeField]
+   private ElementType enemyElementType = ElementType.None;
+        
+   [SerializeField]
+   private List<ElementalResistance> elementalResistances = new List<ElementalResistance>();
+   
    void Start()
    {
        ApplyModifierEffects();
@@ -69,7 +81,7 @@ public class EnemyHealth : MonoBehaviour
        //  _audioManager = FindObjectOfType<AudioManager>();
    }
 
-   public void TakeDamage(float incomingDamage)
+/*   public void TakeDamage(float incomingDamage)
    {
        if (!isHurt)
        {
@@ -102,10 +114,11 @@ public class EnemyHealth : MonoBehaviour
        {
            Die();
        }
-   }
+   }*/
 
    public void TakeDamage(float incomingDamage, float attackerArmorPenetration)
     {
+        
         // Apply armor penetration
         float effectiveDefense = Mathf.Max(0,defense - attackerArmorPenetration);
 
@@ -127,7 +140,7 @@ public class EnemyHealth : MonoBehaviour
            Invoke("ResetHurt", 0.5f);
        }
            
-       
+      
        
        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
        Destroy(effect, 1f);
@@ -155,10 +168,92 @@ public class EnemyHealth : MonoBehaviour
                 Die();
             }
             
-            
-            
+    }
+
+    public void TakeDamage(DamageData damageData)
+    {
+        float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
+        
+        // Apply armor penetration
+        float effectiveDefense = Mathf.Max(0,defense - damageData.armorPenetration);
+
+        // Calculate damage reduction
+        float damageReduction = effectiveDefense / (effectiveDefense + 100f);
+
+        // Calculate final damage
+        float finalDamage = damageData.damage * elementalMultiplier * (1f - damageReduction);
+        
+        if (!isHurt)
+        {
+          
+            currentHealth -= finalDamage;
+            currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
+           
+            CharacterHitEffect.StartHitEffect();
+            animator.SetBool("isHurt", true);
+            isHurt = true;
+            Invoke("ResetHurt", 0.5f);
+        }
+        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
+        Destroy(effect, 1f);
+        UpdateHealthBar();
+
+        if (_playerManager.isCritical == true)
+        {
+            _damageDisplay.DisplayDamageCritical(finalDamage);
+            _playerManager.isCritical = false;
+            _audioManager.PlayHitCritSound();
+        }
+        else
+        {
+            _audioManager.PlayHitSound();
+            _damageDisplay.DisplayDamage(finalDamage);
+        }
+        
+        if (currentHealth > 0)
+        {
+            Stagger();
+        }
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+        
     }
    
+    private float CalculateElementalMultiplier(ElementType attackElementType)
+    {
+        // เช็คว่าแพ้ชนะธาตุกันไหม
+        float baseMultiplier = GetElementalAdvantage(attackElementType, enemyElementType);
+        
+        // เช็คค่าต้านทานธาตุ
+        ElementalResistance resistance = elementalResistances.Find(r => r.elementType == attackElementType);
+        if (resistance != null)
+        {
+            // ถ้ามีค่าต้านทาน +50 จะรับดาเมจแค่ 50%, -50 จะรับดาเมจ 150%
+            float resistanceMultiplier = (100 - resistance.resistance) / 100f;
+            return baseMultiplier * resistanceMultiplier;
+        }
+        
+        return baseMultiplier;
+    }
+    
+    private float GetElementalAdvantage(ElementType attackElement, ElementType defenderElement)
+    {
+        // ตัวอย่างความสัมพันธ์ของธาตุ
+        if (attackElement == ElementType.Fire && defenderElement == ElementType.Earth) return 1.5f;
+        if (attackElement == ElementType.Water && defenderElement == ElementType.Fire) return 1.5f;
+        if (attackElement == ElementType.Earth && defenderElement == ElementType.Wind) return 1.5f;
+        if (attackElement == ElementType.Wind && defenderElement == ElementType.Water) return 1.5f;
+        
+        // ถ้าเป็นธาตุที่แพ้
+        if (attackElement == ElementType.Earth && defenderElement == ElementType.Fire) return 0.5f;
+        if (attackElement == ElementType.Fire && defenderElement == ElementType.Water) return 0.5f;
+        if (attackElement == ElementType.Wind && defenderElement == ElementType.Earth) return 0.5f;
+        if (attackElement == ElementType.Water && defenderElement == ElementType.Wind) return 0.5f;
+        
+        return 1f; // ธาตุไม่มีผลต่อกัน
+    }
     private void Die()
     {
         if (IsthisBoss)
@@ -233,27 +328,28 @@ public class EnemyHealth : MonoBehaviour
     {
         return currentHealth > 0;
     }
-
+    
     public float GetCurrentHealth()
     {
         return currentHealth;
     }
-
+    
     public float GetMaxHealth()
     {
         return EnemyData.maxhealth;
     }
-    
     
     public void ResetHurt()
     {
         animator.SetBool("isHurt", false);
         isHurt = false;
     }
+    
     public void OnHurtAnimationEnd()
     {
         ResetHurt();
     }
+    
     void Stagger()
     {
        
@@ -277,7 +373,6 @@ public class EnemyHealth : MonoBehaviour
     {
         StartCoroutine(SmoothHealthBar());
     }
-
     IEnumerator SmoothHealthBar()
     {
         float elapsedTime = 0f;
@@ -295,9 +390,4 @@ public class EnemyHealth : MonoBehaviour
     }
     
     
-    
-    void Update()
-    {
-        
-    }
 }
