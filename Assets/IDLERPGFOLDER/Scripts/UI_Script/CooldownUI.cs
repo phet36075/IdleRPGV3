@@ -26,18 +26,25 @@ public class CooldownUI : MonoBehaviour
                 cooldownOverlays[i].fillAmount = cooldownPercentage;
 
                 // อัพเดทเวลา cooldown
-                if (cooldownPercentage > 0)
+                if (cooldownPercentage > 0.01f && cooldownPercentage < 1)
                 {
-                    // TimeSpan timeSpan = TimeSpan.FromSeconds(remainingCooldownTime);
-                    cooldownTexts[i].text = remainingCooldownTime.ToString("F1");
+                   
+                    cooldownTexts[i].text = Mathf.Ceil(remainingCooldownTime).ToString();
                     cooldownTexts[i].enabled = true;
+                    cooldownOverlays[i].enabled = true; 
                 }
-                else
+                else if(cooldownPercentage == 1f)
                 {
                     cooldownTexts[i].enabled = false;
+                    cooldownOverlays[i].enabled = false; // ปิด overlay เมื่อสกิลพร้อมใช้งาน
                 }
             }
-           
+            else
+            {
+                // กรณีไม่มีสกิลในตำแหน่งนี้ ปิด UI
+                cooldownOverlays[i].enabled = false;
+                cooldownTexts[i].enabled = false;
+            }
         }
     }
 }

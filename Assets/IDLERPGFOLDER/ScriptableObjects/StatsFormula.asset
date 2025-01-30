@@ -9,7 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5b8284b298b9804581c8dae1c6c36a7, type: 3}
-  m_Name: CurrencyData
+  m_Script: {fileID: 11500000, guid: 4074956f94d9d154f91b80e3442ec63d, type: 3}
+  m_Name: StatsFormula
   m_EditorClassIdentifier: 
-  initialMoney: 999999999
+  baseHP: 100
+  hpPerVit: 10
+  hpPerLevel: 20
+  baseDamage: 10
+  damagePerStr: 2
+  criticalMultiplier: 1.5
+  criticalChancePerDex: 0.01
+  baseDefense: 5
+  defensePerVit: 1
+  evasionPerAgi: 0.005

@@ -31,12 +31,7 @@ public class PlayerData : ScriptableObject
     [Header("----Move Speed----")]
     public float moveSpeed = 2;
 
-    [Header("----Elemental Damage----")] public float fireDamage = 1;
-    public float waterDamage = 1;
-    public float windDamage = 1;
-    public float earthDamage = 1;
-    public float lightDamage = 1;
-    public float darkDamage = 1;
+  
     
     [Header("Elemental")]
     public ElementType elementType = ElementType.None;  // ธาตุเริ่มต้น
@@ -72,8 +67,6 @@ public class PlayerData : ScriptableObject
     
     public void ResetToDefault()
     {
-
-       
         baseDamage = DefaultbaseDamage;
         weaponDamage = 5f;
         criticalChance = 0.05f;
@@ -109,4 +102,6 @@ public class PlayerData : ScriptableObject
         criticalDamageCost = 2500;
 
     }
+    
+    
 }

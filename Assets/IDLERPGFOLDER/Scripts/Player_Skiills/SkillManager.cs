@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
-    public List<ISkill> skills = new List<ISkill>();
-    
+    public List<ISkill> skills;
+    public Animator playerAnimator; // ลาก Animator ของ Player มาใส่ใน Inspector
+  
     // Start is called before the first frame update
-    void Start()
+   
+    
+    private void Start()
     {
-        skills.Add(GetComponent<Skill1>());
-        skills.Add(GetComponent<Skill2>());
-        skills.Add(GetComponent<Skill3>());
+        foreach (var skill in skills)
+        {
+            skill.SetAnimator(playerAnimator); // ส่ง Animator ไปที่สกิล
+        }
     }
     public ISkill GetSkill(int index)
     {
@@ -20,6 +24,22 @@ public class SkillManager : MonoBehaviour
             return skills[index];
         }
         return null;
+    }
+    // เพิ่มเมธอดสำหรับเพิ่มสกิลใหม่
+    public int maxSkills = 4; // กำหนดจำนวนสกิลสูงสุด
+
+    public void AddSkill(ISkill newSkill)
+    {
+        if (newSkill != null && skills.Count < maxSkills)
+        {
+            newSkill.SetAnimator(playerAnimator);
+            skills.Add(newSkill);
+            Debug.Log($"Added new skill. Total skills: {skills.Count}");
+        }
+        else
+        {
+            Debug.Log("Cannot add more skills. Maximum limit reached or skill is null.");
+        }
     }
     private void Update()
     {
@@ -34,8 +54,14 @@ public class SkillManager : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.R))
         {
             UseSkill(2);
+        }else if (Input.GetKeyDown(KeyCode.Y))
+        {
+            // สร้างสกิลใหม่และเพิ่มเข้าไป
+            ISkill newSkill = GetComponent<Skill3>();
+            AddSkill(newSkill);
         }
     }
+    
 
     public void UseSkill(int index)
     {

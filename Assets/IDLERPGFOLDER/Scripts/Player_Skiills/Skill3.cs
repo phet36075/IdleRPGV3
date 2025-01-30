@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Skill3 : MonoBehaviour,ISkill
+public class Skill3 : ISkill
 {
     [Header("-------------Damage-------------")]
     public float skill3DmgLongSword = 3f;
@@ -33,7 +33,7 @@ public class Skill3 : MonoBehaviour,ISkill
         skillDuration = 3; 
     }
 
-    public void UseSkill()
+    public override void UseSkill()
     {
         if (!isOnCooldown)
         {

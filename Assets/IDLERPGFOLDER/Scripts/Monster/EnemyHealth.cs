@@ -240,18 +240,32 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     
     private float GetElementalAdvantage(ElementType attackElement, ElementType defenderElement)
     {
-        // ตัวอย่างความสัมพันธ์ของธาตุ
+        // ธาตุแสง vs มืด
+        if (attackElement == ElementType.Light && defenderElement == ElementType.Dark) return 2.0f;    // แสงแรงกว่ามืด
+        if (attackElement == ElementType.Dark && defenderElement == ElementType.Light) return 0.5f;    // มืดเสียเปรียบแสง
+    
+        // ธาตุแสงได้เปรียบธาตุทั่วไป (แต่ไม่มากเท่าธาตุหลัก)
+        if (attackElement == ElementType.Light && defenderElement != ElementType.Dark) return 1.25f;
+    
+        // ธาตุมืดได้เปรียบธาตุทั่วไป (แต่ไม่มากเท่าธาตุหลัก)
+        if (attackElement == ElementType.Dark && defenderElement != ElementType.Light) return 1.25f;
+
+        // ความสัมพันธ์ของธาตุหลัก
         if (attackElement == ElementType.Fire && defenderElement == ElementType.Earth) return 1.5f;
         if (attackElement == ElementType.Water && defenderElement == ElementType.Fire) return 1.5f;
         if (attackElement == ElementType.Earth && defenderElement == ElementType.Wind) return 1.5f;
         if (attackElement == ElementType.Wind && defenderElement == ElementType.Water) return 1.5f;
-        
-        // ถ้าเป็นธาตุที่แพ้
+    
+        // ธาตุที่เสียเปรียบ
         if (attackElement == ElementType.Earth && defenderElement == ElementType.Fire) return 0.5f;
         if (attackElement == ElementType.Fire && defenderElement == ElementType.Water) return 0.5f;
         if (attackElement == ElementType.Wind && defenderElement == ElementType.Earth) return 0.5f;
         if (attackElement == ElementType.Water && defenderElement == ElementType.Wind) return 0.5f;
-        
+    
+        // ธาตุทั่วไปจะเสียเปรียบธาตุพิเศษเล็กน้อย
+        if ((defenderElement == ElementType.Light || defenderElement == ElementType.Dark) && 
+            (attackElement != ElementType.Light && attackElement != ElementType.Dark)) return 0.75f;
+    
         return 1f; // ธาตุไม่มีผลต่อกัน
     }
     private void Die()

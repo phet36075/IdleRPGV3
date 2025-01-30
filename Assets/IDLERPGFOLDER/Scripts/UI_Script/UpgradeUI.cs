@@ -7,12 +7,17 @@ using TMPro;
 using System;
 public class UpgradeUI : MonoBehaviour
 {
+    public PlayerManager playerManager;
+    
+    public PlayerStats _PlayerStats;
     public PlayerData _PlayerData;
     private CurrencyManager _currencyManager;
     private ProjectileMovement _projectileMovement;
     public TextMeshProUGUI WeaponUpgradeCostTxT;
     public TextMeshProUGUI WeaponDmg;
 
+    public TextMeshProUGUI WeaponDmg2;
+    public TextMeshProUGUI Strtxt;
     public TextMeshProUGUI HealthUpgradeCostTxT;
     public TextMeshProUGUI HealthTxT;
     
@@ -50,6 +55,9 @@ public class UpgradeUI : MonoBehaviour
     {
         WeaponUpgradeCostTxT.text = _PlayerData.WeaponupgradeCost.ToString();
         WeaponDmg.text = _PlayerData.weaponDamage.ToString();
+        WeaponDmg2.text = _PlayerData.baseDamage.ToString();
+        Strtxt.text = _PlayerStats.GetStat(StatType.Strength).ToString();
+        
         
         HealthUpgradeCostTxT.text = _PlayerData.healthUpgradeCost.ToString();
         HealthTxT.text = _PlayerData.maxHealth.ToString();
@@ -91,6 +99,7 @@ public class UpgradeUI : MonoBehaviour
             _currencyManager.SpendMoney(_PlayerData.healthUpgradeCost);
             _PlayerData.maxHealth += 150;
             _PlayerData.healthUpgradeCost= (int)Math.Round(100*( _PlayerData.healthLevel * 1.25f));
+            playerManager.UpdateHealthBar();
         }
     }
 

@@ -48,6 +48,8 @@ public enum ElementType
     Fire,
     Water,
     Earth,
-    Wind
+    Wind,
+    Light,
+    Dark
 }
 

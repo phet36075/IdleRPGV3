@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5b8284b298b9804581c8dae1c6c36a7, type: 3}
-  m_Name: CurrencyData
+  m_Script: {fileID: 11500000, guid: 8f954cb92fa5f6842b855c7a2df99169, type: 3}
+  m_Name: CharacterStats
   m_EditorClassIdentifier: 
-  initialMoney: 999999999
+  baseStr: 1
+  baseDex: 1
+  baseVit: 50
+  baseInt: 1
+  baseAgi: 1

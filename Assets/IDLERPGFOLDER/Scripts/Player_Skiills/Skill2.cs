@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Skill2 : MonoBehaviour,ISkill
+public class Skill2 : ISkill
 {
     [Header("-------------Damage-------------")]
     public float skill2DmgDashThrough = 0.6f;
@@ -35,11 +35,11 @@ public class Skill2 : MonoBehaviour,ISkill
         skillDuration = 3; 
     }
 
-    public void UseSkill()
+    public override void UseSkill()
     {
         if (!isOnCooldown)
         {
-            isOnCooldown = true;
+            ActivateCooldown();
             lastUseTime = Time.time;
 
             // เล่นอนิเมชั่น
@@ -146,38 +146,7 @@ public class Skill2 : MonoBehaviour,ISkill
 
    
     
-    public bool IsOnCooldown()
-    {
-        return isOnCooldown;
-    }
-
-    public float GetCooldownTime()
-    {
-        return cooldownTime;
-    }
-
-    public float GetCooldownPercentage()
-    {
-        if (!isOnCooldown)
-        {
-            return 0f;
-        }
-        
-        float elapsedTime = Time.time - lastUseTime;
-        return 1f - Mathf.Clamp01(elapsedTime / cooldownTime);
-    }
-
-    public float GetRemainingCooldownTime()
-    {
-        if (!isOnCooldown)
-        {
-            return 0f;
-        }
-        float timeSinceUse = Time.time - lastUseTime;
-        
-        return cooldownTime - timeSinceUse;
-
-    }
+   
     
     private void OnDrawGizmos()
     {
