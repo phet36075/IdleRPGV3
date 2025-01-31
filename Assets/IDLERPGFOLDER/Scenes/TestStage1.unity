@@ -5699,7 +5699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -829, y: 365}
+  m_AnchoredPosition: {x: -829, y: 296}
   m_SizeDelta: {x: 440.7051, y: 240.9873}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &246971871
@@ -6979,10 +6979,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f431590db9a1f40b7b400ef4a5dda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
+  cooldownTime: 8
+  lastUseTime: 0
+  playerAnimator: {fileID: 0}
+  isOnCooldown: 0
   skill2DmgDashThrough: 0.6
   skill2DmgAfterDashThrough: 0.3
-  cooldownTime: 5
   dashDistance: 6
   dashDuration: 0.05
   damageRadius: 4
@@ -7005,7 +7007,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a2d5b06c5c88d468bce9a514b1029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 10
   skill3DmgLongSword: 5
   animator: {fileID: 1193181888}
   firstDamageRadius: 2
@@ -7534,13 +7535,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a492ee154ae7f534cbd35e97df92fa92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
+  cooldownTime: 7
+  lastUseTime: 0
+  playerAnimator: {fileID: 0}
+  isOnCooldown: 0
   skillDmgFirst2Hit: 1.5
   skillDmgLastHitAttack: 0.6
   animator: {fileID: 1193181888}
   firstDamageRadius: 2
   firstDamageDistance: 2
-  cooldownTime: 5
   skillEffectPrefab: {fileID: 1996079926692674, guid: fb101b1453aec9747a5ed7244075b1a2, type: 3}
   skillEffectPrefabSlash: {fileID: 1919708242137258, guid: e60d36cff17a1ce4db49ef54f9e72f61, type: 3}
   numberOfHits: 5
@@ -8363,6 +8366,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381838589}
+  m_CullTransparentMesh: 1
+--- !u!1 &386464794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 386464795}
+  - component: {fileID: 386464797}
+  - component: {fileID: 386464796}
+  m_Layer: 5
+  m_Name: Profile_Pic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &386464795
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386464794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2623597, y: 1.2623597, z: 1.2623597}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1008433713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 142.1, y: -27.3}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &386464796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386464794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 10dafa228a4f58d45a85b308bb8345fd, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &386464797
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386464794}
   m_CullTransparentMesh: 1
 --- !u!1 &388691698
 GameObject:
@@ -13112,10 +13190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f431590db9a1f40b7b400ef4a5dda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
+  cooldownTime: 0
+  lastUseTime: 0
+  playerAnimator: {fileID: 0}
+  isOnCooldown: 0
   skill2DmgDashThrough: 0.6
   skill2DmgAfterDashThrough: 0.3
-  cooldownTime: 5
   dashDistance: 6
   dashDuration: 0.05
   damageRadius: 4
@@ -20307,6 +20387,7 @@ RectTransform:
   m_Children:
   - {fileID: 1484297311}
   - {fileID: 2123503875}
+  - {fileID: 386464795}
   m_Father: {fileID: 370117995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -30951,7 +31032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a2d5b06c5c88d468bce9a514b1029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 10
   skill3DmgLongSword: 5
   animator: {fileID: 1274548276}
   firstDamageRadius: 2
@@ -30979,10 +31059,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f431590db9a1f40b7b400ef4a5dda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
+  cooldownTime: 0
+  lastUseTime: 0
+  playerAnimator: {fileID: 0}
+  isOnCooldown: 0
   skill2DmgDashThrough: 0.6
   skill2DmgAfterDashThrough: 0.3
-  cooldownTime: 5
   dashDistance: 6
   dashDuration: 0.05
   damageRadius: 4
@@ -31005,13 +31087,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a492ee154ae7f534cbd35e97df92fa92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 20
+  cooldownTime: 0
+  lastUseTime: 0
+  playerAnimator: {fileID: 0}
+  isOnCooldown: 0
   skillDmgFirst2Hit: 1.5
   skillDmgLastHitAttack: 0.6
   animator: {fileID: 1274548276}
   firstDamageRadius: 2
   firstDamageDistance: 2
-  cooldownTime: 20
   skillEffectPrefab: {fileID: 1996079926692674, guid: fb101b1453aec9747a5ed7244075b1a2, type: 3}
   skillEffectPrefabSlash: {fileID: 1919708242137258, guid: e60d36cff17a1ce4db49ef54f9e72f61, type: 3}
   numberOfHits: 5
@@ -34844,13 +34928,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a492ee154ae7f534cbd35e97df92fa92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
+  cooldownTime: 0
+  lastUseTime: 0
+  playerAnimator: {fileID: 0}
+  isOnCooldown: 0
   skillDmgFirst2Hit: 1.5
   skillDmgLastHitAttack: 0.6
   animator: {fileID: 0}
   firstDamageRadius: 2
   firstDamageDistance: 2
-  cooldownTime: 5
   skillEffectPrefab: {fileID: 1996079926692674, guid: fb101b1453aec9747a5ed7244075b1a2, type: 3}
   skillEffectPrefabSlash: {fileID: 1919708242137258, guid: e60d36cff17a1ce4db49ef54f9e72f61, type: 3}
   numberOfHits: 5
@@ -39100,7 +39186,6 @@ GameObject:
   - component: {fileID: 1704181154}
   - component: {fileID: 1704181153}
   - component: {fileID: 1704181155}
-  - component: {fileID: 1704181156}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -39301,37 +39386,6 @@ MonoBehaviour:
   minRadius: 2
   maxRadius: 10
   itemPickerTf: {fileID: 1200123202}
---- !u!114 &1704181156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1704181142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63c712490461b4c49b60376716a531ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManager: {fileID: 313719825}
-  _PlayerStats: {fileID: 813318748}
-  _PlayerData: {fileID: 11400000, guid: 1b7ab613c4edd4d48917daa5f7fde82b, type: 2}
-  WeaponUpgradeCostTxT: {fileID: 1980485990}
-  WeaponDmg: {fileID: 1559976464}
-  WeaponDmg2: {fileID: 1296610179}
-  Strtxt: {fileID: 1218203411}
-  HealthUpgradeCostTxT: {fileID: 197504793}
-  HealthTxT: {fileID: 1371154049}
-  RegenUpgradeCostTxT: {fileID: 415060418}
-  RegenTxT: {fileID: 2045294614}
-  CriticalUpgradeCostTxT: {fileID: 1337170951}
-  CriticalTxT: {fileID: 304844257}
-  DefenseUpgradeCostTxT: {fileID: 895581176}
-  DefenseTxT: {fileID: 587700607}
-  PenetrationUpgradeCostTxT: {fileID: 1065414893}
-  PenetrationTxT: {fileID: 1909736618}
-  CriticalDamageUpgradeCostTxT: {fileID: 1112126378}
-  CriticalDamageTxT: {fileID: 1314740528}
 --- !u!1 &1721691693
 GameObject:
   m_ObjectHideFlags: 0
@@ -40933,7 +40987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1762238348
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41035,7 +41089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0a2d5b06c5c88d468bce9a514b1029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 10
   skill3DmgLongSword: 5
   animator: {fileID: 1193181888}
   firstDamageRadius: 2
@@ -44999,7 +45052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -267, y: 496}
+  m_AnchoredPosition: {x: -195, y: 496}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1937559942
@@ -46917,7 +46970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -224, y: 491}
+  m_AnchoredPosition: {x: -155, y: 491}
   m_SizeDelta: {x: 346.1163, y: 53.1805}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2036146901
@@ -48180,8 +48233,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 286, y: 7}
-  m_SizeDelta: {x: 116.98, y: 19.82}
+  m_AnchoredPosition: {x: 367, y: -3.8}
+  m_SizeDelta: {x: 142.083, y: 47.9504}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2123503876
 MonoBehaviour:

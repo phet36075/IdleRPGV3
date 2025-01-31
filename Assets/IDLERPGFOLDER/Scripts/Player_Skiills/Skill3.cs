@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Skill3 : ISkill
+public class Skill3 : MonoBehaviour
 {
     [Header("-------------Damage-------------")]
     public float skill3DmgLongSword = 3f;
@@ -33,14 +33,14 @@ public class Skill3 : ISkill
         skillDuration = 3; 
     }
 
-    public override void UseSkill()
+   /* public override void UseSkill()
     {
         if (!isOnCooldown)
         {
             isOnCooldown = true;
             StartCoroutine(SkillSequence());
         }
-    }
+    }*/
     
     IEnumerator SkillSequence()
     {
@@ -103,7 +103,7 @@ public class Skill3 : ISkill
         }
     }
     
-    public float GetCooldownPercentage()
+    /*public float GetCooldownPercentage()
     {
         if (!isOnCooldown)
         {
@@ -132,7 +132,7 @@ public class Skill3 : ISkill
             // สกิลจบแล้ว กำลังอยู่ใน cooldown จริงๆ
             return cooldownTime - (Time.time - actualCooldownStartTime);
         }
-    }
+    }*/
     
     public bool IsOnCooldown()
     {

@@ -11,40 +11,33 @@ public class CooldownUI : MonoBehaviour
     public Image[] cooldownOverlays;
    public TextMeshProUGUI[] cooldownTexts;
    
-    private void Update()
-    {
+   private void Update()
+   {
         
-        for (int i = 0; i < skillIcons.Length; i++)
-        {
-            ISkill skill = skillManager.GetSkill(i);
-            if (skill != null)
-            {
-                float cooldownPercentage = skillManager.GetSkillCooldownPercentage(i);
-                float remainingCooldownTime = skillManager.GetRemainingCooldownTime(i);
+       for (int i = 0; i < skillIcons.Length; i++)
+       {
+           ISkill skill = skillManager.GetSkill(i);
+           if (skill != null)
+           {
+               float cooldownPercentage = skillManager.GetSkillCooldownPercentage(i);
+               float remainingCooldownTime = skillManager.GetRemainingCooldownTime(i);
 
-                // อัพเดทเงา cooldown
-                cooldownOverlays[i].fillAmount = cooldownPercentage;
+               // อัพเดทเงา cooldown
+               cooldownOverlays[i].fillAmount = cooldownPercentage;
 
-                // อัพเดทเวลา cooldown
-                if (cooldownPercentage > 0.01f && cooldownPercentage < 1)
-                {
-                   
-                    cooldownTexts[i].text = Mathf.Ceil(remainingCooldownTime).ToString();
-                    cooldownTexts[i].enabled = true;
-                    cooldownOverlays[i].enabled = true; 
-                }
-                else if(cooldownPercentage == 1f)
-                {
-                    cooldownTexts[i].enabled = false;
-                    cooldownOverlays[i].enabled = false; // ปิด overlay เมื่อสกิลพร้อมใช้งาน
-                }
-            }
-            else
-            {
-                // กรณีไม่มีสกิลในตำแหน่งนี้ ปิด UI
-                cooldownOverlays[i].enabled = false;
-                cooldownTexts[i].enabled = false;
-            }
-        }
-    }
+               // อัพเดทเวลา cooldown
+               if (cooldownPercentage > 0)
+               {
+                   // TimeSpan timeSpan = TimeSpan.FromSeconds(remainingCooldownTime);
+                   cooldownTexts[i].text = remainingCooldownTime.ToString("F1");
+                   cooldownTexts[i].enabled = true;
+               }
+               else
+               {
+                   cooldownTexts[i].enabled = false;
+               }
+           }
+           
+       }
+   }
 }

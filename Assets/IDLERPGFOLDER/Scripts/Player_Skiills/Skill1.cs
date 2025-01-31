@@ -1,26 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
-public class Skill1 : ISkill
+using System.Collections;
+using UnityEngine;
+
+
+public class Skill1 : MonoBehaviour,ISkill
 {
     [Header("--------------------Damage--------------------")]
     public float skillDmgFirst2Hit = 1.5f;
-
+    
     public float skillDmgLastHitAttack = 0.6f;
     public Animator animator;
     public float firstDamageRadius = 2f;
     public float firstDamageDistance = 2f;
     public float cooldownTime = 5f;
-  
     public GameObject skillEffectPrefab;
     public GameObject skillEffectPrefabSlash;
+
    
-  
-    protected bool isOnCooldown = false;
+    private bool isOnCooldown = false;
     private float lastUseTime = -Mathf.Infinity;
     private PlayerController _aiController;
     public int numberOfHits = 5;
@@ -39,21 +36,22 @@ public class Skill1 : ISkill
         skillDuration = 3; 
     }
 
-    public override void UseSkill()
+    public void UseSkill()
     {
         if (!isOnCooldown)
         {
-            ActivateCooldown();
+           
+            lastUseTime = Time.time;
             StartCoroutine(Cooldown());
-            playerAnimator.SetTrigger("UseSkill");
+            animator.SetTrigger("UseSkill");
         }
-          
-            
+        Debug.Log("YOUR ON COOLDOWN" + (cooldownTime - (Time.time - lastUseTime)));
           
         
     }
     private IEnumerator Cooldown()
     {
+        
         isOnCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;
@@ -78,8 +76,7 @@ public class Skill1 : ISkill
         {
             PerformSingleHit();
                yield return new WaitForSeconds(timeBetweenHits);
-        }
-       // actualCooldownStartTime = Time.time;
+        } // actualCooldownStartTime = Time.time;
         // เริ่มคูลดาวน์
       //  StartCoroutine(Cooldown());
     }
@@ -154,7 +151,41 @@ public class Skill1 : ISkill
         //_aiController.GetComponent<NavMeshAgent>().enabled = false;
         _aiController.isAIActive = false;
     }
+    public float GetCooldownPercentage()
+    {
+        if (!isOnCooldown)
+        {
+            return 0f;
+        }
+        float elapsedTime = Time.time - lastUseTime;
+        return 1f - Mathf.Clamp01(elapsedTime / cooldownTime);
+    }
+    public float GetRemainingCooldownTime()
+    {
+        if (!isOnCooldown)
+        {
+            return 0f;
+        }
+
+        float timeSinceUse = Time.time - lastUseTime;
+      
+        
+            // สกิลยังทำงานอยู่
+            return cooldownTime  - timeSinceUse;
+        
+       
+    }
+   
     
+    public bool IsOnCooldown()
+    {
+        return isOnCooldown;
+    }
+
+    public float GetCooldownTime()
+    {
+        return cooldownTime;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 0, 1, 0.5f);
