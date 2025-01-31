@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class EnemyHealth : MonoBehaviour,IDamageable
 {
+    private PlayerStats playerStats;
     public float baseAttack= 1.0f;
     public float baseAttackMultiplier = 1.0f;
     public float baseSpeed = 3.0f;
@@ -62,16 +63,22 @@ public class EnemyHealth : MonoBehaviour,IDamageable
    
    void Start()
    {
-       ApplyModifierEffects();
-       addModifier();
-           
+      // ApplyModifierEffects();
+     //  addModifier();
+
+     playerStats = FindObjectOfType<PlayerStats>();
        _enemySpawner = FindObjectOfType<EnemySpawner>();
        maxHealth = (int)Math.Round((EnemyData.maxhealth * _enemySpawner.currentStage) * 1.25f);
+       defense =(( EnemyData.defense * _enemySpawner.currentStage) * 1.1f);
+       
+       
+       
+       
        currentHealth = maxHealth;
        healthBar.maxValue = maxHealth;
        healthBar.value = currentHealth;
        
-       defense =(( EnemyData.defense * _enemySpawner.currentStage) * 1.1f);
+      
        spawner = FindObjectOfType<EnemySpawner>();
        _playerManager = FindObjectOfType<PlayerManager>();
       // EnemyData.armorPenetration = (EnemyData.armorPenetration * _enemySpawner.currentStage) * 1.25f;
@@ -275,8 +282,13 @@ public class EnemyHealth : MonoBehaviour,IDamageable
            // CongratulationUI.gameObject.SetActive(true);
         }
         
+        // play dead sound
         _audioManager.PlayDieSound();
+        // add money
         CurrencyManager.Instance.AddMoney( Mathf.RoundToInt((EnemyData.moneyDrop * _enemySpawner.currentStage) *1.25f));
+        // add exp
+        playerStats.AddExperience(100);
+        
         isDead = true;
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().enabled = false;
@@ -284,6 +296,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         enemyCollider.enabled = false;
         animator.SetBool("IsWalking",false);
         animator.SetBool("IsAttacking",false);
+        
         currentHealth = 0;
     }
 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f954cb92fa5f6842b855c7a2df99169, type: 3}
   m_Name: CharacterStats
   m_EditorClassIdentifier: 
-  baseStr: 1
-  baseDex: 1
+  baseStr: 5
+  baseDex: 3
   baseVit: 50
-  baseInt: 1
+  baseInt: 2
   baseAgi: 1

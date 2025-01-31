@@ -75,9 +75,16 @@ public class PlayerManager : MonoBehaviour
         // คำนวณ Max HP
         playerData.maxHealth = formula.baseHP + 
                 (playerStats.GetStat(StatType.Vitality) * formula.hpPerVit);
-                
+        // คำนวณ Defense
+        playerData.defense = formula.baseDefense + 
+                             (playerStats.GetStat(StatType.Vitality) * formula.defensePerVit);
+        // คำนวณ Regen
+        playerData.regenRate = formula.baseRegen + 
+                             (playerStats.GetStat(StatType.Vitality) * formula.regenPerVit);
+        
+
         // ถ้า currentHP ยังไม่ถูกกำหนด ให้เท่ากับ maxHP
-        if (currentHP <= 0) currentHP = maxHP;
+       // if (currentHP <= 0) currentHP = maxHP;
 
         // คำนวณ Damage
         playerData.baseDamage = formula.baseDamage + 
@@ -87,12 +94,12 @@ public class PlayerManager : MonoBehaviour
         playerData.criticalChance = playerStats.GetStat(StatType.Dexterity) * 
                          formula.criticalChancePerDex;
 
-        // คำนวณ Defense
-        playerData.defense = formula.baseDefense + 
-                  (playerStats.GetStat(StatType.Vitality) * formula.defensePerVit);
+        playerData.criticalChance = playerData.criticalChance +
+                                    playerStats.GetStat(StatType.Agility) * formula.criticalChancePerAgi;
+        playerData.armorPenetration = playerStats.GetStat(StatType.Agility) * formula.armorPenatrationPerAgi;
 
         // คำนวณ Evasion
-      //  evasion = playerStats.GetStat(StatType.Agility) * formula.evasionPerAgi;
+        //  evasion = playerStats.GetStat(StatType.Agility) * formula.evasionPerAgi;
     }
 
    

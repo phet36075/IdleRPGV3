@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHP: 100
   hpPerVit: 10
+  regenPerVit: 5
   hpPerLevel: 20
   baseDamage: 10
   damagePerStr: 2
   criticalMultiplier: 1.5
   criticalChancePerDex: 0.01
+  criticalChancePerAgi: 0.02
+  armorPenatrationPerAgi: 2
   baseDefense: 5
+  baseRegen: 5
   defensePerVit: 1
   evasionPerAgi: 0.005
