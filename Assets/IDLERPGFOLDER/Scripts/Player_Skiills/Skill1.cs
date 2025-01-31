@@ -51,7 +51,6 @@ public class Skill1 : MonoBehaviour,ISkill
     }
     private IEnumerator Cooldown()
     {
-        
         isOnCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;

@@ -11,7 +11,7 @@ public class SkillManager : MonoBehaviour
     {
         skills.Add(GetComponent<Skill1>());
         skills.Add(GetComponent<Skill2>());
-       // skills.Add(GetComponent<Skill3>());
+        skills.Add(GetComponent<Skill3>());
     }
     public ISkill GetSkill(int index)
     {

@@ -39,17 +39,14 @@ public class Skill2 : MonoBehaviour,ISkill
     {
         if (!isOnCooldown)
         {
-            //ActivateCooldown();
+           
             lastUseTime = Time.time;
             StartCoroutine(Cooldown());
-            // เล่นอนิเมชั่น
             animator.SetTrigger(dashAnimationTrigger);
-          //  StartCoroutine(DashAttackCoroutine());
         }
     }
     private IEnumerator Cooldown()
     {
-        
         isOnCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;
