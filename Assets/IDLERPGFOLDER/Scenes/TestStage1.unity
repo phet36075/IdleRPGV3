@@ -8745,9 +8745,9 @@ MonoBehaviour:
   animator: {fileID: 1193181888}
   firstDamageRadius: 2
   firstDamageDistance: 2
-  cooldownTime: 15
-  skillEffectPrefab: {fileID: 1996079926692674, guid: fb101b1453aec9747a5ed7244075b1a2, type: 3}
-  skillEffectPrefabSlash: {fileID: 1919708242137258, guid: e60d36cff17a1ce4db49ef54f9e72f61, type: 3}
+  cooldownTime: 5
+  skillEffectPrefab: {fileID: 1996079926692674, guid: e80bb5935e1378d4c844244b2b4f38ca, type: 3}
+  skillEffectPrefabSlash: {fileID: 1919708242137258, guid: 0741bc8b1fcb6d441b8cc40d7a725f52, type: 3}
   numberOfHits: 5
   timeBetweenHits: 0.1
   hitboxSize: {x: 3.34, y: 1, z: 6.62}
@@ -8755,6 +8755,8 @@ MonoBehaviour:
   hitboxLayer:
     serializedVersion: 2
     m_Bits: 512
+  AoEMods: {x: 1, y: 1, z: 1}
+  AoEModsMultiplier: 2
 --- !u!64 &337127001
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34711,6 +34713,8 @@ MonoBehaviour:
   hitboxLayer:
     serializedVersion: 2
     m_Bits: 512
+  AoEMods: {x: 2, y: 2, z: 2}
+  AoEModsMultiplier: 0
 --- !u!114 &1274548286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39352,6 +39356,8 @@ MonoBehaviour:
   hitboxLayer:
     serializedVersion: 2
     m_Bits: 512
+  AoEMods: {x: 2, y: 2, z: 2}
+  AoEModsMultiplier: 0
 --- !u!1001 &1483130194
 PrefabInstance:
   m_ObjectHideFlags: 0

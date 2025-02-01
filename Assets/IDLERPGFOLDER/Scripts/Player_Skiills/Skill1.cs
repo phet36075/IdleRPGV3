@@ -1,8 +1,5 @@
-
 using System.Collections;
 using UnityEngine;
-
-
 public class Skill1 : MonoBehaviour,ISkill
 {
     [Header("--------------------Damage--------------------")]
@@ -22,31 +19,57 @@ public class Skill1 : MonoBehaviour,ISkill
     private PlayerController _aiController;
     public int numberOfHits = 5;
     public float timeBetweenHits = 0.2f;
-    private float actualCooldownStartTime;
+  //  private float actualCooldownStartTime;
     private float skillDuration;
     
     
-    public Vector3 hitboxSize = new Vector3(1f, 1f, 2f); // ขนาดของ hitbox
+    /*public Vector3 hitboxSize = new Vector3(1f, 1f, 2f); // ขนาดของ hitbox
     public float hitboxDistance = 1f; // ระยะห่างจากตัวละคร
-    public LayerMask hitboxLayer; // Layer ที่ต้องการตรวจสอบการชน
-    
+    public LayerMask hitboxLayer; // Layer ที่ต้องการตรวจสอบการชน*/
+
+    private PlayerManager playerManager;
+    private float attackDamage;
+    private DamageData damageData;
+
+    public Vector3 AoEMods;
+    public float AoEModsMultiplier = 1f;
+    private float defaultAoEModsMultiplier = 1f;
     private void Start()
     {
+        AoEModsMultiplier = defaultAoEModsMultiplier;
+        playerManager = GetComponent<PlayerManager>();
+        attackDamage = playerManager.CalculatePlayerAttackDamage();
+        damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
+        
+      
+        
         _aiController = FindObjectOfType<PlayerController>();
         skillDuration = 3; 
     }
 
     public void UseSkill()
     {
+        // Check Element
+        damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
+        if (damageData.elementType == ElementType.Wind)
+        {
+            AoEMods = new Vector3(2f, 2f, 2f);
+          
+        }
+        else
+        {
+            AoEModsMultiplier = defaultAoEModsMultiplier;
+            AoEMods = new Vector3(1f, 1f, 1f);
+           
+        }
+        
         if (!isOnCooldown)
         {
-           
             lastUseTime = Time.time;
             StartCoroutine(Cooldown());
             animator.SetTrigger("UseSkill");
         }
         Debug.Log("YOUR ON COOLDOWN" + (cooldownTime - (Time.time - lastUseTime)));
-          
         
     }
     private IEnumerator Cooldown()
@@ -55,88 +78,94 @@ public class Skill1 : MonoBehaviour,ISkill
         yield return new WaitForSeconds(cooldownTime);
         isOnCooldown = false;
     }
-    
+
+   /* void UpdateDamage()
+    {
+        attackDamage = playerManager.CalculatePlayerAttackDamage(skillDmgFirst2Hit);
+        damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
+    }
+
+    void UpdateDamageSecondHit()
+    {
+        attackDamage = playerManager.CalculatePlayerAttackDamage(skillDmgLastHitAttack);
+        damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
+    }*/
 
     public void PerformLastHit()
     {
-        StartCoroutine(LastHit());
+       // StartCoroutine(LastHit());
+       LastHit();
     }
 
-    private IEnumerator LastHit()
+    private void LastHit()
     {
         Vector3 effectPosition = transform.position + transform.forward * 2f;
         Quaternion effectRotation = transform.rotation;
         // แสดง effect
         GameObject effect = Instantiate(skillEffectPrefab, effectPosition, effectRotation);
+        
+        // ปรับขนาด effect
+        effect.transform.localScale = AoEMods; // ปรับขนาดเป็น 2 เท่า
         Destroy(effect, 2f); // ลบ effect หลังจาก 2 วินาที
        
         // ปล่อยดาเมจหลายที
-        for (int i = 0; i < numberOfHits; i++)
+     /*   for (int i = 0; i < numberOfHits; i++)
         {
             PerformSingleHit();
                yield return new WaitForSeconds(timeBetweenHits);
-        } // actualCooldownStartTime = Time.time;
-        // เริ่มคูลดาวน์
-      //  StartCoroutine(Cooldown());
+        } */
     }
     
-    /*private IEnumerator Cooldown()
-    {
-        isOnCooldown = true;
-        yield return new WaitForSeconds(cooldownTime);
-        isOnCooldown = false;
-    }*/
+   
 
-    void PerformSingleHit()
+  /*  void PerformSingleHit()
     {
-        Vector3 hitboxCenter = transform.position + transform.forward * (hitboxDistance + hitboxSize.z / 2f);
+        Vector3 hitboxCenter = transform.position + transform.forward * (hitboxDistance  * AoEModsMultiplier + hitboxSize.z / 2f);
 
         // ตรวจสอบการชนกัน
-        Collider[] hitColliders = Physics.OverlapBox(hitboxCenter, hitboxSize / 2f, transform.rotation, hitboxLayer);
-       // Vector3 skillCenter = transform.position + transform.forward * skillRange;
-     //   Collider[] hitColliders = Physics.OverlapSphere(transform.position + transform.forward * 2f, damageRadius);
+        Collider[] hitColliders = Physics.OverlapBox(hitboxCenter, (hitboxSize / 2f), transform.rotation, hitboxLayer);
+       
         foreach (var hitCollider in hitColliders)
         {
-                EnemyHealth enemyHealth = hitCollider.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
-                {
-                    
-                    PlayerManager playerStats = GetComponent<PlayerManager>();
-                    float enemyDefense = 10f;
+            IDamageable target = hitCollider.GetComponent<IDamageable>();
+            if (target != null)
+            {
+               // PlayerManager playerManager = GetComponent<PlayerManager>();
+              //  float attackDamage = playerManager.CalculatePlayerAttackDamage();
+               
+               // DamageData damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType); 
+             //  UpdateDamageSecondHit();
+                target.TakeDamage(damageData);
                 
-                    //Skill Damage
-                    float skillDamage = playerStats.CalculatePlayerAttackDamage(skillDmgLastHitAttack);
-                    enemyHealth.TakeDamage(skillDamage,playerStats.playerData.armorPenetration);
-                }
-            
+            }
         }
-    }
-    public void ShowEffect1()
+    }*/
+
+    /*public void ShowEffect1()
+    {
+        
+    }*/
+
+    public void DoAnimDamage()
     {
         Vector3 effectPosition = transform.position + transform.forward * 2f; // ระยะห่างจาก GameObject ไปทางด้านหน้า 
         Quaternion effectRotation = transform.rotation;
         GameObject effect = Instantiate(skillEffectPrefabSlash, effectPosition, effectRotation);
+        // ปรับขนาด effect
+        effect.transform.localScale = AoEMods; // ปรับขนาดเป็น 2 เท่า
         Destroy(effect, 0.2f);
-    }
-
-    public void DoAnimDamage()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position + transform.forward * firstDamageDistance, firstDamageRadius); // ระยะห่างจาก GameObject ไปทางด้านหน้า และ รัศมีของวงกลม
+        
+        /*Collider[] hitColliders = Physics.OverlapSphere(transform.position + transform.forward * firstDamageDistance, firstDamageRadius * AoEModsMultiplier); // ระยะห่างจาก GameObject ไปทางด้านหน้า และ รัศมีของวงกลม
         foreach (var hitCollider in hitColliders)
         {
-           
-            EnemyHealth enemyHealth = hitCollider.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
+            IDamageable target = hitCollider.GetComponent<IDamageable>();
+            if (target != null)
             {
-                PlayerManager playerStats = GetComponent<PlayerManager>();
-                float enemyDefense = 10f;
-                
-                //Skill Damage
-                float skillDamage = playerStats.CalculatePlayerAttackDamage(skillDmgFirst2Hit);
-                enemyHealth.TakeDamage(skillDamage,playerStats.playerData.armorPenetration);
+                UpdateDamage();
+                target.TakeDamage(damageData); 
             }
             
-        }
+        }*/
     }
 
     public void EnableNav()
@@ -185,7 +214,7 @@ public class Skill1 : MonoBehaviour,ISkill
     {
         return cooldownTime;
     }
-    private void OnDrawGizmos()
+   /* private void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 0, 1, 0.5f);
         Vector3 sphereCenter = transform.position + transform.forward * firstDamageDistance;
@@ -197,6 +226,6 @@ public class Skill1 : MonoBehaviour,ISkill
         Vector3 hitboxCenter = transform.position + transform.forward * (hitboxDistance + hitboxSize.z / 2f);
         Gizmos.matrix = Matrix4x4.TRS(hitboxCenter, transform.rotation, Vector3.one);
         Gizmos.DrawCube(Vector3.zero, hitboxSize);
-    }
+    }*/
 }
 

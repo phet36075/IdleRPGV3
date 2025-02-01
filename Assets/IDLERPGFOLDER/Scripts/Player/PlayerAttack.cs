@@ -180,7 +180,8 @@ public class PlayerAttack : MonoBehaviour
                 float attackDamage = playerManager.CalculatePlayerAttackDamage();
                 DamageData damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
                 target.TakeDamage(damageData);
-              
+
+                
             }
         }
     }

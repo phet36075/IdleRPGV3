@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   DefaultMaxHealth: 500
-  maxHealth: 600
+  maxHealth: 500
   currentHealth: 500
-  baseDamage: 46
+  baseDamage: 20
   DefaultbaseDamage: 20
   weaponDamage: 5
-  criticalChance: 0.07
+  criticalChance: 0.05
   criticalDamage: 2
-  defense: 55
+  defense: 5
   armorPenetration: 0
   damageVariation: 0.2
   regenRate: 5
   moveSpeed: 2
-  elementType: 1
+  elementType: 4
   WeaponupgradeCost: 100
   Weaponlevel: 1
   healthUpgradeCost: 100

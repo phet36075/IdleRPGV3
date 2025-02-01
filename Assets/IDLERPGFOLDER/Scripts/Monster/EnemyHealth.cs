@@ -192,7 +192,6 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         
         if (!isHurt)
         {
-          
             currentHealth -= finalDamage;
             currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
            
@@ -201,6 +200,22 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             isHurt = true;
             Invoke("ResetHurt", 0.5f);
         }
+        
+        if (damageData.elementType == ElementType.Fire)
+        {
+            var burningEffect = gameObject.GetComponent<BurningEffect>();
+            if (burningEffect == null)
+            {
+                burningEffect = gameObject.AddComponent<BurningEffect>();
+            }
+            burningEffect.Apply();
+        }
+        
+        
+        
+        
+        
+        
         GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
         Destroy(effect, 1f);
         UpdateHealthBar();

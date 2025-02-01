@@ -9,6 +9,7 @@ public interface IDamageable
     void TakeDamage(float amount ,float armorPen);
     // รับดาเมจพร้อมข้อมูลเพิ่มเติม
     void TakeDamage(DamageData damageData);
+    float GetMaxHealth(); // เพิ่ม method นี้
   //  bool isDead { get; }
     // ตรวจสอบว่าวัตถุนี้ยังมีชีวิตอยู่หรือไม่
     //   bool IsAlive();
