@@ -133,6 +133,8 @@ public class AllyMeleeCombat : MonoBehaviour
         if (target != null)
         {
             animator.SetTrigger("Attack");
+            animator.SetBool("IsRunning",false);
+            animator.SetBool("isWalking",false);
         }
     }
 

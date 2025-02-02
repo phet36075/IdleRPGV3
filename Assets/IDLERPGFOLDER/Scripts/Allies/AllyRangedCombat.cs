@@ -101,6 +101,8 @@ public class AllyRangedCombat : MonoBehaviour
             {
                 AllyisAttacking = true;
                 animator.SetTrigger("Attack");
+                animator.SetBool("IsRunning",false);
+                animator.SetBool("isWalking",false);
             }
         }
     }

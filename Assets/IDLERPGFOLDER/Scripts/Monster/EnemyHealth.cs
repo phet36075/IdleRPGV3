@@ -8,114 +8,103 @@ using Random = UnityEngine.Random;
 
 public class EnemyHealth : MonoBehaviour,IDamageable
 {
-    private PlayerStats playerStats;
-    public float baseAttack= 1.0f;
+    #region Variables
+    [Header("Stats")]
+    public float baseAttack = 1.0f;
     public float baseAttackMultiplier = 1.0f;
     public float baseSpeed = 3.0f;
     public float baseAttackSpeed = 1.0f;
-    public float baseCriticalChance = 0.05f; // 5% Critical Chance
+    public float baseCriticalChance = 0.05f;
     public float speedMultiplier = 1.0f;
     public float attackSpeedMultiplier = 1.0f;
     public float criticalChanceMultiplier = 1.0f;
     public bool bypassArmor = false;
     
-    private EnemySpawner _enemySpawner;
-    public bool IsthisBoss = false;
-    //public GameObject CongratulationUI;
-    [Header("-----------Health----------")]
+    [Header("Health")]
     public EnemyData EnemyData;
-    public Transform spawnVFXPosition;
     public float maxHealth;
     public float currentHealth;
     public float defense;
     public Slider healthBar;
-    
+    public Transform spawnVFXPosition;
     public bool isDead = false;
-  
+    public bool IsthisBoss = false;
     
-    
+    [Header("Visual Effects")]
     public GameObject hitVFX;
-    [Header("----------Animator----------")]
     public Animator animator;
-   
-    [Header("----------Enemy Collider----------")]
-    
     public Collider enemyCollider;
-    private EnemySpawner spawner;
     
-    [Header("----------Stun duration----------")]
-    public float staggerDuration = 0.5f;  // ระยะเวลาที่ศัตรูหยุดชะงัก
-    private float lastTimeStagger = 0;
+    [Header("Combat Settings")]
+    public float staggerDuration = 0.5f;
     public float cooldownStagger = 4;
-   private bool isHurt;
-   public CharacterHitEffect CharacterHitEffect;
-   private PlayerManager _playerManager;
-   public DamageDisplay _damageDisplay;
-   public AudioManager _audioManager;
+    private float lastTimeStagger = 0;
+    private bool isHurt;
+    
+    [Header("Elemental")]
+    [SerializeField] private ElementType enemyElementType = ElementType.None;
+    [SerializeField] private List<ElementalResistance> elementalResistances = new List<ElementalResistance>();
+
+    // References
+    private PlayerStats playerStats;
+    private EnemySpawner _enemySpawner;
+    private EnemySpawner spawner;
+    private PlayerManager _playerManager;
+    public CharacterHitEffect CharacterHitEffect;
+    public DamageDisplay _damageDisplay;
+    public AudioManager _audioManager;
+    #endregion
    
-   [Header("----------Elemental----------")]
-   [SerializeField]
-   private ElementType enemyElementType = ElementType.None;
+    #region Unity Lifecycle
+    void Start()
+    {
+        InitializeComponents();
+        InitializeStats();
+    }
+
+    private void InitializeComponents()
+    {
+        playerStats = FindObjectOfType<PlayerStats>();
+        _enemySpawner = FindObjectOfType<EnemySpawner>();
+        spawner = FindObjectOfType<EnemySpawner>();
+        _playerManager = FindObjectOfType<PlayerManager>();
+    }
+
+    private void InitializeStats()
+    {
+        maxHealth = (int)Math.Round((EnemyData.maxhealth * _enemySpawner.currentStage) * 1.25f);
+        defense = ((EnemyData.defense * _enemySpawner.currentStage) * 1.1f);
         
-   [SerializeField]
-   private List<ElementalResistance> elementalResistances = new List<ElementalResistance>();
-   
-   void Start()
-   {
-      // ApplyModifierEffects();
-     //  addModifier();
+        currentHealth = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = currentHealth;
+    }
+    #endregion
+    
+    #region UI Health Bar
 
-     playerStats = FindObjectOfType<PlayerStats>();
-       _enemySpawner = FindObjectOfType<EnemySpawner>();
-       maxHealth = (int)Math.Round((EnemyData.maxhealth * _enemySpawner.currentStage) * 1.25f);
-       defense =(( EnemyData.defense * _enemySpawner.currentStage) * 1.1f);
-       
-       
-       currentHealth = maxHealth;
-       healthBar.maxValue = maxHealth;
-       healthBar.value = currentHealth;
-       
-      
-       spawner = FindObjectOfType<EnemySpawner>();
-       _playerManager = FindObjectOfType<PlayerManager>();
-      
-   }
+    void UpdateHealthBar()
+    {
+        StartCoroutine(SmoothHealthBar());
+    }
+    IEnumerator SmoothHealthBar()
+    {
+        float elapsedTime = 0f;
+        float duration = 0.2f; // ระยะเวลาที่ต้องการให้การลดลงของแถบลื่นไหล
+        float startValue = healthBar.value;
 
-/*   public void TakeDamage(float incomingDamage)
-   {
-       if (!isHurt)
-       {
-           currentHealth -= incomingDamage;
-           currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
-           
-           CharacterHitEffect.StartHitEffect();
-           animator.SetBool("isHurt", true);
-           isHurt = true;
-           Invoke("ResetHurt", 0.5f);
-       }
-           
-       UpdateHealthBar();
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            healthBar.value = Mathf.Lerp(startValue, currentHealth, elapsedTime / duration);
+            yield return null;
+        }
 
-       if (_playerManager.isCritical == true)
-       {
-           _damageDisplay.DisplayDamageCritical(incomingDamage);
-           _playerManager.isCritical = false;
-       }
-       else
-       {
-           _damageDisplay.DisplayDamage(incomingDamage);
-       }
-       
-       if (currentHealth > 0)
-       {
-           Stagger();
-       }
-       if (currentHealth <= 0)
-       {
-           Die();
-       }
-   }*/
+        healthBar.value = currentHealth;
+    }
 
+    #endregion
+    
    public void TakeDamage(float incomingDamage, float attackerArmorPenetration)
     {
         
@@ -233,25 +222,52 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             }
             
     }
-    public void TakeDamage(DamageData damageData)
+
+    #region Main TakeDamage
+ public void TakeDamage(DamageData damageData)
     {
+        if (isDead) return;
         // Calculate final damage
+        float finalDamage = CalculateFinalDamage(damageData);
+
+        // Apply damage to health
+        ApplyDamage(finalDamage);
+    
+        // Apply element effects
+        ApplyElementalEffects(damageData, finalDamage);
+
+        // Spawn hit VFX
+        SpawnHitEffect();
+    
+        // Update UI and play sounds
+        UpdateDamageDisplay(finalDamage, damageData.elementType);
+
+        // Check health state
+        CheckHealthState();
+    }
+    private float CalculateFinalDamage(DamageData damageData)
+    {
         float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
-        float effectiveDefense = Mathf.Max(0,defense - damageData.armorPenetration);
+        float effectiveDefense = Mathf.Max(0, defense - damageData.armorPenetration);
         float damageReduction = effectiveDefense / (effectiveDefense + 100f);
-        float finalDamage = damageData.damage * elementalMultiplier * (1f - damageReduction);
-        
-        if (!isHurt)
-        {
-            currentHealth -= finalDamage;
-            currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
-           
-            CharacterHitEffect.StartHitEffect();
-            animator.SetBool("isHurt", true);
-            isHurt = true;
-            Invoke("ResetHurt", 0.5f);
-        }
-        
+    
+        return damageData.damage * elementalMultiplier * (1f - damageReduction);
+    }
+    private void ApplyDamage(float damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0f);
+
+        CharacterHitEffect.StartHitEffect();
+        animator.SetBool("isHurt", true);
+        isHurt = true;
+        Invoke("ResetHurt", 0.5f);
+    
+        UpdateHealthBar();
+    }
+
+    private void ApplyElementalEffects(DamageData damageData, float finalDamage)
+    {
         if (damageData.elementType == ElementType.Fire)
         {
             var burningEffect = gameObject.GetComponent<BurningEffect>();
@@ -261,48 +277,47 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             }
             burningEffect.Apply();
         }
-        
+        else if (damageData.elementType == ElementType.Earth && !damageData.isEarthTremor)
+        {
+            StartCoroutine(ApplyEarthTremor(finalDamage));
+        }
+    }
+
+    private void SpawnHitEffect()
+    {
+        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
+        Destroy(effect, 1f);
+    }
+
+    private void UpdateDamageDisplay(float damage, ElementType elementType)
+    {
         if (_playerManager.isCritical)
         {
-            _damageDisplay.DisplayDamageCritical(finalDamage);
+            _damageDisplay.DisplayDamageCritical(damage);
             _playerManager.isCritical = false;
             _audioManager.PlayHitCritSound();
         }
-        
-        if (damageData.elementType == ElementType.None)
+        else if (elementType == ElementType.None)
         {
-            _damageDisplay.DisplayDamage(finalDamage);
+            _damageDisplay.DisplayDamage(damage);
         }
         else
         {
             _audioManager.PlayHitSound();
-            _damageDisplay.DisplayDamage(finalDamage);
+            _damageDisplay.DisplayDamage(damage);
         }
-        
+    }
+
+    private void CheckHealthState()
+    {
         if (currentHealth > 0)
         {
             Stagger();
         }
-        if (currentHealth <= 0)
+        else
         {
             Die();
         }
-        // เพิ่มเอฟเฟกต์ธาตุดิน
-        if (damageData.elementType == ElementType.Earth && !damageData.isEarthTremor)
-        {
-            StartCoroutine(ApplyEarthTremor(finalDamage));
-        }
-        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
-        Destroy(effect, 1f);
-        UpdateHealthBar();
-    }
-    private float CalculateFinalDamage(DamageData damageData)
-    {
-        float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
-        float effectiveDefense = Mathf.Max(0, defense - damageData.armorPenetration);
-        float damageReduction = effectiveDefense / (effectiveDefense + 100f);
-    
-        return damageData.damage * elementalMultiplier * (1f - damageReduction);
     }
     // เพิ่มระบบ Earth Tremor
     private IEnumerator ApplyEarthTremor(float initialDamage)
@@ -324,7 +339,13 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             TakeDamage(tremorDamage);
         }
     }
-    private float CalculateElementalMultiplier(ElementType attackElementType)
+    
+
+    #endregion
+
+    #region Elemental System
+
+     private float CalculateElementalMultiplier(ElementType attackElementType)
     {
         // เช็คว่าแพ้ชนะธาตุกันไหม
         float baseMultiplier = GetElementalAdvantage(attackElementType, enemyElementType);
@@ -371,13 +392,46 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     
         return 1f; // ธาตุไม่มีผลต่อกัน
     }
+
+    #endregion
+    
+    #region Stagger System
+
+    void Stagger()
+    {
+       
+        if (animator != null && Time.time > lastTimeStagger  )
+        {
+            lastTimeStagger = Time.time + cooldownStagger;
+            animator.SetTrigger("Hit");
+        }
+        
+        // หยุดการเคลื่อนไหวของศัตรูชั่วคราว
+//        GetComponent<EnemyAttack>().enabled = false;  // ปิดการเคลื่อนไหว
+        Invoke("RecoverFromStagger", staggerDuration);  // กำหนดเวลาหยุดชะงัก
+        
+    }
+    void RecoverFromStagger()
+    {
+//        GetComponent<EnemyAttack>().enabled = true;  // เปิดการเคลื่อนไหวกลับมา
+    }
+
+
+    #endregion
     private void Die()
     {
+        isDead = true;
         if (IsthisBoss)
         {
            // CongratulationUI.gameObject.SetActive(true);
         }
-        
+        // Remove Burning
+        var burningEffect = gameObject.GetComponent<BurningEffect>();
+        if (burningEffect != null)
+        {
+            burningEffect.Remove();
+        }
+      
         // play dead sound
         _audioManager.PlayDieSound();
         // add money
@@ -385,7 +439,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         // add exp
         playerStats.AddExperience(100);
         
-        isDead = true;
+        
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().enabled = false;
         Destroy(gameObject,3f);
@@ -395,6 +449,8 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         
         currentHealth = 0;
     }
+
+    #region Modifier
 
     private enum Modifier
     {
@@ -446,71 +502,24 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
         Debug.Log($"Modified Stats -> Speed: {modifiedAttack}, Attack Speed: {modifiedAttackSpeed}, Critical Chance: {modifiedCriticalChance * 100}%");
     }
+
+    #endregion
+   
     
-    public bool IsAlive()
-    {
-        return currentHealth > 0;
-    }
-    
-    public float GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-    
-    public float GetMaxHealth()
-    {
-        return EnemyData.maxhealth;
-    }
-    
+    public bool IsAlive() => currentHealth > 0;
+    public float GetCurrentHealth() => currentHealth;
+    public float GetMaxHealth() => EnemyData.maxhealth;
+    public void OnHurtAnimationEnd() => ResetHurt();
     public void ResetHurt()
     {
         animator.SetBool("isHurt", false);
         isHurt = false;
     }
-    
-    public void OnHurtAnimationEnd()
-    {
-        ResetHurt();
-    }
-    
-    void Stagger()
-    {
-       
-        if (animator != null && Time.time > lastTimeStagger  )
-        {
-            lastTimeStagger = Time.time + cooldownStagger;
-            animator.SetTrigger("Hit");
-        }
-        
-        // หยุดการเคลื่อนไหวของศัตรูชั่วคราว
-//        GetComponent<EnemyAttack>().enabled = false;  // ปิดการเคลื่อนไหว
-        Invoke("RecoverFromStagger", staggerDuration);  // กำหนดเวลาหยุดชะงัก
-        
-    }
-    void RecoverFromStagger()
-    {
-//        GetComponent<EnemyAttack>().enabled = true;  // เปิดการเคลื่อนไหวกลับมา
-    }
-    
-    void UpdateHealthBar()
-    {
-        StartCoroutine(SmoothHealthBar());
-    }
-    IEnumerator SmoothHealthBar()
-    {
-        float elapsedTime = 0f;
-        float duration = 0.2f; // ระยะเวลาที่ต้องการให้การลดลงของแถบลื่นไหล
-        float startValue = healthBar.value;
 
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            healthBar.value = Mathf.Lerp(startValue, currentHealth, elapsedTime / duration);
-            yield return null;
-        }
+  
+    
 
-        healthBar.value = currentHealth;
-    }
+    
     
     
 }
