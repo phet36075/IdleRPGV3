@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private AllyManager _allyManager;
     public Animator animator;
     
     public AllyRangedCombat rangedAllies;  // เพิ่มอาร์เรย์ของพวกพ้องที่โจมตีระยะไกล
@@ -29,8 +30,8 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayers; // Layer ของศัตรู
     void Start()
     {
-        
-       
+        _allyManager = GetComponent<AllyManager>();
+
     }
 
     void Update()
@@ -61,7 +62,8 @@ public class PlayerAttack : MonoBehaviour
             _lastAttackTime = Time.time;
             isAttacking = true;
             _comboStep++;
-            rangedAllies.CallAlliesToAttack();
+            
+            _allyManager.CallAllAllies();
 
            // FindNearestEnemy();
 

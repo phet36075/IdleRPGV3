@@ -32,8 +32,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     
     public bool isDead = false;
   
-  //isDead
-   // public bool isDead => currentHealth > 0;
+    
     
     public GameObject hitVFX;
     [Header("----------Animator----------")]
@@ -72,8 +71,6 @@ public class EnemyHealth : MonoBehaviour,IDamageable
        defense =(( EnemyData.defense * _enemySpawner.currentStage) * 1.1f);
        
        
-       
-       
        currentHealth = maxHealth;
        healthBar.maxValue = maxHealth;
        healthBar.value = currentHealth;
@@ -81,11 +78,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
       
        spawner = FindObjectOfType<EnemySpawner>();
        _playerManager = FindObjectOfType<PlayerManager>();
-      // EnemyData.armorPenetration = (EnemyData.armorPenetration * _enemySpawner.currentStage) * 1.25f;
-      // EnemyData.defense = (EnemyData.defense * _enemySpawner.currentStage) * 1.25f;
       
-       //  _damageDisplay = FindObjectOfType<DamageDisplay>();
-       //  _audioManager = FindObjectOfType<AudioManager>();
    }
 
 /*   public void TakeDamage(float incomingDamage)
@@ -176,18 +169,76 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             }
             
     }
-
-    public void TakeDamage(DamageData damageData)
+  public void TakeDamage(float incomingDamage, float attackerArmorPenetration, WeaponType weaponType)
     {
-        float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
         
         // Apply armor penetration
-        float effectiveDefense = Mathf.Max(0,defense - damageData.armorPenetration);
+        float effectiveDefense = Mathf.Max(0,defense - attackerArmorPenetration);
 
         // Calculate damage reduction
         float damageReduction = effectiveDefense / (effectiveDefense + 100f);
 
         // Calculate final damage
+        float finalDamage = incomingDamage * (1f - damageReduction);
+        
+       if (!isHurt)
+       {
+           currentHealth -= finalDamage;
+           currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
+           
+           CharacterHitEffect.StartHitEffect();
+           animator.SetBool("isHurt", true);
+           isHurt = true;
+           Invoke("ResetHurt", 0.5f);
+       }
+           
+       
+       GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
+       Destroy(effect, 1f);
+       UpdateHealthBar();
+
+            if (_playerManager.isCritical == true)
+            {
+                _damageDisplay.DisplayDamageCritical(finalDamage);
+                _playerManager.isCritical = false;
+                _audioManager.PlayHitCritSound();
+            }
+            
+            if (weaponType == WeaponType.Mace)
+            {
+                    _audioManager.PlayMaceHitSound();
+                    _damageDisplay.DisplayDamage(finalDamage);
+            }
+            else
+            if (weaponType == WeaponType.Spell)
+            {
+                    _audioManager.PlaySpellHitSound();
+                    _damageDisplay.DisplayDamage(finalDamage);
+            }
+            else
+            {
+                    _audioManager.PlayHitSound();
+                    _damageDisplay.DisplayDamage(finalDamage);
+            }
+               
+            
+            
+            if (currentHealth > 0)
+            {
+                    Stagger();
+            }
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+            
+    }
+    public void TakeDamage(DamageData damageData)
+    {
+        // Calculate final damage
+        float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
+        float effectiveDefense = Mathf.Max(0,defense - damageData.armorPenetration);
+        float damageReduction = effectiveDefense / (effectiveDefense + 100f);
         float finalDamage = damageData.damage * elementalMultiplier * (1f - damageReduction);
         
         if (!isHurt)
@@ -211,20 +262,16 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             burningEffect.Apply();
         }
         
-        
-        
-        
-        
-        
-        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
-        Destroy(effect, 1f);
-        UpdateHealthBar();
-
-        if (_playerManager.isCritical == true)
+        if (_playerManager.isCritical)
         {
             _damageDisplay.DisplayDamageCritical(finalDamage);
             _playerManager.isCritical = false;
             _audioManager.PlayHitCritSound();
+        }
+        
+        if (damageData.elementType == ElementType.None)
+        {
+            _damageDisplay.DisplayDamage(finalDamage);
         }
         else
         {
@@ -240,9 +287,43 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         {
             Die();
         }
-        
+        // เพิ่มเอฟเฟกต์ธาตุดิน
+        if (damageData.elementType == ElementType.Earth && !damageData.isEarthTremor)
+        {
+            StartCoroutine(ApplyEarthTremor(finalDamage));
+        }
+        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
+        Destroy(effect, 1f);
+        UpdateHealthBar();
     }
-   
+    private float CalculateFinalDamage(DamageData damageData)
+    {
+        float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
+        float effectiveDefense = Mathf.Max(0, defense - damageData.armorPenetration);
+        float damageReduction = effectiveDefense / (effectiveDefense + 100f);
+    
+        return damageData.damage * elementalMultiplier * (1f - damageReduction);
+    }
+    // เพิ่มระบบ Earth Tremor
+    private IEnumerator ApplyEarthTremor(float initialDamage)
+    {
+        float[] tremorMultipliers = { 1.0f, 0.85f, 0.75f };
+    
+        for(int i = 0; i < tremorMultipliers.Length; i++)
+        {
+            yield return new WaitForSeconds(0.1f); // รอ 0.5 วินาทีระหว่างแต่ละการโจมตี
+        
+            var tremorDamage = new DamageData
+            {
+                damage = initialDamage * tremorMultipliers[i],
+                elementType = ElementType.Earth,
+                armorPenetration = 0,
+                isEarthTremor = true
+            };
+        
+            TakeDamage(tremorDamage);
+        }
+    }
     private float CalculateElementalMultiplier(ElementType attackElementType)
     {
         // เช็คว่าแพ้ชนะธาตุกันไหม

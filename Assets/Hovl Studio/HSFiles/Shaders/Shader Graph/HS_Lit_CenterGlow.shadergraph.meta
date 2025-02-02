@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5de982fd38113e64ca2e27538557e028
+guid: ab39d2ff1dd4d3643adb53747955f110
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -10,8 +10,8 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
 AssetOrigin:
   serializedVersion: 1
-  productId: 133704
-  packageName: RPG VFX Bundle
-  packageVersion: 5.2.3
+  productId: 157764
+  packageName: Support package for Hovl Studio assets
+  packageVersion: 3.16
   assetPath: Assets/Hovl Studio/HSFiles/Shaders/Shader Graph/HS_Lit_CenterGlow.shadergraph
-  uploadId: 721680
+  uploadId: 719264

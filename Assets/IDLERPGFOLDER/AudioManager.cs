@@ -6,7 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip hitSound,hitCritSound , MonsterPainSound,DieSound;
-    
+
+    public AudioClip maceHitSound;
+    public AudioClip spellHitSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,18 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(hitSound);
         
     }
-
+    public void PlayMaceHitSound()
+    {
+        audioSource.PlayOneShot(MonsterPainSound);
+        audioSource.PlayOneShot(maceHitSound);
+        
+    }
+    public void PlaySpellHitSound()
+    {
+        audioSource.PlayOneShot(MonsterPainSound);
+        audioSource.PlayOneShot(spellHitSound);
+        
+    }
     public void PlayHitCritSound()
     {
         audioSource.PlayOneShot(MonsterPainSound);

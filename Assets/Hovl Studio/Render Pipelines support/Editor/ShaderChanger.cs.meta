@@ -11,8 +11,8 @@ MonoImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 133704
-  packageName: RPG VFX Bundle
-  packageVersion: 5.2.3
+  productId: 157764
+  packageName: Support package for Hovl Studio assets
+  packageVersion: 3.16
   assetPath: Assets/Hovl Studio/Render Pipelines support/Editor/ShaderChanger.cs
-  uploadId: 721680
+  uploadId: 719264

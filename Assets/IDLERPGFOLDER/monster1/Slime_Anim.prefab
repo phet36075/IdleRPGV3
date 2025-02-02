@@ -855,7 +855,7 @@ MonoBehaviour:
   CharacterHitEffect: {fileID: 776062255748010552}
   _damageDisplay: {fileID: 914702316595363713}
   _audioManager: {fileID: 3325628939318457549}
-  enemyElementType: 2
+  enemyElementType: 1
   elementalResistances: []
 --- !u!114 &914702316595363713
 MonoBehaviour:
@@ -892,6 +892,8 @@ MonoBehaviour:
   hitCritSound: {fileID: 8300000, guid: 199d7eede6a5930418e666b222d1ad36, type: 3}
   MonsterPainSound: {fileID: 8300000, guid: cfc7c568b9e60364090ed1292d26c7e9, type: 3}
   DieSound: {fileID: 8300000, guid: 2b6f8b6136b02894698fd3ce97f52206, type: 3}
+  maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
+  spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
 --- !u!82 &9188127306611194332
 AudioSource:
   m_ObjectHideFlags: 0
