@@ -1,0 +1,86 @@
+using System.Linq;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+public class SkillDetailWindow : MonoBehaviour
+{
+     [SerializeField] private Image skillIcon;
+    [SerializeField] private TextMeshProUGUI skillNameText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private TextMeshProUGUI cooldownText;
+    [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private Button equipButton;
+    [SerializeField] private Button unequipButton;
+    [SerializeField] private SkillManager skillManager;
+    [SerializeField] private GameObject windowPanel;  // panel หลักของ window
+    [SerializeField] private Button closeButton;  // เพิ่มปุ่มปิด
+    private SkillData currentSkillData;
+
+    private void Start()
+    {
+        equipButton.onClick.AddListener(OnEquipButtonClick);
+        unequipButton.onClick.AddListener(OnUnequipButtonClick);
+        closeButton.onClick.AddListener(Hide);  // เพิ่ม listener สำหรับปุ่มปิด
+        Hide();  // ซ่อนหน้าต่างตอนเริ่มต้น
+    }
+
+    public void Show(SkillData skillData, bool isEquipped)
+    {
+        currentSkillData = skillData;
+        
+        // แสดงข้อมูลสกิล
+        skillIcon.sprite = skillData.skillIcon;
+        skillNameText.text = skillData.skillName;
+        descriptionText.text = skillData.description;
+        cooldownText.text = $"Cooldown: {skillData.cooldown}s";
+        damageText.text = $"Damage: {skillData.damage}";
+
+        // แสดง/ซ่อนปุ่มตามสถานะ
+        equipButton.gameObject.SetActive(!isEquipped);
+        unequipButton.gameObject.SetActive(isEquipped);
+
+        windowPanel.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        windowPanel.SetActive(false);
+    }
+
+    private void OnEquipButtonClick()
+    {
+        if (currentSkillData != null)
+        {
+            var skillType = currentSkillData.GetSkillComponentType();
+            if (skillType != null)
+            {
+                var targetObject = skillManager.gameObject;
+                var skillComponent = targetObject.AddComponent(skillType) as BaseSkill;
+                if (skillComponent != null)
+                {
+                    skillComponent.SetSkillData(currentSkillData);
+                    skillManager.AddSkill(skillComponent);
+                    // อัพเดทปุ่มหลังจาก equip
+                    equipButton.gameObject.SetActive(false);
+                    unequipButton.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    private void OnUnequipButtonClick()
+    {
+        if (currentSkillData != null)
+        {
+            var equippedSkill = skillManager.Skills.FirstOrDefault(s => s.SkillData == currentSkillData);
+            if (equippedSkill != null)
+            {
+                skillManager.UnequipSkill(equippedSkill);
+                // อัพเดทปุ่มหลังจาก unequip
+                equipButton.gameObject.SetActive(true);
+                unequipButton.gameObject.SetActive(false);
+            }
+        }
+    }
+}
+

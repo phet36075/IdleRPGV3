@@ -24546,8 +24546,8 @@ GameObject:
   - component: {fileID: 4362472259802890}
   - component: {fileID: 198393960337124616}
   - component: {fileID: 199415115864821468}
-  - component: {fileID: 1098066907516670297}
-  - component: {fileID: 9052710765725323796}
+  - component: {fileID: 2952643308607361302}
+  - component: {fileID: 4095558300851081156}
   m_Layer: 0
   m_Name: Sword Slash 4
   m_TagString: Untagged
@@ -29455,19 +29455,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1098066907516670297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919708242137258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efadd36f6b15dd348b05d41f90c38027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &9052710765725323796
+--- !u!65 &2952643308607361302
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29482,12 +29470,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.6716437, y: 0.72210574, z: 4.914604}
-  m_Center: {x: 0.9654701, y: 0.33000004, z: 1.0926986}
+  m_Size: {x: 5.6295347, y: 4.5039363, z: 4.251128}
+  m_Center: {x: 0.7352332, y: 1.2980325, z: 0.044205666}
+--- !u!114 &4095558300851081156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919708242137258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35911e7bc2c78142899ebb73228135c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1930896904671498
 GameObject:
   m_ObjectHideFlags: 0

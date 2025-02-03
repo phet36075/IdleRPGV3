@@ -27,7 +27,6 @@ public class AIController : MonoBehaviour
     
     
     
-    
     private void OnDisable()
     {
         if (currentIndicator != null)
@@ -156,10 +155,9 @@ public class AIController : MonoBehaviour
     {
         if (Time.time >= lastSkillUseTime + skillUseInterval)
         {
-            if (skillManager.UseNextAvailableSkill())
-            {
+            skillManager.UseNextAvailableSkill();
                 lastSkillUseTime = Time.time;
-            }
+            
         }
     }
 
