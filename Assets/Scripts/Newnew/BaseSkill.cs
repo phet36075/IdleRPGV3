@@ -9,7 +9,7 @@ public abstract class BaseSkill : MonoBehaviour
     protected bool isOnCooldown = false;
     protected Animator animator;
     protected bool isSkillActive = false;
-
+    protected PlayerManager playerManager;  // เพิ่มตรงนี้
     public SkillData SkillData => skillData != null ? skillData : null;
     
     // Events สำหรับ cooldown
@@ -24,6 +24,7 @@ public abstract class BaseSkill : MonoBehaviour
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
+        playerManager = GetComponentInParent<PlayerManager>();  // หา PlayerManager ตอน start
     }
 
     public virtual void UseSkill()
@@ -36,7 +37,23 @@ public abstract class BaseSkill : MonoBehaviour
             StartCoroutine(CooldownRoutine());
         }
     }
+// เพิ่มเมธอดสำหรับเช็คธาตุ
+    protected bool IsWindElement()
+    {
+        if (playerManager != null)
+        {
+            return playerManager.playerData.elementType == ElementType.Wind;
+        }
+        return false;
+    }
 
+    // เพิ่มเมธอดสำหรับคำนวณขนาด
+    protected Vector3 CalculateElementalScale(Vector3 baseScale)
+    {
+        return IsWindElement() ? baseScale * 2f : baseScale;
+    }
+    
+    
     // Animation Event Handlers
     public virtual void OnSkillStart()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198516873591244970}
   - component: {fileID: 199545367913169818}
   m_Layer: 0
-  m_Name: SparkleBlue
+  m_Name: Slow Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

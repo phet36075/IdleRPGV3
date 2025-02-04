@@ -29,21 +29,8 @@ public class SlashSkill : BaseSkill
         base.Start();
         playerManager = GetComponent<PlayerManager>();
     }
-    // เมธอดสำหรับเช็คว่าเป็นธาตุลมหรือไม่
-    private bool IsWindElement()
-    {
-        if (playerManager != null)
-        {
-            return playerManager.playerData.elementType == ElementType.Wind; // สมมติว่ามี enum ElementType
-        }
-        return false;
-    }
-
-    // เมธอดสำหรับคำนวณขนาดตามธาตุ
-    private Vector3 CalculateElementalScale(Vector3 baseScale)
-    {
-        return IsWindElement() ? baseScale * 2f : baseScale;
-    }
+   
+    
     public override void OnHitboxActivate()
     {
         base.OnHitboxActivate();

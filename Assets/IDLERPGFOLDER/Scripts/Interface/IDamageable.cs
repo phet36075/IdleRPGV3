@@ -12,19 +12,8 @@ public interface IDamageable
     // รับดาเมจพร้อมข้อมูลเพิ่มเติม
     void TakeDamage(DamageData damageData);
     float GetMaxHealth(); // เพิ่ม method นี้
-  //  bool isDead { get; }
-    // ตรวจสอบว่าวัตถุนี้ยังมีชีวิตอยู่หรือไม่
-    //   bool IsAlive();
-
-    // ดึงค่า HP ปัจจุบัน
-    //  float GetCurrentHealth();
-
-    // ดึงค่า HP สูงสุด
-    //  float GetMaxHealth();
+ 
 }
-
-// struct สำหรับเก็บข้อมูลดาเมจแบบละเอียด
-
 
 public struct DamageData
 {

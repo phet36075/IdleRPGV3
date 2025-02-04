@@ -10,6 +10,7 @@ public class BurningEffect : MonoBehaviour, IStatusEffect
     private float remainingDuration;
     private float nextTickTime;
     private bool isActive;
+    private bool isBurning;
 
     private void Awake()
     {
@@ -72,5 +73,7 @@ public class BurningEffect : MonoBehaviour, IStatusEffect
         // ในกรณีนี้ต้องเพิ่ม method GetMaxHealth() ใน IDamageable
         return target.GetMaxHealth() * damagePercentage;
     }
+
+    public float GetDuration() => duration;
 }
 

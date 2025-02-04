@@ -34,6 +34,9 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public GameObject hitVFX;
     public Animator animator;
     public Collider enemyCollider;
+    public GameObject slowVFX;
+    public GameObject burningVFX;
+    
     
     [Header("Combat Settings")]
     public float staggerDuration = 0.5f;
@@ -53,6 +56,21 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public CharacterHitEffect CharacterHitEffect;
     public DamageDisplay _damageDisplay;
     public AudioManager _audioManager;
+    private NavMeshAgent agent;
+    [SerializeField] private StatusEffectUI statusEffectUI;
+    
+    [Header("Water Effect Settings")]
+    [SerializeField] private float waterSlowMultiplier = 0.7f; // Slow effect strength (30% slower)
+    [SerializeField] private float waterEffectDuration = 5f;
+    [SerializeField] private float waterEffectChance = 0.9f; // 40% chance
+    private bool isFreeze;
+
+    private float lastTimeFreeze;
+    // Water effect tracking
+    private int waterEffectStacks = 0;
+    private float originalSpeed;
+    private float originalAnimSpeed;
+    private bool isSlowed = false;
     #endregion
    
     #region Unity Lifecycle
@@ -62,12 +80,24 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         InitializeStats();
     }
 
+
+    private void Update()
+    {
+        if (Time.time - lastTimeFreeze >= waterEffectDuration)
+        {
+            Debug.Log("Last Freeze: " + lastTimeFreeze);
+            waterEffectStacks = 0;
+        }
+    }
+
     private void InitializeComponents()
     {
         playerStats = FindObjectOfType<PlayerStats>();
         _enemySpawner = FindObjectOfType<EnemySpawner>();
         spawner = FindObjectOfType<EnemySpawner>();
         _playerManager = FindObjectOfType<PlayerManager>();
+        agent = GetComponent<NavMeshAgent>();
+       // statusEffectUI = GetComponent<StatusEffectUI>();
     }
 
     private void InitializeStats()
@@ -78,6 +108,14 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = currentHealth;
+        if (agent != null)
+        {
+            originalSpeed = agent.speed;
+        }
+        if (animator != null)
+        {
+            originalAnimSpeed = animator.speed;
+        }
     }
     #endregion
     
@@ -270,17 +308,38 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     {
         if (damageData.elementType == ElementType.Fire)
         {
+            
             var burningEffect = gameObject.GetComponent<BurningEffect>();
             if (burningEffect == null)
             {
                 burningEffect = gameObject.AddComponent<BurningEffect>();
             }
-            burningEffect.Apply();
+
+            if (burningEffect.IsActive != true)
+            {
+                burningEffect.Apply();
+                statusEffectUI.AddStatusEffect("Burn", null, burningEffect.GetDuration());
+                burningVFX.gameObject.SetActive(true);
+                StartCoroutine(RemoveBurningEffect());
+            }
+           
+
+            
         }
         else if (damageData.elementType == ElementType.Earth && !damageData.isEarthTremor)
         {
             StartCoroutine(ApplyEarthTremor(finalDamage));
         }
+        else if (damageData.elementType == ElementType.Water)
+        {
+            HandleWaterEffect();
+        }
+    }
+
+    private IEnumerator RemoveBurningEffect()
+    {
+        yield return new WaitForSeconds(5f);
+        burningVFX.gameObject.SetActive(false);
     }
 
     private void SpawnHitEffect()
@@ -339,7 +398,124 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             TakeDamage(tremorDamage);
         }
     }
+    private GameObject currentSlowEffect; // เพิ่มตัวแปรเก็บ reference ของ effect
+    private void HandleWaterEffect()
+    {
+        // Check for water effect chance (40%)
+        if (Random.value <= waterEffectChance)
+        {
+            lastTimeFreeze = Time.time;
+            waterEffectStacks++;
+            
+            slowVFX.gameObject.SetActive(true);
+          statusEffectUI.AddStatusEffect("Poison" ,null , waterEffectDuration);
+          ApplySlowEffect();
+            // Apply slow effect if not already slowed
+            if (!isSlowed)
+            {
+               
+                
+            }
+            
+           
+            // Reset slow effect duration
+            StopCoroutine(RemoveSlowEffect());
+            StartCoroutine(RemoveSlowEffect());
+            
+            // Check for 3 stacks
+            if (waterEffectStacks >= 4)
+            {
+                ApplyWaterBurst();
+                waterEffectStacks = 0; // Reset stacks
+            }
+        }
+    }
     
+    private void ApplySlowEffect()
+    {
+        isSlowed = true;
+        if (!isFreeze)
+        {
+            // Slow movement speed
+            if (agent != null)
+            {
+                agent.speed = originalSpeed * waterSlowMultiplier;
+            }
+        
+            // Slow animation speed
+            if (animator != null)
+            {
+                animator.speed = originalAnimSpeed * waterSlowMultiplier;
+            }
+        }
+       
+    }
+    
+    private IEnumerator RemoveSlowEffect()
+    {
+        yield return new WaitForSeconds(waterEffectDuration);
+       
+       
+        slowVFX.gameObject.SetActive(false);
+        // Reset speeds if no stacks remain
+        if (waterEffectStacks == 0)
+        {
+            isSlowed = false;
+            if (!isFreeze)
+            {
+                if (agent != null)
+                {
+                    agent.speed = originalSpeed;
+                }
+            
+                if (animator != null)
+                {
+                    animator.speed = originalAnimSpeed;
+                }
+            }
+            
+        }
+    }
+    
+    private void ApplyWaterBurst()
+    {
+        if (_playerManager != null)
+        {
+            float burstDamage = _playerManager.GetDamage() * 1.5f; // 150% of player's attack power
+            TakeDamage(new DamageData(burstDamage, 0, ElementType.Water));
+            Debug.Log("BRUST WATER DAMAGE");
+
+           
+            // Freeze
+            if (agent != null)
+            {
+                agent.speed = 0;
+            }
+            
+            if (animator != null)
+            {
+                animator.speed = 0;
+            }
+            isFreeze = true;
+            StartCoroutine(UnFreeze());
+        }
+    }
+
+    private IEnumerator UnFreeze()
+    {
+        yield return new WaitForSeconds(5f);
+        if (agent != null)
+        {
+            agent.speed = originalSpeed;
+        }
+            
+        if (animator != null)
+        {
+            animator.speed = originalAnimSpeed;
+        }
+
+        isFreeze = false;
+    }
 
     #endregion
 
@@ -515,11 +691,5 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         animator.SetBool("isHurt", false);
         isHurt = false;
     }
-
-  
-    
-
-    
-    
     
 }

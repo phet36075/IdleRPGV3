@@ -334,7 +334,7 @@ public class PlayerManager : MonoBehaviour
     // Getters
     public float GetCurrentHP() => currentHP;
     public float GetMaxHP() => maxHP;
-    public float GetDamage() => damage;
+    public float GetDamage() => playerData.baseDamage + playerData.weaponDamage;
     public float GetDefense() => defense;
     public float GetCriticalChance() => criticalChance;
     public float GetEvasion() => evasion;
