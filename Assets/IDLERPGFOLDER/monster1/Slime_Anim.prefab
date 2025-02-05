@@ -373,7 +373,8 @@ MonoBehaviour:
   poisonIcon: {fileID: 21300000, guid: baa418b7617b86045812f9d076fcc595, type: 3}
   poisonExplodeIcon: {fileID: 21300000, guid: a962b1dd37dc0714db1d0a6a5f4c884d, type: 3}
   burnIcon: {fileID: 21300000, guid: 776df084e85455b4d87c1db6345d2757, type: 3}
-  stunIcon: {fileID: 21300000, guid: e02651b7cab9f1347b60cd921c91acff, type: 3}
+  holyIcon: {fileID: 21300000, guid: 2b35313a4c7560a42a7c97b368c6b69b, type: 3}
+  judgementIcon: {fileID: 21300000, guid: 3f3ccc74798015245ab22a77c2178dec, type: 3}
 --- !u!1 &6716209649768512012
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,6 +716,97 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1716431715249126996, guid: eed5a13de77d05e419cc8727c673b035, type: 3}
   m_PrefabInstance: {fileID: 2893371458782331946}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3163703852505892342
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3658126377536924483}
+    m_Modifications:
+    - target: {fileID: 1269658436619853312, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_Name
+      value: HolyEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853312, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.87626
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.87626
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.87626
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.806
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269658436619853319, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394037615101267021, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+--- !u!4 &4213399455936535539 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1269658436619853317, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+  m_PrefabInstance: {fileID: 3163703852505892342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4213399455936535542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1269658436619853312, guid: fca71ce114630564daedd94669fc19bd, type: 3}
+  m_PrefabInstance: {fileID: 3163703852505892342}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3841288948956417192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -809,15 +901,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2472584174536214215, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -12.919377
+      value: -0.15040986
       objectReference: {fileID: 0}
     - target: {fileID: 2472584174536214215, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0.02538623
+      value: -0.01705748
       objectReference: {fileID: 0}
     - target: {fileID: 2472584174536214215, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -12.135121
+      value: -11.940022
       objectReference: {fileID: 0}
     - target: {fileID: 2668605608433959078, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_Layer
@@ -825,27 +917,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3242737638710786872, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 84.87888
+      value: 89.824165
       objectReference: {fileID: 0}
     - target: {fileID: 3242737638710786872, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -63.35935
+      value: -0.004435925
       objectReference: {fileID: 0}
     - target: {fileID: 3242737638710786872, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -63.35934
+      value: -0.0044359462
       objectReference: {fileID: 0}
     - target: {fileID: 3273223138991031118, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -24.280184
+      value: -0.1093629
       objectReference: {fileID: 0}
     - target: {fileID: 3273223138991031118, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -0.009499589
+      value: 0.01251273
       objectReference: {fileID: 0}
     - target: {fileID: 3273223138991031118, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 12.02138
+      value: 11.942574
       objectReference: {fileID: 0}
     - target: {fileID: 4042940087036422592, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -881,6 +973,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4603252810410294294}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4213399455936535539}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       insertIndex: -1
@@ -1081,6 +1176,7 @@ MonoBehaviour:
   enemyCollider: {fileID: 7096012905577462812}
   slowVFX: {fileID: 5213232118102161352}
   burningVFX: {fileID: 4609064293606554238}
+  holyVFX: {fileID: 4213399455936535542}
   staggerDuration: 0.5
   cooldownStagger: 5
   enemyElementType: 1
@@ -1092,6 +1188,7 @@ MonoBehaviour:
   waterSlowMultiplier: 0.7
   waterEffectDuration: 5
   waterEffectChance: 0.4
+  holyEffectDuration: 3
 --- !u!114 &914702316595363713
 MonoBehaviour:
   m_ObjectHideFlags: 0

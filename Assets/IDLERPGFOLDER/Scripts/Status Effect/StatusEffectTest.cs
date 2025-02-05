@@ -21,7 +21,7 @@ public class StatusEffectTest : MonoBehaviour
         // กด 2 เพื่อเพิ่ม Stun effect
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            statusEffectUI.AddStatusEffect("Stun", stunIcon, 3f);
+            statusEffectUI.AddStatusEffect("Holy", stunIcon, 3f);
         }
         
         // กด 3 เพื่อเพิ่ม Burn effect

@@ -8,23 +8,26 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PolyGradientSoftMirror_ADD
-  m_Shader: {fileID: 4800000, guid: c4edd00ff2db5b24391a4fcb1762e459, type: 3}
+  m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
+  - _ALPHABLEND_ON
   - _FADING_ON
+  m_InvalidKeywords:
   - _FLIPBOOKBLENDING_OFF
   - _SOFTPARTICLES_ON
-  m_LightmapFlags: 2
+  - _SURFACE_TYPE_TRANSPARENT
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses:
-  - ALWAYS
-  - DistortionVectors
   - MOTIONVECTORS
+  - DistortionVectors
+  - GRABPASS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -50,11 +53,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 641abdbec76a1fc4097224dca89c9d7d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UnlitColorMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 641abdbec76a1fc4097224dca89c9d7d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -64,13 +67,13 @@ Material:
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
-    - _AlphaDstBlend: 0
+    - _AlphaDstBlend: 1
     - _AlphaRemapMax: 1
     - _AlphaRemapMin: 0
     - _AlphaSrcBlend: 1
     - _AlphaToMask: 0
     - _Blend: 2
-    - _BlendMode: 0
+    - _BlendMode: 1
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
@@ -101,7 +104,7 @@ Material:
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0
     - _DoubleSidedGIMode: 0
-    - _DstBlend: 0
+    - _DstBlend: 1
     - _DstBlendAlpha: 1
     - _EmissionEnabled: 0
     - _EmissiveExposureWeight: 1
@@ -119,7 +122,7 @@ Material:
     - _SoftParticlesEnabled: 1
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _SrcBlendAlpha: 1
     - _StencilRef: 0
     - _StencilRefDepth: 1
@@ -130,15 +133,15 @@ Material:
     - _StencilWriteMaskDistortionVec: 4
     - _StencilWriteMaskMV: 43
     - _Surface: 1
-    - _SurfaceType: 0
+    - _SurfaceType: 1
     - _TransparentCullMode: 2
     - _TransparentSortPriority: 0
     - _TransparentZWrite: 0
     - _UseEmissiveIntensity: 0
-    - _ZTestDepthEqualForOpaque: 3
+    - _ZTestDepthEqualForOpaque: 4
     - _ZTestModeDistortion: 4
     - _ZTestTransparent: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}

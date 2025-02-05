@@ -36,7 +36,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public Collider enemyCollider;
     public GameObject slowVFX;
     public GameObject burningVFX;
-    
+    public GameObject holyVFX;
     
     [Header("Combat Settings")]
     public float staggerDuration = 0.5f;
@@ -64,13 +64,21 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     [SerializeField] private float waterEffectDuration = 5f;
     [SerializeField] private float waterEffectChance = 0.9f; // 40% chance
     private bool isFreeze;
-
-    private float lastTimeFreeze;
     // Water effect tracking
     private int waterEffectStacks = 0;
     private float originalSpeed;
     private float originalAnimSpeed;
     private bool isSlowed = false;
+    private float lastTimeFreeze;
+
+    [Header("Light Effect Setting")] 
+    [SerializeField] private float holyEffectDuration = 3f;
+
+    private float lastTimeHoly;
+    private bool isHoly;
+    private int HolyEffectStacks = 0;
+    
+    
     #endregion
    
     #region Unity Lifecycle
@@ -85,8 +93,11 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     {
         if (Time.time - lastTimeFreeze >= waterEffectDuration)
         {
-            Debug.Log("Last Freeze: " + lastTimeFreeze);
             waterEffectStacks = 0;
+        }
+        if (Time.time - lastTimeHoly >= holyEffectDuration)
+        {
+            HolyEffectStacks = 0;
         }
     }
 
@@ -323,7 +334,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
                 StartCoroutine(RemoveBurningEffect());
             }
            
-
+            
             
         }
         else if (damageData.elementType == ElementType.Earth && !damageData.isEarthTremor)
@@ -333,6 +344,10 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         else if (damageData.elementType == ElementType.Water)
         {
             HandleWaterEffect();
+        }
+        else if(damageData.elementType == ElementType.Light)
+        {
+           HandleLightEffect();
         }
     }
 
@@ -399,6 +414,9 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         }
     }
     private GameObject currentSlowEffect; // เพิ่มตัวแปรเก็บ reference ของ effect
+
+    #region Water
+
     private void HandleWaterEffect()
     {
         // Check for water effect chance (40%)
@@ -516,6 +534,69 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
         isFreeze = false;
     }
+
+    #endregion
+
+    #region Light
+
+    private void HandleLightEffect()
+    {
+        lastTimeHoly = Time.time;
+        HolyEffectStacks++;
+        holyVFX.gameObject.SetActive(true);
+        isHoly = true;
+        statusEffectUI.AddStatusEffect("Holy",null,holyEffectDuration);
+        StopCoroutine(RemoveHolyEffect());
+        StartCoroutine(RemoveHolyEffect());
+        
+        // Check for 3 stacks
+        if (HolyEffectStacks >= 2)
+        {
+            isHoly = false;
+            StartCoroutine(ApplyJudgement());
+            HolyEffectStacks = 0; // Reset stacks
+            holyVFX.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator RemoveHolyEffect()
+    {
+        yield return new WaitForSeconds(holyEffectDuration);
+
+        if (waterEffectStacks == 0)
+        {
+            isHoly = false;
+        }
+       
+       
+        
+        holyVFX.gameObject.SetActive(false);
+        
+    }
+
+    private IEnumerator ApplyJudgement()
+    {
+       
+        float[] holyMultipliers = { 2.25f, 1.75f };
+    
+        for(int i = 0; i < holyMultipliers.Length; i++)
+        {
+            yield return new WaitForSeconds(0.3f); // รอ 0.5 วินาทีระหว่างแต่ละการโจมตี
+        
+            var holyDamage = new DamageData
+            {
+                damage = _playerManager.GetDamage() * holyMultipliers[i],
+                elementType = ElementType.None,
+                armorPenetration = 0,
+               
+            };
+        
+            TakeDamage(holyDamage);
+        }
+
+       
+    }
+    #endregion
 
     #endregion
 
