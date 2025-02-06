@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
             if (distanceToPlayer > attackRange)
             {
                 EnemyHealth enemyHealth = this.GetComponent<EnemyHealth>();
-                if (enemyHealth.currentHealth <= 0)
+                if (enemyHealth.GetCurrentHealth() <= 0)
                 {
                     Debug.Log("Enemy IS DIE FR");
                     agent.isStopped = true;

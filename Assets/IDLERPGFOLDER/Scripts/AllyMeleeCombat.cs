@@ -116,7 +116,7 @@ public class AllyMeleeCombat : MonoBehaviour
                 {
                     // ตรวจสอบว่าศัตรูยังมีชีวิตอยู่
                     EnemyHealth enemyHealth = collider.GetComponent<EnemyHealth>();
-                    if (enemyHealth != null && enemyHealth.currentHealth > 0)
+                    if (enemyHealth != null && enemyHealth.GetCurrentHealth() > 0)
                     {
                         closestDistance = distanceToEnemy;
                         closestEnemy = collider.transform;

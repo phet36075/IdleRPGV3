@@ -43,7 +43,7 @@ public class EnemyAttack : MonoBehaviour
             if (distanceToPlayer > attackRange)
             {
                 EnemyHealth enemyHealth = this.GetComponent<EnemyHealth>();
-                if (enemyHealth.currentHealth > 0)
+                if (enemyHealth.GetCurrentHealth() > 0)
                 {
                     GetComponent<EnemyRoaming>().enabled = false;
                     //agent.isStopped = false;

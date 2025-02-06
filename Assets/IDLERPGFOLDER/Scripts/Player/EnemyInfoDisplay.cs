@@ -28,7 +28,7 @@ public class EnemyInfoDisplay : MonoBehaviour
         {
             // อัพเดทข้อความใน UI
             enemyNameText.text = "Name: " + enemyStats.EnemyData.enemyName;
-            enemyHealthText.text = "Health: " + enemyStats.currentHealth.ToString();
+            enemyHealthText.text = "Health: " + enemyStats.GetCurrentHealth().ToString();
             
             // แสดง Panel ข้อมูล
            
@@ -70,7 +70,7 @@ public class EnemyInfoDisplay : MonoBehaviour
         {
             // อัพเดทข้อความใน UI
             enemyNameText.text = "Name: " + enemyStats.EnemyData.enemyName;
-            enemyHealthText.text = "Health: " + enemyStats.currentHealth.ToString();
+            enemyHealthText.text = "Health: " + enemyStats.GetCurrentHealth().ToString();
             
             // แสดง Panel ข้อมูล
             infoPanel.SetActive(true);

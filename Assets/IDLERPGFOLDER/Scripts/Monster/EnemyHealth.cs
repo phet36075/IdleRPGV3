@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class EnemyHealth : MonoBehaviour,IDamageable
 {
     #region Variables
-    [Header("Stats")]
+  /*  [Header("Stats")]
     public float baseAttack = 1.0f;
     public float baseAttackMultiplier = 1.0f;
     public float baseSpeed = 3.0f;
@@ -18,16 +18,16 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public float speedMultiplier = 1.0f;
     public float attackSpeedMultiplier = 1.0f;
     public float criticalChanceMultiplier = 1.0f;
-    public bool bypassArmor = false;
+    public bool bypassArmor = false;*/
     
     [Header("Health")]
     public EnemyData EnemyData;
-    public float maxHealth;
-    public float currentHealth;
-    public float defense;
+    private float maxHealth;
+    private float currentHealth;
+    private float defense;
     public Slider healthBar;
-    public Transform spawnVFXPosition;
-    public bool isDead = false;
+   
+    private bool isDead = false;
     public bool IsthisBoss = false;
     
     [Header("Visual Effects")]
@@ -37,6 +37,10 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public GameObject slowVFX;
     public GameObject burningVFX;
     public GameObject holyVFX;
+    public GameObject DarkVFX;
+    public GameObject darknessVFX;
+    public Transform darnessVFXPosition;
+    public Transform spawnVFXPosition;
     
     [Header("Combat Settings")]
     public float staggerDuration = 0.5f;
@@ -78,6 +82,13 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     private bool isHoly;
     private int HolyEffectStacks = 0;
     
+    [Header("Dark Effect Setting")] 
+    [SerializeField] private float darkEffectDuration = 3f;
+
+    private float lastTimeDark;
+    private bool isDark;
+    private int DarkEffectStacks = 0;
+
     
     #endregion
    
@@ -315,27 +326,12 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         UpdateHealthBar();
     }
 
+    
     private void ApplyElementalEffects(DamageData damageData, float finalDamage)
     {
         if (damageData.elementType == ElementType.Fire)
         {
-            
-            var burningEffect = gameObject.GetComponent<BurningEffect>();
-            if (burningEffect == null)
-            {
-                burningEffect = gameObject.AddComponent<BurningEffect>();
-            }
-
-            if (burningEffect.IsActive != true)
-            {
-                burningEffect.Apply();
-                statusEffectUI.AddStatusEffect("Burn", null, burningEffect.GetDuration());
-                burningVFX.gameObject.SetActive(true);
-                StartCoroutine(RemoveBurningEffect());
-            }
-           
-            
-            
+            ApplyBurningEffect();
         }
         else if (damageData.elementType == ElementType.Earth && !damageData.isEarthTremor)
         {
@@ -349,14 +345,12 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         {
            HandleLightEffect();
         }
+        else if (damageData.elementType == ElementType.Dark)
+        {
+            HandleDarkEffect();
+        }
     }
-
-    private IEnumerator RemoveBurningEffect()
-    {
-        yield return new WaitForSeconds(5f);
-        burningVFX.gameObject.SetActive(false);
-    }
-
+    
     private void SpawnHitEffect()
     {
         GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, spawnVFXPosition.rotation);
@@ -393,6 +387,35 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             Die();
         }
     }
+
+    #region Fire
+
+    private void ApplyBurningEffect()
+    {
+        var burningEffect = gameObject.GetComponent<BurningEffect>();
+        if (burningEffect == null)
+        {
+            burningEffect = gameObject.AddComponent<BurningEffect>();
+        }
+
+        if (burningEffect.IsActive != true)
+        {
+            burningEffect.Apply();
+            statusEffectUI.AddStatusEffect("Burn", null, burningEffect.GetDuration());
+            burningVFX.gameObject.SetActive(true);
+            StartCoroutine(RemoveBurningEffect());
+        }
+    }
+    private IEnumerator RemoveBurningEffect()
+    {
+        yield return new WaitForSeconds(5f);
+        burningVFX.gameObject.SetActive(false);
+    }
+
+    #endregion
+    
+    #region Earth
+
     // เพิ่มระบบ Earth Tremor
     private IEnumerator ApplyEarthTremor(float initialDamage)
     {
@@ -413,10 +436,12 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             TakeDamage(tremorDamage);
         }
     }
-    private GameObject currentSlowEffect; // เพิ่มตัวแปรเก็บ reference ของ effect
 
+    #endregion
+    
     #region Water
-
+    
+    private GameObject currentSlowEffect; // เพิ่มตัวแปรเก็บ reference ของ effect
     private void HandleWaterEffect()
     {
         // Check for water effect chance (40%)
@@ -563,12 +588,10 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     {
         yield return new WaitForSeconds(holyEffectDuration);
 
-        if (waterEffectStacks == 0)
+        if (HolyEffectStacks == 0)
         {
             isHoly = false;
         }
-       
-       
         
         holyVFX.gameObject.SetActive(false);
         
@@ -596,6 +619,60 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
        
     }
+    #endregion
+
+    #region Dark
+
+    private void HandleDarkEffect()
+    {
+        lastTimeDark = Time.time;
+        DarkEffectStacks++;
+        DarkVFX.gameObject.SetActive(true);
+        isDark = true;
+        statusEffectUI.AddStatusEffect("Dark",null,darkEffectDuration);
+        StopCoroutine(RemoveDarkEffect());
+        StartCoroutine(RemoveDarkEffect());
+        
+        // Check for 3 stacks
+        if (DarkEffectStacks >= 4)
+        {
+            isDark = false;
+           ApplyDarkness();
+            DarkEffectStacks = 0; // Reset stacks
+            DarkVFX.gameObject.SetActive(false);
+        }
+    }
+    
+    private IEnumerator RemoveDarkEffect()
+    {
+        yield return new WaitForSeconds(darkEffectDuration);
+
+        if (darkEffectDuration == 0)
+        {
+            isDark = false;
+        }
+        
+        DarkVFX.gameObject.SetActive(false);
+        
+    }
+
+    private void ApplyDarkness()
+    {
+        GameObject effect = Instantiate(darknessVFX, darnessVFXPosition.position, darnessVFXPosition.rotation);
+        Destroy(effect, 1f);
+        float damageAmount = maxHealth * 0.2f;
+            var darknessDamage = new DamageData
+            {
+                damage = damageAmount,
+                elementType = ElementType.None,
+                armorPenetration = 0,
+               
+            };
+            TakeDamage(darknessDamage);
+            
+    }
+    
+    
     #endregion
 
     #endregion
@@ -709,15 +786,15 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
     #region Modifier
 
-    private enum Modifier
+  /*  private enum Modifier
     {
         AttackBoost,       // เพิ่มความแรง
         AttackSpeedBoost, // เพิ่มความเร็วการโจมตี
         CriticalHit100,   // ติดคริ 100%
         ArmorBreaker,     // ศัตรูพังเกราะ
         None              // ไม่มี Modifier
-    }
-    private Modifier currentModifier;
+    }*/
+  /*  private Modifier currentModifier;
     public void addModifier()
     {
         int randomValue = Random.Range(0, 5); // สุ่มค่า 0 ถึง 4
@@ -758,7 +835,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         float modifiedCriticalChance = baseCriticalChance * criticalChanceMultiplier;
 
         Debug.Log($"Modified Stats -> Speed: {modifiedAttack}, Attack Speed: {modifiedAttackSpeed}, Critical Chance: {modifiedCriticalChance * 100}%");
-    }
+    }*/
 
     #endregion
    
@@ -766,6 +843,8 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public bool IsAlive() => currentHealth > 0;
     public float GetCurrentHealth() => currentHealth;
     public float GetMaxHealth() => EnemyData.maxhealth;
+    public bool GetIsDead() => isDead;
+   
     public void OnHurtAnimationEnd() => ResetHurt();
     public void ResetHurt()
     {

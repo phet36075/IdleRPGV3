@@ -94,6 +94,8 @@ public class StatusEffectUI : MonoBehaviour
     [SerializeField] private Sprite burnIcon;
     [SerializeField] private Sprite holyIcon;
     [SerializeField] private Sprite judgementIcon;
+    [SerializeField] private Sprite darkIcon;
+    [SerializeField] private Sprite darknessIcon;
 
     private Dictionary<string, GameObject> activeStatusEffects = new Dictionary<string, GameObject>();
     private Dictionary<string, Sprite> effectIcons = new Dictionary<string, Sprite>();
@@ -108,6 +110,8 @@ public class StatusEffectUI : MonoBehaviour
             statusEffectSettings.Add(new StatusEffectData("Burn", 1));
             statusEffectSettings.Add(new StatusEffectData("Holy", 1,"Judgement",1f));
             statusEffectSettings.Add(new StatusEffectData("Judgement",1));
+            statusEffectSettings.Add(new StatusEffectData("Dark", 3,"Darkness",1f));
+            statusEffectSettings.Add(new StatusEffectData("Darkness",1));
         }
 
         // เก็บ icons ไว้ใน dictionary
@@ -116,6 +120,8 @@ public class StatusEffectUI : MonoBehaviour
         effectIcons.Add("Burn", burnIcon);
         effectIcons.Add("Holy", holyIcon);
         effectIcons.Add("Judgement", judgementIcon);
+        effectIcons.Add("Dark", darkIcon);
+        effectIcons.Add("Darkness", darknessIcon);
     }
 
     public void AddStatusEffect(string effectName, Sprite icon = null, float duration = 5f)

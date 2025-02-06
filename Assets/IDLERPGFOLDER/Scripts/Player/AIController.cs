@@ -51,7 +51,7 @@ public class AIController : MonoBehaviour
         {
             EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
 
-            if (enemyScript != null && !enemyScript.isDead)
+            if (enemyScript != null && !enemyScript.GetIsDead())
             {
                 float distance = Vector3.Distance(transform.position, enemy.transform.position);
                 if (distance < shortestDistance)
@@ -90,7 +90,7 @@ public class AIController : MonoBehaviour
        {
            EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
 
-           if (enemyScript != null && !enemyScript.isDead)
+           if (enemyScript != null && !enemyScript.GetIsDead())
            {
                float distance = Vector3.Distance(transform.position, enemy.transform.position);
                if (distance < shortestDistance)
@@ -166,7 +166,7 @@ public class AIController : MonoBehaviour
         if (target != null)
         {
             EnemyHealth targetEnemy = target.GetComponent<EnemyHealth>();
-            if (targetEnemy != null && targetEnemy.isDead)
+            if (targetEnemy != null && targetEnemy.GetIsDead())
             {
                 // หากศัตรูตายแล้ว หาศัตรูใหม่
                 FindNearestEnemy();

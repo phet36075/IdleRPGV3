@@ -71,7 +71,7 @@ public class AllyRangedCombat : MonoBehaviour
         if (target != null && distance <= followDistance)
         {
             EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
-            if (enemyHealth != null && enemyHealth.currentHealth > 0)
+            if (enemyHealth != null && enemyHealth.GetCurrentHealth() > 0)
             {
                 if (Time.time >= nextFireTime)
                 {
