@@ -39,6 +39,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public GameObject holyVFX;
     public GameObject DarkVFX;
     public GameObject darknessVFX;
+    public GameObject IceEffect;
     public Transform darnessVFXPosition;
     public Transform spawnVFXPosition;
     
@@ -109,6 +110,10 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         if (Time.time - lastTimeHoly >= holyEffectDuration)
         {
             HolyEffectStacks = 0;
+        }
+        if (Time.time - lastTimeDark >= darkEffectDuration)
+        {
+            DarkEffectStacks = 0;
         }
     }
 
@@ -528,7 +533,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             TakeDamage(new DamageData(burstDamage, 0, ElementType.Water));
             Debug.Log("BRUST WATER DAMAGE");
 
-           
+           IceEffect.SetActive(true);
             // Freeze
             if (agent != null)
             {
@@ -556,7 +561,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         {
             animator.speed = originalAnimSpeed;
         }
-
+        IceEffect.SetActive(false);
         isFreeze = false;
     }
 
