@@ -9,7 +9,11 @@ public class SkillData : ScriptableObject
     public Sprite skillIcon;
     public float cooldown;
     public float damage;
+    public float baseSkillDamage ;
+    public float manaMultiplier;
+    public float weaponMultiplier;
     [SerializeField] private string skillComponentTypeName;  // เก็บชื่อ class ของ skill component
+    public float manaCost;  // เพิ่มค่า mana ที่ต้องใช้
 
     [TextArea(3, 10)]
     public string description;  // เพิ่มคำอธิบายสกิล

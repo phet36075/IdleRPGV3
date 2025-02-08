@@ -42,7 +42,7 @@ public class SlashSkill : BaseSkill
         var skillHitbox = hitbox.GetComponent<SkillHitbox>();
         if (skillHitbox != null)
         {
-            skillHitbox.SetDamageMultiplier(damageMultiplier);
+           // skillHitbox.SetDamageMultiplier(damageMultiplier);
         }
 
         // ปรับขนาดตามธาตุ

@@ -5,6 +5,7 @@ public class SkillHitbox : MonoBehaviour
 {
     private PlayerManager playerManager;
     private float damageMultiplier = 1f;  // ถ้าต้องการให้สกิลทำดาเมจต่างกัน
+    private float weaponMultiplier;
     public Collider hitbox; // อ้างอิง Collider ที่เป็น Hitbox
     public float activeTime = 0.3f; // ระยะเวลาที่ Hitbox ทำงาน
     
@@ -44,10 +45,12 @@ public class SkillHitbox : MonoBehaviour
     }
     
     
-    public void SetDamageMultiplier(float multiplier)
+    public void SetDamageMultiplier(float baseSkillDamage,float maxMana,float manaMultiplier,float weaponMultiplier)
     {
-        this.damageMultiplier = multiplier;
+        this.damageMultiplier = baseSkillDamage + ( maxMana * manaMultiplier) ;
+        this.weaponMultiplier = weaponMultiplier;
     }
+   
    
     private void OnTriggerEnter(Collider other)
     {
@@ -55,7 +58,7 @@ public class SkillHitbox : MonoBehaviour
         IDamageable target = other.GetComponent<IDamageable>();
         if (target != null && playerManager != null)
         {
-            float attackDamage = playerManager.CalculatePlayerAttackDamage() * damageMultiplier;
+            float attackDamage = playerManager.CalculatePlayerAttackDamage()  * weaponMultiplier + damageMultiplier ;
             DamageData damageData = new DamageData(
                 attackDamage,
                 playerManager.playerData.armorPenetration,

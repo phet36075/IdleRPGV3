@@ -53,10 +53,18 @@ public class PlayerManager : MonoBehaviour
     
     
     
+    [SerializeField] private float maxMana = 100f;
+    private float currentMana = 100;
+
+    public event System.Action<float> OnManaChanged;  // Event สำหรับอัพเดท UI
+    
     // ฟังก์ชันเปลี่ยนธาตุ
-   
+
+    public float GetMaxMana() => maxMana;
+    public float GetCurrentMana() => currentMana;
     void Start()
     {
+        currentMana = maxMana;
         UpdateHealthBar();
         healthBar.maxValue = playerData.maxHealth;
         healthBar.value = currentHealth;
@@ -70,6 +78,7 @@ public class PlayerManager : MonoBehaviour
        // ลงทะเบียน callback เมื่อ stats มีการเปลี่ยนแปลง
        playerStats.OnStatsChanged += RecalculateStats;
        RecalculateStats();
+      
     }
     public void RecalculateStats()
     {
@@ -102,8 +111,7 @@ public class PlayerManager : MonoBehaviour
         // คำนวณ Evasion
         //  evasion = playerStats.GetStat(StatType.Agility) * formula.evasionPerAgi;
     }
-
-   
+    
     private void Update()
     {
         maxHP = playerData.maxHealth;
@@ -274,7 +282,22 @@ public class PlayerManager : MonoBehaviour
         weaponEffect.SetActive(true);
     }
     
-    
+    public bool HasEnoughMana(float manaCost)
+    {
+        return currentMana >= manaCost;
+    }
+
+    public void UseMana(float amount)
+    {
+        currentMana = Mathf.Max(0, currentMana - amount);
+        OnManaChanged?.Invoke(currentMana);
+    }
+
+    public void RestoreMana(float amount)
+    {
+        currentMana = Mathf.Min(maxMana, currentMana + amount);
+        OnManaChanged?.Invoke(currentMana);
+    }
     
     void Die()
     {

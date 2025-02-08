@@ -17,5 +17,11 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 10dafa228a4f58d45a85b308bb8345fd, type: 3}
   cooldown: 5
   damage: 1
+  baseSkillDamage: 110
+  maxMana: 0
+  manaMultiplier: 0.3
+  weaponMultiplier: 0.3
   skillComponentTypeName: JudgementsLight
-  description: Holy
+  manaCost: 30
+  description: those evils shall perish from insight of the god, perform the beacon
+    of judgement dealing 110(+30%)(+30%) for 10 hits

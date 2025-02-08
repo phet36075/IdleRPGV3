@@ -21,23 +21,30 @@ public abstract class BaseSkill : MonoBehaviour
     {
         skillData = data;
     }
-    // เพิ่ม virtual methods สำหรับ custom event names
-    protected virtual string GetHitboxEventName() => "OnHitboxActivate";
-    protected virtual string GetEffectEventName() => "OnEffectSpawn";
-    protected virtual string GetSkillStartEventName() => "OnSkillStart";
-    protected virtual string GetSkillEndEventName() => "OnSkillEnd";
+   
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
         playerManager = GetComponentInParent<PlayerManager>();  // หา PlayerManager ตอน start
     }
 
+    public virtual bool CanUseSkill()
+    {
+        if (playerManager == null) return false;
+        
+        // เช็คทั้ง cooldown และ mana
+        return !isOnCooldown && 
+               !isSkillActive && 
+               playerManager.HasEnoughMana(skillData.manaCost);
+    }
     public virtual void UseSkill()
     {
-        if (!isOnCooldown && !isSkillActive)
+        if (CanUseSkill())
         {
+            // ใช้ mana
+            playerManager.UseMana(skillData.manaCost);
+            
             isSkillActive = true;
-            // Trigger animation ผ่าน parameter
             animator.SetTrigger(skillData.animationTriggerName);
             StartCoroutine(CooldownRoutine());
         }

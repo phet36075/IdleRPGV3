@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class SkillInventorySlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private Button slotButton;  // เพิ่มปุ่มสำหรับคลิกดูรายละเอียด
-    
+    [SerializeField] private TextMeshProUGUI manaCostText;
     private SkillData skillData;
     private System.Action<SkillData> onSlotClickCallback;
 
@@ -20,6 +21,7 @@ public class SkillInventorySlotUI : MonoBehaviour
 
         if (skill != null)
         {
+           // manaCostText.text = $"Mana: {skill.manaCost}";
             iconImage.sprite = skill.skillIcon;
             iconImage.gameObject.SetActive(true);
         }

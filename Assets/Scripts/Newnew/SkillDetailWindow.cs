@@ -9,6 +9,7 @@ public class SkillDetailWindow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI cooldownText;
     [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private Button equipButton;
     [SerializeField] private Button unequipButton;
     [SerializeField] private SkillManager skillManager;
@@ -34,7 +35,7 @@ public class SkillDetailWindow : MonoBehaviour
         descriptionText.text = skillData.description;
         cooldownText.text = $"Cooldown: {skillData.cooldown}s";
         damageText.text = $"Damage: {skillData.damage}";
-
+        manaText.text = $"Mana Cost: {skillData.manaCost}";
         // แสดง/ซ่อนปุ่มตามสถานะ
         equipButton.gameObject.SetActive(!isEquipped);
         unequipButton.gameObject.SetActive(isEquipped);
