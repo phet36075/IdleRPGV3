@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3415764b416dfec41bb45356cb9f133e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - skillData: {fileID: 11400000, guid: 614bb086adb783543b5204be4282ed28, type: 2}
+  - hitboxPrefab: {fileID: 8919089035659545212, guid: a658781fb3509d24fb9e4abd494a8518, type: 3}
+  - orbitalEffectPrefab: {fileID: 7352723259943148806, guid: 6af3921d59f8c454688467aafb4d8ede, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

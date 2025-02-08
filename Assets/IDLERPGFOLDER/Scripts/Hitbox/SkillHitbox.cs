@@ -5,12 +5,44 @@ public class SkillHitbox : MonoBehaviour
 {
     private PlayerManager playerManager;
     private float damageMultiplier = 1f;  // ถ้าต้องการให้สกิลทำดาเมจต่างกัน
-
+    public Collider hitbox; // อ้างอิง Collider ที่เป็น Hitbox
+    public float activeTime = 0.3f; // ระยะเวลาที่ Hitbox ทำงาน
+    
+    public int hitCount = 5; // จำนวนครั้งที่ Hitbox ทำงาน
+    public float hitInterval = 0.2f; // เวลาระหว่างแต่ละ Hit
     private void Start()
     {
         // หา PlayerManager จาก parent (ตัวละครที่ใช้สกิล)
-        playerManager = GetComponentInParent<PlayerManager>();
+        playerManager = FindAnyObjectByType<PlayerManager>();
+         hitbox.enabled = false; // ปิด Hitbox ตอนเริ่มต้น
     }
+    public void ActivateHitbox()
+    {
+        StartCoroutine(EnableHitbox());
+    }
+    public void ActivateMultipleHitbox()
+    {
+        StartCoroutine(EnableHitboxMultipleTimes());
+    }
+    IEnumerator EnableHitbox()
+    {
+        Debug.Log("HITBOX ENABLE");
+        hitbox.enabled = true; // เปิด Hitbox
+        yield return new WaitForSeconds(activeTime); // รอให้ทำงาน
+        hitbox.enabled = false; // ปิด Hitbox
+    }
+    
+    IEnumerator EnableHitboxMultipleTimes()
+    {
+        for (int i = 0; i < hitCount; i++) 
+        {
+            hitbox.enabled = true; // เปิด Hitbox
+            yield return new WaitForSeconds(0.1f); // เปิดให้โจมตีได้สั้น ๆ
+            hitbox.enabled = false; // ปิด Hitbox
+            yield return new WaitForSeconds(hitInterval); // รอเวลาก่อน Hit รอบต่อไป
+        }
+    }
+    
     
     public void SetDamageMultiplier(float multiplier)
     {

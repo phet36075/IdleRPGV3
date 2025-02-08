@@ -30,7 +30,7 @@ public class SkillManager : MonoBehaviour
         {
             skillInventory.UnlockSkill(skillsToUnlock);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+      /*  if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             SlashSkill slashSkill = GetComponent<SlashSkill>();
             AddSkill(slashSkill);
@@ -42,7 +42,7 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             SwapSkills(0, 1);
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             skillInventory.UnlockSkill(skilltoUnlock2);

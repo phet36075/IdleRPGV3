@@ -21,6 +21,11 @@ public abstract class BaseSkill : MonoBehaviour
     {
         skillData = data;
     }
+    // เพิ่ม virtual methods สำหรับ custom event names
+    protected virtual string GetHitboxEventName() => "OnHitboxActivate";
+    protected virtual string GetEffectEventName() => "OnEffectSpawn";
+    protected virtual string GetSkillStartEventName() => "OnSkillStart";
+    protected virtual string GetSkillEndEventName() => "OnSkillEnd";
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
