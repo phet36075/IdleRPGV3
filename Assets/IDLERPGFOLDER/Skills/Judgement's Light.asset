@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76449b976f4ce964783dff0279d8ce83, type: 3}
   m_Name: Judgement's Light
   m_EditorClassIdentifier: 
+  elementType: 5
   skillName: Judgement's Light
   animationTriggerName: JudgementsLightTrigger
   skillIcon: {fileID: 21300000, guid: 10dafa228a4f58d45a85b308bb8345fd, type: 3}
   cooldown: 5
   damage: 1
   baseSkillDamage: 110
-  maxMana: 0
   manaMultiplier: 0.3
   weaponMultiplier: 0.3
   skillComponentTypeName: JudgementsLight

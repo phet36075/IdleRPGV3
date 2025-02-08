@@ -64,11 +64,19 @@ public abstract class BaseSkill : MonoBehaviour
     {
         return IsWindElement() ? baseScale * 2f : baseScale;
     }
-    
+
+    protected void ElementalCheck()
+    {
+        if (skillData.elementType == playerManager.playerData.elementType)
+        {
+            Debug.Log("HOLYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+        }
+    }
     
     // Animation Event Handlers
     public virtual void OnSkillStart()
     {
+        ElementalCheck();
         Debug.Log($"Skill {skillData.skillName} started");
     }
 

@@ -40,7 +40,7 @@ public class JudgementsLight : BaseSkill
         // ปรับขนาดตามธาตุ
         spawnedEffect.transform.localScale = CalculateElementalScale(effectScale);
         // **Delay 0.5 วินาทีก่อนเปิด Hitbox**
-        Invoke(nameof(JudgementsLight_OnHitboxActivate), 2f);
+        Invoke(nameof(JudgementsLight_OnHitboxActivate), hitboxSpawnDelay);
         Destroy(spawnedEffect, 5f);
     }
     public void JudgementsLight_OnHitboxActivate()

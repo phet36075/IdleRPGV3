@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillData", menuName = "Skills/SkillData")]
 public class SkillData : ScriptableObject
 {
+    public ElementType elementType = ElementType.None;
     public string skillName;
     public string animationTriggerName;
     public Sprite skillIcon;

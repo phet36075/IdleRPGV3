@@ -11,6 +11,9 @@ public class SkillHitbox : MonoBehaviour
     
     public int hitCount = 5; // จำนวนครั้งที่ Hitbox ทำงาน
     public float hitInterval = 0.2f; // เวลาระหว่างแต่ละ Hit
+    public bool isPulling = false;
+    public bool isPushing = false;
+    public float pushForce;
     private void Start()
     {
         // หา PlayerManager จาก parent (ตัวละครที่ใช้สกิล)
@@ -43,8 +46,11 @@ public class SkillHitbox : MonoBehaviour
             yield return new WaitForSeconds(hitInterval); // รอเวลาก่อน Hit รอบต่อไป
         }
     }
-    
-    
+
+    public void PullMonster()
+    {
+        
+    }
     public void SetDamageMultiplier(float baseSkillDamage,float maxMana,float manaMultiplier,float weaponMultiplier)
     {
         this.damageMultiplier = baseSkillDamage + ( maxMana * manaMultiplier) ;
@@ -65,6 +71,22 @@ public class SkillHitbox : MonoBehaviour
                 playerManager.playerData.elementType
             );
             target.TakeDamage(damageData);
+            
         }
+
+        if (isPulling)
+        {
+            Rigidbody enemy = other.GetComponent<Rigidbody>();
+            Vector3 direction = (transform.position - enemy.transform.position).normalized;
+            enemy.AddForce(direction * 20,ForceMode.Force);
+        }
+
+        if (isPushing)
+        {
+            Rigidbody enemy = other.GetComponent<Rigidbody>();
+            Vector3 direction = -(transform.position - enemy.transform.position).normalized;
+            enemy.AddForce(direction * pushForce,ForceMode.Force);
+        }
+        
     }
 }
