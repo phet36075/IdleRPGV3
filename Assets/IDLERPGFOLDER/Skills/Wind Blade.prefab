@@ -24472,8 +24472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitbox: {fileID: 5429921273716871101}
   activeTime: 0.3
-  hitCount: 2
-  hitInterval: 0.2
+  hitCount: 3
+  hitInterval: 0.05
   isPulling: 0
   isPushing: 0
   pushForce: 0

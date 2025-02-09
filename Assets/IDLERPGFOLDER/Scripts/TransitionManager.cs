@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+
 public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance { get; private set; }
@@ -33,12 +34,13 @@ public class TransitionManager : MonoBehaviour
     {
         transitionCanvas.gameObject.SetActive(true);
         loadingText.text = loadingMessage;
-        fadeImage.color = new Color(0, 0, 0, 0); // ตั้งค่าให้ fadeImage โปร่งใสเมื่อเริ่มต้น
-        yield return StartCoroutine(FadeIn());
+        // Set initial fade image to fully opaque instead of transparent
+        fadeImage.color = new Color(0, 0, 0, 1);
 
+        // Remove fade in coroutine
         onTransitionIn?.Invoke();
 
-        yield return new WaitForSeconds(0.5f); // เวลาขั้นต่ำสำหรับการแสดงข้อความ
+        yield return new WaitForSeconds(1f);
 
         onTransitionOut?.Invoke();
 
@@ -46,22 +48,12 @@ public class TransitionManager : MonoBehaviour
 
         transitionCanvas.gameObject.SetActive(false);
     }
-
-    private IEnumerator FadeIn()
-    {
-        yield return Fade(0, 1);
-    }
     
     private IEnumerator FadeOut()
     {
-        yield return Fade(1, 0);
-    }
-
-    private IEnumerator Fade(float startAlpha, float endAlpha)
-    {
         float elapsedTime = 0f;
-        Color startColor = new Color(0, 0, 0, startAlpha);
-        Color endColor = new Color(0, 0, 0, endAlpha);
+        Color startColor = new Color(0, 0, 0, 1);
+        Color endColor = new Color(0, 0, 0, 0);
 
         while (elapsedTime < fadeDuration)
         {
