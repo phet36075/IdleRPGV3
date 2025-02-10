@@ -32,7 +32,7 @@ public class WindBlade : BaseSkill
         // ปรับขนาดตามธาตุ
         spawnedEffect.transform.localScale = CalculateElementalScale(effectScale);
         // **Delay 0.5 วินาทีก่อนเปิด Hitbox**
-        Invoke(nameof(WindBlade_OnHitboxActivate), 0f);
+        Invoke(nameof(WindBlade_OnHitboxActivate), hitboxSpawnDelay);
         Destroy(spawnedEffect, 1f);
     }
     public void WindBlade_OnHitboxActivate()
