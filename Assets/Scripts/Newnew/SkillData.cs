@@ -11,6 +11,7 @@ public class SkillData : ScriptableObject
     public float cooldown;
     public float damage;
     public float baseSkillDamage ;
+    public float baseSkillDamage2;
     public float manaMultiplier;
     public float weaponMultiplier;
     [SerializeField] private string skillComponentTypeName;  // เก็บชื่อ class ของ skill component
