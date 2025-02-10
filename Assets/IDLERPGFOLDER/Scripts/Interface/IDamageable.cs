@@ -21,13 +21,20 @@ public struct DamageData
     public float armorPenetration;
     public ElementType elementType;
     public bool isEarthTremor; // เพิ่มเพื่อป้องกันการเกิด tremor ซ้ำซ้อน
-    
-    public DamageData(float damage, float armorPenetration,ElementType elementType)
+    public Status status;
+    public float multipleNextHit;
+    public Multiple multiple;
+    public DamageData(float damage, float armorPenetration, ElementType elementType, Status status = Status.None,Multiple multiple = Multiple.None,
+        float multipleNextHit = 1f)
+
     {
         this.damage = damage;
         this.armorPenetration = armorPenetration;
         this.elementType = elementType;
         this.isEarthTremor = false; // กำหนดค่าเริ่มต้นเป็น false
+        this.status = status;
+        this.multipleNextHit = multipleNextHit;
+        this.multiple = multiple;
     }
 }
 [System.Serializable]
@@ -54,4 +61,18 @@ public enum WeaponType
     Spell
     
 }
+
+public enum Status
+{
+    None,
+    Freezing
+}
+
+public enum Multiple
+{
+    None,
+    Yes
+}
+
+
 

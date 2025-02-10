@@ -49,7 +49,8 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public float cooldownStagger = 4;
     private float lastTimeStagger = 0;
     private bool isHurt;
-    
+    public bool isMultiplyingDamageNextHit = false; // Tracks if next hit should be buffed
+    public float storedMultiplier = 1.0f; // Stores the multiplier for the next hit
     [Header("Elemental")]
     [SerializeField] private ElementType enemyElementType = ElementType.None;
     [SerializeField] private List<ElementalResistance> elementalResistances = new List<ElementalResistance>();
@@ -115,6 +116,13 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         if (Time.time - lastTimeDark >= darkEffectDuration)
         {
             DarkEffectStacks = 0;
+        }
+        // Check for 4 stacks
+        if (waterEffectStacks >= 4)
+        {
+            Debug.Log("DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+            ApplyWaterBurst();
+            waterEffectStacks = 0; // Reset stacks
         }
     }
 
@@ -316,12 +324,29 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         float elementalMultiplier = CalculateElementalMultiplier(damageData.elementType);
         float effectiveDefense = Mathf.Max(0, defense - damageData.armorPenetration);
         float damageReduction = effectiveDefense / (effectiveDefense + 100f);
-    
-        return damageData.damage * elementalMultiplier * (1f - damageReduction);
+
+        float finalDamage = damageData.damage * elementalMultiplier * (1f - damageReduction);
+       
+        // Apply multiplier from previous hit if it was set
+        if (isMultiplyingDamageNextHit)
+        {
+            finalDamage *= storedMultiplier; // Use stored multiplier from last hit
+            isMultiplyingDamageNextHit = false; // Reset to prevent further multiplication
+        }
+
+        // If this hit should buff the next hit, store the multiplier
+        if (damageData.multiple == Multiple.Yes)
+        {
+            isMultiplyingDamageNextHit = true;
+            storedMultiplier = damageData.multipleNextHit; // Store multiplier for next hit
+        }
+
+        return finalDamage;
     }
+
     private void ApplyDamage(float damage)
     {
-        currentHealth -= damage;
+        currentHealth -= damage ;
         currentHealth = Mathf.Max(currentHealth, 0f);
 
         CharacterHitEffect.StartHitEffect();
@@ -345,7 +370,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         }
         else if (damageData.elementType == ElementType.Water)
         {
-            HandleWaterEffect();
+            HandleWaterEffect(damageData);
         }
         else if(damageData.elementType == ElementType.Light)
         {
@@ -354,6 +379,14 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         else if (damageData.elementType == ElementType.Dark)
         {
             HandleDarkEffect();
+        }
+
+        if (damageData.status == Status.Freezing)
+        {
+            Debug.Log("FREZZZZZZZZZZZZZZZZZZZZZZZZZZZZE");
+           Freeze();
+            statusEffectUI.AddStatusEffect("PoisonExplode" ,null , 5);
+            HandleWaterEffect(damageData);
         }
     }
     
@@ -448,36 +481,35 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     #region Water
     
     private GameObject currentSlowEffect; // เพิ่มตัวแปรเก็บ reference ของ effect
-    private void HandleWaterEffect()
+    private Coroutine slowEffectCoroutine; // เพิ่มตัวแปรเพื่อเก็บ Coroutine
+    private void HandleWaterEffect(DamageData damageData)
     {
         // Check for water effect chance (40%)
-        if (Random.value <= waterEffectChance)
-        {
-            lastTimeFreeze = Time.time;
-            waterEffectStacks++;
-            
-            slowVFX.gameObject.SetActive(true);
-          statusEffectUI.AddStatusEffect("Poison" ,null , waterEffectDuration);
-          ApplySlowEffect();
-            // Apply slow effect if not already slowed
-            if (!isSlowed)
+        //if (Random.value <= waterEffectChance)
+      //  {
+
+            if (damageData.status != Status.Freezing)
             {
-               
-                
+                waterEffectStacks += 1;
+                statusEffectUI.AddStatusEffect("Poison" ,null , waterEffectDuration,1);
+                ApplySlowEffect();
+                lastTimeFreeze = Time.time;
+                slowVFX.gameObject.SetActive(true);
+                // Reset slow effect duration
+                if (slowEffectCoroutine != null)
+                {
+                    StopCoroutine(RemoveSlowEffect());
+                }
+
+                // เริ่ม Coroutine ใหม่และเก็บไว้ในตัวแปร
+                slowEffectCoroutine = StartCoroutine(RemoveSlowEffect());
+                StartCoroutine(RemoveSlowEffect());
             }
-            
            
-            // Reset slow effect duration
-            StopCoroutine(RemoveSlowEffect());
-            StartCoroutine(RemoveSlowEffect());
-            
-            // Check for 3 stacks
-            if (waterEffectStacks >= 4)
-            {
-                ApplyWaterBurst();
-                waterEffectStacks = 0; // Reset stacks
-            }
-        }
+       // }
+        
+        
+        
     }
     
     private void ApplySlowEffect()
@@ -530,40 +562,49 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     {
         if (_playerManager != null)
         {
+            //statusEffectUI.AddStatusEffect("PoisonExplode" ,null , 5);
             float burstDamage = _playerManager.GetDamage() * 1.5f; // 150% of player's attack power
             TakeDamage(new DamageData(burstDamage, 0, ElementType.Water));
-            Debug.Log("BRUST WATER DAMAGE");
-
-           IceEffect.SetActive(true);
-            // Freeze
-            if (agent != null)
-            {
-                agent.speed = 0;
-            }
-            
-            if (animator != null)
-            {
-                animator.speed = 0;
-            }
-            isFreeze = true;
-            StartCoroutine(UnFreeze());
+            Freeze();
         }
     }
 
-    private IEnumerator UnFreeze()
+    private void Freeze()
     {
-        yield return new WaitForSeconds(5f);
+        IceEffect.SetActive(true);
+        // Freeze
         if (agent != null)
         {
-            agent.speed = originalSpeed;
+            agent.speed = 0;
         }
             
         if (animator != null)
         {
-            animator.speed = originalAnimSpeed;
+            animator.speed = 0;
         }
-        IceEffect.SetActive(false);
-        isFreeze = false;
+        isFreeze = true;
+           
+        StartCoroutine(UnFreeze());
+    }
+
+    private IEnumerator UnFreeze()
+    {
+        if (isFreeze)
+        {
+            yield return new WaitForSeconds(5f);
+            if (agent != null)
+            {
+                agent.speed = originalSpeed;
+            }
+            
+            if (animator != null)
+            {
+                animator.speed = originalAnimSpeed;
+            }
+            IceEffect.SetActive(false);
+            isFreeze = false;
+        }
+       
     }
 
     #endregion

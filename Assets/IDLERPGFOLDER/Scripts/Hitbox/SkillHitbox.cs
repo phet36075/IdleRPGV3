@@ -13,12 +13,18 @@ public class SkillHitbox : MonoBehaviour
     public float hitInterval = 0.2f; // เวลาระหว่างแต่ละ Hit
     public bool isPulling = false;
     public bool isPushing = false;
+   
     public float pushForce;
+    public bool isFreezingSkill = false;
+    public bool isMultiplierNextHit = false;
+    private float multiplierNextHit;
+    
     private void Start()
     {
         // หา PlayerManager จาก parent (ตัวละครที่ใช้สกิล)
         playerManager = FindAnyObjectByType<PlayerManager>();
          hitbox.enabled = false; // ปิด Hitbox ตอนเริ่มต้น
+         multiplierNextHit = 1f;
     }
     public void ActivateHitbox()
     {
@@ -65,13 +71,31 @@ public class SkillHitbox : MonoBehaviour
         if (target != null && playerManager != null)
         {
             float attackDamage = playerManager.CalculatePlayerAttackDamage()  * weaponMultiplier + damageMultiplier ;
-            DamageData damageData = new DamageData(
-                attackDamage,
-                playerManager.playerData.armorPenetration,
-                playerManager.playerData.elementType
-            );
-            target.TakeDamage(damageData);
             
+            Status status = Status.None; // กำหนดค่าเริ่มต้น
+            Multiple multiple = Multiple.None;
+            if (isFreezingSkill)
+            {
+                status = Status.Freezing;
+            }
+           
+            if (isMultiplierNextHit)
+            {
+                multiple = Multiple.Yes;
+                multiplierNextHit = 1.8f;
+            }
+            
+                DamageData damageData = new DamageData(
+                    attackDamage,
+                    playerManager.playerData.armorPenetration,
+                    playerManager.playerData.elementType,status,multiple,multiplierNextHit
+                );
+                target.TakeDamage(damageData);
+            
+            
+                
+           
+           
         }
 
         if (isPulling)

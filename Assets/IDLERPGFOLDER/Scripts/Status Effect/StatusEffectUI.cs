@@ -59,11 +59,11 @@ public class StatusEffect : MonoBehaviour
         }
     }
 
-    public bool AddStack()
+    public bool AddStack(int stack)
     {
         if (stackCount < maxStacks)
         {
-            stackCount++;
+            stackCount += stack;
             UpdateStackDisplay();
             return false; // ยังไม่ถึง max stack
         }
@@ -124,7 +124,7 @@ public class StatusEffectUI : MonoBehaviour
         effectIcons.Add("Darkness", darknessIcon);
     }
 
-    public void AddStatusEffect(string effectName, Sprite icon = null, float duration = 5f)
+    public void AddStatusEffect(string effectName,Sprite icon = null, float duration = 5f,int stack = 1 )
     {
         var settings = statusEffectSettings.Find(s => s.effectName == effectName);
         if (settings == null)
@@ -139,7 +139,7 @@ public class StatusEffectUI : MonoBehaviour
             StatusEffect existingStatus = existingEffect.GetComponent<StatusEffect>();
             if (existingStatus != null)
             {
-                if (existingStatus.AddStack()) // ถ้า return true แปลว่า stack เต็มแล้ว
+                if (existingStatus.AddStack(stack)) // ถ้า return true แปลว่า stack เต็มแล้ว
                 {
                     // ถ้ามี effect ที่จะ evolve ไป
                     if (!string.IsNullOrEmpty(settings.evolveToEffect))

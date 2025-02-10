@@ -19,8 +19,8 @@ public class DimensionSplit : BaseSkill
     {
         base.OnSkillStart();
     }
-  
 
+    
     private GameObject spawnedEffect; // เก็บอ้างอิงของ Effect ที่ Spawn
     public void DimensionSplit_OnEffectSpawn()
     {
