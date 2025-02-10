@@ -37,6 +37,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public GameObject slowVFX;
     public GameObject burningVFX;
     public GameObject holyVFX;
+    public GameObject JudgementVFX;
     public GameObject DarkVFX;
     public GameObject darknessVFX;
     public GameObject IceEffect;
@@ -604,7 +605,8 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
     private IEnumerator ApplyJudgement()
     {
-       
+        GameObject effect = Instantiate(JudgementVFX, darnessVFXPosition.position, darnessVFXPosition.rotation);
+        Destroy(effect, 1f);
         float[] holyMultipliers = { 2.25f, 1.75f };
     
         for(int i = 0; i < holyMultipliers.Length; i++)

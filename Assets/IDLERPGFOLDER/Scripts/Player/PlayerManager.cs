@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour
 
    
    
-    
+    // อาจจะยังไม่ได้ใช้
     private float currentHP;
     private float maxHP;
     private float damage;
@@ -62,6 +62,17 @@ public class PlayerManager : MonoBehaviour
 
     public float GetMaxMana() => maxMana;
     public float GetCurrentMana() => currentMana;
+
+    public void AddMana(float amount)
+    {
+        currentMana += amount;
+        if (currentMana >= maxMana)
+        {
+            currentMana = maxMana;
+        }
+       
+        OnManaChanged?.Invoke(currentMana);
+    }
     void Start()
     {
         currentMana = maxMana;
@@ -78,6 +89,7 @@ public class PlayerManager : MonoBehaviour
        // ลงทะเบียน callback เมื่อ stats มีการเปลี่ยนแปลง
        playerStats.OnStatsChanged += RecalculateStats;
        RecalculateStats();
+       UpdateWeaponEffects(playerData.elementType);
       
     }
     public void RecalculateStats()
@@ -140,6 +152,10 @@ public class PlayerManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha6)) // กด 6
         {
             ChangeWeaponElement(ElementType.Dark);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) // กด 7
+        {
+            AddMana(50f);
         }
     }
 
