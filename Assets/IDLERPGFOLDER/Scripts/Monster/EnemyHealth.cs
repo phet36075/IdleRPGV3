@@ -491,8 +491,8 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     private void HandleWaterEffect(DamageData damageData)
     {
         // Check for water effect chance (40%)
-        //if (Random.value <= waterEffectChance)
-      //  {
+        if (Random.value <= waterEffectChance)
+        {
 
             if (damageData.status != Status.Freezing)
             {
@@ -512,7 +512,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
                 StartCoroutine(RemoveSlowEffect());
             }
            
-       // }
+        }
         
         
         

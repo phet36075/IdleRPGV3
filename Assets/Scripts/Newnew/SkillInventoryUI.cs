@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class SkillInventoryUI : MonoBehaviour
 {
     [SerializeField] private SkillInventoryManager inventoryManager;
@@ -11,6 +12,9 @@ public class SkillInventoryUI : MonoBehaviour
     [SerializeField] private SkillDetailWindow detailWindow;
     [SerializeField] private GameObject inventoryPanel;  // Panel หลักของ inventory
     [SerializeField] private Button closeButton;  // ปุ่มปิด inventory
+    [SerializeField] private Button nextPageButton;
+    [SerializeField] private Button previousPageButton;
+    [SerializeField] private TextMeshProUGUI pageText;  // แสดงเลขหน้า
     
     private List<SkillInventorySlotUI> slots = new List<SkillInventorySlotUI>();
     private bool isInventoryOpen = false;
@@ -49,22 +53,45 @@ public class SkillInventoryUI : MonoBehaviour
     }
     private void UpdateInventoryUI()
     {
-        // Clear old slots
+        // ลบ slots เก่า
         foreach (var slot in slots)
         {
             Destroy(slot.gameObject);
         }
         slots.Clear();
 
-        // Create new slots
-        foreach (var skillData in inventoryManager.GetUnlockedSkills())
+        // สร้าง slots ใหม่จากสกิลในหน้าปัจจุบัน
+        foreach (var skillData in inventoryManager.GetCurrentPageSkills())
         {
             var slotUI = Instantiate(slotPrefab, skillSlotsContainer);
             slotUI.Setup(skillData, OnSkillSlotClicked);
             slots.Add(slotUI);
         }
+
+        // อัพเดทปุ่มเปลี่ยนหน้า
+        UpdatePageButtons();
+        UpdatePageText();
     }
 
+    private void UpdatePageButtons()
+    {
+        nextPageButton.interactable = inventoryManager.HasNextPage;
+        previousPageButton.interactable = inventoryManager.HasPreviousPage;
+    }
+
+    private void OnNextPageClick()
+    {
+        inventoryManager.NextPage();
+    }
+
+    private void OnPreviousPageClick()
+    {
+        inventoryManager.PreviousPage();
+    }
+    private void UpdatePageText()
+    {
+        pageText.text = $"Page {inventoryManager.CurrentPage}/{inventoryManager.TotalPages}";
+    }
     private void OnTryEquipSkill(SkillData skillData)
     {
         // เช็คว่าสกิลนี้ถูก equip อยู่แล้วหรือไม่
