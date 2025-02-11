@@ -62,7 +62,7 @@ public abstract class BaseSkill : MonoBehaviour
     // เพิ่มเมธอดสำหรับคำนวณขนาด
     protected Vector3 CalculateElementalScale(Vector3 baseScale)
     {
-        return IsWindElement() ? baseScale * 2f : baseScale;
+        return IsWindElement() ? baseScale * 1.5f : baseScale;
     }
 
     protected void ElementalCheck()
