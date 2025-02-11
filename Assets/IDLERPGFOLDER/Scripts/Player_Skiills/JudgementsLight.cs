@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 public class JudgementsLight : BaseSkill
 {
-   
     
     [SerializeField] private GameObject orbitalEffectPrefab;
     //[SerializeField] private float damageMultiplier = 1f;  // ตัวคูณดาเมจของสกิลนี้

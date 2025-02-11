@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GlacierBlossom : BaseSkill
 {
-      [SerializeField] private GameObject GlacierBlossomEffectPrefab;
+    [SerializeField] private GameObject GlacierBlossomEffectPrefab;
     [SerializeField] private Vector3 hitboxOffset = Vector3.forward;  // ระยะห่างของ hitbox
     [SerializeField] private float hitboxSpawnDelay = 0.5f; // ระยะเวลาหน่วงก่อนเริ่มโจมตี
     // เพิ่มตัวแปรสำหรับปรับขนาด
@@ -42,7 +42,7 @@ public class GlacierBlossom : BaseSkill
             SkillHitbox hitbox = spawnedEffect.GetComponent<SkillHitbox>();
             if (hitbox != null)
             {
-                hitbox.SetDamageMultiplier(skillData.baseSkillDamage,playerManager.GetMaxMana(),skillData.manaMultiplier,skillData.weaponMultiplier);
+                hitbox.SetDamageMultiplier(skillData.baseSkillDamage,playerManager.GetMaxMana(),skillData.manaMultiplier,skillData.weaponMultiplier,skillData.StatusSkill);
                 hitbox.ActivateMultipleHitbox(); // เปิดใช้งาน Hitbox
             }
         }

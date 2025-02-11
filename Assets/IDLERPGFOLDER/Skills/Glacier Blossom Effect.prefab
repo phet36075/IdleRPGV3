@@ -39148,8 +39148,9 @@ MonoBehaviour:
   isPulling: 0
   isPushing: 0
   pushForce: 0
-  isFreezingSkill: 1
+  StatusSkill: 1
   isMultiplierNextHit: 1
+  multiplierForNextHit: 1.8
 --- !u!135 &1563893704746147125
 SphereCollider:
   m_ObjectHideFlags: 0

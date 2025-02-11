@@ -65,7 +65,8 @@ public enum WeaponType
 public enum Status
 {
     None,
-    Freezing
+    Freezing,
+    Radiant
 }
 
 public enum Multiple

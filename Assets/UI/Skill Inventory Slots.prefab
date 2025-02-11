@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.4026, y: -35.6566}
-  m_SizeDelta: {x: 188.8051, y: 171.3131}
+  m_AnchoredPosition: {x: 32.376934, y: -24.745407}
+  m_SizeDelta: {x: 164.7545, y: 149.4907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7539123997238578066
 CanvasRenderer:
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconImage: {fileID: 6299440738478803543}
   slotButton: {fileID: 8454284986018565662}
+  manaCostText: {fileID: 0}
 --- !u!114 &8454284986018565662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,8 +510,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.402, y: -33.5}
-  m_SizeDelta: {x: 188.81, y: 167}
+  m_AnchoredPosition: {x: 32.37641, y: -22.863518}
+  m_SizeDelta: {x: 164.7588, y: 145.7271}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6016349930606881734
 CanvasRenderer:

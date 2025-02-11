@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkillData : ScriptableObject
 {
     public ElementType elementType = ElementType.None;
+    public Status StatusSkill = Status.None;
     public string skillName;
     public string animationTriggerName;
     public Sprite skillIcon;

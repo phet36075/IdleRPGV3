@@ -15,9 +15,10 @@ public class SkillHitbox : MonoBehaviour
     public bool isPushing = false;
    
     public float pushForce;
-    public bool isFreezingSkill = false;
+    private Status StatusSkill;
     public bool isMultiplierNextHit = false;
     private float multiplierNextHit;
+    public float multiplierForNextHit;
     
     private void Start()
     {
@@ -57,10 +58,11 @@ public class SkillHitbox : MonoBehaviour
     {
         
     }
-    public void SetDamageMultiplier(float baseSkillDamage,float maxMana,float manaMultiplier,float weaponMultiplier)
+    public void SetDamageMultiplier(float baseSkillDamage,float maxMana,float manaMultiplier,float weaponMultiplier, Status status = Status.None)
     {
         this.damageMultiplier = baseSkillDamage + ( maxMana * manaMultiplier) ;
         this.weaponMultiplier = weaponMultiplier;
+        StatusSkill = status;
     }
    
    
@@ -72,13 +74,17 @@ public class SkillHitbox : MonoBehaviour
         {
             float attackDamage = playerManager.CalculatePlayerAttackDamage()  * weaponMultiplier + damageMultiplier ;
             
-            Status status = Status.None; // กำหนดค่าเริ่มต้น
+           // Status status = Status.None; // กำหนดค่าเริ่มต้น
             Multiple multiple = Multiple.None;
-            if (isFreezingSkill)
+          /*  if (StatusSkill == Status.Freezing)
             {
                 status = Status.Freezing;
             }
-           
+
+            if (StatusSkill == Status.Radiant)
+            {
+                status = Status.Radiant;
+            }*/
             if (isMultiplierNextHit)
             {
                 multiple = Multiple.Yes;
@@ -88,7 +94,7 @@ public class SkillHitbox : MonoBehaviour
                 DamageData damageData = new DamageData(
                     attackDamage,
                     playerManager.playerData.armorPenetration,
-                    playerManager.playerData.elementType,status,multiple,multiplierNextHit
+                    playerManager.playerData.elementType,StatusSkill,multiple,multiplierNextHit
                 );
                 target.TakeDamage(damageData);
             

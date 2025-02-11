@@ -120,7 +120,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         // Check for 4 stacks
         if (waterEffectStacks >= 4)
         {
-            Debug.Log("DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+           
             ApplyWaterBurst();
             waterEffectStacks = 0; // Reset stacks
         }
@@ -383,10 +383,16 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
         if (damageData.status == Status.Freezing)
         {
-            Debug.Log("FREZZZZZZZZZZZZZZZZZZZZZZZZZZZZE");
+           
            Freeze();
             statusEffectUI.AddStatusEffect("PoisonExplode" ,null , 5);
             HandleWaterEffect(damageData);
+        }
+
+        if (damageData.status == Status.Radiant)
+        {
+            statusEffectUI.AddStatusEffect("Judgement" ,null , 1);
+            StartCoroutine(ApplyJudgement(1.5f));
         }
     }
     
@@ -644,11 +650,11 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         
     }
 
-    private IEnumerator ApplyJudgement()
+    private IEnumerator ApplyJudgement(float multiplier = 1f)
     {
         GameObject effect = Instantiate(JudgementVFX, darnessVFXPosition.position, darnessVFXPosition.rotation);
-        Destroy(effect, 1f);
-        float[] holyMultipliers = { 2.25f, 1.75f };
+        Destroy(effect, 3f);
+        float[] holyMultipliers = { 2.25f * multiplier, 1.75f * multiplier};
     
         for(int i = 0; i < holyMultipliers.Length; i++)
         {

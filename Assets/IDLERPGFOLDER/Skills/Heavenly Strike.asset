@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76449b976f4ce964783dff0279d8ce83, type: 3}
+  m_Name: Heavenly Strike
+  m_EditorClassIdentifier: 
+  elementType: 5
+  StatusSkill: 2
+  skillName: Heavenly Strike
+  animationTriggerName: HeavenlyStrikeTrigger
+  skillIcon: {fileID: 21300000, guid: 3f3ccc74798015245ab22a77c2178dec, type: 3}
+  cooldown: 3
+  damage: 0
+  baseSkillDamage: 90
+  baseSkillDamage2: 0
+  manaMultiplier: 0.2
+  weaponMultiplier: 0.2
+  skillComponentTypeName: HeavenlyStrike
+  manaCost: 11
+  description: Call the Blade of heaven, Guide thier light to evils dealing 90(+20%)(+20%)
+    trigger Radiant and make them stronger by 50%

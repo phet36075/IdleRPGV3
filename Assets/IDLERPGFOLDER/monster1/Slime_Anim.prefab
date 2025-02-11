@@ -1260,7 +1260,7 @@ MonoBehaviour:
   slowVFX: {fileID: 5213232118102161352}
   burningVFX: {fileID: 4609064293606554238}
   holyVFX: {fileID: 4213399455936535542}
-  JudgementVFX: {fileID: 8832710976538346180, guid: 361bb69e98e2b3f4384b9baff314f1f3, type: 3}
+  JudgementVFX: {fileID: 1251970232510534, guid: ca66454a31c7af1488eff2308dc407fe, type: 3}
   DarkVFX: {fileID: 7424425403248824793}
   darknessVFX: {fileID: 1126160920730200, guid: 51a3482aa12d7374f9a8214d5277529d, type: 3}
   IceEffect: {fileID: 9151097432137940807}
@@ -1268,6 +1268,8 @@ MonoBehaviour:
   spawnVFXPosition: {fileID: 913371510232322611}
   staggerDuration: 0.5
   cooldownStagger: 5
+  isMultiplyingDamageNextHit: 0
+  storedMultiplier: 1
   enemyElementType: 1
   elementalResistances: []
   CharacterHitEffect: {fileID: 776062255748010552}
