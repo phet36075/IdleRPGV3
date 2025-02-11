@@ -66,7 +66,8 @@ public enum Status
 {
     None,
     Freezing,
-    Radiant
+    Radiant,
+    Tremor
 }
 
 public enum Multiple

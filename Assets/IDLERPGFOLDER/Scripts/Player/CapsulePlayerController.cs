@@ -28,7 +28,7 @@ public class CapsulePlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_rigidbody.velocity);
+        Debug.Log(_rigidbody.linearVelocity);
         
         
         float speedMagnitude = m_DirectionalSpeed;
@@ -65,13 +65,13 @@ public class CapsulePlayerController : MonoBehaviour
             transform.Translate(transform.forward*-speedMagnitude*0.4f*Time.deltaTime,Space.World);
         }
         
-        else if (_rigidbody.velocity.magnitude > 0)
+        else if (_rigidbody.linearVelocity.magnitude > 0)
         {
             animator.SetBool("IsWalking", true);
             
         }
         
-        else if(_rigidbody.velocity.magnitude <=0)
+        else if(_rigidbody.linearVelocity.magnitude <=0)
         {  
             animator.SetBool("IsWalking", false);
             

@@ -394,6 +394,11 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             statusEffectUI.AddStatusEffect("Judgement" ,null , 1);
             StartCoroutine(ApplyJudgement(1.5f));
         }
+
+        if (damageData.status == Status.Tremor)
+        {
+            StartCoroutine(ApplyEarthTremor(finalDamage,true));
+        }
     }
     
     private void SpawnHitEffect()
@@ -460,12 +465,13 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     #endregion
     
     #region Earth
-
+  private  float[] tremorMultipliers = { 1.0f, 0.85f, 0.75f };
     // เพิ่มระบบ Earth Tremor
-    private IEnumerator ApplyEarthTremor(float initialDamage)
+    private IEnumerator ApplyEarthTremor(float initialDamage , bool multiplier = false)
     {
-        float[] tremorMultipliers = { 1.0f, 0.85f, 0.75f };
-    
+        if(multiplier)
+      tremorMultipliers = new float[] { 1.1f, 1.3f,1.6f };
+        
         for(int i = 0; i < tremorMultipliers.Length; i++)
         {
             yield return new WaitForSeconds(0.1f); // รอ 0.5 วินาทีระหว่างแต่ละการโจมตี
