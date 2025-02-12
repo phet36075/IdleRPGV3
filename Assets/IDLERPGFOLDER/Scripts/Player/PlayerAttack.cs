@@ -6,8 +6,9 @@ public class PlayerAttack : MonoBehaviour
 {
     private AllyManager _allyManager;
     private WeaponSystem _weaponSystem;
-    public Animator animator;
     
+    public Animator animator;
+    private PlayerMovement playerMovement;
     public AllyRangedCombat rangedAllies;  // เพิ่มอาร์เรย์ของพวกพ้องที่โจมตีระยะไกล
     
     private int _comboStep;
@@ -33,6 +34,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _allyManager = GetComponent<AllyManager>();
         _weaponSystem = GetComponent<WeaponSystem>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -43,8 +45,12 @@ public class PlayerAttack : MonoBehaviour
             isAttacking = false;
             _isMovingToEnemy = false;
         }
+
+       
+           
         
-        if (Input.GetKeyDown(KeyCode.F) && !isAttacking && _weaponSystem.GetIsDrawn == true)
+
+        if (Input.GetKeyDown(KeyCode.F) && !isAttacking )
         {
             Attack();
         }
@@ -58,8 +64,10 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Attack()
     {
-        if (!isAttacking)
+        if (!isAttacking&& _weaponSystem.GetIsDrawn == true)
         {
+            _weaponSystem.ResetIdleTimer();
+            playerMovement.isTakingAction = true;
             _lastAttackTime = Time.time;
             isAttacking = true;
             _comboStep++;
@@ -197,6 +205,7 @@ public class PlayerAttack : MonoBehaviour
     
     public void EndAttack()
     {
+        playerMovement.isTakingAction = false;
         isAttacking = false;
       //  _isMovingToEnemy = false;
         //_nearestEnemy = null;

@@ -28,7 +28,7 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) UseSkill(2);
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            skillInventory.UnlockSkill(skillsToUnlock);
+           // skillInventory.UnlockSkill(skillsToUnlock);
         }
       /*  if (Input.GetKeyDown(KeyCode.Alpha5))
         {
@@ -45,11 +45,11 @@ public class SkillManager : MonoBehaviour
         }*/
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            skillInventory.UnlockSkill(skilltoUnlock2);
+           // skillInventory.UnlockSkill(skilltoUnlock2);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            UseNextAvailableSkill();
+           // UseNextAvailableSkill();
         }
     }
     public void UnequipSkill(BaseSkill skill)

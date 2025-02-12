@@ -6,113 +6,130 @@ using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-   public LayerMask groundmask;
+    [Header("Ground Check Settings")]
+    public LayerMask groundMask;
+    public Transform groundCheck;
+    public float groundDistance;
 
-   public Transform groundcheck;
+    [Header("Movement Settings")]
+    public float walkSpeed = 5f;
+    public float sprintSpeed = 10f;
+    public Transform cam;
+    public bool isTakingAction =false;
+    [Header("Jump Settings")]
+    public float jumpHeight = 3f;
+    public float gravity = -9.81f;
 
-   public float groundDistance;
-   //Essentials
-   public Transform cam;
-   private CharacterController controller;
-   private float turnSmoothTime = .1f;
-   private float turnSmoothVelocity;
-   private Animator anim;
-   
-   
-   //Movement
-   private Vector2 movement;
-   public float walkSpeed;
-   public float sprintSpeed;
-   private bool sprinting;
-   private float trueSpeed;
-   
-   
-   //Jump
-   public float jumpHeight;
-   public float gravity;
-   private bool isGrounded;
-   private Vector3 velocity;
+    // Private Components
+    private CharacterController controller;
+    private Animator animator;
+    
+    // Movement Variables
+    private float turnSmoothTime = 0.1f;
+    private float turnSmoothVelocity;
+    private float currentSpeed;
+    private Vector2 movementInput;
+    private bool isSprinting;
+    
+    // Jump Variables
+    private bool isGrounded;
+    private Vector3 verticalVelocity;
 
+    private void Start()
+    {
+        // Initialize components
+        controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
+        currentSpeed = walkSpeed;
+    }
 
-   private void Start()
-   {
-      trueSpeed = walkSpeed;
-      controller = GetComponent<CharacterController>();
-      anim = GetComponentInChildren<Animator>();
-   }
-
-   private void Update()
-   {
-      
-      isGrounded = Physics.CheckSphere(groundcheck.position, groundDistance, groundmask);
-      
-      anim.SetBool("IsGrounded",isGrounded);
-      if (isGrounded && velocity.y < 0);
-      {
-         velocity.y = -2;
-      }
-      movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-      Vector3 direction = new Vector3(movement.x, 0, movement.y).normalized;
-
-      if (Input.GetKeyDown(KeyCode.LeftShift))
-      {
-         trueSpeed = sprintSpeed;
-         sprinting = true;
-
-      }
-
-      if (Input.GetKeyUp(KeyCode.LeftShift))
-      {
-         trueSpeed = walkSpeed;
-         sprinting = false;
-      }
-      
-      if (direction.magnitude >= 0.1f)
-      {
-         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-         transform.rotation = Quaternion.Euler(0f, angle, 0f);
-         
-         Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-         controller.Move(moveDirection.normalized * trueSpeed * Time.deltaTime);
+    private void Update()
+    {
+        CheckGrounded();
+        if (!isTakingAction)
+        {
+            HandleMovementInput();
+            HandleSprintInput();
+            HandleMovement();
+        }
         
-         if (sprinting == true)
-         {
-            anim.SetFloat("Speed",2);
-         }
-         else
-         {
-            anim.SetFloat("Speed",1);
-         }
-         
-         
-      }
-      else
-      {
-         anim.SetFloat("Speed",0);
-      }
-      
-      //Jumping
-      if (Input.GetButtonDown("Jump") && isGrounded)
-      {
-         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-         //velocity.y = jumpHeight;
-      }
-      velocity.y += gravity * Time.deltaTime;
-      controller.Move(velocity * Time.deltaTime);
+        
+        HandleJump();
+        ApplyGravity();
+    }
 
-   /*if (Input.GetButtonDown("Jump") && isGrounded)
-   {
-      Jump();
-   }
+    private void CheckGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        animator.SetBool("IsGrounded", isGrounded);
 
-   void Jump()
-   {
-      rb.AddForce(Vector3.up*jumpForce,ForceMode.Impulse);
-   }*/
-   }
-   
-   
-   
-   
+        if (isGrounded && verticalVelocity.y < 0)
+        {
+            verticalVelocity.y = -2f;
+        }
+    }
+
+    private void HandleMovementInput()
+    {
+        movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    }
+
+    private void HandleSprintInput()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            currentSpeed = sprintSpeed;
+            isSprinting = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            currentSpeed = walkSpeed;
+            isSprinting = false;
+        }
+    }
+
+    private void HandleMovement()
+    {
+        Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            // Calculate rotation
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float smoothedAngle = Mathf.SmoothDampAngle(
+                transform.eulerAngles.y, 
+                targetAngle, 
+                ref turnSmoothVelocity, 
+                turnSmoothTime
+            );
+            
+            // Apply rotation
+            transform.rotation = Quaternion.Euler(0f, smoothedAngle, 0f);
+
+            // Calculate and apply movement
+            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
+
+            // Update animation
+            animator.SetFloat("Speed", isSprinting ? 2f : 1f);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0f);
+        }
+    }
+
+    private void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        verticalVelocity.y += gravity * Time.deltaTime;
+        controller.Move(verticalVelocity * Time.deltaTime);
+    }
 }

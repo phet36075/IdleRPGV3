@@ -44,7 +44,7 @@ public abstract class BaseSkill : MonoBehaviour
         if (CanUseSkill())
         {
             // ใช้ mana
-            
+           
             playerManager.UseMana(skillData.manaCost);
             isSkillActive = true;
             animator.SetTrigger(skillData.animationTriggerName);
@@ -79,6 +79,7 @@ public abstract class BaseSkill : MonoBehaviour
     public virtual void OnSkillStart()
     {
         ElementalCheck();
+        playerMovement.isTakingAction = true;
         Debug.Log($"Skill {skillData.skillName} started");
     }
 
@@ -95,6 +96,7 @@ public abstract class BaseSkill : MonoBehaviour
     public virtual void OnSkillEnd()
     {
         isSkillActive = false;
+        playerMovement.isTakingAction = false;
         Debug.Log($"Skill {skillData.skillName} ended");
     }
 

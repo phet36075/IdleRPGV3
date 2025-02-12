@@ -55,7 +55,7 @@ public class WeaponSystem : MonoBehaviour
             float timeSinceLastSheath = Time.time - lastSheathTime;
 
             // เช็คว่าผ่าน cooldown แล้ว
-            if (idleTime >= idleTimeBeforeSheath && timeSinceLastSheath >= sheathCooldown && _playerAttack.isAttacking == false)
+            if (idleTime >= idleTimeBeforeSheath && timeSinceLastSheath >= sheathCooldown )
             {
                 StartCoroutine(SheathWeaponRoutine());
             }
