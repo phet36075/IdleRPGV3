@@ -20,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
 
+    [Header("Roll Settings")]
+    public float rollSpeed = 15f;
+    public float rollDuration = 0.5f;
+    public float rollCooldown = 1f;
     // Private Components
     private CharacterController controller;
     private Animator animator;
@@ -35,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private Vector3 verticalVelocity;
 
+    // Roll Variables
+    public bool isRolling;
+    private float rollTimeRemaining;
+    private float rollCooldownRemaining;
+    private Vector3 rollDirection;
     private void Start()
     {
         // Initialize components
@@ -46,15 +55,25 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         CheckGrounded();
-        if (!isTakingAction)
+        if (!isRolling)
         {
-            HandleMovementInput();
-            HandleSprintInput();
-            HandleMovement();
+            if (!isTakingAction)
+            {
+                HandleMovementInput();
+                HandleSprintInput();
+                HandleMovement();
+                HandleJump();
+                HandleRollInput();
+            }
+        }else
+        {
+            UpdateRoll();
         }
+
+        UpdateRollCooldown();
         
         
-        HandleJump();
+        
         ApplyGravity();
     }
 
@@ -131,5 +150,55 @@ public class PlayerMovement : MonoBehaviour
     {
         verticalVelocity.y += gravity * Time.deltaTime;
         controller.Move(verticalVelocity * Time.deltaTime);
+    }
+    
+    private void HandleRollInput()
+    {
+        // Check if can roll (grounded, not in cooldown, and moving)
+        if (Input.GetKey(KeyCode.LeftControl) && 
+            isGrounded && 
+            rollCooldownRemaining <= 0 && 
+            movementInput.magnitude > 0.1f)
+        {
+            StartRoll();
+        }
+    }
+
+    private void StartRoll()
+    {
+        isRolling = true;
+        rollTimeRemaining = rollDuration;
+        
+        // Store current movement direction for the roll
+        Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        rollDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+        // Play roll animation
+        animator.SetTrigger("Roll");
+    }
+
+    private void UpdateRoll()
+    {
+        if (rollTimeRemaining > 0)
+        {
+            // Move in roll direction
+            controller.Move(rollDirection * rollSpeed * Time.deltaTime);
+            rollTimeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            // End roll
+            isRolling = false;
+            rollCooldownRemaining = rollCooldown;
+        }
+    }
+
+    private void UpdateRollCooldown()
+    {
+        if (rollCooldownRemaining > 0)
+        {
+            rollCooldownRemaining -= Time.deltaTime;
+        }
     }
 }
