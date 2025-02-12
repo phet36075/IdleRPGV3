@@ -135899,7 +135899,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 3.3666666
+  - time: 2.4666667
     functionName: FrozenKnife_OnSkillEnd
     data: 
     objectReferenceParameter: {fileID: 0}

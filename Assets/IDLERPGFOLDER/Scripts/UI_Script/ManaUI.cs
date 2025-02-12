@@ -12,7 +12,7 @@ public class ManaUI : MonoBehaviour
     public Slider manaBar;
     private void Start()
     {
-        manaBar.maxValue = playerManager.GetMaxMana();
+        manaBar.maxValue = playerManager.playerData.maxMana;
         manaBar.value = playerManager.GetCurrentMana();
         if (playerManager != null)
         {
@@ -21,19 +21,29 @@ public class ManaUI : MonoBehaviour
             // Update UI ครั้งแรก
             UpdateManaUI(playerManager.GetCurrentMana());
         }
+
+        StartCoroutine(RegenerateMana());
     }
 
+    private IEnumerator RegenerateMana()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+
+           playerManager.RestoreMana(playerManager.playerData.manaRegenRate);
+        }
+        
+    }
     private void UpdateManaUI(float currentMana)
     {
         // อัพเดทแถบ mana
         //manaBarFill.fillAmount = currentMana / playerManager.GetMaxMana();
         // อัพเดทตัวเลข mana
         manaText.text = $"{Mathf.Ceil(currentMana)}/{playerManager.GetMaxMana()}";
-
+        manaBar.maxValue = playerManager.playerData.maxMana;
        StartCoroutine(SmoothManaBar());
-
-
-
+       
     }
     IEnumerator SmoothManaBar()
     {

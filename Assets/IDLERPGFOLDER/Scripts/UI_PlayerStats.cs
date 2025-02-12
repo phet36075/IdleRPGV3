@@ -30,7 +30,8 @@ public class UIPlayerStats : MonoBehaviour
     public TextMeshProUGUI txtCritDamage;
     public TextMeshProUGUI txtArmorPenatration;
     public TextMeshProUGUI txtHpRegen;
-    
+    public TextMeshProUGUI txtMana;
+    public TextMeshProUGUI txtManaRegen;
     [Header("Level Text")]
     public TextMeshProUGUI txtLevel;
     public TextMeshProUGUI txtLevel2;
@@ -64,7 +65,9 @@ public class UIPlayerStats : MonoBehaviour
         txtCritDamage.text = playerData.criticalDamage.ToString();
         txtArmorPenatration.text = playerData.armorPenetration.ToString();
         txtHpRegen.text = playerData.regenRate.ToString();
-
+        txtMana.text = playerData.maxMana.ToString();
+        txtManaRegen.text = playerData.manaRegenRate.ToString();
+        
         txtLevel.text = playerStats.Level.ToString();
         txtLevel2.text = playerStats.Level.ToString();
         txtExp.text = playerStats.CurrentExp.ToString();

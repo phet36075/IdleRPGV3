@@ -9,15 +9,16 @@ public abstract class BaseSkill : MonoBehaviour
     protected bool isOnCooldown = false;
     protected Animator animator;
     protected bool isSkillActive = false;
-    protected PlayerManager playerManager;  // เพิ่มตรงนี้
+    protected PlayerManager playerManager;  
     protected PlayerMovement playerMovement;
+    protected WeaponSystem weaponSystem;
     public SkillData SkillData => skillData != null ? skillData : null;
     
     // Events สำหรับ cooldown
     public event System.Action<float> OnCooldownStart;
     public event System.Action OnCooldownEnd;
     public bool IsOnCooldown => isOnCooldown;
-    public bool IsSkillActive => isSkillActive;  // เพิ่ม property นี้
+    public bool IsSkillActive => isSkillActive;  
     public virtual void SetSkillData(SkillData data)
     {
         skillData = data;
@@ -27,7 +28,8 @@ public abstract class BaseSkill : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerManager = GetComponentInParent<PlayerManager>();  // หา PlayerManager ตอน start
-        playerMovement = GetComponentInParent<PlayerMovement>();  // หา PlayerManager ตอน start
+        playerMovement = GetComponentInParent<PlayerMovement>();  
+        weaponSystem = GetComponentInParent<WeaponSystem>();
     }
 
     public virtual bool CanUseSkill()
@@ -37,14 +39,14 @@ public abstract class BaseSkill : MonoBehaviour
         // เช็คทั้ง cooldown และ mana
         return !isOnCooldown && 
                !isSkillActive && 
-               playerManager.HasEnoughMana(skillData.manaCost);
+               playerManager.HasEnoughMana(skillData.manaCost) && weaponSystem.GetIsDrawn;
     }
     public virtual void UseSkill()
     {
         if (CanUseSkill())
         {
             // ใช้ mana
-           
+           weaponSystem.ResetIdleTimer();
             playerManager.UseMana(skillData.manaCost);
             isSkillActive = true;
             animator.SetTrigger(skillData.animationTriggerName);

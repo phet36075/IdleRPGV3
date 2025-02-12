@@ -11,6 +11,7 @@ public class PlayerData : ScriptableObject
     public float DefaultMaxHealth;
     public float maxHealth = 100f;
     public float currentHealth;
+    [Header("Mana")] public float maxMana;
     [Header("----Damage----")]
     public float baseDamage = 10f;
     public float DefaultbaseDamage;
@@ -27,10 +28,10 @@ public class PlayerData : ScriptableObject
     public float damageVariation = 0.2f; // 20% variation
     [Header("----Regen Rate----")]
     public float regenRate = 1f;
-
+    public float manaRegenRate = 20f;
     [Header("----Move Speed----")]
     public float moveSpeed = 2;
-
+    
   
     
     [Header("Elemental")]

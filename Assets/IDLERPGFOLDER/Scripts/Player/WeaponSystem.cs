@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class WeaponSystem : MonoBehaviour
 {
+    public TextMeshProUGUI PressTabText;
     public Transform weaponBack; // ตำแหน่งดาบที่หลัง
     public Transform weaponHand; // ตำแหน่งดาบที่มือ
     public GameObject sword; // ตัวดาบ
@@ -32,7 +33,34 @@ public class WeaponSystem : MonoBehaviour
         _playerAttack = GetComponent<PlayerAttack>();
     }
     
+    void Update()
+    {
+        if (!isDrawn)
+        {
+            PressTabText.gameObject.SetActive(true);
+        }
+        else
+        {
+            PressTabText.gameObject.SetActive(false);
+        }
+        CheckMovement();
+        CheckIdleTime();
+        // ตัวอย่างการเช็คว่าอยู่ในโหมดต่อสู้หรือไม่
+        if (Input.GetKeyDown(KeyCode.Tab)) // หรือปุ่มที่คุณต้องการ
+        {
+            if (!isDrawn)
+            {
+                ResetIdleTimer();
+                DrawWeaponAnim();
 
+            }
+            else
+            {
+               
+                SheathWeaponAnim();
+            }
+        }
+    }
     void CheckMovement()
     {
         // ตรวจสอบการเคลื่อนที่หรือหมุน
@@ -126,24 +154,5 @@ public class WeaponSystem : MonoBehaviour
             isDrawn = false;
         }
     }
-    void Update()
-    {
-        CheckMovement();
-        CheckIdleTime();
-        // ตัวอย่างการเช็คว่าอยู่ในโหมดต่อสู้หรือไม่
-        if (Input.GetKeyDown(KeyCode.Tab)) // หรือปุ่มที่คุณต้องการ
-        {
-            if (!isDrawn)
-            {
-                ResetIdleTimer();
-                DrawWeaponAnim();
-
-            }
-            else
-            {
-               
-                SheathWeaponAnim();
-            }
-        }
-    }
+    
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   DefaultMaxHealth: 500
   maxHealth: 500
   currentHealth: 500
+  maxMana: 200
   baseDamage: 20
   DefaultbaseDamage: 20
   weaponDamage: 5

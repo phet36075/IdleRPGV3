@@ -9,7 +9,10 @@ public class StatsFormula : ScriptableObject
     public float regenPerVit = 10f;
     public float hpPerLevel = 20f;
 
-    
+    [Header("Mana Formula")] public float baseMana = 100f;
+    public float baseManaRegen = 10f;
+    public float manaPerInt = 0.1f;
+    public float manaRegenPerInt = 2f;
     [Header("Damage Formula")]
     public float baseDamage = 10f;
     public float damagePerStr = 2f;

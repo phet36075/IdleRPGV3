@@ -64,7 +64,7 @@ public class SkillSlotUI : MonoBehaviour
     }
     public void OnUnequipButtonClick()
     {
-        if (currentSkill != null && onUnequipCallback != null)
+        if (currentSkill != null && onUnequipCallback != null &&!isCooldown)
         {
             onUnequipCallback.Invoke(currentSkill);
         }

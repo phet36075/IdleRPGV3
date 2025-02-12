@@ -53,29 +53,30 @@ public class PlayerManager : MonoBehaviour
     
     
     
-    [SerializeField] private float maxMana = 100f;
-    private float currentMana = 100;
+  //  [SerializeField] private float maxMana = 100f;
+    public float currentMana = 100;
 
     public event System.Action<float> OnManaChanged;  // Event สำหรับอัพเดท UI
     
     // ฟังก์ชันเปลี่ยนธาตุ
 
-    public float GetMaxMana() => maxMana;
+    public float GetMaxMana() => playerData.maxMana;
     public float GetCurrentMana() => currentMana;
 
     public void AddMana(float amount)
     {
         currentMana += amount;
-        if (currentMana >= maxMana)
+        if (currentMana >= playerData.maxMana)
         {
-            currentMana = maxMana;
+            currentMana = playerData.maxMana;
         }
        
         OnManaChanged?.Invoke(currentMana);
     }
     void Start()
     {
-        currentMana = maxMana;
+       // maxMana = playerData.maxMana;
+        currentMana = playerData.maxMana;
         UpdateHealthBar();
         healthBar.maxValue = playerData.maxHealth;
         healthBar.value = currentHealth;
@@ -122,6 +123,12 @@ public class PlayerManager : MonoBehaviour
 
         // คำนวณ Evasion
         //  evasion = playerStats.GetStat(StatType.Agility) * formula.evasionPerAgi;
+
+        playerData.maxMana = formula.baseMana * (1 + (playerStats.GetStat(StatType.Intelligence) * formula.manaPerInt));
+        playerData.manaRegenRate = formula.baseManaRegen + (playerStats.GetStat(StatType.Intelligence) * formula.manaRegenPerInt) ;
+        
+        OnManaChanged?.Invoke(currentMana);
+        UpdateHealthBar();
     }
     
     private void Update()
@@ -155,7 +162,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7)) // กด 7
         {
-            AddMana(50f);
+           RestoreMana(50f);
         }
     }
 
@@ -311,7 +318,7 @@ public class PlayerManager : MonoBehaviour
 
     public void RestoreMana(float amount)
     {
-        currentMana = Mathf.Min(maxMana, currentMana + amount);
+        currentMana = Mathf.Min(playerData.maxMana, currentMana + amount);
         OnManaChanged?.Invoke(currentMana);
     }
     
