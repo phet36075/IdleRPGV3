@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76449b976f4ce964783dff0279d8ce83, type: 3}
+  m_Name: Frozen Knife
+  m_EditorClassIdentifier: 
+  elementType: 2
+  StatusSkill: 4
+  skillName: Frozen Knife
+  animationTriggerName: FrozenKnifeTrigger
+  skillIcon: {fileID: 21300000, guid: 35dfd41a64d701042a20c3ba47242c9c, type: 2}
+  cooldown: 9
+  damage: 0
+  baseSkillDamage: 70
+  baseSkillDamage2: 0
+  manaMultiplier: 0.3
+  weaponMultiplier: 0.1
+  skillComponentTypeName: FrozenKnife
+  manaCost: 9
+  description: Spawn a frozen knife-shape spraying from above dealing 70(+10%)(+30%)
+    along 5 second and 40% chance to Freeze stack in each hit

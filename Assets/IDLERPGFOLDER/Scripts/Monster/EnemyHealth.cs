@@ -399,6 +399,11 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         {
             StartCoroutine(ApplyEarthTremor(finalDamage,true));
         }
+
+        if (damageData.status == Status.Slow)
+        {
+            HandleWaterEffect(damageData);
+        }
     }
     
     private void SpawnHitEffect()
@@ -659,7 +664,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     private IEnumerator ApplyJudgement(float multiplier = 1f)
     {
         GameObject effect = Instantiate(JudgementVFX, darnessVFXPosition.position, darnessVFXPosition.rotation);
-        Destroy(effect, 3f);
+        Destroy(effect, 1f);
         float[] holyMultipliers = { 2.25f * multiplier, 1.75f * multiplier};
     
         for(int i = 0; i < holyMultipliers.Length; i++)
