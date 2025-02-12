@@ -10,13 +10,16 @@ public class PlayerController : MonoBehaviour
     public bool isAIEnabled = true;
     public bool isAIActive = true;
     private bool wasManualInputActive = false;
+    [SerializeField] private WeaponSystem weaponSystem;
 
     public TextMeshProUGUI OnOffTxT;
     void Update()
     {
         if (isAIEnabled == true)
         {
+            weaponSystem.DrawWeaponAnim();
             OnOffTxT.text = "On";
+            
         }else if (isAIEnabled == false)
         {
             OnOffTxT.text = "Off";

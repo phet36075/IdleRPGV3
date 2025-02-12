@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class PlayerAttack : MonoBehaviour
 {
     private AllyManager _allyManager;
+    private WeaponSystem _weaponSystem;
     public Animator animator;
     
     public AllyRangedCombat rangedAllies;  // เพิ่มอาร์เรย์ของพวกพ้องที่โจมตีระยะไกล
@@ -31,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         _allyManager = GetComponent<AllyManager>();
-
+        _weaponSystem = GetComponent<WeaponSystem>();
     }
 
     void Update()
@@ -43,7 +44,7 @@ public class PlayerAttack : MonoBehaviour
             _isMovingToEnemy = false;
         }
         
-        if (Input.GetKeyDown(KeyCode.F) && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.F) && !isAttacking && _weaponSystem.GetIsDrawn == true)
         {
             Attack();
         }

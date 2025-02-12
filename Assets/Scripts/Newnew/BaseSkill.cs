@@ -10,6 +10,7 @@ public abstract class BaseSkill : MonoBehaviour
     protected Animator animator;
     protected bool isSkillActive = false;
     protected PlayerManager playerManager;  // เพิ่มตรงนี้
+    protected PlayerMovement playerMovement;
     public SkillData SkillData => skillData != null ? skillData : null;
     
     // Events สำหรับ cooldown
@@ -26,6 +27,7 @@ public abstract class BaseSkill : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         playerManager = GetComponentInParent<PlayerManager>();  // หา PlayerManager ตอน start
+        playerMovement = GetComponentInParent<PlayerMovement>();  // หา PlayerManager ตอน start
     }
 
     public virtual bool CanUseSkill()
@@ -42,8 +44,8 @@ public abstract class BaseSkill : MonoBehaviour
         if (CanUseSkill())
         {
             // ใช้ mana
-            playerManager.UseMana(skillData.manaCost);
             
+            playerManager.UseMana(skillData.manaCost);
             isSkillActive = true;
             animator.SetTrigger(skillData.animationTriggerName);
             StartCoroutine(CooldownRoutine());
