@@ -1,7 +1,7 @@
 using Tiny;
 using UnityEngine;
 using UnityEngine.Serialization;
-
+using UnityEngine.EventSystems;
 public class PlayerAttack : MonoBehaviour
 {
     private AllyManager _allyManager;
@@ -50,16 +50,21 @@ public class PlayerAttack : MonoBehaviour
            
         
 
-        if (Input.GetKeyDown(KeyCode.F) && !isAttacking )
+        if (Input.GetKeyDown(KeyCode.F) )
         {
             Attack();
         }
-        
         else
         {
             StopMoving();
         }
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                Attack();
+            }
+        }
        
     }
     public void Attack()

@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool isAIEnabled = true;
     public bool isAIActive = true;
     private bool wasManualInputActive = false;
+    public GameObject ToggleEffect;
     [SerializeField] private WeaponSystem weaponSystem;
 
     public TextMeshProUGUI OnOffTxT;
@@ -19,10 +20,11 @@ public class PlayerController : MonoBehaviour
         {
             weaponSystem.DrawWeaponAnim();
             OnOffTxT.text = "On";
-            
+            ToggleEffect.gameObject.SetActive(true);
         }else if (isAIEnabled == false)
         {
             OnOffTxT.text = "Off";
+            ToggleEffect.gameObject.SetActive(false);
         }
         
         if (Input.GetKeyDown(KeyCode.T)) // ปุ่มเพื่อสลับระหว่างผู้เล่นและ AI
