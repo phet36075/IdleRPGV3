@@ -23,6 +23,7 @@ public class SkillManager : MonoBehaviour
     void Update()
     {
         // ตัวอย่างการใช้ Input
+       
         if (Input.GetKeyDown(KeyCode.Q)) UseSkill(0);
         if (Input.GetKeyDown(KeyCode.E)) UseSkill(1);
         if (Input.GetKeyDown(KeyCode.R)) UseSkill(2);
@@ -81,7 +82,7 @@ public class SkillManager : MonoBehaviour
             BaseSkill currentSkill = skills[currentSkillIndex];
             
             // ถ้าสกิลไม่ติด cooldown และไม่กำลังใช้งานอยู่
-            if (!currentSkill.IsOnCooldown && !currentSkill.IsSkillActive)
+            if (!currentSkill.IsOnCooldown /* && !currentSkill.IsSkillActive*/)
             {
                 currentSkill.UseSkill();
                 // เลื่อนไปตำแหน่งถัดไป

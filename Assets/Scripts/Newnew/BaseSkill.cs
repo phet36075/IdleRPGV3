@@ -38,7 +38,7 @@ public abstract class BaseSkill : MonoBehaviour
         
         // เช็คทั้ง cooldown และ mana
         return !isOnCooldown && 
-               !isSkillActive && 
+             //  !isSkillActive && 
                playerManager.HasEnoughMana(skillData.manaCost) && weaponSystem.GetIsDrawn;
     }
     public virtual void UseSkill()
@@ -80,9 +80,11 @@ public abstract class BaseSkill : MonoBehaviour
     // Animation Event Handlers
     public virtual void OnSkillStart()
     {
+        isSkillActive = true;
         ElementalCheck();
         playerMovement.isTakingAction = true;
         Debug.Log($"Skill {skillData.skillName} started");
+        Invoke(nameof(OnSkillEnd),4f);
     }
 
     public virtual void OnHitboxActivate()

@@ -44,10 +44,15 @@ public class PlayerAttack : MonoBehaviour
             _comboStep = 0;
             isAttacking = false;
             _isMovingToEnemy = false;
+            playerMovement.isTakingAction = false;
         }
 
+        /*if (Time.time - _lastAttackTime > 1)
+        {
+            playerMovement.isTakingAction = false;
+        }*/
+
        
-           
         
 
         if (Input.GetKeyDown(KeyCode.F) )

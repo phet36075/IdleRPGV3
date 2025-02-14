@@ -118,7 +118,7 @@ TextureImporter:
         width: 30
         height: 31
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -127,6 +127,28 @@ TextureImporter:
       bones: []
       spriteID: 6b89bf55133c79b4aa52a04d6c1675f8
       internalID: -1519622253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI assets (3x)_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 190
+        width: 732
+        height: 476
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 492e107cc77d7aa4b98d358d89135d03
+      internalID: -1240087233
       vertices: []
       indices: 
       edges: []
@@ -146,6 +168,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       UI assets (3x)_0: -1519622253
+      UI assets (3x)_1: -1240087233
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
