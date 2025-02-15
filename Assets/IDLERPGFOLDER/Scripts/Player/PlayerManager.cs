@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour,IDamageable
 {
     [Header("Elemental")]
     public List<GameObject> elementalEffect;
@@ -62,6 +62,7 @@ public class PlayerManager : MonoBehaviour
 
     public float GetMaxMana() => playerData.maxMana;
     public float GetCurrentMana() => currentMana;
+    public float GetMaxHealth() => playerData.maxHealth;
 
     public void AddMana(float amount)
     {
@@ -93,6 +94,7 @@ public class PlayerManager : MonoBehaviour
        UpdateWeaponEffects(playerData.elementType);
       
     }
+    
     public void RecalculateStats()
     {
         // คำนวณ Max HP
@@ -239,7 +241,43 @@ public class PlayerManager : MonoBehaviour
         UpdateHealthBar();
 
     }
+    
 
+    public void TakeDamage(float amount, float armorPen, WeaponType weaponType)
+    {
+        
+    }
+    // รับดาเมจพร้อมข้อมูลเพิ่มเติม
+    public void TakeDamage(DamageData damageData)
+    {
+        hitEffect.StartHitEffect();
+        
+        // Apply armor penetration
+        float effectiveDefense = Mathf.Max(0, playerData.defense - damageData.armorPenetration);
+
+        // Calculate damage reduction
+        float damageReduction = effectiveDefense / (effectiveDefense + 100f);
+
+        // Calculate final damage
+        float finalDamage = damageData.damage * (1f - damageReduction);
+       
+        currentHealth -= finalDamage;
+        currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
+
+        Debug.Log($"Player took {finalDamage} damage. Current health: {currentHealth}");
+        
+        audioManager.PlayHitSound();
+        damageDisplay.DisplayDamage(finalDamage);
+        Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);
+        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position,rotation );
+        Destroy(effect, 1f);
+            
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+        UpdateHealthBar();
+    }
     public void Heal(float amount)
     {
         currentHealth +=amount;

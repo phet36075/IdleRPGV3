@@ -897,12 +897,6 @@ PrefabInstance:
       addedObject: {fileID: 1325710517833138407}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6943423079997676159}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6678346254499349826}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5039188728682897619}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
       insertIndex: -1
@@ -916,6 +910,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3304348286440733885}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4151970051859472428}
     - targetCorrespondingSourceObject: {fileID: 635547659545568360, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143913214364411950}
@@ -942,22 +939,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a6c468df95731479ed892f607f3414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossSkills:
+  - {fileID: 4151970051859472428}
+  - {fileID: 4151970051859472428}
+  - {fileID: 4151970051859472428}
   _BossData: {fileID: 11400000, guid: 352734a712f37fe4fb237689298a875f, type: 2}
   animator: {fileID: 4342426368844977647}
   attackRange: 2
-  attackDamage: 10
   chaseRange: 10
-  fireBallDamage: 20
-  iceSpearDamage: 15
-  thunderStrikeDamage: 25
-  skillCooldown: 10
-  IsUsingSkill: 0
-  rotationSpeed: 5
-  dashDistance: 5
-  dashDuration: 1.5
-  Skill3Prefab: {fileID: 4793280151809815146, guid: 5bffff5061706ae428fbb619c0154aa7, type: 3}
-  distanceSkill3: 1
   attackCooldown: 5
+  skillCooldown: 0
+  rotationSpeed: 5
+  IsUsingSkill: 0
 --- !u!195 &1325710517833138407
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -980,36 +973,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!114 &6943423079997676159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7055057859302053167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7252fb89333b7f40a69e67a57cecb0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 2093315739786083040, guid: 4b3db4a4dc650e04491571fb1ded93a7, type: 3}
-  distanceInFront: 3
-  objectToAttach: {fileID: 1479687051209355539, guid: b78278a96b8731a4895e97e0688028e1, type: 3}
-  attachmentOffset: {x: 0, y: 0, z: 0}
---- !u!114 &6678346254499349826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7055057859302053167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffe77ca56c80f34098fb3b118116814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillCirclePrefab: {fileID: 763126377463097019, guid: 2fe5ef71e773e3f46b9b766c1e285a89, type: 3}
-  minDistance: 2
 --- !u!114 &5039188728682897619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1209,6 +1172,23 @@ MonoBehaviour:
   randomOffsetRange: {x: 0.5, y: 0.5, z: 0.5}
   textToDisplay: 
   vector: {x: 0, y: 0, z: 0}
+--- !u!114 &4151970051859472428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7055057859302053167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7252fb89333b7f40a69e67a57cecb0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossSkillData: {fileID: 11400000, guid: 31bf38e5ae915444a9f65ad03d31e94b, type: 2}
+  skillIndicatorPrefab: {fileID: 6252701811108093375, guid: 16cbb25516223024e91bbd90f18bd700, type: 3}
+  hitboxOffset: {x: 0, y: 0, z: 1}
+  hitboxSpawnDelay: 1
+  indicatorDuration: 1
 --- !u!1 &7347652844553538582 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 635547659545568360, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
