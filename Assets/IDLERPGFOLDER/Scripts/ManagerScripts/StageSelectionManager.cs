@@ -132,8 +132,6 @@ public class StageSelectionManager : MonoBehaviour
     {
         if (selectedStageIndex <= currentStage)
         {
-            Vector3 newpos = new Vector3(-8, 2.1f, -6);
-            _teleportPlayer.TeleportPlayer(newpos);
             enemySpawner.SetStage(selectedStageIndex);
             
             // เรียกใช้ script เข้าด่านของคุณที่นี่

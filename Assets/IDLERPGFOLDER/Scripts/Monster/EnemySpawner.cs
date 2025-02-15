@@ -1,272 +1,217 @@
-using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.LowLevel;
-using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private TestTeleportPlayer _teleportPlayer;
-    [SerializeField]private StageSelectionManager stageSelectionManager;
-  //  private PlayerController 
-    private StageManager _stageManager;
+    [SerializeField] private StageSelectionManager stageSelectionManager;
+    
+    [Header("Stage Settings")]
     public StageData _StageData;
-    public GameObject[] enemyPrefab;  // ตัว prefab ของศัตรู
-    public float spawnInterval = 2f;  // ระยะเวลาระหว่างการเกิดของศัตรูแต่ละตัว
-    public float spawnRadius = 10f;  // รัศมีของพื้นที่ที่ศัตรูจะเกิด
-    public int maxEnemies = 10;  // จำนวนศัตรูสูงสุดที่จะเกิด
-    public List<Transform> spawnPoints;  // ลิสต์ของตำแหน่งที่จะให้ศัตรูเกิด
-    private EnemyHealth _enemyHealth;
-    public int enemiesSpawned = 0;  // จำนวนศัตรูที่เกิดแล้ว
-    public int enemiesDefeated = 0;  // จำนวนศัตรูที่ถูกกำจัดแล้ว
-
-    public GameObject NextButton;
- 
-    public GameObject WinUI;
-    private GameObject enemy;
     public int currentStage = 1;
     public int MapIndex;
-   // public int furthestStage = 1;
     
+    [Header("Spawn Settings")]
+    public GameObject[] enemyPrefab;
+    public float spawnInterval = 2f;
+    public float spawnRadius = 10f;
+    public int maxEnemies = 10;
+    public List<Transform> spawnPoints;
+    
+    [Header("Enemy Tracking")]
+    public int enemiesSpawned = 0;
+    public int enemiesDefeated = 0;
+    
+    [Header("UI Elements")]
+    public GameObject NextButton;
+    public GameObject WinUI;
     public GameObject BossUI;
+    
+    private TestTeleportPlayer _teleportPlayer;
+    private StageManager _stageManager;
+    private bool isClearing = false;
 
-    
-    public bool isClearing = false; // เพิ่มตัวแปรควบคุมการเคลียร์
-    
-    
-    void Start()
+    private void Start()
     {
-        _enemyHealth = FindObjectOfType<EnemyHealth>();
+        InitializeComponents();
+        StartSpawning();
+    }
+
+    private void InitializeComponents()
+    {
         _teleportPlayer = FindObjectOfType<TestTeleportPlayer>();
         _stageManager = FindObjectOfType<StageManager>();
-        //currentStage = _StageData.currentStage;
-        // เริ่มการเรียกฟังก์ชัน SpawnEnemy ซ้ำๆ ทุก spawnInterval วินาที
-        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
     }
-    void Update()
+
+    private void Update()
     {
-        // เพิ่มการตรวจสอบการกดปุ่ม P
         if (Input.GetKeyDown(KeyCode.P))
         {
             ClearAllEnemies();
         }
     }
+
+    private void StartSpawning()
+    {
+        InvokeRepeating(nameof(SpawnEnemy), 0f, spawnInterval);
+    }
+
+    public void SpawnEnemy()
+    {
+        if (enemiesSpawned >= maxEnemies)
+        {
+            CancelInvoke(nameof(SpawnEnemy));
+            return;
+        }
+
+        Vector3 spawnPos = GetSpawnPosition();
+        GameObject enemy = CreateEnemy(spawnPos);
+        enemy.AddComponent<EnemyDefeatedNotifier>().spawner = this;
+        enemiesSpawned++;
+    }
+
+    private Vector3 GetSpawnPosition()
+    {
+        if (spawnPoints.Count > 0)
+        {
+            return spawnPoints[Random.Range(0, spawnPoints.Count)].position;
+        }
+        
+        Vector2 randomPos = Random.insideUnitCircle * spawnRadius;
+        return new Vector3(randomPos.x, 0, randomPos.y) + transform.position;
+    }
+
+    private GameObject CreateEnemy(Vector3 spawnPos)
+    {
+        UpdateStageSettings();
+        int enemyIndex = GetEnemyIndexForStage();
+        return Instantiate(enemyPrefab[enemyIndex], spawnPos, Quaternion.identity);
+    }
+
+    private int GetEnemyIndexForStage()
+    {
+        int stageModulo = currentStage % 5;
+        if (stageModulo == 0) return 4; // Boss stages (5, 10, etc.)
+        if (stageModulo == 1) return 0;
+        if (stageModulo == 2) return 1;
+        if (stageModulo == 3) return 5;
+        return 2; // stageModulo == 4 or default case
+    }
+
+    private void UpdateStageSettings()
+    {
+        int stageModulo = currentStage % 5;
+        MapIndex = (stageModulo == 0) ? 5 : stageModulo;
+        maxEnemies = (stageModulo == 0) ? 1 : 5;
+    }
+
     public void ClearAllEnemies()
     {
-        isClearing = true; // ตั้งค่าเป็น true ก่อนเริ่มเคลียร์
-
-        // หาศัตรูทั้งหมดในฉาก
+        isClearing = true;
         GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        // ทำลายศัตรูทุกตัว
         foreach (GameObject enemy in allEnemies)
         {
             Destroy(enemy);
         }
-
-        // รีเซ็ตตัวแปรที่เกี่ยวข้อง
-        enemiesSpawned = 0;
-        enemiesDefeated = 0;
+        ResetEnemyCount();
         StartCoroutine(WaitAndResetClear());
-
-        Debug.Log("All enemies cleared!");
     }
 
-    IEnumerator WaitAndResetClear()
+    private void ResetEnemyCount()
+    {
+        enemiesSpawned = 0;
+        enemiesDefeated = 0;
+    }
+
+    private IEnumerator WaitAndResetClear()
     {
         yield return new WaitForSeconds(5f);
         isClearing = false;
     }
-    public int GetStage()
+
+    public void EnemyDefeated()
     {
-        return currentStage;
+        if (isClearing) return;
+        
+        enemiesDefeated++;
+        if (enemiesDefeated >= maxEnemies)
+        {
+            HandleStageCompletion();
+        }
+    }
+
+    private void HandleStageCompletion()
+    {
+        BeforeBossStageCheck();
+        if (currentStage <= stageSelectionManager.currentStage)
+        {
+            ResetEnemyCount();
+            StartSpawning();
+        }
+        
+        if (currentStage >= stageSelectionManager.currentStage)
+        {
+            CompleteCurrentStage();
+        }
+    }
+
+    private void BeforeBossStageCheck()
+    {
+        if ((currentStage - 4) % 5 == 0)
+        {
+            BossUI.SetActive(true);
+        }
+    }
+
+    private void CompleteCurrentStage()
+    {
+        stageSelectionManager.CompleteStage(currentStage);
+        BossUI.SetActive(false);
+        WinUI.SetActive(true);
+    }
+
+    public void TeleportPlayer()
+    {
+        Vector3 newpos = new Vector3(-8, 2.1f, -6);
+        _teleportPlayer.TeleportPlayer(newpos);
+    }
+    public void GotoBoss()
+    {
+        TeleportPlayer();
+        
+        ClearAllEnemies();
+        maxEnemies = 1;
+        currentStage += 1;
+        
+        _stageManager.ChangeMap(MapIndex);
+        StartSpawning();
+        BossUI.SetActive(false);
     }
 
     public void NextStage()
-    {
-        currentStage += 1;
-        MapChecking();
-        _stageManager.ChangeMap(MapIndex);
-        enemiesDefeated = 0;
-        enemiesSpawned = 0;
-        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
+    { 
+        TeleportPlayer();
         
+        currentStage += 1;
+        UpdateStageSettings();
+        _stageManager.ChangeMap(MapIndex);
+        ResetEnemyCount();
+        StartSpawning();
     }
 
     public void SetStage(int stageIndex)
     {
+        TeleportPlayer();
+        
         ClearAllEnemies();
         currentStage = stageIndex;
         _stageManager.ChangeMap(stageIndex);
-        enemiesDefeated = 0;
-        enemiesSpawned = 0;
-        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
+        ResetEnemyCount();
+        StartSpawning();
     }
 
-   
-    public void GotoBoss()
-    {
-      
-        _stageManager.ChangeMap(MapIndex);
-        Vector3 newpos = new Vector3(-8, 2.1f, -6);
-        _teleportPlayer.TeleportPlayer(newpos);
-        ClearAllEnemies();
-        enemiesDefeated = 0;
-        enemiesSpawned = 0;
-        maxEnemies = 1;
-        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
-        currentStage += 1;
-        BossUI.SetActive(false);
-    }
-    public void SpawnEnemy()
-    {
-        // ตรวจสอบว่าจำนวนศัตรูที่เกิดแล้วยังไม่เกินค่าสูงสุด
-        if (enemiesSpawned < maxEnemies)
-        {
-            Vector3 spawnPos;
+    public int GetStage() => currentStage;
 
-            if (spawnPoints.Count > 0)
-            {
-                // สุ่มเลือกตำแหน่งจาก spawnPoints
-                spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position;
-            }
-            else
-            {
-                // ถ้าไม่มี spawnPoints ให้สุ่มตำแหน่งภายในวงกลมเหมือนเดิม
-                Vector2 randomPos = Random.insideUnitCircle * spawnRadius;
-                spawnPos = new Vector3(randomPos.x, 0, randomPos.y) + transform.position;
-            }
-
-
-            MapChecking();
-            if ((currentStage - 1) % 5 == 0) // ด่าน 1 6 11 16
-            {
-                enemy = Instantiate(enemyPrefab[0], spawnPos, Quaternion.identity);
-                maxEnemies = 5;
-               // MapIndex = 1;
-            }
-            else if ((currentStage - 2) % 5 == 0) // ด่าน 2 7 12 17
-            {
-                enemy = Instantiate(enemyPrefab[1], spawnPos, Quaternion.identity);
-                maxEnemies = 5;
-               // MapIndex = 2;
-            }
-            else if ((currentStage - 3) % 5 == 0) // ด่าน 3 8 13 18
-            {
-                enemy = Instantiate(enemyPrefab[5], spawnPos, Quaternion.identity);
-                maxEnemies = 5;
-              //  MapIndex = 3;
-            }
-            else 
-            if ((currentStage - 4) % 5 == 0) // ด่าน 4,9 , 14 19
-            {
-                enemy = Instantiate(enemyPrefab[2], spawnPos, Quaternion.identity);
-                maxEnemies = 5;
-               // MapIndex = 4;
-            }
-            else if (currentStage % 5 == 0) // ด่าน 5 10
-            {
-                enemy = Instantiate(enemyPrefab[4], spawnPos, Quaternion.identity);
-                maxEnemies = 1;
-               // MapIndex = 5;
-            }
-            else
-            {
-                enemy = Instantiate(enemyPrefab[2], spawnPos, Quaternion.identity);
-                maxEnemies = 5;
-               // MapIndex = 5;
-            }
-            
-            enemiesSpawned++;
-            // เพิ่ม EnemyDefeatedNotifier component ให้กับศัตรู
-            enemy.AddComponent<EnemyDefeatedNotifier>().spawner = this;
-        }
-        else
-        {
-            // หยุดการ spawn เมื่อครบจำนวนที่กำหนด
-            CancelInvoke("SpawnEnemy");
-        }
-    }
-
-    public void MapChecking()
-    {
-        if ((currentStage - 1) % 5 == 0) // ด่าน 1 6 11 16
-        {
-            MapIndex = 1;
-        }
-        else if ((currentStage - 2) % 5 == 0) // ด่าน 2 7 12 17
-        {
-            MapIndex = 2;
-        }
-        else if ((currentStage - 3) % 5 == 0) // ด่าน 3 8 13 18
-        {
-            MapIndex = 3;
-        }
-        else 
-        if ((currentStage - 4) % 5 == 0) // ด่าน 4,9 , 14 19
-        {
-            MapIndex = 4;
-        }
-        else if (currentStage % 5 == 0) // ด่าน 5 10
-        {
-            MapIndex = 5;
-        }
-        else
-        {
-            maxEnemies = 5;
-            MapIndex = 5;
-        }
-    }
-    public void EnemyDefeated()
-    {
-        if (!isClearing) // เช็คว่าไม่ได้อยู่ในระหว่างการเคลียร์
-        {
-            enemiesDefeated++;
-        }
-        if (enemiesDefeated >= maxEnemies)
-        {
-            BeforeBossStageCheck();
-            AlreadyWinCheck();
-            WinningCheck();
-        }
-        
-       
-    }
-
-    public void AlreadyWinCheck()
-    {
-        if ( currentStage <= stageSelectionManager.currentStage)
-        {
-            enemiesDefeated = 0;
-            enemiesSpawned = 0;
-            InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
-        }
-    }
-
-    public void BeforeBossStageCheck()
-    {
-       
-            if ((currentStage - 4) % 5 == 0)
-            {
-                Debug.Log("All enemies defeated! LOOPPPPPPPP");
-                BossUI.SetActive(true);
-                
-            }
-            
-    }
-
-    public void WinningCheck()
-    {
-        if ( currentStage >= stageSelectionManager.currentStage)
-        {
-            stageSelectionManager.CompleteStage(currentStage);
-            BossUI.SetActive(false);
-            Debug.Log("All enemies defeated!");
-            WinUI.gameObject.SetActive(true);
-        }
-    }
-    
     public void ResetEnemies()
     {
         enemiesDefeated = 0;
@@ -274,19 +219,12 @@ public class EnemySpawner : MonoBehaviour
     }
 }
 
-// Component เพิ่มเติมสำหรับแจ้งเตือนเมื่อศัตรูถูกกำจัด
 public class EnemyDefeatedNotifier : MonoBehaviour
 {
     public EnemySpawner spawner;
 
-
     private void OnDestroy()
     {
-        if (spawner != null)
-        {
-            spawner.EnemyDefeated();
-        }
+        spawner?.EnemyDefeated();
     }
-    
-   
 }
