@@ -13,7 +13,7 @@ public class GameOverUI : MonoBehaviour
     private EnemySpawner _enemySpawner;
     public string stageName;
     private TestTeleportPlayer _teleportPlayer;
-    [SerializeField] private StageData stageData;
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -39,13 +39,12 @@ public class GameOverUI : MonoBehaviour
       
       _playerManager.currentHealth = _playerManager.playerData.maxHealth;
       
-     // playerAnim.SetTrigger("Reset");
-     // allyAnim.SetTrigger("Reset");
+      _playerManager.UpdateHealthBar();
       _playerManager.ResetDie();
-     // stageData.currentStage = _enemySpawner.currentStage;
+      _enemySpawner.ClearAllEnemies();
+      _enemySpawner.StartSpawning();
      Vector3 newpos = new Vector3(-8, 2.1f, -6);
       _teleportPlayer.TeleportPlayer(newpos);
-     // SceneManager.LoadScene(stageName);
      timeRemaining = 10;
     gameObject.SetActive(false);
       

@@ -3,31 +3,27 @@ using UnityEngine;
 public class IndicatorFadeEffect : MonoBehaviour
 {
     [SerializeField] private float fadeInDuration = 0.5f;
+    [SerializeField] private float fadeOutDuration = 0.3f;  // เพิ่มระยะเวลา fade out
     [SerializeField] private float maxAlpha = 0.6f;
-    [SerializeField] private bool enablePulse = true;
-    [SerializeField] private float pulseSpeed = 2f;
-    [SerializeField] private float pulseMinAlpha = 0.3f;
-    
-    // สำหรับ HDRP
-    [SerializeField] private string colorPropertyName = "_UnlitColor"; // หรือ "_UnlitColor" ขึ้นอยู่กับ shader
-    [SerializeField] private Color baseColor = Color.red; // สีพื้นฐาน
-    [SerializeField] private float intensity = 1f; // ความเข้มของแสง (HDR)
+    [SerializeField] private string colorPropertyName = "_BaseColor";
+    [SerializeField] private Color baseColor = Color.red;
+    [SerializeField] private float intensity = 1f;
     
     private Material indicatorMaterial;
     private float currentTime = 0f;
     private bool isFading = true;
-    private static readonly int ColorProperty = Shader.PropertyToID("_UnlitColor"); // cache property ID
+    private bool isFadingOut = false;
+    private static readonly int ColorProperty = Shader.PropertyToID("_BaseColor");
+    private System.Action onFadeOutComplete; // callback เมื่อ fade out เสร็จ
 
     void Start()
     {
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
         {
-            // สร้าง material instance
             indicatorMaterial = new Material(renderer.material);
             renderer.material = indicatorMaterial;
             
-            // ตั้งค่าสีเริ่มต้นด้วย alpha = 0
             Color startColor = baseColor * intensity;
             startColor.a = 0f;
             indicatorMaterial.SetColor(ColorProperty, startColor);
@@ -40,7 +36,7 @@ public class IndicatorFadeEffect : MonoBehaviour
 
         if (isFading)
         {
-            // Fade In Effect
+            // Fade In
             currentTime += Time.deltaTime;
             float alpha = Mathf.Lerp(0f, maxAlpha, currentTime / fadeInDuration);
             UpdateMaterialColor(alpha);
@@ -48,30 +44,40 @@ public class IndicatorFadeEffect : MonoBehaviour
             if (currentTime >= fadeInDuration)
             {
                 isFading = false;
+                currentTime = 0f;  // รีเซ็ตเวลาสำหรับ fade out
             }
         }
-        else if (enablePulse)
+        else if (isFadingOut)
         {
-            // Pulse Effect
-            float pulseAlpha = Mathf.Lerp(pulseMinAlpha, maxAlpha, 
-                (Mathf.Sin(Time.time * pulseSpeed) + 1f) * 0.5f);
-            UpdateMaterialColor(pulseAlpha);
+            // Fade Out
+            currentTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(maxAlpha, 0f, currentTime / fadeOutDuration);
+            UpdateMaterialColor(alpha);
+
+            if (currentTime >= fadeOutDuration)
+            {
+                isFadingOut = false;
+                if (onFadeOutComplete != null)
+                {
+                    onFadeOutComplete.Invoke();
+                }
+                Destroy(gameObject);  // ทำลาย indicator เมื่อ fade out เสร็จ
+            }
         }
     }
 
     private void UpdateMaterialColor(float alpha)
     {
-        Color color = baseColor * intensity; // คูณด้วย intensity สำหรับ HDR
+        Color color = baseColor * intensity;
         color.a = alpha;
         indicatorMaterial.SetColor(ColorProperty, color);
     }
 
-    void OnValidate()
+    public void StartFadeOut(System.Action onComplete = null)
     {
-        // อัพเดทค่าเมื่อมีการเปลี่ยนแปลงใน Inspector
-        if (indicatorMaterial != null)
-        {
-            UpdateMaterialColor(isFading ? 0f : maxAlpha);
-        }
+        isFading = false;
+        isFadingOut = true;
+        currentTime = 0f;
+        onFadeOutComplete = onComplete;
     }
 }

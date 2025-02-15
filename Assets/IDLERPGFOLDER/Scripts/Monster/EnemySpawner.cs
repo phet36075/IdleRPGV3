@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
     public int enemiesDefeated = 0;
     
     [Header("UI Elements")]
-    public GameObject NextButton;
+    // public GameObject NextButton;
     public GameObject WinUI;
     public GameObject BossUI;
     
@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void StartSpawning()
+    public void StartSpawning()
     {
         InvokeRepeating(nameof(SpawnEnemy), 0f, spawnInterval);
     }
@@ -220,7 +220,7 @@ public class EnemySpawner : MonoBehaviour
     public void ResetEnemies()
     {
         enemiesDefeated = 0;
-        NextButton.SetActive(false);
+//        NextButton.SetActive(false);
     }
 }
 

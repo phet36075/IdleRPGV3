@@ -1,11 +1,9 @@
-using System;
-using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Random = UnityEngine.Random;
 using UnityEngine.UI;
-public class PlayerManager : MonoBehaviour,IDamageable
+
+public class PlayerManager : MonoBehaviour, IDamageable
 {
     [Header("Elemental")]
     public List<GameObject> elementalEffect;
@@ -13,7 +11,7 @@ public class PlayerManager : MonoBehaviour,IDamageable
     [Header("References")]
     public PlayerData playerData;
     public Animator allyAnimator;
-    public PlayerStats playerStats; // อ้างอิงไปยัง PlayerStats component
+    public PlayerStats playerStats;
     public StatsFormula formula;
     public AudioManager audioManager;
     public DamageDisplay damageDisplay;
@@ -25,147 +23,104 @@ public class PlayerManager : MonoBehaviour,IDamageable
     public bool isCritical;
     public CharacterHitEffect hitEffect;
     
-    
-    
-    [Header("HP")]
+    [Header("Status")]
     public float currentHealth;
+    public float currentMana;
+    public float regenInterval = 5f;
+    public bool isPlayerDie;
     public Slider healthBar;
+    public GameObject gameOverUI;
+
     private PlayerController _playerController;
     private AIController _aiController;
     private AllyRangedCombat _allyRangedCombat;
-    public GameObject gameOverUI;
-    //public float regenRate = 1f;
     
-    public float regenInterval = 5f;
-  
+    public event System.Action<float> OnManaChanged;
 
-    public bool isPlayerDie;
-
-   
-   
-    // อาจจะยังไม่ได้ใช้
-    private float currentHP;
-    private float maxHP;
-    private float damage;
-    private float defense;
-    private float criticalChance;
-    private float evasion;
-    
-    
-    
-  //  [SerializeField] private float maxMana = 100f;
-    public float currentMana = 100;
-
-    public event System.Action<float> OnManaChanged;  // Event สำหรับอัพเดท UI
-    
-    // ฟังก์ชันเปลี่ยนธาตุ
-
-    public float GetMaxMana() => playerData.maxMana;
-    public float GetCurrentMana() => currentMana;
-    public float GetMaxHealth() => playerData.maxHealth;
-
-    public void AddMana(float amount)
+    private void Start()
     {
-        currentMana += amount;
-        if (currentMana >= playerData.maxMana)
-        {
-            currentMana = playerData.maxMana;
-        }
-       
-        OnManaChanged?.Invoke(currentMana);
-    }
-    void Start()
-    {
-       // maxMana = playerData.maxMana;
-        currentMana = playerData.maxMana;
-        UpdateHealthBar();
-        healthBar.maxValue = playerData.maxHealth;
-        healthBar.value = currentHealth;
+        InitializeComponents();
+        InitializeStats();
         StartCoroutine(RegenerateHp());
+    }
+
+    private void InitializeComponents()
+    {
         _allyRangedCombat = FindObjectOfType<AllyRangedCombat>();
         _playerController = FindObjectOfType<PlayerController>();
-       currentHealth = playerData.currentHealth;
         _aiController = FindObjectOfType<AIController>();
-      
-       
-       // ลงทะเบียน callback เมื่อ stats มีการเปลี่ยนแปลง
-       playerStats.OnStatsChanged += RecalculateStats;
-       RecalculateStats();
-       UpdateWeaponEffects(playerData.elementType);
-      
+        
+        currentMana = playerData.maxMana;
+        currentHealth = playerData.currentHealth;
+        
+        InitializeHealthBar();
     }
-    
+
+    private void InitializeStats()
+    {
+        playerStats.OnStatsChanged += RecalculateStats;
+        RecalculateStats();
+        UpdateWeaponEffects(playerData.elementType);
+    }
+
+    private void InitializeHealthBar()
+    {
+        healthBar.maxValue = playerData.maxHealth;
+        healthBar.value = currentHealth;
+        UpdateHealthBar();
+    }
+
+    private void Update()
+    {
+        HandleElementalInputs();
+    }
+
+    private void HandleElementalInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeWeaponElement(ElementType.Fire);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeWeaponElement(ElementType.Water);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeWeaponElement(ElementType.Wind);
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeWeaponElement(ElementType.Earth);
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) ChangeWeaponElement(ElementType.Light);
+        else if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeWeaponElement(ElementType.Dark);
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) RestoreMana(50f);
+    }
+
     public void RecalculateStats()
     {
-        // คำนวณ Max HP
-        playerData.maxHealth = formula.baseHP + 
-                (playerStats.GetStat(StatType.Vitality) * formula.hpPerVit);
-        // คำนวณ Defense
-        playerData.defense = formula.baseDefense + 
-                             (playerStats.GetStat(StatType.Vitality) * formula.defensePerVit);
-        // คำนวณ Regen
-        playerData.regenRate = formula.baseRegen + 
-                             (playerStats.GetStat(StatType.Vitality) * formula.regenPerVit);
-        
-
-        // ถ้า currentHP ยังไม่ถูกกำหนด ให้เท่ากับ maxHP
-       // if (currentHP <= 0) currentHP = maxHP;
-
-        // คำนวณ Damage
-        playerData.baseDamage = formula.baseDamage + 
-                 (playerStats.GetStat(StatType.Strength) * formula.damagePerStr);
-
-        // คำนวณ Critical Chance
-        playerData.criticalChance = playerStats.GetStat(StatType.Dexterity) * 
-                         formula.criticalChancePerDex;
-
-        playerData.criticalChance = playerData.criticalChance +
-                                    playerStats.GetStat(StatType.Agility) * formula.criticalChancePerAgi;
-        playerData.armorPenetration = playerStats.GetStat(StatType.Agility) * formula.armorPenatrationPerAgi;
-
-        // คำนวณ Evasion
-        //  evasion = playerStats.GetStat(StatType.Agility) * formula.evasionPerAgi;
-
-        playerData.maxMana = formula.baseMana * (1 + (playerStats.GetStat(StatType.Intelligence) * formula.manaPerInt));
-        playerData.manaRegenRate = formula.baseManaRegen + (playerStats.GetStat(StatType.Intelligence) * formula.manaRegenPerInt) ;
+        CalculateHealthStats();
+        CalculateCombatStats();
+        CalculateManaStats();
         
         OnManaChanged?.Invoke(currentMana);
         UpdateHealthBar();
     }
-    
-    private void Update()
+
+    private void CalculateHealthStats()
     {
-        maxHP = playerData.maxHealth;
-       
-        // ตัวอย่างการกดปุ่มเปลี่ยนธาตุ
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // กด 1
-        {
-            ChangeWeaponElement(ElementType.Fire);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // กด 2
-        {
-            ChangeWeaponElement(ElementType.Water);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) // กด 3
-        {
-            ChangeWeaponElement(ElementType.Wind);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) // กด 4
-        {
-            ChangeWeaponElement(ElementType.Earth);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) // กด 5
-        {
-            ChangeWeaponElement(ElementType.Light);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha6)) // กด 6
-        {
-            ChangeWeaponElement(ElementType.Dark);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha7)) // กด 7
-        {
-           RestoreMana(50f);
-        }
+        float vitality = playerStats.GetStat(StatType.Vitality);
+        playerData.maxHealth = formula.baseHP + (vitality * formula.hpPerVit);
+        playerData.defense = formula.baseDefense + (vitality * formula.defensePerVit);
+        playerData.regenRate = formula.baseRegen + (vitality * formula.regenPerVit);
+    }
+
+    private void CalculateCombatStats()
+    {
+        float strength = playerStats.GetStat(StatType.Strength);
+        float dexterity = playerStats.GetStat(StatType.Dexterity);
+        float agility = playerStats.GetStat(StatType.Agility);
+
+        playerData.baseDamage = formula.baseDamage + (strength * formula.damagePerStr);
+        playerData.criticalChance = (dexterity * formula.criticalChancePerDex) + 
+                                  (agility * formula.criticalChancePerAgi);
+        playerData.armorPenetration = agility * formula.armorPenatrationPerAgi;
+    }
+
+    private void CalculateManaStats()
+    {
+        float intelligence = playerStats.GetStat(StatType.Intelligence);
+        playerData.maxMana = formula.baseMana * (1 + (intelligence * formula.manaPerInt));
+        playerData.manaRegenRate = formula.baseManaRegen + (intelligence * formula.manaRegenPerInt);
     }
 
     private IEnumerator RegenerateHp()
@@ -174,178 +129,115 @@ public class PlayerManager : MonoBehaviour,IDamageable
         {
             yield return new WaitForSeconds(regenInterval);
 
-            if (currentHealth < playerData.maxHealth)
+            if (currentHealth < playerData.maxHealth && !isPlayerDie)
             {
-                Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);
-                GameObject regenEfx = Instantiate(regenEffect, spawnRegenPosition.position,rotation );
-                Destroy(regenEfx, 1f);
-                
-                currentHealth += playerData.regenRate;
-                currentHealth = Mathf.Min(currentHealth, playerData.maxHealth);
-                Debug.Log("Current HP: " + currentHealth);
-                UpdateHealthBar();
+                SpawnRegenEffect();
+                RegenerateHealth();
             }
         }
-        // ReSharper disable once IteratorNeverReturns
     }
-    
-    
+
+    private void SpawnRegenEffect()
+    {
+        Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);
+        GameObject regenEfx = Instantiate(regenEffect, spawnRegenPosition.position, rotation);
+        Destroy(regenEfx, 1f);
+    }
+
+    private void RegenerateHealth()
+    {
+        currentHealth = Mathf.Min(currentHealth + playerData.regenRate, playerData.maxHealth);
+        UpdateHealthBar();
+    }
+
     public float CalculatePlayerAttackDamage(float skillDamageMultiplier = 1f)
     {
-        // Start with base damage
         float attackDamage = (playerData.baseDamage + playerData.weaponDamage) * skillDamageMultiplier;
-        
-        // Apply damage variation
-        float variationMultiplier = Random.Range(1 - playerData.damageVariation, 1 + playerData.damageVariation);
-        attackDamage *= variationMultiplier;
+        attackDamage *= Random.Range(1 - playerData.damageVariation, 1 + playerData.damageVariation);
 
-        // Apply critical hit
         isCritical = Random.value < playerData.criticalChance;
         if (isCritical)
         {
-            attackDamage *= playerData.criticalDamage; // Double damage for critical hit
-            Debug.Log("Critical Hit!");
+            attackDamage *= playerData.criticalDamage;
         }
-        
-        Debug.Log($"Attack Damage: {attackDamage} (Base: {playerData.baseDamage}, Skill Multiplier: {skillDamageMultiplier}, Critical: {isCritical})");
+
         return attackDamage;
     }
-    public void TakeDamage(float incomingDamage , float attackerArmorPenetration )
+
+    public void TakeDamage(float incomingDamage, float attackerArmorPenetration)
     {
-        hitEffect.StartHitEffect();
-        
-       // Apply armor penetration
-       float effectiveDefense = Mathf.Max(0, playerData.defense - attackerArmorPenetration);
-
-       // Calculate damage reduction
-       float damageReduction = effectiveDefense / (effectiveDefense + 100f);
-
-       // Calculate final damage
-       float finalDamage = incomingDamage * (1f - damageReduction);
-       
-        currentHealth -= finalDamage;
-        currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
-
-        Debug.Log($"Player took {finalDamage} damage. Current health: {currentHealth}");
-        
-        audioManager.PlayHitSound();
-        damageDisplay.DisplayDamage(finalDamage);
-           Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);
-            GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position,rotation );
-            Destroy(effect, 1f);
-            
-        if (currentHealth <= 0)
-        {
-           Die();
-        }
-        UpdateHealthBar();
-
+        ApplyDamage(new DamageData 
+        { 
+            damage = incomingDamage, 
+            armorPenetration = attackerArmorPenetration 
+        });
     }
-    
-
-    public void TakeDamage(float amount, float armorPen, WeaponType weaponType)
+    public void TakeDamage(float incomingDamage, float attackerArmorPenetration, WeaponType weaponType)
     {
-        
+        ApplyDamage(new DamageData 
+        { 
+            damage = incomingDamage, 
+            armorPenetration = attackerArmorPenetration 
+        });
     }
-    // รับดาเมจพร้อมข้อมูลเพิ่มเติม
     public void TakeDamage(DamageData damageData)
     {
+        ApplyDamage(damageData);
+    }
+
+    private void ApplyDamage(DamageData damageData)
+    {
         hitEffect.StartHitEffect();
-        
-        // Apply armor penetration
+
         float effectiveDefense = Mathf.Max(0, playerData.defense - damageData.armorPenetration);
-
-        // Calculate damage reduction
         float damageReduction = effectiveDefense / (effectiveDefense + 100f);
-
-        // Calculate final damage
         float finalDamage = damageData.damage * (1f - damageReduction);
-       
-        currentHealth -= finalDamage;
-        currentHealth = Mathf.Max(currentHealth, 0f); // Ensure health doesn't go below 0
 
-        Debug.Log($"Player took {finalDamage} damage. Current health: {currentHealth}");
-        
-        audioManager.PlayHitSound();
-        damageDisplay.DisplayDamage(finalDamage);
-        Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);
-        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position,rotation );
-        Destroy(effect, 1f);
-            
+        currentHealth = Mathf.Max(currentHealth - finalDamage, 0f);
+
+        HandleDamageEffects(finalDamage);
+
         if (currentHealth <= 0)
         {
             Die();
         }
         UpdateHealthBar();
     }
-    public void Heal(float amount)
+
+    private void HandleDamageEffects(float damage)
     {
-        currentHealth +=amount;
-        if (currentHealth >= playerData.maxHealth)
-        {
-            currentHealth = playerData.maxHealth;
-        }
+        audioManager.PlayHitSound();
+        damageDisplay.DisplayDamage(damage);
+        
+        Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);
+        GameObject effect = Instantiate(hitVFX, spawnVFXPosition.position, rotation);
+        Destroy(effect, 1f);
     }
 
-    public void ChangeWeapon(float weaponDmg)
+    public void ChangeWeaponElement(ElementType newElement)
     {
-        playerData.weaponDamage = weaponDmg;
-    }
-    
-    public void ChangeWeaponElement(ElementType newElement) 
-    {
-        // เปลี่ยนธาตุใน PlayerData
         playerData.elementType = newElement;
-        
-        // เปลี่ยนเอฟเฟกต์ตามธาตุ
         UpdateWeaponEffects(newElement);
     }
-    
+
     private void UpdateWeaponEffects(ElementType elementType)
     {
-        // หยุดเอฟเฟกต์เก่า
-     /*   if (weaponElementalEffect != null)
+        foreach (GameObject effect in elementalEffect)
         {
-            weaponElementalEffect.Stop();
-        }*/
+            effect.SetActive(false);
+        }
 
-     foreach (GameObject elementalEffectList in elementalEffect)
-         
-     {
-         elementalEffectList.SetActive(false);
-     }
-        // ตั้งค่าเอฟเฟกต์ใหม่ตามธาตุ
-        switch (elementType)
+        int elementIndex = (int)elementType;
+        if (elementIndex >= 0 && elementIndex < elementalEffect.Count)
         {
-            case ElementType.Fire:
-                SetWeaponAppearance(elementalEffect[0]);
-                break;
-            case ElementType.Water:
-                SetWeaponAppearance(elementalEffect[1]);
-                break;
-            case ElementType.Wind:
-                SetWeaponAppearance(elementalEffect[2]);
-                break;
-            case ElementType.Earth:
-                SetWeaponAppearance(elementalEffect[3]);
-                break;
-            case ElementType.Light:
-                SetWeaponAppearance(elementalEffect[4]);
-                break;
-            case ElementType.Dark:
-                SetWeaponAppearance(elementalEffect[5]);
-                break;
+            elementalEffect[elementIndex].SetActive(true);
         }
     }
 
-    void SetWeaponAppearance(GameObject weaponEffect)
+    public void Heal(float amount)
     {
-        weaponEffect.SetActive(true);
-    }
-    
-    public bool HasEnoughMana(float manaCost)
-    {
-        return currentMana >= manaCost;
+        currentHealth = Mathf.Min(currentHealth + amount, playerData.maxHealth);
+        UpdateHealthBar();
     }
 
     public void UseMana(float amount)
@@ -359,20 +251,25 @@ public class PlayerManager : MonoBehaviour,IDamageable
         currentMana = Mathf.Min(playerData.maxMana, currentMana + amount);
         OnManaChanged?.Invoke(currentMana);
     }
-    
-    void Die()
+
+    private void Die()
     {
+        if (isPlayerDie) return; // Prevent multiple death triggers
         isPlayerDie = true;
-       // currentHealth = PlayerData.maxHealth;
-       animator.SetTrigger("Die");
-       _allyRangedCombat.Die();
-       _aiController.enabled = false;
-       GetComponent<CapsuleCollider>().enabled = false;
-       GetComponent<CharacterController>().enabled = false;
-       _playerController.isAIActive = false;
-       _playerController.enabled = false;
-       gameOverUI.gameObject.SetActive(true);
-       
+        animator.SetTrigger("Die");
+        DisableComponents();
+        gameOverUI.SetActive(true);
+    }
+
+    private void DisableComponents()
+    {
+        _allyRangedCombat.Die();
+        _aiController.enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+        GetComponent<CharacterController>().enabled = false;
+        GetComponent<PlayerMovement>().enabled = false;
+        _playerController.isAIActive = false;
+        _playerController.enabled = false;
     }
 
     public void ResetDie()
@@ -380,29 +277,36 @@ public class PlayerManager : MonoBehaviour,IDamageable
         StartCoroutine(WaitLoading());
     }
 
-    public IEnumerator WaitLoading()
+    private IEnumerator WaitLoading()
     {
         yield return new WaitForSeconds(1.0f);
         animator.SetTrigger("Reset");
         allyAnimator.SetTrigger("Reset");
+        
         yield return new WaitForSeconds(0.5f);
+        ResetPlayerState();
+    }
+
+    private void ResetPlayerState()
+    {
         isPlayerDie = false;
-       // GetComponent<CapsuleCollider>().enabled = true;
         GetComponent<CharacterController>().enabled = false;
         _playerController.isAIActive = true;
         _playerController.isAIEnabled = true;
         _playerController.enabled = true;
+        GetComponent<PlayerMovement>().enabled = true;
     }
-    
+
     public void UpdateHealthBar()
     {
         healthBar.maxValue = playerData.maxHealth;
         StartCoroutine(SmoothHealthBar());
     }
-    IEnumerator SmoothHealthBar()
+
+    private IEnumerator SmoothHealthBar()
     {
         float elapsedTime = 0f;
-        float duration = 0.2f; // ระยะเวลาที่ต้องการให้การลดลงของแถบลื่นไหล
+        float duration = 0.2f;
         float startValue = healthBar.value;
 
         while (elapsedTime < duration)
@@ -413,16 +317,14 @@ public class PlayerManager : MonoBehaviour,IDamageable
         }
 
         healthBar.value = currentHealth;
-      
     }
-    // Getters
-    public float GetCurrentHP() => currentHP;
-    public float GetMaxHP() => maxHP;
+
+    // Public getters
+    public float GetMaxMana() => playerData.maxMana;
+    public float GetCurrentMana() => currentMana;
+    public float GetMaxHealth() => playerData.maxHealth;
+    public float GetCurrentHealth() => currentHealth;
+    public float GetDefense() => playerData.defense;
     public float GetDamage() => playerData.baseDamage + playerData.weaponDamage;
-    public float GetDefense() => defense;
-    public float GetCriticalChance() => criticalChance;
-    public float GetEvasion() => evasion;
-    
-    
-    
+    public bool HasEnoughMana(float manaCost) => currentMana >= manaCost;
 }

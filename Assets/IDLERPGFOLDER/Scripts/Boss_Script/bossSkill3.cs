@@ -2,32 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bossSkill3 : MonoBehaviour
+public class bossSkill3 : BaseBossSkill
 {
-    public float WaitTime = 3f;
-    public GameObject Indicator;
-    public GameObject bossSkill3Prefab;
+    public GameObject BossSkill3_effectPrefab;  // แยก effect ออกมาเป็น prefab ต่างหาก
+    [SerializeField] private Vector3 hitboxOffset = Vector3.forward;
+    
     // Start is called before the first frame update
-    void Start()
+   
+    public  void BossSkill3_OnEffectSpawn()
     {
-        StartCoroutine(WaitBeforeSpawnSkill());
-    }
-
-    IEnumerator WaitBeforeSpawnSkill()
-    {
-        yield return new WaitForSeconds(WaitTime);
-        bossSkill3Prefab.gameObject.SetActive(true);
-        Indicator.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-       
+        Vector3 spawnPosition = transform.position + transform.rotation * hitboxOffset;
+        GameObject spawnedEffect = Instantiate(BossSkill3_effectPrefab, spawnPosition, transform.rotation);
+        
+        Destroy(spawnedEffect, 3f);
     }
     
-    
+    public void BossSkill3_OnSkillEnd()
+    {
+        base.OnSkillEnd();
+    }
     
 }

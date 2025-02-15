@@ -115,7 +115,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
         {
             if (item.itemName == "Iron Sword")
             {
-                _playerManager.ChangeWeapon(15f);
+               // _playerManager.ChangeWeapon(15f);
                 Debug.Log("Use Iron Sword");
             }
             inventory.RemoveItem(this);

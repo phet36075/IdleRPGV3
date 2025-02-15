@@ -913,6 +913,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4151970051859472428}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2564351925013003937}
     - targetCorrespondingSourceObject: {fileID: 635547659545568360, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2143913214364411950}
@@ -941,8 +944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossSkills:
   - {fileID: 4151970051859472428}
-  - {fileID: 4151970051859472428}
-  - {fileID: 4151970051859472428}
+  - {fileID: 2564351925013003937}
   _BossData: {fileID: 11400000, guid: 352734a712f37fe4fb237689298a875f, type: 2}
   animator: {fileID: 4342426368844977647}
   attackRange: 2
@@ -1185,10 +1187,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossSkillData: {fileID: 11400000, guid: 31bf38e5ae915444a9f65ad03d31e94b, type: 2}
-  skillIndicatorPrefab: {fileID: 6252701811108093375, guid: 16cbb25516223024e91bbd90f18bd700, type: 3}
-  hitboxOffset: {x: 0, y: 0, z: 1}
-  hitboxSpawnDelay: 1
+  skillIndicatorPrefab: {fileID: 7440890435843132094, guid: 0901ae8d0d7d78d4da83bc3b07447b8e, type: 3}
+  effectPrefab: {fileID: 1492667978523942, guid: 606e0006d1071654ea47dc3ab6b59d47, type: 3}
+  hitboxOffset: {x: 0, y: 0, z: 5}
   indicatorDuration: 1
+  hitboxSpawnDelay: 1
+--- !u!114 &2564351925013003937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7055057859302053167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c31606273390944a40d4b783fa3b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossSkillData: {fileID: 11400000, guid: 4a1c2e84fea708a4381593d94da42716, type: 2}
+  BossSkill3_effectPrefab: {fileID: 4793280151809815146, guid: 5bffff5061706ae428fbb619c0154aa7, type: 3}
+  hitboxOffset: {x: 0, y: 0, z: 1}
 --- !u!1 &7347652844553538582 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 635547659545568360, guid: 34fb44cabc3b4054a88af747c132eab4, type: 3}

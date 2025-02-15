@@ -68890,14 +68890,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.26666668
-    functionName: SpawnIndicatorAndEffect
+    functionName: SpawnIndicator
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.7333333
-    functionName: OnSkillEnd
+    functionName: BossSkill1_OnSkillEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
