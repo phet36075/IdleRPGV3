@@ -1022,22 +1022,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3cfe2111aee4c43a330e8f4abfa05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsthisBoss: 0
   EnemyData: {fileID: 11400000, guid: 352734a712f37fe4fb237689298a875f, type: 2}
-  spawnVFXPosition: {fileID: 5503190135005439608}
-  maxHealth: 0
-  currentHealth: 0
-  defense: 0
   healthBar: {fileID: 2171815149568650377}
-  isDead: 0
+  IsthisBoss: 1
   hitVFX: {fileID: 4150821029337826937, guid: 63b34de022059464194c07adacff0692, type: 3}
   animator: {fileID: 4342426368844977647}
   enemyCollider: {fileID: 2292134788159868508}
+  slowVFX: {fileID: 0}
+  burningVFX: {fileID: 0}
+  holyVFX: {fileID: 0}
+  JudgementVFX: {fileID: 0}
+  DarkVFX: {fileID: 0}
+  darknessVFX: {fileID: 0}
+  IceEffect: {fileID: 0}
+  darnessVFXPosition: {fileID: 0}
+  spawnVFXPosition: {fileID: 5503190135005439608}
   staggerDuration: 0.5
   cooldownStagger: 4
+  isMultiplyingDamageNextHit: 0
+  storedMultiplier: 1
+  enemyElementType: 0
+  elementalResistances: []
   CharacterHitEffect: {fileID: 2143913214364411950}
   _damageDisplay: {fileID: 3304348286440733885}
   _audioManager: {fileID: 2988457825650589330}
+  statusEffectUI: {fileID: 0}
+  waterSlowMultiplier: 0.7
+  waterEffectDuration: 5
+  waterEffectChance: 0.9
+  holyEffectDuration: 3
+  darkEffectDuration: 3
 --- !u!136 &2292134788159868508
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1072,6 +1086,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.178
   m_Pitch: 1
@@ -1174,6 +1189,8 @@ MonoBehaviour:
   hitCritSound: {fileID: 8300000, guid: 199d7eede6a5930418e666b222d1ad36, type: 3}
   MonsterPainSound: {fileID: 8300000, guid: 40ac21ef67a5bad4693c9a47eaffcc71, type: 3}
   DieSound: {fileID: 8300000, guid: 40ac21ef67a5bad4693c9a47eaffcc71, type: 3}
+  maceHitSound: {fileID: 0}
+  spellHitSound: {fileID: 0}
 --- !u!114 &3304348286440733885
 MonoBehaviour:
   m_ObjectHideFlags: 0

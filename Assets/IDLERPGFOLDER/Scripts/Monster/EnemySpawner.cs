@@ -190,6 +190,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void NextStage()
     { 
+        ClearAllEnemies();
         TeleportPlayer();
         
         currentStage += 1;
@@ -201,11 +202,15 @@ public class EnemySpawner : MonoBehaviour
 
     public void SetStage(int stageIndex)
     {
-        TeleportPlayer();
-        
-        ClearAllEnemies();
+        MapIndex = stageIndex;
+       
         currentStage = stageIndex;
-        _stageManager.ChangeMap(stageIndex);
+        UpdateStageSettings();
+        TeleportPlayer();
+        ClearAllEnemies();
+        
+        _stageManager.ChangeMap(MapIndex);
+        
         ResetEnemyCount();
         StartSpawning();
     }
