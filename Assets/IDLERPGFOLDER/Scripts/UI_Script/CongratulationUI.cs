@@ -45,25 +45,16 @@ public class CongratulationUI : MonoBehaviour
 
     public void GoNextStage()
     {
-        
-      // enemySpawner.ChangeStateForEnemy();
         Vector3 newpos = new Vector3(-8, 2.1f, -6);
         _teleportPlayer.TeleportPlayer(newpos);
         StartCoroutine(Wait());
-        
-      //  PortalEffect.gameObject.SetActive(true);
-       //_aiController.SetTarget(NextDoorLocation);
-       
-        
     }
 
     IEnumerator Wait()
     {
-        
         yield return new WaitForSeconds(1.5f);
         timeRemaining = 10;
         enemySpawner.NextStage();
-       
         gameObject.SetActive(false);
     }
 }

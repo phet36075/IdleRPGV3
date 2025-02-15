@@ -33,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
         _enemyHealth = FindObjectOfType<EnemyHealth>();
         _teleportPlayer = FindObjectOfType<TestTeleportPlayer>();
         _stageManager = FindObjectOfType<StageManager>();
-        currentStage = _StageData.currentStage;
+        //currentStage = _StageData.currentStage;
         // เริ่มการเรียกฟังก์ชัน SpawnEnemy ซ้ำๆ ทุก spawnInterval วินาที
         InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
     }
@@ -79,20 +79,20 @@ public class EnemySpawner : MonoBehaviour
     public void NextStage()
     {
         currentStage += 1;
-      /*  if (currentStage > 5)
-        {*/
-            _stageManager.ChangeMap(MapIndex);
-      /*  }
-        else if(currentStage <=5 )
-        {
-            _stageManager.ChangeMap(currentStage -1);
-        }*/
+        _stageManager.ChangeMap(MapIndex);
         enemiesDefeated = 0;
         enemiesSpawned = 0;
         InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
+        
+    }
 
-      
-
+    public void SetStage(int stageIndex)
+    {
+        currentStage = stageIndex;
+        _stageManager.ChangeMap(stageIndex);
+        enemiesDefeated = 0;
+        enemiesSpawned = 0;
+        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
     }
 
    
