@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,16 +13,17 @@ public class StageData
 
 public class StageSelectionManager : MonoBehaviour
 {
-    [SerializeField]private StageManager stageManager;
+    [SerializeField]private EnemySpawner enemySpawner;
+    private TestTeleportPlayer _teleportPlayer;
     [Header("Stage Data")]
     public StageData[] stages;
-    public int currentStage = 0;  // Latest unlocked stage
+    public int currentStage = 1;  // Latest unlocked stage (starting from 1)
 
     [Header("UI References")]
     public GameObject stageButtonPrefab;
     public Transform stageButtonContainer;
     public GameObject stageDetailPanel;
-    
+    public GameObject stagePanel;
     [Header("Stage Detail UI")]
     public TextMeshProUGUI stageNumberText;
     public TextMeshProUGUI stageDetailsText;
@@ -32,24 +34,35 @@ public class StageSelectionManager : MonoBehaviour
     public Color currentColor = Color.yellow;
     public Color lockedColor = Color.gray;
 
+    private int selectedStageIndex = 1;
+    private bool isStageSelectOpen = false;
     private void Start()
     {
+        _teleportPlayer = FindObjectOfType<TestTeleportPlayer>();
         CreateStageButtons();
         stageDetailPanel.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            UpdateStageButtons();
+        }
+    }
+
     void CreateStageButtons()
     {
-        for (int i = 0; i < stages.Length; i++)
+        for (int i = 1; i < stages.Length; i++)
         {
             GameObject buttonObj = Instantiate(stageButtonPrefab, stageButtonContainer);
             Button stageButton = buttonObj.GetComponent<Button>();
             Image buttonImage = buttonObj.GetComponent<Image>();
 
             // Set stage icon
-            if (stages[i].stageIcon != null)
+            if (stages[i-1].stageIcon != null)
             {
-                buttonImage.sprite = stages[i].stageIcon;
+                buttonImage.sprite = stages[i-1].stageIcon;
             }
 
             // Set button color based on progress
@@ -74,19 +87,42 @@ public class StageSelectionManager : MonoBehaviour
             stageButton.interactable = (i <= currentStage);
         }
     }
-    private int selectedStageIndex;
     // เรียกใช้ method นี้เมื่อแสดง stage details
     void ShowStageDetails(int stageIndex)
     {
         selectedStageIndex = stageIndex;  // เก็บค่า stage ที่เลือก
         stageDetailPanel.SetActive(true);
-        
-        stageNumberText.text = $"Stage {stageIndex + 1}";
-        stageDetailsText.text = stages[stageIndex].stageDetails;
+        // No need to add 1 to stageIndex since it's already 1-based
+        stageNumberText.text = $"Stage {stageIndex}";
+        stageDetailsText.text = stages[stageIndex-1].stageDetails; // Array is still 0-based
         
         enterStageButton.interactable = (stageIndex <= currentStage);
     }
 
+    public void ToggleUI()
+    {
+        if (isStageSelectOpen)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
+    }
+    public void Show()
+    {
+        stagePanel.SetActive(true);
+        isStageSelectOpen = true;
+       
+    }
+
+    public void Hide()
+    {
+        stagePanel.SetActive(false);
+        isStageSelectOpen = false;
+       
+    }
     public void CloseStageDetails()
     {
         stageDetailPanel.SetActive(false);
@@ -97,13 +133,13 @@ public class StageSelectionManager : MonoBehaviour
         if (selectedStageIndex <= currentStage)
         {
             Vector3 newpos = new Vector3(-8, 2.1f, -6);
-            //_teleportPlayer.TeleportPlayer(newpos);
+            _teleportPlayer.TeleportPlayer(newpos);
+            enemySpawner.SetStage(selectedStageIndex);
             
-            stageManager.ChangeMap(selectedStageIndex);
             // เรียกใช้ script เข้าด่านของคุณที่นี่
             // ตัวอย่าง: YourLevelLoader.LoadLevel(selectedStageIndex);
-            Debug.Log($"Entering stage {selectedStageIndex + 1}");
-            CloseStageDetails();
+            Debug.Log($"Entering stage {selectedStageIndex}");
+           Hide();
         }
     }
     // Call this when a stage is completed
@@ -118,26 +154,42 @@ public class StageSelectionManager : MonoBehaviour
 
     void UpdateStageButtons()
     {
-        // Update button colors
-        for (int i = 0; i < stageButtonContainer.childCount; i++)
+        // Update buttons using same logic as CreateStageButtons
+        for (int i = 1; i <= stages.Length; i++)
         {
-            Image buttonImage = stageButtonContainer.GetChild(i).GetComponent<Image>();
-            Button stageButton = stageButtonContainer.GetChild(i).GetComponent<Button>();
+            // คำนวณ index ที่จะใช้เข้าถึง child
+            int childIndex = i + 1;
+            
+            // ตรวจสอบว่า index ไม่เกินจำนวน child ที่มี
+            if (childIndex < stageButtonContainer.childCount)
+            {
+                try
+                {
+                    Image buttonImage = stageButtonContainer.GetChild(childIndex).GetComponent<Image>();
+                    Button stageButton = stageButtonContainer.GetChild(childIndex).GetComponent<Button>();
 
-            if (i < currentStage)
-            {
-                buttonImage.color = completedColor;
+                    // Use same coloring logic as in CreateStageButtons
+                    if (i < currentStage)
+                    {
+                        buttonImage.color = completedColor;
+                        stageButton.interactable = true;
+                    }
+                    else if (i == currentStage)
+                    {
+                        buttonImage.color = currentColor;
+                        stageButton.interactable = true;
+                    }
+                    else
+                    {
+                        buttonImage.color = lockedColor;
+                        stageButton.interactable = false;
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogWarning($"Error updating stage button {i}: {e.Message}");
+                }
             }
-            else if (i == currentStage)
-            {
-                buttonImage.color = currentColor;
-            }
-            else
-            {
-                buttonImage.color = lockedColor;
-            }
-
-            stageButton.interactable = (i <= currentStage);
         }
     }
 }

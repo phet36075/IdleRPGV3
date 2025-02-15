@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   maxhealth: 999999
-  DefaultMaxHealth: 999999
+  DefaultMaxHealth: 5
   enemyName: Enemy
   defense: 5
   DefaultDefense: 5

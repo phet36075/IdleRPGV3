@@ -47,14 +47,15 @@ public class CongratulationUI : MonoBehaviour
     {
         Vector3 newpos = new Vector3(-8, 2.1f, -6);
         _teleportPlayer.TeleportPlayer(newpos);
-        StartCoroutine(Wait());
+        timeRemaining = 10;
+        enemySpawner.NextStage();
+        gameObject.SetActive(false);
+      //  StartCoroutine(Wait());
     }
 
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(1.5f);
-        timeRemaining = 10;
-        enemySpawner.NextStage();
-        gameObject.SetActive(false);
+       
     }
 }
