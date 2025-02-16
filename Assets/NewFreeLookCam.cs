@@ -28,6 +28,12 @@ public class NewFreeLookCam : MonoBehaviour
         
         // เก็บค่าความสูงเริ่มต้นของ TopRig
         initialTopRigHeight = freeLookCamera.m_Orbits[0].m_Height;
+
+        // ปิดการ damping ของแกน X และ Y
+        freeLookCamera.m_XAxis.m_AccelTime = 0f;
+        freeLookCamera.m_XAxis.m_DecelTime = 0f;
+        freeLookCamera.m_YAxis.m_AccelTime = 0f;
+        freeLookCamera.m_YAxis.m_DecelTime = 0f;
     }
 
     void Update()
