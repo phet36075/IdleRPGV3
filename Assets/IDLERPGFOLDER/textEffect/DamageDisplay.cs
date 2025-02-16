@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 public class DamageDisplay : MonoBehaviour
 {
-    public GameObject damageTextPrefab, damageTextPrefabCritical;
+    public GameObject damageTextPrefab, damageTextPrefabCritical,damageTextPrefabWinElement;
     public Transform textLocation;
     public Vector3 randomOffsetRange = new Vector3(0.5f, 0.5f, 0.5f); // ระยะการสุ่มตำแหน่งสำหรับ X, Y, Z
 
@@ -36,7 +36,7 @@ public class DamageDisplay : MonoBehaviour
         }*/
         
     }
-    public void DisplayDamage(float damage)
+    public void DisplayDamage(float damage,bool isWeakness = false)
     {
         // คำนวณตำแหน่งที่จะแสดงตัวหนังสือ
         Vector3 spawnPosition = textLocation.position;
@@ -49,11 +49,26 @@ public class DamageDisplay : MonoBehaviour
         // เพิ่ม offset ที่สุ่มได้เข้ากับตำแหน่งเริ่มต้น
         spawnPosition += new Vector3(randomX, randomY, randomZ);
 
-        // สร้าง instance ของ prefab ที่ตำแหน่งที่คำนวณไว้ โดยไม่กำหนด parent
-        GameObject damageTextInstance = Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity);
+        if (isWeakness)
+        {
+            Debug.Log("Change Color lana");
+            GameObject damageTextInstance = Instantiate(damageTextPrefabWinElement, spawnPosition, Quaternion.identity);
+            TextMeshPro tmpText = damageTextInstance.GetComponentInChildren<TextMeshPro>();
+            // ตั้งค่าข้อความให้แสดงค่าความเสียหาย
+            tmpText.SetText(damage.ToString("0"));
+        }
+        else
+        {
+            GameObject damageTextInstance = Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity);
+            TextMeshPro tmpText = damageTextInstance.GetComponentInChildren<TextMeshPro>();
+            // ตั้งค่าข้อความให้แสดงค่าความเสียหาย
+            tmpText.SetText(damage.ToString("0"));
+        }
+       
+       
 
-        // ตั้งค่าข้อความให้แสดงค่าความเสียหาย
-        damageTextInstance.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString("0"));
+        
+        
         
     }
     public void DisplayDamageCritical(float damage)

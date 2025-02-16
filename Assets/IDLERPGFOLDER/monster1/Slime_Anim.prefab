@@ -1254,6 +1254,7 @@ MonoBehaviour:
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
   healthBar: {fileID: 5179961636422445443}
   IsthisBoss: 0
+  isWeakness: 0
   hitVFX: {fileID: 4150821029337826937, guid: 63b34de022059464194c07adacff0692, type: 3}
   animator: {fileID: 7216009444343083321}
   enemyCollider: {fileID: 7096012905577462812}
@@ -1295,6 +1296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 8058489753668129861, guid: 9db87d97486b99c44824f5688f7c2f37, type: 3}
   damageTextPrefabCritical: {fileID: 8058489753668129861, guid: 7d73b485ef3239141b8a5090c1d603dc, type: 3}
+  damageTextPrefabWinElement: {fileID: 8058489753668129861, guid: 7b6b7e854eeffae4aa91cb54c560e91d, type: 3}
   textLocation: {fileID: 2870316263218687902}
   randomOffsetRange: {x: 0.5, y: 0.5, z: 0.5}
   textToDisplay: 

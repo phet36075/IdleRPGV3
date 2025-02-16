@@ -29,6 +29,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
    
     private bool isDead = false;
     public bool IsthisBoss = false;
+    public bool isWeakness = false;
     
     [Header("Visual Effects")]
     public GameObject hitVFX;
@@ -422,12 +423,12 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         }
         else if (elementType == ElementType.None)
         {
-            _damageDisplay.DisplayDamage(damage);
+            _damageDisplay.DisplayDamage(damage,isWeakness);
         }
         else
         {
             _audioManager.PlayHitSound();
-            _damageDisplay.DisplayDamage(damage);
+            _damageDisplay.DisplayDamage(damage,isWeakness);
         }
     }
 
@@ -763,33 +764,68 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     
     private float GetElementalAdvantage(ElementType attackElement, ElementType defenderElement)
     {
+        float multiplier;
+        
         // ธาตุแสง vs มืด
-        if (attackElement == ElementType.Light && defenderElement == ElementType.Dark) return 2.0f;    // แสงแรงกว่ามืด
-        if (attackElement == ElementType.Dark && defenderElement == ElementType.Light) return 0.5f;    // มืดเสียเปรียบแสง
-    
-        // ธาตุแสงได้เปรียบธาตุทั่วไป (แต่ไม่มากเท่าธาตุหลัก)
-        if (attackElement == ElementType.Light && defenderElement != ElementType.Dark) return 1.25f;
-    
-        // ธาตุมืดได้เปรียบธาตุทั่วไป (แต่ไม่มากเท่าธาตุหลัก)
-        if (attackElement == ElementType.Dark && defenderElement != ElementType.Light) return 1.25f;
-
-        // ความสัมพันธ์ของธาตุหลัก
-        if (attackElement == ElementType.Fire && defenderElement == ElementType.Earth) return 1.5f;
-        if (attackElement == ElementType.Water && defenderElement == ElementType.Fire) return 1.5f;
-        if (attackElement == ElementType.Earth && defenderElement == ElementType.Wind) return 1.5f;
-        if (attackElement == ElementType.Wind && defenderElement == ElementType.Water) return 1.5f;
-    
+        if (attackElement == ElementType.Light && defenderElement == ElementType.Dark) 
+        {
+            multiplier = 2.0f;
+            Debug.Log("Win Element");
+            isWeakness = true;
+        }    
+        else if (attackElement == ElementType.Dark && defenderElement == ElementType.Light) 
+        {
+            multiplier = 0.5f;
+            isWeakness = false;
+            
+        }
+        // ธาตุแสงได้เปรียบธาตุทั่วไป
+        else if (attackElement == ElementType.Light && defenderElement != ElementType.Dark) 
+        {
+            multiplier = 1.25f;
+            Debug.Log("Win Element");
+            isWeakness = true;
+        }
+        // ธาตุมืดได้เปรียบธาตุทั่วไป
+        else if (attackElement == ElementType.Dark && defenderElement != ElementType.Light) 
+        {
+            multiplier = 1.25f;
+            Debug.Log("Win Element");
+            isWeakness = true;
+        }
+        // ความสัมพันธ์ของธาตุหลัก - ได้เปรียบ
+        else if ((attackElement == ElementType.Fire && defenderElement == ElementType.Earth) ||
+                 (attackElement == ElementType.Water && defenderElement == ElementType.Fire) ||
+                 (attackElement == ElementType.Earth && defenderElement == ElementType.Wind) ||
+                 (attackElement == ElementType.Wind && defenderElement == ElementType.Water))
+        {
+            multiplier = 1.5f;
+            Debug.Log("Win Element");
+            isWeakness = true;
+        }
         // ธาตุที่เสียเปรียบ
-        if (attackElement == ElementType.Earth && defenderElement == ElementType.Fire) return 0.5f;
-        if (attackElement == ElementType.Fire && defenderElement == ElementType.Water) return 0.5f;
-        if (attackElement == ElementType.Wind && defenderElement == ElementType.Earth) return 0.5f;
-        if (attackElement == ElementType.Water && defenderElement == ElementType.Wind) return 0.5f;
-    
+        else if ((attackElement == ElementType.Earth && defenderElement == ElementType.Fire) ||
+                 (attackElement == ElementType.Fire && defenderElement == ElementType.Water) ||
+                 (attackElement == ElementType.Wind && defenderElement == ElementType.Earth) ||
+                 (attackElement == ElementType.Water && defenderElement == ElementType.Wind))
+        {
+            multiplier = 0.5f;
+            isWeakness = false;
+        }
         // ธาตุทั่วไปจะเสียเปรียบธาตุพิเศษเล็กน้อย
-        if ((defenderElement == ElementType.Light || defenderElement == ElementType.Dark) && 
-            (attackElement != ElementType.Light && attackElement != ElementType.Dark)) return 0.75f;
-    
-        return 1f; // ธาตุไม่มีผลต่อกัน
+        else if ((defenderElement == ElementType.Light || defenderElement == ElementType.Dark) && 
+                 (attackElement != ElementType.Light && attackElement != ElementType.Dark))
+        {
+            multiplier = 0.75f;
+            isWeakness = false;
+        }
+        else
+        {
+            multiplier = 1f; // ธาตุไม่มีผลต่อกัน
+            isWeakness = false;
+        }
+
+        return (multiplier);
     }
 
     #endregion

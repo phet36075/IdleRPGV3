@@ -114,7 +114,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288256409
+    rgba: 65510
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7632897690237548536}
   m_Layer: 0
-  m_Name: text_holder_Normal
+  m_Name: text_holder_WinElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
