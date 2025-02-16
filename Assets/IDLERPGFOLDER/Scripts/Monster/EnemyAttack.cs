@@ -57,7 +57,12 @@ public class EnemyAttack : MonoBehaviour
                 if (_playerManager.isPlayerDie != true)
                 {
                     GetComponent<EnemyRoaming>().enabled = false;
-                    agent.SetDestination(transform.position);
+                    if (agent != null)
+                    {
+                        if(agent.enabled)
+                        agent.SetDestination(transform.position);
+                    }
+                   
                     // agent.isStopped = true;
                     animator.SetBool("IsWalking",false);
                     RotateTowardsTarget();

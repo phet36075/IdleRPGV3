@@ -182,7 +182,7 @@ public class EnemySpawner : MonoBehaviour
         ClearAllEnemies();
         maxEnemies = 1;
         currentStage += 1;
-        
+        UpdateStageSettings();
         _stageManager.ChangeMap(MapIndex);
         StartSpawning();
         BossUI.SetActive(false);

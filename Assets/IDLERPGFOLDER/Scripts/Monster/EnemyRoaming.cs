@@ -46,6 +46,7 @@ public class EnemyRoaming : MonoBehaviour
         if (NavMesh.SamplePosition(randomDirection, out navHit, roamRadius, -1))
         {
 //            Debug.Log("Moving to new position: " + navHit.position);  // ตรวจสอบตำแหน่งเป้าหมาย
+            if (navMeshAgent.enabled)
             navMeshAgent.SetDestination(navHit.position);
             
         }

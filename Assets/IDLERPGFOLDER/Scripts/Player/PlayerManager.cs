@@ -222,16 +222,37 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void UpdateWeaponEffects(ElementType elementType)
     {
-        foreach (GameObject effect in elementalEffect)
+        foreach (GameObject elementalEffectList in elementalEffect)
+         
         {
-            effect.SetActive(false);
+            elementalEffectList.SetActive(false);
         }
-
-        int elementIndex = (int)elementType;
-        if (elementIndex >= 0 && elementIndex < elementalEffect.Count)
+        // ตั้งค่าเอฟเฟกต์ใหม่ตามธาตุ
+        switch (elementType)
         {
-            elementalEffect[elementIndex].SetActive(true);
+            case ElementType.Fire:
+                SetWeaponAppearance(elementalEffect[0]);
+                break;
+            case ElementType.Water:
+                SetWeaponAppearance(elementalEffect[1]);
+                break;
+            case ElementType.Wind:
+                SetWeaponAppearance(elementalEffect[2]);
+                break;
+            case ElementType.Earth:
+                SetWeaponAppearance(elementalEffect[3]);
+                break;
+            case ElementType.Light:
+                SetWeaponAppearance(elementalEffect[4]);
+                break;
+            case ElementType.Dark:
+                SetWeaponAppearance(elementalEffect[5]);
+                break;
         }
+    }
+    void SetWeaponAppearance(GameObject weaponEffect)
+    {
+        weaponEffect.SetActive(true);
     }
 
     public void Heal(float amount)

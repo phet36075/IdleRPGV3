@@ -68,6 +68,11 @@ public class SkillHitbox : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
+        // เช็คว่าไม่ใช่ Player
+        if (other.CompareTag("Player"))
+        {
+            return; 
+        }
         // เช็คว่าชนกับ enemy ไหม
         IDamageable target = other.GetComponent<IDamageable>();
         if (target != null && playerManager != null)
