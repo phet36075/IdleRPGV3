@@ -70,7 +70,7 @@ public class UIPlayerStats : MonoBehaviour
         
         txtLevel.text = playerStats.Level.ToString();
         txtLevel2.text = playerStats.Level.ToString();
-        txtExp.text = playerStats.CurrentExp.ToString();
+        txtExp.text = playerStats.CurrentExp.ToString()  + "/ " + playerStats.CalculateExpForNextLevel().ToString();
 
         txtRemainPoints.text = playerStats.AvailableStatPoints.ToString();
 

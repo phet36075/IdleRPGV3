@@ -56,7 +56,7 @@ public class PlayerStats : MonoBehaviour
         OnLevelUp?.Invoke(level);
     }
     
-    private int CalculateExpForNextLevel()
+    public int CalculateExpForNextLevel()
     {
         return level * 100; // Simple formula: each level requires level * 100 EXP
     }

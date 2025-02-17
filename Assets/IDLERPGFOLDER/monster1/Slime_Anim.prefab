@@ -1271,7 +1271,7 @@ MonoBehaviour:
   cooldownStagger: 5
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
-  enemyElementType: 1
+  enemyElementType: 6
   elementalResistances: []
   CharacterHitEffect: {fileID: 776062255748010552}
   _damageDisplay: {fileID: 914702316595363713}

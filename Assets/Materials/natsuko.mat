@@ -532,7 +532,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a0851a86f18f3434080f6ef27ce6aa5e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTexture:
@@ -1495,7 +1495,7 @@ Material:
     - _DoubleSidedBackfaceValueFromBase: 1
     - _DoubleSidedFlipBackfaceNormal: 0
     - _DstBlend: 0
-    - _DstBlendAlpha: 0
+    - _DstBlendAlpha: 10
     - _DstBlendAlphaFA: 1
     - _DstBlendFA: 1
     - _DummyProperty: 0
@@ -2197,7 +2197,7 @@ Material:
     - _Main3rdTexAlphaMode: 0
     - _Main3rdTexAngle: 0
     - _Main3rdTexBlendMode: 0
-    - _Main3rdTexIsDecal: 1
+    - _Main3rdTexIsDecal: 0
     - _Main3rdTexIsLeftOnly: 0
     - _Main3rdTexIsMSDF: 0
     - _Main3rdTexIsRightOnly: 0
@@ -2508,7 +2508,7 @@ Material:
     - _OutlineAlphaDistanceFadeType: 1
     - _OutlineAlphaToMask: 0
     - _OutlineBlendOp: 0
-    - _OutlineBlendOpAlpha: 4
+    - _OutlineBlendOpAlpha: 0
     - _OutlineBlendOpAlphaFA: 4
     - _OutlineBlendOpFA: 4
     - _OutlineClipAtZeroWidth: 0
@@ -2518,19 +2518,19 @@ Material:
     - _OutlineDeleteMesh: 0
     - _OutlineDisableInVR: 0
     - _OutlineDstBlend: 0
-    - _OutlineDstBlendAlpha: 0
+    - _OutlineDstBlendAlpha: 10
     - _OutlineDstBlendAlphaFA: 1
     - _OutlineDstBlendFA: 1
     - _OutlineEmission: 0
     - _OutlineEnableLighting: 1
     - _OutlineExpansionMode: 1
-    - _OutlineFixWidth: 0.5
+    - _OutlineFixWidth: 1
     - _OutlineFixedSize: 1
     - _OutlineHueOffsetSpeed: 0
     - _OutlineHueShift: 0
     - _OutlineHueShiftFromBase: 0
     - _OutlineLit: 1
-    - _OutlineLitApplyTex: 0
+    - _OutlineLitApplyTex: 1
     - _OutlineLitOffset: -8
     - _OutlineLitScale: 10
     - _OutlineLitShadowReceive: 0
@@ -2582,7 +2582,7 @@ Material:
     - _OutlineWidth: 0.1
     - _OutlineZBias: 0
     - _OutlineZClip: 1
-    - _OutlineZTest: 4
+    - _OutlineZTest: 2
     - _OutlineZWrite: 1
     - _OutlinesMaxDistance: 1
     - _PBRNormalSelect: 1
@@ -2690,6 +2690,35 @@ Material:
     - _PolarSpiralPower: 0
     - _PolarUV: 0
     - _PostProcess: 0
+    - _PreAlphaToMask: 0
+    - _PreBlendOp: 0
+    - _PreBlendOpAlpha: 0
+    - _PreBlendOpAlphaFA: 4
+    - _PreBlendOpFA: 4
+    - _PreColorMask: 15
+    - _PreCull: 2
+    - _PreCutoff: 0.5
+    - _PreDstBlend: 10
+    - _PreDstBlendAlpha: 10
+    - _PreDstBlendAlphaFA: 1
+    - _PreDstBlendFA: 1
+    - _PreOffsetFactor: 0
+    - _PreOffsetUnits: 0
+    - _PreOutType: 0
+    - _PreSrcBlend: 1
+    - _PreSrcBlendAlpha: 1
+    - _PreSrcBlendAlphaFA: 0
+    - _PreSrcBlendFA: 1
+    - _PreStencilComp: 8
+    - _PreStencilFail: 0
+    - _PreStencilPass: 0
+    - _PreStencilReadMask: 255
+    - _PreStencilRef: 0
+    - _PreStencilWriteMask: 255
+    - _PreStencilZFail: 0
+    - _PreZClip: 1
+    - _PreZTest: 4
+    - _PreZWrite: 1
     - _QueueOffset: 0
     - _RGBAAlphaBlendType: 0
     - _RGBAAlphaEmissionStrength: 0
@@ -2851,13 +2880,13 @@ Material:
     - _RimApplyGlobalMaskBlendType: 2
     - _RimApplyGlobalMaskIndex: 0
     - _RimApplyTransparency: 1
-    - _RimBackfaceMask: 1
+    - _RimBackfaceMask: 0
     - _RimBaseColorMix: 0
     - _RimBiasIntensity: 0
     - _RimBlend: 1
     - _RimBlendMode: 1
     - _RimBlendStrength: 1
-    - _RimBlur: 0.65
+    - _RimBlur: 0.1
     - _RimBorder: 0.5
     - _RimBrightness: 1
     - _RimColorTexUV: 0
@@ -2871,7 +2900,7 @@ Material:
     - _RimEnviroMinBrightness: 0
     - _RimEnviroSharpness: 0
     - _RimEnviroWidth: 0.45
-    - _RimFresnelPower: 1
+    - _RimFresnelPower: 3
     - _RimGlobalMask: 0
     - _RimGlobalMaskBlendType: 2
     - _RimHueShift: 0
@@ -2898,7 +2927,7 @@ Material:
     - _RimShadeFresnelPower: 1
     - _RimShadeMix: 0
     - _RimShadeNormalStrength: 1
-    - _RimShadowMask: 0.5
+    - _RimShadowMask: 0
     - _RimShadowMaskInvert: 0
     - _RimShadowMaskRampType: 0
     - _RimShadowMaskStrength: 1
@@ -2943,8 +2972,8 @@ Material:
     - _ShadingRampedLightMapInverseApplyGlobalMaskBlendType: 2
     - _ShadingRampedLightMapInverseApplyGlobalMaskIndex: 0
     - _ShadingShadeMapBlendType: 0
-    - _Shadow2ndBlur: 0
-    - _Shadow2ndBorder: 0.15
+    - _Shadow2ndBlur: 0.3
+    - _Shadow2ndBorder: 0.5
     - _Shadow2ndColorTexUV: 0
     - _Shadow2ndNormalStrength: 1
     - _Shadow2ndReceive: 0
@@ -2955,7 +2984,7 @@ Material:
     - _Shadow3rdReceive: 0
     - _ShadowBlur: 0
     - _ShadowBlurMaskLOD: 0
-    - _ShadowBorder: 0.219
+    - _ShadowBorder: 0.119
     - _ShadowBorderMapToggle: 0
     - _ShadowBorderMaskLOD: 0
     - _ShadowBorderMaskUV: 0
@@ -2970,7 +2999,7 @@ Material:
     - _ShadowFlatBlur: 1
     - _ShadowFlatBorder: 1
     - _ShadowIndirectIntensity: 0.25
-    - _ShadowMainStrength: 0
+    - _ShadowMainStrength: 1
     - _ShadowMaskType: 0
     - _ShadowNormalStrength: 1
     - _ShadowOffset: 0
@@ -2987,9 +3016,9 @@ Material:
     - _ShadowPlanBUsePlanB: 0
     - _ShadowPlanBValueFromBase: 1
     - _ShadowPostAO: 0
-    - _ShadowReceive: 1
+    - _ShadowReceive: 0
     - _ShadowSteps: 4
-    - _ShadowStrength: 0.664
+    - _ShadowStrength: 1
     - _ShadowStrengthMaskLOD: 0
     - _ShadowUseStep: 0
     - _Shadowborder: 0.579
@@ -2998,7 +3027,7 @@ Material:
     - _SkinThicknessMapInvert: 0
     - _SkinThicknessMapUV: 0
     - _SkinThicknessPower: 1
-    - _Smoothness: 0
+    - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _Specular2ndLayer: 0
     - _SpecularBlur: 0
@@ -4136,7 +4165,7 @@ Material:
     - _EmissionAL3StrengthMod: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionBlendMask_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionBlink: {r: 0, g: 0, b: 3.141593, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor1: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor2: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor3: {r: 1, g: 1, b: 1, a: 1}
@@ -4305,12 +4334,12 @@ Material:
     - _MochieSpecularTint: {r: 1, g: 1, b: 1, a: 1}
     - _MultilayerMathBlurMapPan: {r: 0, g: 0, b: 0, a: 0}
     - _NormalCorrectOrigin: {r: 0, g: 0.4, b: -0.025, a: 1}
-    - _OutlineColor: {r: 0.31617647, g: 0.03719723, b: 0.03719723, a: 1}
+    - _OutlineColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _OutlineDropShadowOffset: {r: 1, g: 0, b: 0, a: 0}
-    - _OutlineLitColor: {r: 1, g: 0.19999996, b: 0, a: 0}
+    - _OutlineLitColor: {r: 1, g: 0.19999906, b: 0, a: 0.5019608}
     - _OutlineMaskPan: {r: 0, g: 0, b: 0, a: 0}
     - _OutlinePersonaDirection: {r: 1, g: 0, b: 0, a: 0}
-    - _OutlineTexHSVG: {r: 0, g: 1, b: 1, a: 1}
+    - _OutlineTexHSVG: {r: 0, g: 1, b: 1, a: 2}
     - _OutlineTex_ScrollRotate: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineTexturePan: {r: 0, g: 0, b: 0, a: 0}
     - _PBRMaskScaleTiling: {r: 1, g: 1, b: 0, a: 0}
@@ -4344,6 +4373,7 @@ Material:
     - _PathingColorMapPan: {r: 0, g: 0, b: 0, a: 0}
     - _PathingMapPan: {r: 0, g: 0, b: 0, a: 0}
     - _PolarCenter: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _PreColor: {r: 1, g: 1, b: 1, a: 1}
     - _RGBAAlphaPBRMaskScaleTiling: {r: 1, g: 1, b: 0, a: 0}
     - _RGBAAlphaPBRMasksPan: {r: 0, g: 0, b: 0, a: 0}
     - _RGBABluePBRMaskScaleTiling: {r: 1, g: 1, b: 0, a: 0}
@@ -4388,15 +4418,15 @@ Material:
     - _Set_HighColorMaskPan: {r: 0, g: 0, b: 0, a: 0}
     - _Set_Rim2LightMaskPan: {r: 0, g: 0, b: 0, a: 0}
     - _Set_RimLightMaskPan: {r: 0, g: 0, b: 0, a: 0}
-    - _Shadow2ndColor: {r: 0.68, g: 0.65999997, b: 0.78999996, a: 0}
+    - _Shadow2ndColor: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow2ndColorTexPan: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow3rdColor: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow3rdColorTexPan: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowAOShift: {r: 1, g: 0, b: 1, a: 0}
     - _ShadowAOShift2: {r: 1, g: 0, b: 1, a: 0}
-    - _ShadowBorderColor: {r: 1, g: 0.1, b: 0, a: 1}
+    - _ShadowBorderColor: {r: 1, g: 0, b: 0, a: 1}
     - _ShadowBorderMaskPan: {r: 0, g: 0, b: 0, a: 0}
-    - _ShadowColor: {r: 0.82, g: 0.76, b: 0.85, a: 1}
+    - _ShadowColor: {r: 0.7, g: 0.75, b: 0.85, a: 1}
     - _ShadowColorTexPan: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowPlanB2CustomShadowTextureRGB: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowPlanBCustomShadowTextureRGB: {r: 1, g: 1, b: 1, a: 1}
@@ -4484,6 +4514,7 @@ Material:
     - _egc6: {r: 1, g: 1, b: 1, a: 0}
     - _egc7: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &1352534967651306223
 MonoBehaviour:
   m_ObjectHideFlags: 11

@@ -143,7 +143,7 @@ public class EnemySpawner : MonoBehaviour
     private void HandleStageCompletion()
     {
         BeforeBossStageCheck();
-        if (currentStage <= stageSelectionManager.currentStage)
+        if (currentStage < stageSelectionManager.currentStage)
         {
             ResetEnemyCount();
             StartSpawning();
