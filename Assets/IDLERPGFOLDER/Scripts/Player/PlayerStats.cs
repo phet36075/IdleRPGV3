@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public CharacterStats baseStats;
-    
+    [SerializeField] private GameObject lvUpPrefab;
     private int currentStr;
     private int currentDex;
     private int currentVit;
@@ -51,6 +51,8 @@ public class PlayerStats : MonoBehaviour
     
     private void LevelUp()
     {
+        GameObject spawnedEffect = Instantiate(lvUpPrefab, transform.position, lvUpPrefab.transform.rotation);
+        Destroy(spawnedEffect,1f);
         level++;
         availableStatPoints += POINTS_PER_LEVEL;
         OnLevelUp?.Invoke(level);
@@ -58,7 +60,8 @@ public class PlayerStats : MonoBehaviour
     
     public int CalculateExpForNextLevel()
     {
-        return level * 100; // Simple formula: each level requires level * 100 EXP
+        float K = 1.5f; // ปรับค่า K ตามความต้องการ
+        return Mathf.FloorToInt(100 * level * Mathf.Log(level + 1) * K);
     }
     
     public bool TrySpendStatPoint(StatType statType)

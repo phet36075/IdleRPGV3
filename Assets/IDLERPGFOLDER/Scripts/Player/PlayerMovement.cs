@@ -150,7 +150,11 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyGravity()
     {
         verticalVelocity.y += gravity * Time.deltaTime;
-        controller.Move(verticalVelocity * Time.deltaTime);
+        if (controller.enabled)
+        {
+            controller.Move(verticalVelocity * Time.deltaTime);
+        }
+        
     }
     
     private void HandleRollInput()

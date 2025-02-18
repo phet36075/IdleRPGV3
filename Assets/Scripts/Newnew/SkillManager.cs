@@ -6,8 +6,10 @@ using UnityEngine;
 // SkillManager สำหรับจัดการสกิลทั้งหมด
 public class SkillManager : MonoBehaviour
 {
-    [SerializeField] private List<BaseSkill> skills = new List<BaseSkill>();
+   
 // Event สำหรับแจ้งเมื่อมีการเปลี่ยนแปลง skills
+    private const int MAX_SKILLS = 3;
+    [SerializeField] private List<BaseSkill> skills = new List<BaseSkill>();
     public event System.Action OnSkillsChanged;
     [SerializeField] private SkillInventoryManager skillInventory;
     [SerializeField] private SkillData skillsToUnlock,skilltoUnlock2;  // ลาก SkillData ที่จะปลดล็อคใส่ใน inspector
@@ -70,32 +72,23 @@ public class SkillManager : MonoBehaviour
         }
     }
     // ใช้สกิลถัดไปที่พร้อมใช้งาน
-    public void UseNextAvailableSkill()
+    public bool UseNextAvailableSkill()
     {
-        if (skills.Count == 0) return;
+        if (skills.Count == 0) return false;  // Return false if no skills exist
 
-        // เริ่มเช็คจากตำแหน่งปัจจุบัน
-        int startIndex = currentSkillIndex;
-        
-        do
+        for (int i = 0; i < skills.Count; i++)
         {
-            BaseSkill currentSkill = skills[currentSkillIndex];
-            
-            // ถ้าสกิลไม่ติด cooldown และไม่กำลังใช้งานอยู่
-            if (!currentSkill.IsOnCooldown /* && !currentSkill.IsSkillActive*/)
+            BaseSkill currentSkill = skills[i];
+        
+            if (!currentSkill.IsOnCooldown)
             {
                 currentSkill.UseSkill();
-                // เลื่อนไปตำแหน่งถัดไป
-                currentSkillIndex = (currentSkillIndex + 1) % skills.Count;
-                return;
+                return true;
             }
-            
-            // เลื่อนไปตำแหน่งถัดไปเพื่อเช็คสกิลต่อไป
-            currentSkillIndex = (currentSkillIndex + 1) % skills.Count;
-            
-        } while (currentSkillIndex != startIndex);  // วนจนกว่าจะครบรอบ
+        }
 
         Debug.Log("No available skills to use!");
+        return false;
     }
     
     // รีเซ็ตลำดับการใช้สกิล
@@ -131,10 +124,14 @@ public class SkillManager : MonoBehaviour
     }
     public void AddSkill(BaseSkill skill)
     {
-        if (!skills.Contains(skill))
+        if (skills.Count < MAX_SKILLS && !skills.Contains(skill))
         {
             skills.Add(skill);
-            OnSkillsChanged?.Invoke();  // แจ้ง UI ให้อัพเดท
+            OnSkillsChanged?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Cannot add more skills. Maximum limit reached or skill already exists!");
         }
     }
 

@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     public bool isAttacking;
     private Transform _vfxPos;
     public GameObject attackVFX;
-    [FormerlySerializedAs("_Trail")] public Trail trail;
+   // [FormerlySerializedAs("_Trail")] public Trail trail;
     
     public float detectionRadius = 5f; // รัศมีในการตรวจจับศัตรู
     public float moveSpeed = 5f; // ความเร็วในการเคลื่อนที่
@@ -186,7 +186,7 @@ public class PlayerAttack : MonoBehaviour
     public void PerformAttack()
     {
         attackVFX.SetActive(true);
-        trail.enabled = true;
+       // trail.enabled = true;
         float effectDuration = 0.2f;
         Invoke("StopEffect", effectDuration);
 
@@ -210,7 +210,7 @@ public class PlayerAttack : MonoBehaviour
     private void StopEffect()
     {
         attackVFX.SetActive(false);
-        trail.enabled = false;
+       // trail.enabled = false;
     }
     
     public void EndAttack()

@@ -872,7 +872,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         // add money
         CurrencyManager.Instance.AddMoney( Mathf.RoundToInt((EnemyData.moneyDrop * _enemySpawner.currentStage) *1.25f));
         // add exp
-        playerStats.AddExperience(100);
+        playerStats.AddExperience(GetMonsterExp(_enemySpawner.currentStage));
         
         
         animator.SetTrigger("Die");
@@ -884,7 +884,12 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         
         currentHealth = 0;
     }
-
+    public int GetMonsterExp(int monsterLevel)
+    {
+        float baseExp = 20f;
+        float multiplier = 1.2f;
+        return Mathf.FloorToInt(baseExp * Mathf.Log(monsterLevel + 1) * multiplier);
+    }
     #region Modifier
 
   /*  private enum Modifier

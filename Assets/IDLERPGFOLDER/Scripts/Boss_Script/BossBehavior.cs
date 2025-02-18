@@ -114,7 +114,11 @@ public class BossBehavior : MonoBehaviour
         {
             IsUsingSkill = true;
             RotateTowardsTarget();
-            agent.SetDestination(transform.position);
+            if (agent.enabled)
+            {
+                agent.SetDestination(transform.position);
+            }
+           
             bossSkills[index].UseSkill();
         }
     }

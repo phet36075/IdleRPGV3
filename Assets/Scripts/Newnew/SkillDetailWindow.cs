@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using TMPro;
@@ -10,6 +11,7 @@ public class SkillDetailWindow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cooldownText;
     [SerializeField] private TextMeshProUGUI damageText;
     [SerializeField] private TextMeshProUGUI manaText;
+    [SerializeField] private TextMeshProUGUI warningText;
     [SerializeField] private Button equipButton;
     [SerializeField] private Button unequipButton;
     [SerializeField] private SkillManager skillManager;
@@ -52,6 +54,16 @@ public class SkillDetailWindow : MonoBehaviour
     {
         if (currentSkillData != null)
         {
+            // เช็คจำนวนสกิลก่อน
+            if (skillManager.Skills.Count >= 3)
+            {
+                Debug.Log("Skills are full! Maximum 3 skills allowed.");
+                warningText.gameObject.SetActive(true);
+                StartCoroutine(HideWarningSecs());
+                // อาจจะเพิ่ม UI แสดงข้อความเตือนตรงนี้
+                return;
+            }
+            warningText.gameObject.SetActive(false);
             var skillType = currentSkillData.GetSkillComponentType();
             if (skillType != null)
             {
@@ -69,6 +81,20 @@ public class SkillDetailWindow : MonoBehaviour
         }
     }
 
+    private IEnumerator HideWarningSecs()
+    {
+        
+        yield return new WaitForSeconds(1f);
+        HideWarning();
+    }
+    
+    public void HideWarning()
+    {
+        if (warningText != null)
+        {
+            warningText.gameObject.SetActive(false);
+        }
+    }
     private void OnUnequipButtonClick()
     {
         if (currentSkillData != null)
