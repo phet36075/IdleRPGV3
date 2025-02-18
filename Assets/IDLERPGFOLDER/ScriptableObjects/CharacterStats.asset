@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f954cb92fa5f6842b855c7a2df99169, type: 3}
   m_Name: CharacterStats
   m_EditorClassIdentifier: 
-  baseStr: 9
+  baseStr: 1
   baseDex: 9
-  baseVit: 9
-  baseInt: 9
+  baseVit: 1
+  baseInt: 1
   baseAgi: 9

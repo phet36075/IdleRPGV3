@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3f4b6540eef684398d568de5e1a4cf, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  DefaultMaxHealth: 500
-  maxHealth: 600
-  currentHealth: 500
-  maxMana: 120
-  baseDamage: 20
+  DefaultMaxHealth: 0
+  maxHealth: 380
+  currentHealth: 190
+  maxMana: 110
+  baseDamage: 12
   DefaultbaseDamage: 20
   weaponDamage: 5
-  criticalChance: 0.049999997
+  criticalChance: 0.13499999
   criticalDamage: 2
-  defense: 55
-  armorPenetration: 2
+  defense: 12
+  armorPenetration: 18
   damageVariation: 0.2
-  regenRate: 255
-  manaRegenRate: 14
+  regenRate: 40
+  manaRegenRate: 12
   moveSpeed: 2
-  elementType: 1
+  elementType: 4
   WeaponupgradeCost: 100
   Weaponlevel: 1
   healthUpgradeCost: 100

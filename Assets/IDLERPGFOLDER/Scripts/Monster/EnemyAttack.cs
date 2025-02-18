@@ -137,7 +137,14 @@ public class EnemyAttack : MonoBehaviour
             int finalDamage = CalculateDamage();
             PlayerManager playerManager = player.GetComponent<PlayerManager>();
             
-            playerManager.TakeDamage(finalDamage,_enemyData.EnemyData.armorPenetration);
+           // playerManager.TakeDamage(finalDamage,_enemyData.EnemyData.armorPenetration);
+            
+            DamageData damageData = new DamageData(
+                finalDamage,
+               10,
+                ElementType.None
+            );
+            playerManager.TakeDamage(damageData);
         }
     }
     

@@ -78,8 +78,8 @@ public class PlayerData : ScriptableObject
         Weaponlevel = 1;
         WeaponupgradeCost = 100;
 
-        maxHealth = DefaultMaxHealth;
-        currentHealth = maxHealth;
+     //   maxHealth = DefaultMaxHealth;
+       // currentHealth = maxHealth;
         healthLevel = 1;
         healthUpgradeCost = 100;
 

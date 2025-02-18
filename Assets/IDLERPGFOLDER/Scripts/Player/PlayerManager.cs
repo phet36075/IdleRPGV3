@@ -39,9 +39,12 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        
         InitializeComponents();
         InitializeStats();
         StartCoroutine(RegenerateHp());
+      
+
     }
 
     private void InitializeComponents()

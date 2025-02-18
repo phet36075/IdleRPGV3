@@ -90,6 +90,8 @@ public class SkillManager : MonoBehaviour
         Debug.Log("No available skills to use!");
         return false;
     }
+
+   
     
     // รีเซ็ตลำดับการใช้สกิล
     public void ResetSkillSequence()

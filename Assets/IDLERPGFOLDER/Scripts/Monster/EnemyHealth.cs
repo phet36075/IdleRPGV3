@@ -794,20 +794,20 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             isWeakness = true;
         }
         // ความสัมพันธ์ของธาตุหลัก - ได้เปรียบ
-        else if ((attackElement == ElementType.Fire && defenderElement == ElementType.Earth) ||
+        else if ((attackElement == ElementType.Fire && defenderElement == ElementType.Wind) ||
                  (attackElement == ElementType.Water && defenderElement == ElementType.Fire) ||
-                 (attackElement == ElementType.Earth && defenderElement == ElementType.Wind) ||
-                 (attackElement == ElementType.Wind && defenderElement == ElementType.Water))
+                 (attackElement == ElementType.Earth && defenderElement == ElementType.Water) ||
+                 (attackElement == ElementType.Wind && defenderElement == ElementType.Earth))
         {
             multiplier = 1.5f;
             Debug.Log("Win Element");
             isWeakness = true;
         }
         // ธาตุที่เสียเปรียบ
-        else if ((attackElement == ElementType.Earth && defenderElement == ElementType.Fire) ||
+        else if ((attackElement == ElementType.Earth && defenderElement == ElementType.Wind) ||
                  (attackElement == ElementType.Fire && defenderElement == ElementType.Water) ||
-                 (attackElement == ElementType.Wind && defenderElement == ElementType.Earth) ||
-                 (attackElement == ElementType.Water && defenderElement == ElementType.Wind))
+                 (attackElement == ElementType.Wind && defenderElement == ElementType.Fire) ||
+                 (attackElement == ElementType.Water && defenderElement == ElementType.Earth))
         {
             multiplier = 0.5f;
             isWeakness = false;
@@ -819,10 +819,15 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             multiplier = 0.75f;
             isWeakness = false;
         }
+        else if ((attackElement == ElementType.Light && defenderElement == ElementType.Light) ||
+                 (attackElement == ElementType.Dark && defenderElement == ElementType.Dark))
+        {
+            multiplier = 0.5f;
+            isWeakness = false;
+        }
         else
         {
-            multiplier = 1f; // ธาตุไม่มีผลต่อกัน
-            isWeakness = false;
+            multiplier = 0.1f;
         }
 
         return (multiplier);

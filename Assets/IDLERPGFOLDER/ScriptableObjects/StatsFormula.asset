@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: StatsFormula
   m_EditorClassIdentifier: 
   baseHP: 100
-  hpPerVit: 10
+  hpPerVit: 40
   regenPerVit: 5
   hpPerLevel: 20
+  baseMana: 100
+  baseManaRegen: 10
+  manaPerInt: 0.1
+  manaRegenPerInt: 2
   baseDamage: 10
   damagePerStr: 2
   criticalMultiplier: 1.5
   criticalChancePerDex: 0.01
-  criticalChancePerAgi: 0.02
+  criticalChancePerAgi: 0.005
   armorPenatrationPerAgi: 2
   baseDefense: 5
   baseRegen: 5

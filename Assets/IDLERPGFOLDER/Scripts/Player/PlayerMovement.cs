@@ -130,11 +130,12 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
 
             // Update animation
-            animator.SetFloat("Speed", isSprinting ? 2f : 1f);
+           // animator.SetFloat("Speed", isSprinting ? 2f : 1f);
+           animator.SetFloat("Speed", currentSpeed,0.1f,Time.deltaTime);
         }
         else
         {
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat("Speed", 0f,0.1f,Time.deltaTime);
         }
     }
 

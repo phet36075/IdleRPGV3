@@ -197,6 +197,7 @@ public class AIController : MonoBehaviour
                 else
                 {
                     // agent.isStopped = false;
+                    
                     agent.SetDestination(target.position);
                 }
 
