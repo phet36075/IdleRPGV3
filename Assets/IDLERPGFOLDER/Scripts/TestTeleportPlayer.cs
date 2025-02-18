@@ -8,9 +8,14 @@ public class TestTeleportPlayer : MonoBehaviour
     private Coroutine teleportCoroutine;
     private CharacterController characterController;
     public Transform AllyPosition;
+    public CanvasGroup stageUI;
+    public float fadeDuration = 0.5f; // ระยะเวลาการจางเข้า-ออก
+    public float displayTime = 2f; // เวลาที่ UI จะคงอยู่ก่อนจางออก
     private void Start()
     {
+        stageUI.alpha = 0;
         characterController = GetComponent<CharacterController>();
+        ShowUI();
     }
 
     public void TeleportPlayer(Vector3 newPosition)
@@ -57,11 +62,41 @@ public class TestTeleportPlayer : MonoBehaviour
 
         // รอให้ fade out เสร็จสิ้น
         yield return new WaitForSeconds(TransitionManager.Instance.fadeDuration);
-
+        ShowUI();
         Debug.Log("การเคลื่อนย้ายเสร็จสิ้น");
         isTeleporting = false;
     }
+    public void ShowUI()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeIn());
+    }
 
+    private IEnumerator FadeIn()
+    {
+        float time = 0;
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            stageUI.alpha = Mathf.Lerp(0, 1, time / fadeDuration);
+            yield return null;
+        }
+        stageUI.alpha = 1;
+        yield return new WaitForSeconds(displayTime);
+        StartCoroutine(FadeOut());
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float time = 0;
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+            stageUI.alpha = Mathf.Lerp(1, 0, time / fadeDuration);
+            yield return null;
+        }
+        stageUI.alpha = 0;
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))

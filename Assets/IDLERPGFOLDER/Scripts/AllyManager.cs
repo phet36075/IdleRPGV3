@@ -15,7 +15,7 @@ public class AllyManager : MonoBehaviour
         
         if (meleeAlly != null)
         {
-            meleeAlly.StartAutonomousCombat();
+            //meleeAlly.StartAutonomousCombat();
         }
     }
 
@@ -30,8 +30,8 @@ public class AllyManager : MonoBehaviour
         
         if (meleeAlly != null)
         {
-            meleeAlly.AllyisAttacking = false;
-            meleeAlly.CancelInvoke("ContinueAttacking");
+           // meleeAlly.AllyisAttacking = false;
+          //  meleeAlly.CancelInvoke("ContinueAttacking");
         }
     }
 }
