@@ -5,30 +5,34 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class PowerCalculator
+public static class PowerCalculator 
 {
-    public static int CalculatePower(PlayerData stats)
+    // ค่าถ่วงน้ำหนักของแต่ละ stat
+    private const float POWER_PER_HEALTH = 0.5f;
+    private const float POWER_PER_DAMAGE = 2f;
+    private const float POWER_PER_DEFENSE = 3f;
+    private const float POWER_PER_MANA = 0.3f;
+    private const float POWER_PER_CRIT = 5f;
+
+    public static int CalculatePower(PlayerData currentStats)
     {
-        // สูตรคำนวณแบบตรงไปตรงมา
-        float totalPower = 0;
-        
-        // พลังโจมตี
-        float attackPower = stats.baseDamage + stats.weaponDamage;
-        totalPower += attackPower;
-        
-        // พลังป้องกัน
-        float defensePower = stats.defense;
-        totalPower += defensePower;
-        
-        // เพิ่มจากเลือด
-        float healthPower = stats.maxHealth * 0.5f;
-        totalPower += healthPower;
-        
-        // เพิ่มจากมานา
-        float manaPower = stats.maxMana * 0.3f;
-        totalPower += manaPower;
-        
-        return Mathf.RoundToInt(totalPower);
+        // เก็บค่า default ไว้ใน ScriptableObject เดียวกัน หรือแยกอีกไฟล์ก็ได้
+        float defaultHealth = 140f;
+        float defaultMana = 110f;
+        float defaultDamage = 12;
+        float defaultDefense = 6f;
+        float defaultCrit = 0.015f;
+
+        int totalPower = 0;
+
+        // คำนวณ power จากผลต่างของแต่ละ stat กับค่าเริ่มต้น
+        totalPower += Mathf.RoundToInt((currentStats.maxHealth - defaultHealth) * POWER_PER_HEALTH);
+        totalPower += Mathf.RoundToInt((currentStats.maxMana - defaultMana) * POWER_PER_MANA);
+        totalPower += Mathf.RoundToInt((currentStats.baseDamage + currentStats.weaponDamage - defaultDamage) * POWER_PER_DAMAGE);
+        totalPower += Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
+        totalPower += Mathf.RoundToInt((currentStats.criticalChance - defaultCrit) * POWER_PER_CRIT);
+
+        return totalPower;
     }
 }
 
