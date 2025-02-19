@@ -23,6 +23,12 @@ public class UIPlayerStats : MonoBehaviour
     public TextMeshProUGUI txtVit;
     public TextMeshProUGUI txtInt;
     public TextMeshProUGUI txtAgi;
+    
+    public TextMeshProUGUI txtStrExtra;
+    public TextMeshProUGUI txtDexExtra;
+    public TextMeshProUGUI txtVitExtra;
+    public TextMeshProUGUI txtIntExtra;
+    public TextMeshProUGUI txtAgiExtra;
     [Header("Property Text")]
     public TextMeshProUGUI txtHealth;
     public TextMeshProUGUI txtDamage;
@@ -99,6 +105,8 @@ public class UIPlayerStats : MonoBehaviour
         txtInt.text = playerStats.GetStat(StatType.Intelligence).ToString();
         txtAgi.text = playerStats.GetStat(StatType.Agility).ToString();
         
+        
+        
         txtHealth.text = playerData.maxHealth.ToString();
         txtDamage.text = playerData.baseDamage.ToString();
         txtDefense.text = playerData.defense.ToString();
@@ -123,12 +131,12 @@ public class UIPlayerStats : MonoBehaviour
     }
     private void OnEnable()
     {
-        PlayerStats.OnPowerChanged += UpdatePowerText;
+        PowerManager.OnPowerChanged += UpdatePowerText;
     }
 
     private void OnDisable()
     {
-        PlayerStats.OnPowerChanged -= UpdatePowerText;
+        PowerManager.OnPowerChanged -= UpdatePowerText;
     }
 
     private void UpdatePowerText(int newPower)

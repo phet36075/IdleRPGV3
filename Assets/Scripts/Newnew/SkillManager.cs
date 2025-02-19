@@ -14,7 +14,8 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private SkillInventoryManager skillInventory;
     [SerializeField] private SkillData skillsToUnlock,skilltoUnlock2;  // ลาก SkillData ที่จะปลดล็อคใส่ใน inspector
     [SerializeField] private PlayerStats playerStats;
-    
+
+    [SerializeField] private PowerManager powerManager;
     // Property สำหรับเข้าถึง skills จากภายนอก
     public IReadOnlyList<BaseSkill> Skills => skills;
     private int currentSkillIndex = 0;  // ตำแหน่งสกิลปัจจุบัน
@@ -61,7 +62,7 @@ public class SkillManager : MonoBehaviour
     {
         if (skills.Contains(skill))
         {
-            playerStats.DecreasePower(skill.GetPowerBonus());
+            powerManager.DecreasePower(skill.GetPowerBonus());
           // playerStats.RecalculatePower(); // อัปเดตค่าพลังใหม่ทุกครั้งที่เพิ่มสกิล
             skills.Remove(skill);
             Destroy(skill);  // ลบ component ออกจาก GameObject
@@ -133,7 +134,7 @@ public class SkillManager : MonoBehaviour
         if (skills.Count < MAX_SKILLS && !skills.Contains(skill))
         {
             skills.Add(skill);
-            playerStats.IncreasePower(skill.GetPowerBonus());
+            powerManager.IncreasePower(skill.GetPowerBonus());
            // playerStats.RecalculatePower(); // อัปเดตค่าพลังใหม่ทุกครั้งที่เพิ่มสกิล
             OnSkillsChanged?.Invoke();
         }

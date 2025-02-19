@@ -30,7 +30,7 @@ public class SceneChanger : MonoBehaviour
         _enemyData.maxhealth += 100;
         _enemyData.moneyDrop += 100;
         //PlayerData.stage += 1;
-        PlayerData.currentHealth = _playerManager.currentHealth;
+       // PlayerData.currentHealth = _playerManager.currentHealth;
         SceneManager.LoadScene(nextLevelName);
     }
 }

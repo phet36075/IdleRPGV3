@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         _aiController = FindObjectOfType<AIController>();
         
         currentMana = playerData.maxMana;
-        currentHealth = playerData.currentHealth;
+        currentHealth = playerData.maxHealth;
         
         InitializeHealthBar();
     }

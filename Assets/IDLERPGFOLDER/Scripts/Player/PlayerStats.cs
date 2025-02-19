@@ -18,7 +18,8 @@ public class PlayerStats : MonoBehaviour
     public SkillManager skillManager;
     [SerializeField] private GameObject lvUpPrefab;
     [SerializeField] private UIPlayerStats uiPlayerStats;
-    [SerializeField] private PowerChangeUI powerChangeUI;
+   // [SerializeField] private PowerChangeUI powerChangeUI;
+    [SerializeField] private PowerManager powerManager;
     #endregion
 
     #region Base Stats
@@ -30,12 +31,12 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Power Per Stat Settings
-    [SerializeField] private int powerPerStr = 5;
-    [SerializeField] private int powerPerDex = 3;
-    [SerializeField] private int powerPerVit = 4;
-    [SerializeField] private int powerPerInt = 2;
-    [SerializeField] private int powerPerAgi = 3;
-    private Dictionary<StatType, int> statsPowerGain = new Dictionary<StatType, int>();
+    // [SerializeField] private int powerPerStr = 5;
+    // [SerializeField] private int powerPerDex = 3;
+    // [SerializeField] private int powerPerVit = 4;
+    // [SerializeField] private int powerPerInt = 2;
+    // [SerializeField] private int powerPerAgi = 3;
+    // private Dictionary<StatType, int> statsPowerGain = new Dictionary<StatType, int>();
     #endregion
 
     #region Level and Experience
@@ -51,9 +52,9 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Power System
-    [SerializeField] private int basePower = 100;
-    private int currentPower;
-    public static event Action<int> OnPowerChanged;
+    // [SerializeField] private int basePower = 100;
+    // private int currentPower;
+    // public static event Action<int> OnPowerChanged;
     #endregion
 
     #region Events
@@ -75,8 +76,8 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        currentPower = basePower;
-        NotifyPowerChange();
+       // currentPower = basePower;
+        // NotifyPowerChange();
         NotifyStatPointsChanged();
     }
     #endregion
@@ -84,11 +85,11 @@ public class PlayerStats : MonoBehaviour
     #region Initialization Methods
     private void InitializeStatsPowerGain()
     {
-        statsPowerGain[StatType.Strength] = powerPerStr;
-        statsPowerGain[StatType.Dexterity] = powerPerDex;
-        statsPowerGain[StatType.Vitality] = powerPerVit;
-        statsPowerGain[StatType.Intelligence] = powerPerInt;
-        statsPowerGain[StatType.Agility] = powerPerAgi;
+        // statsPowerGain[StatType.Strength] = powerPerStr;
+        // statsPowerGain[StatType.Dexterity] = powerPerDex;
+        // statsPowerGain[StatType.Vitality] = powerPerVit;
+        // statsPowerGain[StatType.Intelligence] = powerPerInt;
+        // statsPowerGain[StatType.Agility] = powerPerAgi;
     }
 
     private void InitializeStats()
@@ -102,24 +103,24 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Power Management
-    public void IncreasePower(int amount)
-    {
-        currentPower += amount;
-        NotifyPowerChange();
-        powerChangeUI.ShowPowerChange(amount);
-    }
-
-    public void DecreasePower(int amount)
-    {
-        currentPower = Mathf.Max(0, currentPower - amount);
-        NotifyPowerChange();
-        powerChangeUI.ShowPowerChange(-amount);
-    }
-
-    private void NotifyPowerChange()
-    {
-        OnPowerChanged?.Invoke(currentPower);
-    }
+    // public void IncreasePower(int amount)
+    // {
+    //     currentPower += amount;
+    //     NotifyPowerChange();
+    //     powerChangeUI.ShowPowerChange(amount);
+    // }
+    //
+    // public void DecreasePower(int amount)
+    // {
+    //     currentPower = Mathf.Max(0, currentPower - amount);
+    //     NotifyPowerChange();
+    //     powerChangeUI.ShowPowerChange(-amount);
+    // }
+    //
+    // private void NotifyPowerChange()
+    // {
+    //     OnPowerChanged?.Invoke(currentPower);
+    // }
     #endregion
 
     #region Experience and Level Management
@@ -167,16 +168,16 @@ public class PlayerStats : MonoBehaviour
         ModifyStat(statType, 1);
         availableStatPoints--;
         totalSpentStatPoints++;
-        int powerGain = statsPowerGain[statType];
-        IncreasePower(powerGain);
+       // int powerGain = statsPowerGain[statType];
+        //powerManager.IncreasePower(powerGain);
         NotifyStatPointsChanged();
         return true;
     }
 
     public void ResetAllStats()
     {
-        int totalPowerToReduce = CalculateTotalStatsPower();
-        DecreasePower(totalPowerToReduce);
+        // int totalPowerToReduce = CalculateTotalStatsPower();
+        // powerManager.DecreasePower(totalPowerToReduce);
 
         currentStr = baseStats.baseStr;
         currentDex = baseStats.baseDex;
@@ -216,21 +217,21 @@ public class PlayerStats : MonoBehaviour
     #endregion
 
     #region Stat Calculations and Queries
-    public int CalculateTotalStatsPower()
-    {
-        int totalPower = 0;
-        totalPower += (currentStr - baseStats.baseStr) * powerPerStr;
-        totalPower += (currentDex - baseStats.baseDex) * powerPerDex;
-        totalPower += (currentVit - baseStats.baseVit) * powerPerVit;
-        totalPower += (currentInt - baseStats.baseInt) * powerPerInt;
-        totalPower += (currentAgi - baseStats.baseAgi) * powerPerAgi;
-        return totalPower;
-    }
+    // public int CalculateTotalStatsPower()
+    // {
+    //     int totalPower = 0;
+    //     totalPower += (currentStr - baseStats.baseStr) * powerPerStr;
+    //     totalPower += (currentDex - baseStats.baseDex) * powerPerDex;
+    //     totalPower += (currentVit - baseStats.baseVit) * powerPerVit;
+    //     totalPower += (currentInt - baseStats.baseInt) * powerPerInt;
+    //     totalPower += (currentAgi - baseStats.baseAgi) * powerPerAgi;
+    //     return totalPower;
+    // }
 
-    public int GetPowerGainPerStat(StatType statType)
-    {
-        return statsPowerGain[statType];
-    }
+    // public int GetPowerGainPerStat(StatType statType)
+    // {
+    //     return statsPowerGain[statType];
+    // }
 
     public int GetTotalSpentStatPoints()
     {
