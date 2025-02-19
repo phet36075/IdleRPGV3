@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   DefaultMaxHealth: 0
-  maxHealth: 380
-  currentHealth: 190
+  maxHealth: 140
+  currentHealth: 140
   maxMana: 110
   baseDamage: 12
   DefaultbaseDamage: 20
   weaponDamage: 5
   criticalChance: 0.13499999
   criticalDamage: 2
-  defense: 12
+  defense: 6
   armorPenetration: 18
   damageVariation: 0.2
-  regenRate: 40
+  regenRate: 10
   manaRegenRate: 12
   moveSpeed: 2
-  elementType: 4
+  elementType: 5
   WeaponupgradeCost: 100
   Weaponlevel: 1
   healthUpgradeCost: 100

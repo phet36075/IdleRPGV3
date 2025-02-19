@@ -4,6 +4,7 @@ public class PlayerStats : MonoBehaviour
 {
     public CharacterStats baseStats;
     [SerializeField] private GameObject lvUpPrefab;
+    [SerializeField] private UIPlayerStats uiPlayerStats;
     private int currentStr;
     private int currentDex;
     private int currentVit;
@@ -36,6 +37,7 @@ public class PlayerStats : MonoBehaviour
     public void AddExperience(int amount)
     {
         currentExp += amount;
+        uiPlayerStats.UpdateExpUI(currentExp);
         CheckLevelUp();
     }
     
@@ -44,8 +46,10 @@ public class PlayerStats : MonoBehaviour
         int expRequired = CalculateExpForNextLevel();
         while (currentExp >= expRequired)
         {
+            currentExp -= expRequired; // ลดค่า EXP ตามที่ต้องใช้
             LevelUp();
             expRequired = CalculateExpForNextLevel();
+            uiPlayerStats.UpdateExpUI(currentExp);
         }
     }
     

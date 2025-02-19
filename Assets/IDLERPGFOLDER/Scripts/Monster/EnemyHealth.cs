@@ -664,6 +664,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
 
     private IEnumerator ApplyJudgement(float multiplier = 1f)
     {
+        _playerManager.Heal(_playerManager.GetMaxHealth()/10);
         GameObject effect = Instantiate(JudgementVFX, darnessVFXPosition.position, darnessVFXPosition.rotation);
         Destroy(effect, 1f);
         float[] holyMultipliers = { 2.25f * multiplier, 1.75f * multiplier};

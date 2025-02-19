@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -39,6 +40,8 @@ public class UIPlayerStats : MonoBehaviour
     
     [Header("Remaining Points Text")]
     public TextMeshProUGUI txtRemainPoints;
+
+    [Header("Exp Bar")] public Slider expBar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,8 +50,46 @@ public class UIPlayerStats : MonoBehaviour
         vitalityButton.onClick.AddListener(() => playerStats.TrySpendStatPoint(StatType.Vitality));
         intelligenceButton.onClick.AddListener(() => playerStats.TrySpendStatPoint(StatType.Intelligence));
         agilityButton.onClick.AddListener(() => playerStats.TrySpendStatPoint(StatType.Agility));
-    }
+        
+        
+        expBar.maxValue = playerStats.CalculateExpForNextLevel();
+        expBar.value = playerStats.CurrentExp;
+        if (playerStats != null)
+        {
+            // Subscribe to mana change event
+          //  playerManager.OnManaChanged += UpdateManaUI;
+            // Update UI ครั้งแรก
+            UpdateExpUI(playerStats.CurrentExp);
+        }
 
+       // StartCoroutine(RegenerateMana());
+    }
+    public void UpdateExpUI(float currentExp)
+    {
+        // อัพเดทแถบ mana
+        //manaBarFill.fillAmount = currentMana / playerManager.GetMaxMana();
+        // อัพเดทตัวเลข mana
+      
+        expBar.maxValue = playerStats.CalculateExpForNextLevel();
+        StartCoroutine(SmoothExpBar());
+       
+    }
+    IEnumerator SmoothExpBar()
+    {
+        float elapsedTime = 0f;
+        float duration = 0.2f; // ระยะเวลาที่ต้องการให้การลดลงของแถบลื่นไหล
+        float startValue = expBar.value;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            expBar.value = Mathf.Lerp(startValue, playerStats.CurrentExp, elapsedTime / duration);
+            yield return null;
+        }
+
+        expBar.value = playerStats.CurrentExp;
+      
+    }
     // Update is called once per frame
     void Update()
     {
@@ -75,7 +116,7 @@ public class UIPlayerStats : MonoBehaviour
         txtRemainPoints.text = playerStats.AvailableStatPoints.ToString();
 
     }
-
+   
     public void ToggleUI()
     {
         UI_Stats.SetActive(!UI_Stats.activeSelf);
