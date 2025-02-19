@@ -37,7 +37,7 @@ public class UIPlayerStats : MonoBehaviour
     public TextMeshProUGUI txtLevel;
     public TextMeshProUGUI txtLevel2;
     public TextMeshProUGUI txtExp;
-    
+    public TextMeshProUGUI powerText;
     [Header("Remaining Points Text")]
     public TextMeshProUGUI txtRemainPoints;
 
@@ -121,5 +121,18 @@ public class UIPlayerStats : MonoBehaviour
     {
         UI_Stats.SetActive(!UI_Stats.activeSelf);
     }
-    
+    private void OnEnable()
+    {
+        PlayerStats.OnPowerChanged += UpdatePowerText;
+    }
+
+    private void OnDisable()
+    {
+        PlayerStats.OnPowerChanged -= UpdatePowerText;
+    }
+
+    private void UpdatePowerText(int newPower)
+    {
+        powerText.text = "Power: " + newPower;
+    }
 }

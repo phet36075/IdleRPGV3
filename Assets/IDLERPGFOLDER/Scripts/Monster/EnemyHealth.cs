@@ -892,8 +892,8 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     }
     public int GetMonsterExp(int monsterLevel)
     {
-        float baseExp = 20f;
-        float multiplier = 1.2f;
+        float baseExp = EnemyData.baseExp;
+        float multiplier = EnemyData.expMultiplier;
         return Mathf.FloorToInt(baseExp * Mathf.Log(monsterLevel + 1) * multiplier);
     }
     #region Modifier

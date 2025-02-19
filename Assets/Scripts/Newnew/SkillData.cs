@@ -17,6 +17,7 @@ public class SkillData : ScriptableObject
     public float weaponMultiplier;
     [SerializeField] private string skillComponentTypeName;  // เก็บชื่อ class ของ skill component
     public float manaCost;  // เพิ่มค่า mana ที่ต้องใช้
+    public int skillPower;
 
     [TextArea(3, 10)]
     public string description;  // เพิ่มคำอธิบายสกิล

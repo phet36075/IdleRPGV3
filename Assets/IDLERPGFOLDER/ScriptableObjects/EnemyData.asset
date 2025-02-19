@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8989e9eda936ad4498e9a95b08f51dd7, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  maxhealth: 5
+  maxhealth: 100
   DefaultMaxHealth: 100
   enemyName: Enemy
   defense: 5
@@ -24,3 +24,5 @@ MonoBehaviour:
   DefaultBaseAttack: 10
   moneyDrop: 100
   DefaultmoneyDrop: 100
+  baseExp: 100
+  expMultiplier: 1.5

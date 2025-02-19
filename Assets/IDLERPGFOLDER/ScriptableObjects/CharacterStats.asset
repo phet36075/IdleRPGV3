@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CharacterStats
   m_EditorClassIdentifier: 
   baseStr: 1
-  baseDex: 9
+  baseDex: 1
   baseVit: 1
   baseInt: 1
-  baseAgi: 9
+  baseAgi: 1

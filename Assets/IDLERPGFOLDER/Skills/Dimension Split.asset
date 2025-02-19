@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Dimension Split
   m_EditorClassIdentifier: 
   elementType: 6
+  StatusSkill: 0
   skillName: Dimension Split
   animationTriggerName: DimensionSplitTrigger
   skillIcon: {fileID: 21300000, guid: e42e10881fa6534419631c5b61a04386, type: 3}
@@ -24,6 +25,7 @@ MonoBehaviour:
   weaponMultiplier: 0.5
   skillComponentTypeName: DimensionSplit
   manaCost: 20
+  skillPower: 100
   description: Shatterd the light, Twisted the land, only one shall be stand from
     this might, dealing continuously 60(+50%)(+30%) and explode 160 at the ending
     of skill.

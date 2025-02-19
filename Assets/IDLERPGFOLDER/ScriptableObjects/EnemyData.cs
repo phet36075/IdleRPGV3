@@ -17,7 +17,8 @@ public class EnemyData : ScriptableObject
     public float DefaultBaseAttack;
     public int moneyDrop = 100;
     public int DefaultmoneyDrop;
-
+    public int baseExp;
+    public float expMultiplier;
 
     private void OnEnable()
     {

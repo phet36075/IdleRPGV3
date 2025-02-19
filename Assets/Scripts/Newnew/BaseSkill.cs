@@ -18,7 +18,13 @@ public abstract class BaseSkill : MonoBehaviour
     public event System.Action<float> OnCooldownStart;
     public event System.Action OnCooldownEnd;
     public bool IsOnCooldown => isOnCooldown;
-    public bool IsSkillActive => isSkillActive;  
+    public bool IsSkillActive => isSkillActive;
+
+    public int GetPowerBonus()
+    {
+        return skillData.skillPower;
+    }
+    [SerializeField] private int powerBonus = 0; // ค่าพลังที่สกิลเพิ่มให้
     public virtual void SetSkillData(SkillData data)
     {
         skillData = data;

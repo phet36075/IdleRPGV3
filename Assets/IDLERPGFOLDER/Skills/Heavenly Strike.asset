@@ -25,5 +25,6 @@ MonoBehaviour:
   weaponMultiplier: 0.2
   skillComponentTypeName: HeavenlyStrike
   manaCost: 11
+  skillPower: 100
   description: Call the Blade of heaven, Guide thier light to evils dealing 90(+20%)(+20%)
     trigger Radiant and make them stronger by 50%

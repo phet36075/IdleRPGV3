@@ -25,5 +25,6 @@ MonoBehaviour:
   weaponMultiplier: 0.2
   skillComponentTypeName: GlacierBlossom
   manaCost: 18
+  skillPower: 100
   description: Blooming a spiral glacier dealing 120(+20%)(+60%) instantly active
     Freeze and boost a damage of next skill by 80%

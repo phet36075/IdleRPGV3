@@ -25,5 +25,6 @@ MonoBehaviour:
   weaponMultiplier: 0.4
   skillComponentTypeName: GaiasWrath
   manaCost: 18
+  skillPower: 100
   description: Infuse within rage make an earthquake dealing 4 time 150(+40%)(+40%)
     and stronger in each hit.

@@ -25,5 +25,6 @@ MonoBehaviour:
   weaponMultiplier: 0.1
   skillComponentTypeName: FrozenKnife
   manaCost: 9
+  skillPower: 100
   description: Spawn a frozen knife-shape spraying from above dealing 70(+10%)(+30%)
     along 5 second and 40% chance to Freeze stack in each hit

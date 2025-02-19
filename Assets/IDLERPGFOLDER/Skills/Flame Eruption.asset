@@ -25,5 +25,6 @@ MonoBehaviour:
   weaponMultiplier: 0.2
   skillComponentTypeName: FlameEruption
   manaCost: 15
+  skillPower: 100
   description: 'Cast down a large fire balls that dealing 120(+20%)(+40%) and splashing
     80 damage around after an exploded '

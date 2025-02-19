@@ -25,5 +25,6 @@ MonoBehaviour:
   weaponMultiplier: 0.1
   skillComponentTypeName: DragonicPulse
   manaCost: 10
+  skillPower: 100
   description: Unleashed the dragonic's head forward dealing 80(+10%)(+20%) and rise
     a damage of next skill by 50%
