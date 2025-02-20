@@ -62,7 +62,7 @@ public class SkillManager : MonoBehaviour
     {
         if (skills.Contains(skill))
         {
-            powerManager.DecreasePower(skill.GetPowerBonus());
+           // powerManager.DecreasePower(skill.GetPowerBonus());
           // playerStats.RecalculatePower(); // อัปเดตค่าพลังใหม่ทุกครั้งที่เพิ่มสกิล
             skills.Remove(skill);
             Destroy(skill);  // ลบ component ออกจาก GameObject
@@ -134,7 +134,7 @@ public class SkillManager : MonoBehaviour
         if (skills.Count < MAX_SKILLS && !skills.Contains(skill))
         {
             skills.Add(skill);
-            powerManager.IncreasePower(skill.GetPowerBonus());
+          //  powerManager.IncreasePower(skill.GetPowerBonus());
            // playerStats.RecalculatePower(); // อัปเดตค่าพลังใหม่ทุกครั้งที่เพิ่มสกิล
             OnSkillsChanged?.Invoke();
         }

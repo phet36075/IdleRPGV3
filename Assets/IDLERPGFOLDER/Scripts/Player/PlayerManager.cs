@@ -281,6 +281,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         if (isPlayerDie) return; // Prevent multiple death triggers
         isPlayerDie = true;
         animator.SetTrigger("Die");
+        animator.SetBool("Died", true);
         DisableComponents();
         gameOverUI.SetActive(true);
     }
@@ -305,6 +306,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(1.0f);
         animator.SetTrigger("Reset");
+        animator.SetBool("Died", false);
         allyAnimator.SetTrigger("Reset");
         
         yield return new WaitForSeconds(0.5f);

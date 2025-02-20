@@ -79,47 +79,7 @@ public class AIController : MonoBehaviour
             Destroy(currentIndicator);
         }
     }
-
-   public void FindNearestBoss()
-   {
-       GameObject[] enemies = GameObject.FindGameObjectsWithTag("Boss");
-       float shortestDistance = Mathf.Infinity;
-       GameObject nearestEnemy = null;
-
-       foreach (GameObject enemy in enemies)
-       {
-           EnemyHealth enemyScript = enemy.GetComponent<EnemyHealth>();
-
-           if (enemyScript != null && !enemyScript.GetIsDead())
-           {
-               float distance = Vector3.Distance(transform.position, enemy.transform.position);
-               if (distance < shortestDistance)
-               {
-                   shortestDistance = distance;
-                   nearestEnemy = enemy;
-               }
-           }
-            
-       }
-
-       if (nearestEnemy != null)
-       {
-           target = nearestEnemy.transform;
-           if (currentIndicator != null)
-           {
-               Destroy(currentIndicator);
-           }
-           // show indicator
-           currentIndicator = Instantiate(indicatorPrefab, target.transform.position, Quaternion.identity);
-       }
-       else
-       {
-           target = null; // ไม่มีศัตรูในระยะ
-           Destroy(currentIndicator);
-       }
-       
-       
-   }
+   
     void Update()
     {
         if (currentIndicator != null)
@@ -157,7 +117,6 @@ public class AIController : MonoBehaviour
         {
             skillManager.UseNextAvailableSkill();
                 lastSkillUseTime = Time.time;
-            
         }
     }
 

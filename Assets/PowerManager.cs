@@ -29,14 +29,12 @@ public static class PowerCalculator
         totalPower += Mathf.RoundToInt((currentStats.maxHealth - defaultHealth) * POWER_PER_HEALTH);
         totalPower += Mathf.RoundToInt((currentStats.maxMana - defaultMana) * POWER_PER_MANA);
         totalPower += Mathf.RoundToInt((currentStats.baseDamage + currentStats.weaponDamage - defaultDamage) * POWER_PER_DAMAGE);
-        totalPower += Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
+       // totalPower += Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
         totalPower += Mathf.RoundToInt((currentStats.criticalChance - defaultCrit) * POWER_PER_CRIT);
 
         return totalPower;
     }
 }
-
-
 
 public class PowerManager : MonoBehaviour
 {
@@ -102,7 +100,6 @@ public class PowerManager : MonoBehaviour
         NotifyPowerChange();
         ShowPowerChange(-amount);
     }
-   
     
     public void ShowPowerChange(int amount)
     {
