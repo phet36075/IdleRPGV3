@@ -33,8 +33,8 @@ public class StageManager : MonoBehaviour
         if (mapIndex >= 0 && mapIndex < mapPrefabs.Count)
         {
             currentMap = Instantiate(mapPrefabs[mapIndex], Vector3.zero, Quaternion.identity);
-         //   StartCoroutine(BakeNavMeshCoroutine());
-            //  BakeNavMesh();
+           // StartCoroutine(BakeNavMeshCoroutine());
+             // BakeNavMesh();
         }
         else
         {
@@ -42,7 +42,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
-   /* private void BakeNavMesh()
+    private void BakeNavMesh()
     {
         if (navMeshSurface != null)
         {
@@ -53,7 +53,7 @@ public class StageManager : MonoBehaviour
         {
             Debug.LogError("NavMeshSurface is not assigned!");
         }
-    }*/
+    }
    
    private IEnumerator BakeNavMeshCoroutine()
    {
