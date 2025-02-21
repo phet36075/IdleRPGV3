@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,6 +36,9 @@ public class DragonMovement : MonoBehaviour
     private const string GLIDE_TRIGGER = "Glide";
     private const string LAND_TRIGGER = "Land";
 
+
+    private float lastTimeAttack;
+    
     // State machine
     private enum DragonState
     {
@@ -117,7 +121,8 @@ public class DragonMovement : MonoBehaviour
                 // โจมตีถ้าหมดเวลา Cooldown
                 if (Time.time >= nextAttackTime)
                 {
-                    //Attack();
+                    Attack();
+                    StartCoroutine(FacePlayer());
                 }
             }
             else
@@ -144,6 +149,51 @@ public class DragonMovement : MonoBehaviour
         }
     }
 
+    private void Attack()
+    {
+        nextAttackTime = Time.time + attackCooldown;
+        animator.SetTrigger("ClawAttack");
+    }
+    IEnumerator FacePlayer()
+    {
+        if (player != null)
+        {
+            // คำนวณทิศทางไปยัง player
+            Vector3 direction = player.position - transform.position;
+            direction.y = 0; // ไม่หมุนในแกน y (ขึ้น-ลง)
+        
+            if (direction != Vector3.zero)
+            {
+                // คำนวณ rotation เป้าหมาย
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+            
+                // หมุนช้าๆ จนกว่าจะถึงเป้าหมาย
+                float angle = Quaternion.Angle(transform.rotation, targetRotation);
+            
+                // ทำการหมุนจนกว่าจะหันไปหา player เกือบสมบูรณ์ (น้อยกว่า 2 องศา)
+                while (angle > 2f)
+                {
+                    // ค่อยๆ หมุนด้วย Slerp
+                    transform.rotation = Quaternion.Slerp(
+                        transform.rotation, 
+                        targetRotation, 
+                        rotationSpeed * Time.deltaTime
+                    );
+                
+                    // คำนวณมุมที่เหลืออยู่
+                    angle = Quaternion.Angle(transform.rotation, targetRotation);
+                
+                    // รอจนกว่าจะถึงเฟรมถัดไป
+                    yield return null;
+                }
+            
+                // หมุนให้ตรงกับเป้าหมายเมื่อใกล้ถึง
+                transform.rotation = targetRotation;
+            }
+        }
+    }
+    
+    
     private void UpdateTakeoff()
     {
         stateTimer += Time.deltaTime;
@@ -257,6 +307,7 @@ public class DragonMovement : MonoBehaviour
 
     private void StartGliding()
     {
+        agent.ResetPath();
         currentState = DragonState.Gliding;
         animator.SetTrigger(GLIDE_TRIGGER);
         agent.speed = glideSpeed;
@@ -264,6 +315,7 @@ public class DragonMovement : MonoBehaviour
     }
     private void StartFlyAttack()
     {
+        agent.ResetPath();
         currentState = DragonState.FlyAttack;
         agent.isStopped = true;
         animator.SetTrigger("FlyAttack");
