@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Inventory : MonoBehaviour
     [Space(5)]
     public int slotAmount = 30;
     public InventorySlot[] inventorySlots;
+  
 
     [Header("Mini Canvas")]
     public RectTransform miniCanvas;
@@ -25,6 +27,11 @@ public class Inventory : MonoBehaviour
     private CanvasGroup inventoryCanvasGroup;
     private bool isVisible = false;
     [SerializeField] private float fadeSpeed = 5f;
+
+    [SerializeField] public InventorySlot equippedItemSlot;
+    public Image myEqImage;
+    [SerializeField] private PlayerManager playerManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +49,7 @@ public class Inventory : MonoBehaviour
         {
             ToggleInventory();
         }
-        
+
         // ทำการ Fade In/Out
         if (isVisible && inventoryCanvasGroup.alpha < 1f)
         {
@@ -55,6 +62,20 @@ public class Inventory : MonoBehaviour
     }
 
     #region Inventory Methods
+
+
+    public TextMeshProUGUI itemNameText; //  UI 
+
+    public void ShowItemName(string name)
+    {
+        itemNameText.text = name; // แสดงชื่อไอเทม
+    }
+
+    public void ClearItemName()
+    {
+        itemNameText.text = ""; // clear ชื่อไอเทม
+    }
+
 
     public void ToggleInventory()
     {
@@ -69,7 +90,7 @@ public class Inventory : MonoBehaviour
         inventoryCanvasGroup.blocksRaycasts = visible;
     }
 
-    
+
     public void ShowInventory(bool show)
     {
         isVisible = show;
@@ -78,7 +99,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(SO_Item item, int amount)
     {
         InventorySlot slot = IsEmptySlotLeft(item);
-        if(slot == null)
+        if (slot == null)
         {
             //full
             DropItem(item, amount);
@@ -95,15 +116,51 @@ public class Inventory : MonoBehaviour
     }
     public void DestroyItem() //OnClick Event
     {
+        if (rightClickSlot == equippedItemSlot)
+        {
+            // ลบรูปภาพใน myEqImage
+            myEqImage.sprite = null;  // ลบไอคอนของไอเทม
+            myEqImage.color = new Color(1f, 1f, 1f, 0f);  // ทำให้ภาพเป็นโปร่งใส
+        }
         rightClickSlot.SetThislot(EMPTY_ITEM, 0);
         OnFinishMiniCanvas();
     }
     public void DropItem() //OnCLick Event
     {
+        if (rightClickSlot == equippedItemSlot)
+        {
+            // ลบรูปภาพใน myEqImage
+            myEqImage.sprite = null;  // ลบไอคอนของไอเทม
+            myEqImage.color = new Color(1f, 1f, 1f, 0f);  // ทำให้ภาพเป็นโปร่งใส
+            ShowItemName(""); // clear ชื่อไอเทม
+        }
+
+        // สร้างไอเทมใหม่ที่ถูกทิ้ง
         ItemSpawner.Instance.SpawnItem(rightClickSlot.item, rightClickSlot.stack);
         DestroyItem();
     }
-    public void DropItem(SO_Item item, int amount) 
+
+    public void UnequipItem() //OnCLick Event
+    {
+        if (rightClickSlot == equippedItemSlot)
+        {
+            if (rightClickSlot.item.itemType == ItemType.Weapon)
+            {
+                playerManager.ChangeWeaponElement(ElementType.None);
+            }
+            // ลบรูปภาพใน myEqImage
+            myEqImage.sprite = null;  // ลบไอคอนของไอเทม
+            myEqImage.color = new Color(1f, 1f, 1f, 0f);  // ทำให้ภาพเป็นโปร่งใส
+            ShowItemName(""); // ล้างชื่อไอเทม
+        }
+
+        // สร้างไอเทมใหม่ที่ถูกทิ้ง
+
+        OnFinishMiniCanvas();
+    }
+
+
+    public void DropItem(SO_Item item, int amount)
     {
         ItemSpawner.Instance.SpawnItem(item, amount);
     }
@@ -111,27 +168,28 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(InventorySlot slot)
     {
+       
         slot.SetThislot(EMPTY_ITEM, 0);
     }
     public void SortItem(bool Ascending = true)
     {
         //Sorting Item
         SetLayoutControlChild(true);
-  
+
         List<InventorySlot> slotHaveItem = new List<InventorySlot>();
-        foreach(InventorySlot slot in inventorySlots)
+        foreach (InventorySlot slot in inventorySlots)
         {
-            if(slot.item != EMPTY_ITEM)
+            if (slot.item != EMPTY_ITEM)
                 slotHaveItem.Add(slot);
         }
 
         var sortArray = Ascending ?
                         slotHaveItem.OrderBy(Slot => Slot.item.id).ToArray() :
                         slotHaveItem.OrderByDescending(Slot => Slot.item.id).ToArray();
-        foreach (InventorySlot slot in inventorySlots )
+        foreach (InventorySlot slot in inventorySlots)
         {
             Destroy(slot.gameObject);
-        }   
+        }
         CreateInventorySlots();
 
         foreach (InventorySlot slot in sortArray)
@@ -162,13 +220,14 @@ public class Inventory : MonoBehaviour
             if (slot == itemSlot)
                 continue;
 
-            if(slot.item ==  itemChecker)
+            if (slot.item == itemChecker)
             {
-                if(slot.stack < slot.item.maxStack)
+                if (slot.stack < slot.item.maxStack)
                 {
-                    return slot;  
+                    return slot;
                 }
-            }else if(slot.item == EMPTY_ITEM && firstEmptySlot == null)
+            }
+            else if (slot.item == EMPTY_ITEM && firstEmptySlot == null)
                 firstEmptySlot = slot;
         }
         return firstEmptySlot;

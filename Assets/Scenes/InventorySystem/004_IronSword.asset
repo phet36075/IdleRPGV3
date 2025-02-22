@@ -17,4 +17,5 @@ MonoBehaviour:
   itemName: Iron Sword
   description: 
   maxStack: 1
+  itemType: 0
   gamePrefab: {fileID: 9138812136301910688, guid: 35434d7f846b1b642b81dac85ef17f74, type: 3}

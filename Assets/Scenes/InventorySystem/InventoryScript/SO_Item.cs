@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+public enum ItemType
+{
+    Default,
+    Weapon,
+    
+}
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Create new Item", order = 4) ]
 public class SO_Item : ScriptableObject
@@ -11,6 +17,7 @@ public class SO_Item : ScriptableObject
     public string itemName;
     public string description;
     public int maxStack;
+    public ItemType itemType;
 
     [Header("In Game Object")]
     public GameObject gamePrefab;

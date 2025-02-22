@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae5c3e9a56f420458496b9305462e22, type: 3}
+  m_Name: 006_WindSword
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 30208dd2f74e24844838f69d78a7cdf6, type: 3}
+  id: 006
+  itemName: WindSword
+  description: 
+  maxStack: 1
+  itemType: 1
+  gamePrefab: {fileID: 8619133333658594807, guid: 8ea6e5ed774e9414387b84737d55d717, type: 3}

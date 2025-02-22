@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 
-public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDragHandler,IEndDragHandler, IPointerClickHandler
+public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [Header("Inventory Detail")]
     public Inventory inventory;
@@ -27,7 +27,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
     public RectTransform draggable;
     Canvas canvas;
     CanvasGroup canvasGroup;
-    private PlayerManager _playerManager;
+    private PlayerManager playerManager;
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,13 +39,15 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
         siblingIndex = transform.GetSiblingIndex();
-        _playerManager = FindObjectOfType<PlayerManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
+
+        
     }
 
     #region Drag and Drop Methods
     public void OnBeginDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha = 0.6f; 
+        canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
         transform.SetAsLastSibling();
         inventory.SetLayoutControlChild(false);
@@ -80,6 +86,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
                 }
             }
         }
+
+
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -93,36 +102,74 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
             inventory.OpenMiniCanvas(eventData.position);
             inventory.SetRightClickSlot(this);
         }
-        
+
     }
 
     #endregion
 
     public void UseItem()
     {
+        if (item.itemType == ItemType.Weapon)
+        {
+            inventory.equippedItemSlot = this; // ตั้งค่าช่องที่กำลังใช้อยู่
+
+            //_playerManager.ChangeWeapon(15f);
+            //Debug.Log("Use Sword");
+
+            if (inventory.myEqImage != null)
+            {
+                inventory.myEqImage.sprite = item.icon;
+                inventory.myEqImage.color = Color.white; // ทำให้รูปไม่โปร่งใส
+            }
+            Debug.Log($"Equipped {item.itemName}");
+
+            inventory.ShowItemName(item.itemName); // แสดงชื่อไอเทมใน UI
+            if (item.itemName == "FireSword")
+            {
+                playerManager.ChangeWeaponElement(ElementType.Fire);
+            }else if (item.itemName == "WaterSword")
+            {
+                playerManager.ChangeWeaponElement(ElementType.Water);
+            }
+            else if (item.itemName == "WindSword")
+            {
+                playerManager.ChangeWeaponElement(ElementType.Wind);
+            }
+            else if (item.itemName == "EarthSword")
+            {
+                playerManager.ChangeWeaponElement(ElementType.Earth);
+            }
+            else if (item.itemName == "LightSword")
+            {
+                playerManager.ChangeWeaponElement(ElementType.Light);
+            }
+            else if (item.itemName == "DarkSword")
+            {
+                playerManager.ChangeWeaponElement(ElementType.Dark);
+            }
+
+            return; // **ออกจากเมทอดทันที ไม่ลด stack**
+        }
+
+        // ลด stack ตามปกติ
         stack = Mathf.Clamp(stack - 1, 0, item.maxStack);
+
         if (stack > 0)
         {
             CheckShowText();
             Debug.Log("Use Item");
             item.Use();
+
             if (item.itemName == "Healing Potion")
             {
-                _playerManager.Heal(10f);
+                playerManager.Heal(110f);
             }
         }
         else
         {
-            if (item.itemName == "Iron Sword")
-            {
-               // _playerManager.ChangeWeapon(15f);
-                Debug.Log("Use Iron Sword");
-            }
             inventory.RemoveItem(this);
         }
-        
 
-            
     }
 
     public void SwapSlot(InventorySlot newSlot)
@@ -150,7 +197,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
 
     public void MergeThisSlot(InventorySlot mergeSlot)
     {
-        if(stack == item.maxStack || mergeSlot.stack == mergeSlot.item.maxStack )
+        if (stack == item.maxStack || mergeSlot.stack == mergeSlot.item.maxStack)
         {
             SwapSlot(mergeSlot);
             return;
@@ -190,7 +237,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
         if (amountLeft > 0)
         {
             InventorySlot slot = inventory.IsEmptySlotLeft(mergeItem, this);
-            if (slot == null) 
+            if (slot == null)
             {
                 inventory.DropItem(mergeItem, amountLeft);
                 return;
@@ -200,7 +247,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
                 slot.MergeThisSlot(mergeItem, amountLeft);
             }
         }
-        
+
     }
 
     public void SetThislot(SO_Item newItem, int amount)
@@ -241,7 +288,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
         }
         else
         {
-            if(stack > 1)
+            if (stack > 1)
                 stackText.gameObject.SetActive(true);
             else
                 stackText.gameObject.SetActive(false);
@@ -250,7 +297,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler,IBeginDra
 
     public void UpdateColorSlot()
     {
-        if(item == inventory.EMPTY_ITEM)
+        if (item == inventory.EMPTY_ITEM)
             icon.color = emptyColor;
         else
             icon.color = itemColor;

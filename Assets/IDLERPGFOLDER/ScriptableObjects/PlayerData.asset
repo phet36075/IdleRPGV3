@@ -23,7 +23,7 @@ MonoBehaviour:
   _regenRate: 1
   _manaRegenRate: 20
   damageVariation: 0.2
-  elementType: 1
+  elementType: 0
   WeaponupgradeCost: 100
   Weaponlevel: 1
   healthUpgradeCost: 100

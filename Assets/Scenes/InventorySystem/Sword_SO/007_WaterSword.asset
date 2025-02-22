@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae5c3e9a56f420458496b9305462e22, type: 3}
+  m_Name: 007_WaterSword
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: a71252e4992eb014796b88e50bed20ad, type: 3}
+  id: 007
+  itemName: WaterSword
+  description: 
+  maxStack: 1
+  itemType: 1
+  gamePrefab: {fileID: 7823755851359155732, guid: 9e685f277355f3b4fb824a0159343d7c, type: 3}
