@@ -23,8 +23,8 @@ MonoBehaviour:
   baseDamage: 10
   damagePerStr: 2
   criticalMultiplier: 1.5
-  criticalChancePerDex: 0.01
-  criticalChancePerAgi: 0.005
+  criticalChancePerDex: 1.5
+  criticalChancePerAgi: 0.5
   armorPenatrationPerAgi: 2
   baseDefense: 5
   baseRegen: 5

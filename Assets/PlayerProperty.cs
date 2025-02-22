@@ -13,7 +13,7 @@ public class PlayerProperty : MonoBehaviour
     private Dictionary<string, float> previousStats = new Dictionary<string, float>();
     private Dictionary<string, float> changedStats = new Dictionary<string, float>();
     
-    [Header("----Health----")]
+   [Header("----Health----")]
     [SerializeField] private float _maxHealth = 100f;
     public float maxHealth
     {
@@ -40,8 +40,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_maxMana != value)
             {
+                float oldValue = _maxMana;
                 _maxMana = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("maxMana", oldValue, value);
+                changedStats["maxMana"] = value;
             }
         }
     }
@@ -55,8 +58,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_baseDamage != value)
             {
+                float oldValue = _baseDamage;
                 _baseDamage = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("baseDamage", oldValue, value);
+                changedStats["baseDamage"] = value;
             }
         }
     }
@@ -69,8 +75,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_weaponDamage != value)
             {
+                float oldValue = _weaponDamage;
                 _weaponDamage = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("weaponDamage", oldValue, value);
+                changedStats["weaponDamage"] = value;
             }
         }
     }
@@ -84,8 +93,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_criticalChance != value)
             {
+                float oldValue = _criticalChance;
                 _criticalChance = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("criticalChance", oldValue, value);
+                changedStats["criticalChance"] = value;
             }
         }
     }
@@ -98,8 +110,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_criticalDamage != value)
             {
+                float oldValue = _criticalDamage;
                 _criticalDamage = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("criticalDamage", oldValue, value);
+                changedStats["criticalDamage"] = value;
             }
         }
     }
@@ -131,8 +146,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_armorPenetration != value)
             {
+                float oldValue = _armorPenetration;
                 _armorPenetration = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("armorPenetration", oldValue, value);
+                changedStats["armorPenetration"] = value;
             }
         }
     }
@@ -146,8 +164,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_regenRate != value)
             {
+                float oldValue = _regenRate;
                 _regenRate = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("regenRate", oldValue, value);
+                changedStats["regenRate"] = value;
             }
         }
     }
@@ -160,8 +181,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_manaRegenRate != value)
             {
+                float oldValue = _manaRegenRate;
                 _manaRegenRate = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("manaRegenRate", oldValue, value);
+                changedStats["manaRegenRate"] = value;
             }
         }
     }

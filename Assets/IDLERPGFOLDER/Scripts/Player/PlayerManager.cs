@@ -158,7 +158,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         float attackDamage = (playerProperty.baseDamage + playerProperty.weaponDamage) * skillDamageMultiplier;
         attackDamage *= Random.Range(1 - playerProperty.damageVariation, 1 + playerProperty.damageVariation);
 
-        isCritical = Random.value < playerProperty.criticalChance;
+        isCritical = Random.value < (playerProperty.criticalChance / 100f);
         if (isCritical)
         {
             attackDamage *= playerProperty.criticalDamage;

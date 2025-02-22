@@ -164,6 +164,10 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             {
                 playerManager.Heal(110f);
             }
+            if (item.itemName == "Mana Potion")
+            {
+                playerManager.RestoreMana(50f);
+            }
         }
         else
         {

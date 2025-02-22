@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _maxHealth: 140
-  _maxMana: 100
-  _baseDamage: 10
+  _maxMana: 110
+  _baseDamage: 12
   _weaponDamage: 10
-  _criticalChance: 0.05
+  _criticalChance: 15
   _criticalDamage: 2
-  _defense: 5
-  _armorPenetration: 0
+  _defense: 6
+  _armorPenetration: 2
   _regenRate: 10
-  _manaRegenRate: 20
+  _manaRegenRate: 12
   damageVariation: 0.2
   elementType: 0
   WeaponupgradeCost: 100
