@@ -26,7 +26,7 @@ public static class PowerCalculator
         float defaultManaRegen = 12f;
         float defaultDamage = 12f;
         float defaultDefense = 6f;
-        float defaultCrit = 15f;
+        float defaultCrit = 2f;
         float defaultCritDamage = 2f;
         float defaultArmorPen = 2f;
        
@@ -59,9 +59,11 @@ public class PowerManager : MonoBehaviour
     public TextMeshProUGUI maxHealthChange;
     public GameObject PowerStatsSlot;
     public Transform PowerStatsHolder;
-    
+    public Transform PowerStatsCanvas;
+    public GameObject powerChangePrefab;
     public float fadeDuration = 1.5f; // ระยะเวลาที่ข้อความจะหายไป
-    
+
+    public Animator animator;
     private int currentPower;
     private int previousPower;
     public static event Action<int> OnPowerChanged;
@@ -277,8 +279,8 @@ public class PowerManager : MonoBehaviour
         // currentPower = basePower;
         // NotifyPowerChange();
         UpdatePowerFromStats();
-        powerChangeCanvas.gameObject.SetActive(false);
-        //powerChangeText.alpha = 0; // ซ่อนข้อความตอนเริ่ม
+        //powerChangeCanvas.gameObject.SetActive(false);
+        powerChangeText.alpha = 0; // ซ่อนข้อความตอนเริ่ม
        
     }
     private void OnStatsChanged()
@@ -317,13 +319,15 @@ public class PowerManager : MonoBehaviour
         powerChangeText.text = "Power: " + (amount > 0 ? "+" : "") + amount;
         powerChangeText.color = amount < 0 ? Color.red : Color.green; // เปลี่ยนสีเป็นแดงถ้าติดลบ เขียวถ้าบวก
         
+        animator.Play("PowerDisplay_Anim", 0, 0f);
+       // animator.SetTrigger("DisplayTrigger");
         
       // StartCoroutine(DisplayPower());
        if (myCoroutine != null)
        {
            StopCoroutine(myCoroutine); // หยุด Coroutine เดิมก่อน
        }
-       myCoroutine = StartCoroutine(DisplayPower()); // เริ่มใหม่
+       myCoroutine = StartCoroutine(FadeText()); // เริ่มใหม่
     }
 
     private IEnumerator FadeText()

@@ -16,7 +16,7 @@ MonoBehaviour:
   _maxMana: 110
   _baseDamage: 12
   _weaponDamage: 10
-  _criticalChance: 15
+  _criticalChance: 2
   _criticalDamage: 2
   _defense: 6
   _armorPenetration: 2
