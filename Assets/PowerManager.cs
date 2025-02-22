@@ -14,7 +14,7 @@ public static class PowerCalculator
     private const float POWER_PER_MANA = 0.3f;
     private const float POWER_PER_CRIT = 5f;
 
-    public static int CalculatePower(PlayerData currentStats)
+    public static int CalculatePower(PlayerProperty currentStats)
     {
         float defaultHealth = 140f;
         float defaultMana = 100f;
@@ -42,9 +42,9 @@ public static class PowerCalculator
 
 public class PowerManager : MonoBehaviour
 {
-    [SerializeField] private PlayerData playerData;
+   // [SerializeField] private PlayerData playerData;
     [SerializeField] private int basePower = 100;
-    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerProperty playerProperty;
     public TextMeshProUGUI powerChangeText;
     public float fadeDuration = 1.5f; // ระยะเวลาที่ข้อความจะหายไป
     
@@ -54,17 +54,17 @@ public class PowerManager : MonoBehaviour
     
     void OnEnable()
     {
-        if (playerData != null)
+        if (playerProperty != null)
         {
-            playerData.OnStatsChanged += OnStatsChanged;
+            playerProperty.OnStatsChanged += OnStatsChanged;
         }
     }
 
     void OnDisable()
     {
-        if (playerData != null)
+        if (playerProperty != null)
         {
-            playerData.OnStatsChanged -= OnStatsChanged;
+            playerProperty.OnStatsChanged -= OnStatsChanged;
         }
     }
     void Start()
@@ -82,7 +82,7 @@ public class PowerManager : MonoBehaviour
     public void UpdatePowerFromStats()
     {
         previousPower = currentPower;
-        currentPower = PowerCalculator.CalculatePower(playerData);
+        currentPower = PowerCalculator.CalculatePower(playerProperty);
         
         int powerDifference = currentPower - previousPower;
         if (powerDifference != 0)

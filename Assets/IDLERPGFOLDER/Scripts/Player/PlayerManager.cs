@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     public List<GameObject> elementalEffect;
     
     [Header("References")]
-    public PlayerData playerData;
+    public PlayerProperty playerProperty;
     public Animator allyAnimator;
     public PlayerStats playerStats;
     public StatsFormula formula;
@@ -53,8 +53,8 @@ public class PlayerManager : MonoBehaviour, IDamageable
         _playerController = FindObjectOfType<PlayerController>();
         _aiController = FindObjectOfType<AIController>();
         
-        currentMana = playerData.maxMana;
-        currentHealth = playerData.maxHealth;
+        currentMana = playerProperty.maxMana;
+        currentHealth = playerProperty.maxHealth;
         
         InitializeHealthBar();
     }
@@ -63,12 +63,12 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         playerStats.OnStatsChanged += RecalculateStats;
         RecalculateStats();
-        UpdateWeaponEffects(playerData.elementType);
+        UpdateWeaponEffects(playerProperty.elementType);
     }
 
     private void InitializeHealthBar()
     {
-        healthBar.maxValue = playerData.maxHealth;
+        healthBar.maxValue = playerProperty.maxHealth;
         healthBar.value = currentHealth;
         UpdateHealthBar();
     }
@@ -102,9 +102,9 @@ public class PlayerManager : MonoBehaviour, IDamageable
     private void CalculateHealthStats()
     {
         float vitality = playerStats.GetStat(StatType.Vitality);
-        playerData.maxHealth = formula.baseHP + (vitality * formula.hpPerVit);
-        playerData.defense = formula.baseDefense + (vitality * formula.defensePerVit);
-        playerData.regenRate = formula.baseRegen + (vitality * formula.regenPerVit);
+        playerProperty.maxHealth = formula.baseHP + (vitality * formula.hpPerVit);
+        playerProperty.defense = formula.baseDefense + (vitality * formula.defensePerVit);
+        playerProperty.regenRate = formula.baseRegen + (vitality * formula.regenPerVit);
     }
 
     private void CalculateCombatStats()
@@ -113,17 +113,17 @@ public class PlayerManager : MonoBehaviour, IDamageable
         float dexterity = playerStats.GetStat(StatType.Dexterity);
         float agility = playerStats.GetStat(StatType.Agility);
 
-        playerData.baseDamage = formula.baseDamage + (strength * formula.damagePerStr);
-        playerData.criticalChance = (dexterity * formula.criticalChancePerDex) + 
-                                  (agility * formula.criticalChancePerAgi);
-        playerData.armorPenetration = agility * formula.armorPenatrationPerAgi;
+        playerProperty.baseDamage = formula.baseDamage + (strength * formula.damagePerStr);
+        playerProperty.criticalChance = (dexterity * formula.criticalChancePerDex) + 
+                                        (agility * formula.criticalChancePerAgi);
+        playerProperty.armorPenetration = agility * formula.armorPenatrationPerAgi;
     }
 
     private void CalculateManaStats()
     {
         float intelligence = playerStats.GetStat(StatType.Intelligence);
-        playerData.maxMana = formula.baseMana * (1 + (intelligence * formula.manaPerInt));
-        playerData.manaRegenRate = formula.baseManaRegen + (intelligence * formula.manaRegenPerInt);
+        playerProperty.maxMana = formula.baseMana * (1 + (intelligence * formula.manaPerInt));
+        playerProperty.manaRegenRate = formula.baseManaRegen + (intelligence * formula.manaRegenPerInt);
     }
 
     private IEnumerator RegenerateHp()
@@ -132,7 +132,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         {
             yield return new WaitForSeconds(regenInterval);
 
-            if (currentHealth < playerData.maxHealth && !isPlayerDie)
+            if (currentHealth < playerProperty.maxHealth && !isPlayerDie)
             {
                 SpawnRegenEffect();
                 RegenerateHealth();
@@ -149,19 +149,19 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void RegenerateHealth()
     {
-        currentHealth = Mathf.Min(currentHealth + playerData.regenRate, playerData.maxHealth);
+        currentHealth = Mathf.Min(currentHealth + playerProperty.regenRate, playerProperty.maxHealth);
         UpdateHealthBar();
     }
 
     public float CalculatePlayerAttackDamage(float skillDamageMultiplier = 1f)
     {
-        float attackDamage = (playerData.baseDamage + playerData.weaponDamage) * skillDamageMultiplier;
-        attackDamage *= Random.Range(1 - playerData.damageVariation, 1 + playerData.damageVariation);
+        float attackDamage = (playerProperty.baseDamage + playerProperty.weaponDamage) * skillDamageMultiplier;
+        attackDamage *= Random.Range(1 - playerProperty.damageVariation, 1 + playerProperty.damageVariation);
 
-        isCritical = Random.value < playerData.criticalChance;
+        isCritical = Random.value < playerProperty.criticalChance;
         if (isCritical)
         {
-            attackDamage *= playerData.criticalDamage;
+            attackDamage *= playerProperty.criticalDamage;
         }
 
         return attackDamage;
@@ -192,7 +192,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         hitEffect.StartHitEffect();
 
-        float effectiveDefense = Mathf.Max(0, playerData.defense - damageData.armorPenetration);
+        float effectiveDefense = Mathf.Max(0, playerProperty.defense - damageData.armorPenetration);
         float damageReduction = effectiveDefense / (effectiveDefense + 100f);
         float finalDamage = damageData.damage * (1f - damageReduction);
 
@@ -219,7 +219,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void ChangeWeaponElement(ElementType newElement)
     {
-        playerData.elementType = newElement;
+        playerProperty.elementType = newElement;
         UpdateWeaponEffects(newElement);
     }
 
@@ -260,7 +260,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
-        currentHealth = Mathf.Min(currentHealth + amount, playerData.maxHealth);
+        currentHealth = Mathf.Min(currentHealth + amount, playerProperty.maxHealth);
         UpdateHealthBar();
     }
 
@@ -272,7 +272,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void RestoreMana(float amount)
     {
-        currentMana = Mathf.Min(playerData.maxMana, currentMana + amount);
+        currentMana = Mathf.Min(playerProperty.maxMana, currentMana + amount);
         OnManaChanged?.Invoke(currentMana);
     }
 
@@ -325,7 +325,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     public void UpdateHealthBar()
     {
-        healthBar.maxValue = playerData.maxHealth;
+        healthBar.maxValue = playerProperty.maxHealth;
         StartCoroutine(SmoothHealthBar());
     }
 
@@ -346,11 +346,11 @@ public class PlayerManager : MonoBehaviour, IDamageable
     }
 
     // Public getters
-    public float GetMaxMana() => playerData.maxMana;
+    public float GetMaxMana() => playerProperty.maxMana;
     public float GetCurrentMana() => currentMana;
-    public float GetMaxHealth() => playerData.maxHealth;
+    public float GetMaxHealth() => playerProperty.maxHealth;
     public float GetCurrentHealth() => currentHealth;
-    public float GetDefense() => playerData.defense;
-    public float GetDamage() => playerData.baseDamage + playerData.weaponDamage;
+    public float GetDefense() => playerProperty.defense;
+    public float GetDamage() => playerProperty.baseDamage + playerProperty.weaponDamage;
     public bool HasEnoughMana(float manaCost) => currentMana >= manaCost;
 }

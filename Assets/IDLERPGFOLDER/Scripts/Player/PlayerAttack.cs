@@ -199,7 +199,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 PlayerManager playerManager = GetComponent<PlayerManager>();
                 float attackDamage = playerManager.CalculatePlayerAttackDamage();
-                DamageData damageData = new DamageData(attackDamage, playerManager.playerData.armorPenetration , playerManager.playerData.elementType);
+                DamageData damageData = new DamageData(attackDamage, playerManager.playerProperty.armorPenetration , playerManager.playerProperty.elementType);
                 target.TakeDamage(damageData);
 
                 

@@ -98,8 +98,8 @@ public class SkillHitbox : MonoBehaviour
             
                 DamageData damageData = new DamageData(
                     attackDamage,
-                    playerManager.playerData.armorPenetration,
-                    playerManager.playerData.elementType,StatusSkill,multiple,multiplierNextHit
+                    playerManager.playerProperty.armorPenetration,
+                    playerManager.playerProperty.elementType,StatusSkill,multiple,multiplierNextHit
                 );
                 target.TakeDamage(damageData);
             

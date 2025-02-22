@@ -12,7 +12,7 @@ public class ManaUI : MonoBehaviour
     public Slider manaBar;
     private void Start()
     {
-        manaBar.maxValue = playerManager.playerData.maxMana;
+        manaBar.maxValue = playerManager.playerProperty.maxMana;
         manaBar.value = playerManager.GetCurrentMana();
         if (playerManager != null)
         {
@@ -31,7 +31,7 @@ public class ManaUI : MonoBehaviour
         {
             yield return new WaitForSeconds(5);
 
-           playerManager.RestoreMana(playerManager.playerData.manaRegenRate);
+           playerManager.RestoreMana(playerManager.playerProperty.manaRegenRate);
         }
         
     }
@@ -41,7 +41,7 @@ public class ManaUI : MonoBehaviour
         //manaBarFill.fillAmount = currentMana / playerManager.GetMaxMana();
         // อัพเดทตัวเลข mana
         manaText.text = $"{Mathf.Ceil(currentMana)}/{playerManager.GetMaxMana()}";
-        manaBar.maxValue = playerManager.playerData.maxMana;
+        manaBar.maxValue = playerManager.playerProperty.maxMana;
        StartCoroutine(SmoothManaBar());
        
     }

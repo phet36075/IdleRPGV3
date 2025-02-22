@@ -64,7 +64,7 @@ public abstract class BaseSkill : MonoBehaviour
     {
         if (playerManager != null)
         {
-            return playerManager.playerData.elementType == ElementType.Wind;
+            return playerManager.playerProperty.elementType == ElementType.Wind;
         }
         return false;
     }
@@ -77,7 +77,7 @@ public abstract class BaseSkill : MonoBehaviour
 
     protected void ElementalCheck()
     {
-        if (skillData.elementType == playerManager.playerData.elementType)
+        if (skillData.elementType == playerManager.playerProperty.elementType)
         {
             Debug.Log("HOLYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
         }

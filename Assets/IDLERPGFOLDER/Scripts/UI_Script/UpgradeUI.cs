@@ -10,7 +10,7 @@ public class UpgradeUI : MonoBehaviour
     public PlayerManager playerManager;
     
     public PlayerStats _PlayerStats;
-    public PlayerData _PlayerData;
+    public PlayerProperty playerProperty;
     private CurrencyManager _currencyManager;
     private ProjectileMovement _projectileMovement;
     public TextMeshProUGUI WeaponUpgradeCostTxT;
@@ -53,107 +53,107 @@ public class UpgradeUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WeaponUpgradeCostTxT.text = _PlayerData.WeaponupgradeCost.ToString();
-        WeaponDmg.text = _PlayerData.weaponDamage.ToString();
-        WeaponDmg2.text = _PlayerData.baseDamage.ToString();
+        WeaponUpgradeCostTxT.text = playerProperty.WeaponupgradeCost.ToString();
+        WeaponDmg.text = playerProperty.weaponDamage.ToString();
+        WeaponDmg2.text = playerProperty.baseDamage.ToString();
         Strtxt.text = _PlayerStats.GetStat(StatType.Strength).ToString();
         
         
-        HealthUpgradeCostTxT.text = _PlayerData.healthUpgradeCost.ToString();
-        HealthTxT.text = _PlayerData.maxHealth.ToString();
+        HealthUpgradeCostTxT.text = playerProperty.healthUpgradeCost.ToString();
+        HealthTxT.text = playerProperty.maxHealth.ToString();
         
-        RegenUpgradeCostTxT.text = _PlayerData.regenRateCost.ToString();
-        RegenTxT.text = _PlayerData.regenRate.ToString();
+        RegenUpgradeCostTxT.text = playerProperty.regenRateCost.ToString();
+        RegenTxT.text = playerProperty.regenRate.ToString();
         
-        CriticalUpgradeCostTxT.text = _PlayerData.criticalRateCost.ToString();
-        CriticalTxT.text = _PlayerData.criticalChance.ToString();
+        CriticalUpgradeCostTxT.text = playerProperty.criticalRateCost.ToString();
+        CriticalTxT.text = playerProperty.criticalChance.ToString();
 
-        DefenseUpgradeCostTxT.text = _PlayerData.defenseCost.ToString();
-        DefenseTxT.text = _PlayerData.defense.ToString();
+        DefenseUpgradeCostTxT.text = playerProperty.defenseCost.ToString();
+        DefenseTxT.text = playerProperty.defense.ToString();
         
-        PenetrationUpgradeCostTxT.text = _PlayerData.armorPenetrationCost.ToString();
-        PenetrationTxT.text = _PlayerData.armorPenetration.ToString();
+        PenetrationUpgradeCostTxT.text = playerProperty.armorPenetrationCost.ToString();
+        PenetrationTxT.text = playerProperty.armorPenetration.ToString();
 
-        CriticalDamageUpgradeCostTxT.text = _PlayerData.criticalDamageCost.ToString();
-        CriticalDamageTxT.text = _PlayerData.criticalDamage.ToString();
+        CriticalDamageUpgradeCostTxT.text = playerProperty.criticalDamageCost.ToString();
+        CriticalDamageTxT.text = playerProperty.criticalDamage.ToString();
 
         
     }
 
     public void UpgradeWeapon()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.WeaponupgradeCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.WeaponupgradeCost)
         {
-            _PlayerData.Weaponlevel++;
-            _currencyManager.SpendMoney(_PlayerData.WeaponupgradeCost);
-            _PlayerData.weaponDamage += 5;
-            _PlayerData.WeaponupgradeCost = (int)Math.Round(100*( _PlayerData.Weaponlevel * 1.5f));
+            playerProperty.Weaponlevel++;
+            _currencyManager.SpendMoney(playerProperty.WeaponupgradeCost);
+            playerProperty.weaponDamage += 5;
+            playerProperty.WeaponupgradeCost = (int)Math.Round(100*( playerProperty.Weaponlevel * 1.5f));
         }
     }
 
     public void UpgradeHealth()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.healthUpgradeCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.healthUpgradeCost)
         {
-            _PlayerData.healthLevel++;
-            _currencyManager.SpendMoney(_PlayerData.healthUpgradeCost);
-            _PlayerData.maxHealth += 150;
-            _PlayerData.healthUpgradeCost= (int)Math.Round(100*( _PlayerData.healthLevel * 1.25f));
+            playerProperty.healthLevel++;
+            _currencyManager.SpendMoney(playerProperty.healthUpgradeCost);
+            playerProperty.maxHealth += 150;
+            playerProperty.healthUpgradeCost= (int)Math.Round(100*( playerProperty.healthLevel * 1.25f));
             playerManager.UpdateHealthBar();
         }
     }
 
     public void UpgradeRegen()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.regenRateCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.regenRateCost)
         {
-            _PlayerData.regenRateLevel++;
-            _currencyManager.SpendMoney(_PlayerData.regenRateCost);
-            _PlayerData.regenRate += 10;
-            _PlayerData.regenRateCost= (int)Math.Round(100*( _PlayerData.regenRateLevel * 1.5f));
+            playerProperty.regenRateLevel++;
+            _currencyManager.SpendMoney(playerProperty.regenRateCost);
+            playerProperty.regenRate += 10;
+            playerProperty.regenRateCost= (int)Math.Round(100*( playerProperty.regenRateLevel * 1.5f));
         }
     }
     public void UpgradeCritical()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.criticalRateCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.criticalRateCost)
         {
-            _PlayerData.criticalRateLevel++;
-            _currencyManager.SpendMoney(_PlayerData.criticalRateCost);
-            _PlayerData.criticalChance += 0.01f;
-            _PlayerData.criticalRateCost= (int)Math.Round(100*( _PlayerData.criticalRateLevel * 1.5f));
+            playerProperty.criticalRateLevel++;
+            _currencyManager.SpendMoney(playerProperty.criticalRateCost);
+            playerProperty.criticalChance += 0.01f;
+            playerProperty.criticalRateCost= (int)Math.Round(100*( playerProperty.criticalRateLevel * 1.5f));
         }
     }
     
     public void UpgradeDefense()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.defenseCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.defenseCost)
         {
-            _PlayerData.defenseLevel++;
-            _currencyManager.SpendMoney(_PlayerData.defenseCost);
-            _PlayerData.defense += 30f;
-            _PlayerData.defenseCost= (int)Math.Round(100*( _PlayerData.defenseLevel * 1.5f));
+            playerProperty.defenseLevel++;
+            _currencyManager.SpendMoney(playerProperty.defenseCost);
+            playerProperty.defense += 30f;
+            playerProperty.defenseCost= (int)Math.Round(100*( playerProperty.defenseLevel * 1.5f));
         }
     }
     
     public void UpgradePenetration()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.armorPenetrationCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.armorPenetrationCost)
         {
-            _PlayerData.armorPenetrationLevel++;
-            _currencyManager.SpendMoney(_PlayerData.armorPenetrationCost);
-            _PlayerData.armorPenetration += 5f;
-            _PlayerData.armorPenetrationCost= (int)Math.Round(100*( _PlayerData.armorPenetrationLevel * 1.5f));
+            playerProperty.armorPenetrationLevel++;
+            _currencyManager.SpendMoney(playerProperty.armorPenetrationCost);
+            playerProperty.armorPenetration += 5f;
+            playerProperty.armorPenetrationCost= (int)Math.Round(100*( playerProperty.armorPenetrationLevel * 1.5f));
         }
     }
     
     public void UpgradeCriticalDamage()
     {
-        if (_currencyManager.CurrentMoney >= _PlayerData.criticalDamageCost)
+        if (_currencyManager.CurrentMoney >= playerProperty.criticalDamageCost)
         {
-            _PlayerData.criticalDamageLevel++;
-            _currencyManager.SpendMoney(_PlayerData.criticalDamageCost);
-            _PlayerData.criticalDamage += 0.05f;
-            _PlayerData.criticalDamageCost= (int)Math.Round(100*( _PlayerData.criticalDamageLevel * 1.5f));
+            playerProperty.criticalDamageLevel++;
+            _currencyManager.SpendMoney(playerProperty.criticalDamageCost);
+            playerProperty.criticalDamage += 0.05f;
+            playerProperty.criticalDamageCost= (int)Math.Round(100*( playerProperty.criticalDamageLevel * 1.5f));
         }
     }
     public void ToggleUpgradeUI()

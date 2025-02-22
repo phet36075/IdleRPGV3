@@ -37,7 +37,7 @@ public class GameOverUI : MonoBehaviour
   private void RetryStage()
   {
       
-      _playerManager.currentHealth = _playerManager.playerData.maxHealth;
+      _playerManager.currentHealth = _playerManager.playerProperty.maxHealth;
       
       _playerManager.UpdateHealthBar();
       _playerManager.ResetDie();
