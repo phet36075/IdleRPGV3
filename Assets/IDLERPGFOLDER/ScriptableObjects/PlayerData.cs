@@ -193,7 +193,7 @@ public class PlayerData : ScriptableObject
     
     public void ResetToDefault()
     {
-        _maxHealth = 100f;
+        _maxHealth = 140f;
         _maxMana = 100f;
         _baseDamage = 10f;
         _weaponDamage = 10f;

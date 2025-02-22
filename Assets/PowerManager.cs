@@ -16,22 +16,26 @@ public static class PowerCalculator
 
     public static int CalculatePower(PlayerData currentStats)
     {
-        // เก็บค่า default ไว้ใน ScriptableObject เดียวกัน หรือแยกอีกไฟล์ก็ได้
         float defaultHealth = 140f;
-        float defaultMana = 110f;
-        float defaultDamage = 12;
-        float defaultDefense = 6f;
-        float defaultCrit = 0.015f;
+        float defaultMana = 100f;
+        float defaultDamage = 10f;
+        float defaultDefense = 5f;
+        float defaultCrit = 0.05f;
 
-        int totalPower = 0;
+        int powerFromHealth = Mathf.RoundToInt((currentStats.maxHealth - defaultHealth) * POWER_PER_HEALTH);
+        int powerFromMana = Mathf.RoundToInt((currentStats.maxMana - defaultMana) * POWER_PER_MANA);
+        int powerFromDamage = Mathf.RoundToInt((currentStats.baseDamage + currentStats.weaponDamage - defaultDamage) *
+                                               POWER_PER_DAMAGE);
+        //int powerFormDefense = Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
+        int powerFromCrit = Mathf.RoundToInt((currentStats.criticalChance - defaultCrit) * POWER_PER_CRIT);
 
-        // คำนวณ power จากผลต่างของแต่ละ stat กับค่าเริ่มต้น
-        totalPower += Mathf.RoundToInt((currentStats.maxHealth - defaultHealth) * POWER_PER_HEALTH);
-        totalPower += Mathf.RoundToInt((currentStats.maxMana - defaultMana) * POWER_PER_MANA);
-        totalPower += Mathf.RoundToInt((currentStats.baseDamage + currentStats.weaponDamage - defaultDamage) * POWER_PER_DAMAGE);
-       // totalPower += Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
-        totalPower += Mathf.RoundToInt((currentStats.criticalChance - defaultCrit) * POWER_PER_CRIT);
-
+        // Debug เพื่อเช็คค่าของแต่ละตัว
+        Debug.Log($"Power from Health: {powerFromHealth}");
+        Debug.Log($"Power from Mana: {powerFromMana}");
+        Debug.Log($"Power from Damage: {powerFromDamage}");
+        Debug.Log($"Power from Crit: {powerFromCrit}");
+        //Debug.Log($"Power from Defense: {powerFormDefense}");
+        int totalPower = powerFromHealth + powerFromMana + powerFromDamage + powerFromCrit;
         return totalPower;
     }
 }
@@ -103,7 +107,8 @@ public class PowerManager : MonoBehaviour
     
     public void ShowPowerChange(int amount)
     {
-        powerChangeText.text = (amount > 0 ? "+" : "") + amount; // แสดง + ถ้าเป็นค่าบวก
+        powerChangeText.text = "Power: " + (amount > 0 ? "+" : "") + amount;
+        powerChangeText.color = amount < 0 ? Color.red : Color.green; // เปลี่ยนสีเป็นแดงถ้าติดลบ เขียวถ้าบวก
         StartCoroutine(FadeText());
     }
 

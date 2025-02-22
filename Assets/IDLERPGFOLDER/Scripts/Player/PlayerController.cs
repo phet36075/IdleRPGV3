@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool wasManualInputActive = false;
     public GameObject ToggleEffect;
     [SerializeField] private WeaponSystem weaponSystem;
-
+    [SerializeField] private Collider playerCollider;
     public TextMeshProUGUI OnOffTxT;
     void Update()
     {
@@ -20,10 +20,12 @@ public class PlayerController : MonoBehaviour
         {
             weaponSystem.DrawWeaponAnim();
             OnOffTxT.text = "On";
+            playerCollider.enabled = true;
             ToggleEffect.gameObject.SetActive(true);
         }else if (isAIEnabled == false)
         {
             OnOffTxT.text = "Off";
+            playerCollider.enabled = false;
             ToggleEffect.gameObject.SetActive(false);
         }
         

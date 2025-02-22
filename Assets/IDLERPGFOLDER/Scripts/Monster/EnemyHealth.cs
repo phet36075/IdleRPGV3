@@ -861,6 +861,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     #endregion
     private void Die()
     {
+        if (isDead) return;
         isDead = true;
         if (IsthisBoss)
         {
@@ -954,7 +955,9 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     
     public bool IsAlive() => currentHealth > 0;
     public float GetCurrentHealth() => currentHealth;
+    public bool IsFreeze() => isFreeze;
     public float GetMaxHealth() => EnemyData.maxhealth;
+    public float GetCurrentMaxHealth() => maxHealth;
     public bool GetIsDead() => isDead;
    
     public void OnHurtAnimationEnd() => ResetHurt();

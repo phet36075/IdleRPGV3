@@ -18,7 +18,8 @@ public class BossSkillHitbox : MonoBehaviour
     {
         
     }
-
+    
+    
     public void ActivateMultipleHitbox()
     {
         StartCoroutine(EnableHitboxMultipleTimes());
@@ -27,6 +28,7 @@ public class BossSkillHitbox : MonoBehaviour
     {
         for (int i = 0; i < hitCount; i++) 
         {
+            
             hitbox.enabled = true; // เปิด Hitbox
             yield return new WaitForSeconds(0.1f); // เปิดให้โจมตีได้สั้น ๆ
             hitbox.enabled = false; // ปิด Hitbox
@@ -43,16 +45,16 @@ public class BossSkillHitbox : MonoBehaviour
             yield return new WaitForSeconds(hitInterval); // รอเวลาก่อน Hit รอบต่อไป
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        IDamageable target = other.GetComponent<IDamageable>();
-        if (target != null)
-        {
-            DamageData damageData = new DamageData(
-                5f,
-                100f,
-                ElementType.Dark);
-            target.TakeDamage(damageData);
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     IDamageable target = other.GetComponent<IDamageable>();
+    //     if (target != null)
+    //     {
+    //         DamageData damageData = new DamageData(
+    //             5f,
+    //             100f,
+    //             ElementType.Dark);
+    //         target.TakeDamage(damageData);
+    //     }
+    // }
 }

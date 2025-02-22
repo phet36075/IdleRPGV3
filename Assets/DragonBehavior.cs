@@ -10,6 +10,7 @@ public class DragonMovement : MonoBehaviour
     [SerializeField] private float defaultSpeed = 3.5f;
     [SerializeField] private float glideSpeed = 15f;
     [SerializeField] private float rotationSpeed = 3f;
+    [SerializeField] private float takeOffDuration = 3f;
     
     [Header("Random Flight Settings")]
     [SerializeField] private float minX = -50f;
@@ -19,16 +20,20 @@ public class DragonMovement : MonoBehaviour
     [SerializeField] private int FlightCount = 0;
     [Header("Components")]
     [SerializeField] private Animator animator;
+
+    [SerializeField] private Collider dragonHitbox;
     private NavMeshAgent agent;
     private Transform player;
+    [SerializeField] private EnemyHealth enemyHealth;
+    
     [Header("Enemy Settings")]
     [SerializeField] private float detectionRange = 10f;  // ระยะการตรวจจับ Player
-    [SerializeField] private float attackRange = 2f;      // ระยะโจมตี
+    [SerializeField] public float attackRange = 2f;      // ระยะโจมตี
     [SerializeField] private float attackCooldown = 2f;   // ระยะเวลารอระหว่างการโจมตี
-    
+    private bool screamFirstTime;
     private float nextAttackTime;
     private bool isAttacking;
-
+    private int attackCount;
     private bool isFlyingTowardPlayer;
     // Animation parameter names
     private const string TAKEOFF_TRIGGER = "Takeoff";
@@ -45,6 +50,7 @@ public class DragonMovement : MonoBehaviour
         GroundIdle,
         FlyAttack,
         Takeoff,
+        FlameAttack,
         Flapping,
         Gliding,
         Landing
@@ -63,7 +69,7 @@ public class DragonMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        ForceFly();
+     //   ForceFly();
         // ตั้งค่า NavMeshAgent
         agent.baseOffset = 0;
        
@@ -85,6 +91,9 @@ public class DragonMovement : MonoBehaviour
             case DragonState.Takeoff:
                 UpdateTakeoff();
                 break;
+            case DragonState.FlameAttack:
+                UpdateFlameAttack();
+                break;
             case DragonState.Flapping:
                 UpdateFlapping();
                 break;
@@ -105,16 +114,24 @@ public class DragonMovement : MonoBehaviour
     private void UpdateGroundIdle()
     {
         if (player == null) return;
-        
+        float speed = agent.velocity.magnitude;
         // คำนวณระยะห่างระหว่างศัตรูกับ Player
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         
         // ถ้าอยู่ในระยะตรวจจับ
         if (distanceToPlayer <= detectionRange)
         {
+           
+            animator.SetFloat("Speed", speed);
             // ถ้าอยู่ในระยะโจมตี
             if (distanceToPlayer <= attackRange)
             {
+                if (!screamFirstTime)
+                {
+                    animator.SetTrigger("Scream");
+                    screamFirstTime = true;
+                }
+                    
                 // หยุดเดิน
                 agent.isStopped = true;
                 
@@ -128,7 +145,7 @@ public class DragonMovement : MonoBehaviour
             else
             {
                 // เดินตาม Player
-                float speed = agent.velocity.magnitude; // คำนวณความเร็ว
+                // คำนวณความเร็ว
                 animator.SetFloat("Speed", speed);
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
@@ -139,12 +156,23 @@ public class DragonMovement : MonoBehaviour
             // อยู่นอกระยะตรวจจับ หยุดเดิน
             agent.isStopped = true;
         }
-        
-        
-        
-        if (ShouldStartFlying())
+
+
+        if (ShouldStartFlameAttack())
         {
-            isFlyingTowardPlayer = true;
+            animator.SetTrigger("FlameAttack");
+            attackCount = 0;
+        }
+        
+        // if (ShouldStartFlying())
+        // {
+        //     isFlyingTowardPlayer = true;
+        //     StartTakeoff();
+        // }
+
+        if (ShouldStartTakeOff())
+        {
+          
             StartTakeoff();
         }
     }
@@ -152,6 +180,7 @@ public class DragonMovement : MonoBehaviour
     private void Attack()
     {
         nextAttackTime = Time.time + attackCooldown;
+        attackCount++;
         animator.SetTrigger("ClawAttack");
     }
     IEnumerator FacePlayer()
@@ -201,8 +230,8 @@ public class DragonMovement : MonoBehaviour
         
         // ปรับ baseOffset ของ NavMeshAgent แทนการเปลี่ยน y position โดยตรง
         //agent.baseOffset = targetHeight;
-
-        if (stateTimer >= flapDuration)
+    
+        if (stateTimer >= takeOffDuration)
         {
             StartFlapping();
         }
@@ -236,6 +265,7 @@ public class DragonMovement : MonoBehaviour
 
     private void UpdateGliding()
     {
+        stateTimer += Time.deltaTime;
         // ถ้ายังไม่มีเป้าหมายหรือถึงเป้าหมายแล้ว ให้สุ่มเป้าหมายใหม่
         if (currentTarget == Vector3.zero || 
             Vector3.Distance(transform.position, currentTarget) < TARGET_REACHED_THRESHOLD)
@@ -288,9 +318,23 @@ public class DragonMovement : MonoBehaviour
             StartLanding();
         }
     }
+
+    private void UpdateFlameAttack()
+    {
+        
+    }
+    
     // State Transition Methods
     private void StartTakeoff()
     {
+        
+        //animator.ResetTrigger();
+        if (!isFlyingTowardPlayer)
+        {
+            animator.SetTrigger("Scream2");
+        }
+
+        dragonHitbox.enabled = false;
         currentState = DragonState.Takeoff;
         stateTimer = 0;
         animator.SetTrigger(TAKEOFF_TRIGGER);
@@ -305,8 +349,13 @@ public class DragonMovement : MonoBehaviour
         animator.SetTrigger(FLAP_TRIGGER);
     }
 
+    private void StartFlameAttack()
+    {
+        
+    }
     private void StartGliding()
     {
+        stateTimer = 0;
         agent.ResetPath();
         currentState = DragonState.Gliding;
         animator.SetTrigger(GLIDE_TRIGGER);
@@ -325,6 +374,7 @@ public class DragonMovement : MonoBehaviour
 
     private void StartLanding()
     {
+        dragonHitbox.enabled = true;
         agent.isStopped = true;
         FlightCount = 0;
         currentState = DragonState.Landing;
@@ -356,16 +406,46 @@ public class DragonMovement : MonoBehaviour
         //return false;
     }
 
+    private bool ShouldStartFlameAttack()
+    {
+        return attackCount >= 4;
+    }
+    
     private bool ShouldLand()
     {
-        
-        
-        
+        if (stateTimer >= 8)
+        {
+            return true;
+        }
         return FlightCount >= 4;
         // ใส่เงื่อนไขการลงจอดตามที่ต้องการ
         // return false;
     }
+    
+    
 
+    private bool hasTriggered70 = false;
+    private bool hasTriggered30 = false;
+
+    private bool ShouldStartTakeOff()
+    {
+        float currentHealth = enemyHealth.GetCurrentHealth();
+        float maxHealth = enemyHealth.GetCurrentMaxHealth();
+        bool isFreeze = enemyHealth.IsFreeze();
+        if (currentHealth < maxHealth * 0.70f && !hasTriggered70 && !isFreeze)
+        {
+            hasTriggered70 = true; // ป้องกันการเรียกซ้ำ
+            return true;
+        }
+
+        if (currentHealth < maxHealth * 0.35f && !hasTriggered30 && !isFreeze)
+        {
+            hasTriggered30 = true; // ป้องกันการเรียกซ้ำ
+            return true;
+        }
+
+        return false; // ไม่เข้าเงื่อนไข
+    }
     private bool ShouldLandFlyAttack()
     {
        

@@ -18,7 +18,7 @@ public class AIController : MonoBehaviour
     private bool moveToNextLevel = false;
     public AllyRangedCombat _AllyRangedCombat;
     private SkillManager skillManager;
-
+   
     
     
     private float lastSkillUseTime;
