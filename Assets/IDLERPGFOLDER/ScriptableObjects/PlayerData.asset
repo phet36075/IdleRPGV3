@@ -20,7 +20,7 @@ MonoBehaviour:
   _criticalDamage: 2
   _defense: 5
   _armorPenetration: 0
-  _regenRate: 1
+  _regenRate: 10
   _manaRegenRate: 20
   damageVariation: 0.2
   elementType: 0

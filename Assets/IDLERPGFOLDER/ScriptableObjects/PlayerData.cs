@@ -77,7 +77,7 @@ public class PlayerData : ScriptableObject
     public void ResetToDefault()
     {
         // ค่าพื้นฐานของตัวละคร
-        _maxHealth = 140f;
+      /*  _maxHealth = 140f;
         _maxMana = 100f;
         _baseDamage = 10f;
         _weaponDamage = 10f;
@@ -85,9 +85,9 @@ public class PlayerData : ScriptableObject
         _criticalDamage = 2f;
         _defense = 5f;
         _armorPenetration = 0f;
-        _regenRate = 1f;
+        _regenRate = 10f;
         _manaRegenRate = 20f;
-        
+        */
         // ค่าเริ่มต้นสำหรับการอัพเกรด
         Weaponlevel = 1;
         WeaponupgradeCost = 100;
