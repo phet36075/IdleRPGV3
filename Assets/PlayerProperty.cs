@@ -113,8 +113,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_defense != value)
             {
+                float oldValue = _defense;
                 _defense = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("defense", oldValue, value);
+                changedStats["defense"] = value;
             }
         }
     }

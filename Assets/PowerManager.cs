@@ -45,6 +45,9 @@ public class PowerManager : MonoBehaviour
     
     public TextMeshProUGUI powerChangeText;
     public TextMeshProUGUI maxHealthChange;
+    public GameObject PowerStatsSlot;
+    public Transform PowerStatsHolder;
+    
     public float fadeDuration = 1.5f; // ระยะเวลาที่ข้อความจะหายไป
     
     private int currentPower;
@@ -72,8 +75,40 @@ public class PowerManager : MonoBehaviour
     {
         // แสดงการแจ้งเตือนหรือ Effect พิเศษเมื่อสถิติบางตัวเปลี่ยนแปลง
         Debug.Log($"Stat changed: {statName} from {oldValue} to {newValue}");
-        ShowStatIncreaseEffect("maxHealth", oldValue, newValue);
-        
+
+        switch (statName)
+        {
+            case "maxHealth":
+                Transform healthSlot = PowerStatsHolder.Find("PowerHealthSlot");
+
+                if (healthSlot == null) // ถ้าไม่มีให้สร้างใหม่
+                {
+                    GameObject powerHealthSlot = Instantiate(PowerStatsSlot, PowerStatsHolder.position, Quaternion.identity);
+                    powerHealthSlot.name = "PowerHealthSlot"; // ตั้งชื่อเพื่อให้ค้นหาได้
+                    powerHealthSlot.transform.SetParent(PowerStatsHolder); // กำหนด Parent
+                }
+
+                // หา slot ที่มีอยู่แล้ว และเรียกใช้ฟังก์ชันซ้ำ
+                PowerStatsSlots healthComponent = PowerStatsHolder.Find("PowerHealthSlot").GetComponent<PowerStatsSlots>();
+                healthComponent.HandleStatsSlots("maxHealth", oldValue, newValue);
+                break;
+
+            case "defense":
+                Transform defenseSlot = PowerStatsHolder.Find("PowerDefenseSlot");
+
+                if (defenseSlot == null) // ถ้าไม่มีให้สร้างใหม่
+                {
+                    GameObject powerDefenseSlot = Instantiate(PowerStatsSlot, PowerStatsHolder.position, Quaternion.identity);
+                    powerDefenseSlot.name = "PowerDefenseSlot"; // ตั้งชื่อเพื่อให้หาเจอ
+                    powerDefenseSlot.transform.SetParent(PowerStatsHolder);
+                }
+
+                // หา slot ที่มีอยู่แล้ว และเรียกใช้ฟังก์ชันซ้ำ
+                PowerStatsSlots defenseComponent = PowerStatsHolder.Find("PowerDefenseSlot").GetComponent<PowerStatsSlots>();
+                defenseComponent.HandleStatsSlots("defense", oldValue, newValue);
+                break;
+        }
+
         // ตัวอย่าง: แสดงการแจ้งเตือนเมื่อค่า HP สูงสุดเพิ่มขึ้น
         // if (statName == "maxHealth" && newValue > oldValue)
         // {
@@ -82,11 +117,16 @@ public class PowerManager : MonoBehaviour
     }
     private void ShowStatIncreaseEffect(string statName, float oldValue, float newValue)
     {
-        if (statName == "maxHealth" && newValue > oldValue)
+
+        switch (statName)
         {
-            
+            case "maxHealth":
+               // maxHealthChange.text = "Health " + oldValue + "       " + newValue;
+                // อาจจะเพิ่ม animation สีเขียวที่ตัวเลข
+                break;
         }
-        maxHealthChange.text = "Health " + oldValue + "       " + newValue;
+
+       
         // if (statName == "maxHealth" && newValue < oldValue)
         // {
         //     maxHealthChange.text = "Health " + newValue + " " + oldValue;
@@ -167,7 +207,7 @@ public class PowerManager : MonoBehaviour
     private IEnumerator DisplayPower()
     {
         powerChangeCanvas.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f); // รอ 1 วิ
+        yield return new WaitForSeconds(2f); // รอ 1 วิ
        powerChangeCanvas.gameObject.SetActive(false);
        
     }
