@@ -9,7 +9,7 @@ public class UIPlayerStats : MonoBehaviour
 {
     public GameObject UI_Stats;
     public PlayerStats playerStats;
-    public PlayerData playerData;
+    public PlayerProperty playerProperty;
     [Header("Button")]
     public Button strengthButton; // ประกาศตัวแปรสำหรับปุ่ม
     public Button dexterityButton;
@@ -107,15 +107,15 @@ public class UIPlayerStats : MonoBehaviour
         
         
         
-        txtHealth.text = playerData.maxHealth.ToString();
-        txtDamage.text = playerData.baseDamage.ToString();
-        txtDefense.text = playerData.defense.ToString();
-        txtCritChance.text = playerData.criticalChance.ToString();
-        txtCritDamage.text = playerData.criticalDamage.ToString();
-        txtArmorPenatration.text = playerData.armorPenetration.ToString();
-        txtHpRegen.text = playerData.regenRate.ToString();
-        txtMana.text = playerData.maxMana.ToString();
-        txtManaRegen.text = playerData.manaRegenRate.ToString();
+        txtHealth.text = playerProperty.maxHealth.ToString();
+        txtDamage.text = playerProperty.baseDamage.ToString();
+        txtDefense.text = playerProperty.defense.ToString();
+        txtCritChance.text = playerProperty.criticalChance.ToString();
+        txtCritDamage.text = playerProperty.criticalDamage.ToString();
+        txtArmorPenatration.text = playerProperty.armorPenetration.ToString();
+        txtHpRegen.text = playerProperty.regenRate.ToString();
+        txtMana.text = playerProperty.maxMana.ToString();
+        txtManaRegen.text = playerProperty.manaRegenRate.ToString();
         
         txtLevel.text = playerStats.Level.ToString();
         txtLevel2.text = playerStats.Level.ToString();

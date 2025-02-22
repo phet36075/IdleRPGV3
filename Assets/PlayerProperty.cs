@@ -7,7 +7,12 @@ public class PlayerProperty : MonoBehaviour
 {
     public PlayerData playerData; // อ้างอิงไปยัง ScriptableObject เพื่อใช้เป็นค่าเริ่มต้น
     public event Action OnStatsChanged;
+    public event Action<string, float, float> OnSpecificStatChanged; // เพิ่ม event ใหม่ที่ส่งชื่อสถิติ ค่าเก่า และค่าใหม่
+    
     private bool statsChangedSinceLastFrame = false;
+    private Dictionary<string, float> previousStats = new Dictionary<string, float>();
+    private Dictionary<string, float> changedStats = new Dictionary<string, float>();
+    
     [Header("----Health----")]
     [SerializeField] private float _maxHealth = 100f;
     public float maxHealth
@@ -17,8 +22,11 @@ public class PlayerProperty : MonoBehaviour
         {
             if (_maxHealth != value)
             {
+                float oldValue = _maxHealth;
                 _maxHealth = value;
                 statsChangedSinceLastFrame = true;
+                OnSpecificStatChanged?.Invoke("maxHealth", oldValue, value);
+                changedStats["maxHealth"] = value;
             }
         }
     }
@@ -160,6 +168,15 @@ public class PlayerProperty : MonoBehaviour
         {
             statsChangedSinceLastFrame = false;
             OnStatsChanged?.Invoke();
+            
+            // อัปเดตค่า previous stats เป็นค่าปัจจุบัน
+            foreach (var stat in changedStats)
+            {
+                previousStats[stat.Key] = stat.Value;
+            }
+            
+            // เคลียร์รายการสถิติที่เปลี่ยนแปลงหลังจากประมวลผลแล้ว
+            changedStats.Clear();
         }
     }
     
@@ -169,6 +186,8 @@ public class PlayerProperty : MonoBehaviour
     [Header("Elemental")]
     public ElementType elementType = ElementType.None;  // ธาตุเริ่มต้น
 
+    
+    
     #region UpgradeCost
 
     [Header("----UpgradeCost----")]
@@ -262,6 +281,20 @@ public class PlayerProperty : MonoBehaviour
             // กำหนดค่าปัจจุบันให้เต็ม
             _currentHealth = maxHealth;
             _currentMana = maxMana;
+            
+            // เก็บค่าเริ่มต้นของทุกสถิติเพื่อใช้เปรียบเทียบภายหลัง
+            previousStats["maxHealth"] = _maxHealth;
+            previousStats["maxMana"] = _maxMana;
+            previousStats["baseDamage"] = _baseDamage;
+            previousStats["weaponDamage"] = _weaponDamage;
+            previousStats["criticalChance"] = _criticalChance;
+            previousStats["criticalDamage"] = _criticalDamage;
+            previousStats["defense"] = _defense;
+            previousStats["armorPenetration"] = _armorPenetration;
+            previousStats["regenRate"] = _regenRate;
+            previousStats["manaRegenRate"] = _manaRegenRate;
+            
+            
         }
     }
     
@@ -311,5 +344,109 @@ public class PlayerProperty : MonoBehaviour
         }
     }
     
-   
+    
+    // เมธอดที่ส่งคืนรายการของทุกสถิติที่เปลี่ยนแปลงตั้งแต่เฟรมสุดท้าย
+    public Dictionary<string, StatChange> GetChangedStats()
+    {
+        Dictionary<string, StatChange> result = new Dictionary<string, StatChange>();
+        
+        foreach (var stat in changedStats)
+        {
+            result[stat.Key] = new StatChange(previousStats[stat.Key], stat.Value);
+        }
+        
+        return result;
+    }
+    
+    // เมธอดที่เช็คว่าสถิติใดเปลี่ยนจากการเก็บค่าเริ่มต้น
+    public Dictionary<string, StatChange> GetChangesFromInitial()
+    {
+        Dictionary<string, StatChange> result = new Dictionary<string, StatChange>();
+        
+        // ตรวจสอบสถิติทั้งหมดกับค่าเริ่มต้น (ต้องปรับตามค่า default ของสถิติ)
+        CheckAndAddChange(result, "maxHealth", 100f, _maxHealth);
+        CheckAndAddChange(result, "maxMana", 0f, _maxMana);
+        CheckAndAddChange(result, "baseDamage", 10f, _baseDamage);
+        CheckAndAddChange(result, "weaponDamage", 10f, _weaponDamage);
+        CheckAndAddChange(result, "criticalChance", 0.05f, _criticalChance);
+        CheckAndAddChange(result, "criticalDamage", 2f, _criticalDamage);
+        CheckAndAddChange(result, "defense", 5f, _defense);
+        CheckAndAddChange(result, "armorPenetration", 0f, _armorPenetration);
+        CheckAndAddChange(result, "regenRate", 1f, _regenRate);
+        CheckAndAddChange(result, "manaRegenRate", 20f, _manaRegenRate);
+        
+        return result;
+    }
+    
+    private void CheckAndAddChange(Dictionary<string, StatChange> dict, string statName, float initialValue, float currentValue)
+    {
+        if (Math.Abs(initialValue - currentValue) > 0.001f) // ใช้ epsilon ในการเปรียบเทียบค่า float
+        {
+            dict[statName] = new StatChange(initialValue, currentValue);
+        }
+    }
+    
+    public void RestatAllProperties()
+    {
+        // บันทึกค่าปัจจุบันทั้งหมด
+        Dictionary<string, float> oldValues = new Dictionary<string, float>
+        {
+            { "maxHealth", _maxHealth }//,
+          //  { "maxMana", _maxMana },
+            // บันทึกค่าอื่นๆ
+        };
+    
+        // โหลดค่าจาก PlayerData หรือค่าเริ่มต้น
+       /* if (playerData != null)
+        {
+            _maxHealth = playerData.maxHealth;
+            _maxMana = playerData.maxMana;
+            // กำหนดค่าอื่นๆ
+        }
+        else
+        {
+            // กำหนดค่าเริ่มต้นถ้าไม่มี PlayerData
+            _maxHealth = 100f;
+            _maxMana = 0f;
+            // กำหนดค่าอื่นๆ
+        }*/
+    
+        // บังคับส่ง event สำหรับทุก property
+        foreach (var stat in oldValues)
+        {
+            float newValue = 0f;
+        
+            // ดึงค่าปัจจุบันตามชื่อ stat
+            switch (stat.Key)
+            {
+                case "maxHealth": newValue = _maxHealth; break;
+               // case "maxMana": newValue = _maxMana; break;
+                // กรณีอื่นๆ
+            }
+        
+            // ส่ง event แม้จะมีค่าเท่าเดิม
+            OnSpecificStatChanged?.Invoke(stat.Key, stat.Value, newValue);
+            changedStats[stat.Key] = newValue;
+        }
+    
+        statsChangedSinceLastFrame = true;
+    }
+    
+    // คลาสเพื่อเก็บข้อมูลการเปลี่ยนแปลงของสถิติ
+    [System.Serializable]
+    public class StatChange
+    {
+        public float oldValue;
+        public float newValue;
+        public float difference;
+        public float percentChange;
+    
+        public StatChange(float oldVal, float newVal)
+        {
+            oldValue = oldVal;
+            newValue = newVal;
+            difference = newValue - oldValue;
+            percentChange = (oldValue != 0) ? (difference / oldValue) * 100f : 0f;
+        }
+    }
 }

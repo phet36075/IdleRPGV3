@@ -14,6 +14,8 @@ public enum StatType
 public class PlayerStats : MonoBehaviour
 {
     #region References
+
+    public PlayerProperty playerProperty;
     public CharacterStats baseStats;
     public SkillManager skillManager;
     [SerializeField] private GameObject lvUpPrefab;
@@ -187,7 +189,7 @@ public class PlayerStats : MonoBehaviour
 
         availableStatPoints += totalSpentStatPoints;
         totalSpentStatPoints = 0;
-
+       // playerProperty.RestatAllProperties();
         OnStatsChanged?.Invoke();
     }
 

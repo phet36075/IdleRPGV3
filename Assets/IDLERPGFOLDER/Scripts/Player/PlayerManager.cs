@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         InitializeComponents();
         InitializeStats();
         StartCoroutine(RegenerateHp());
-      
+       
 
     }
 

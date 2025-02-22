@@ -41,7 +41,10 @@ public class PowerManager : MonoBehaviour
    // [SerializeField] private PlayerData playerData;
     [SerializeField] private int basePower = 100;
     [SerializeField] private PlayerProperty playerProperty;
+    public GameObject powerChangeCanvas;
+    
     public TextMeshProUGUI powerChangeText;
+    public TextMeshProUGUI maxHealthChange;
     public float fadeDuration = 1.5f; // ระยะเวลาที่ข้อความจะหายไป
     
     private int currentPower;
@@ -53,6 +56,7 @@ public class PowerManager : MonoBehaviour
         if (playerProperty != null)
         {
             playerProperty.OnStatsChanged += OnStatsChanged;
+            playerProperty.OnSpecificStatChanged += HandleSpecificStatChanged;
         }
     }
 
@@ -61,19 +65,49 @@ public class PowerManager : MonoBehaviour
         if (playerProperty != null)
         {
             playerProperty.OnStatsChanged -= OnStatsChanged;
+            playerProperty.OnSpecificStatChanged -= HandleSpecificStatChanged;
         }
+    }
+    private void HandleSpecificStatChanged(string statName, float oldValue, float newValue)
+    {
+        // แสดงการแจ้งเตือนหรือ Effect พิเศษเมื่อสถิติบางตัวเปลี่ยนแปลง
+        Debug.Log($"Stat changed: {statName} from {oldValue} to {newValue}");
+        ShowStatIncreaseEffect("maxHealth", oldValue, newValue);
+        
+        // ตัวอย่าง: แสดงการแจ้งเตือนเมื่อค่า HP สูงสุดเพิ่มขึ้น
+        // if (statName == "maxHealth" && newValue > oldValue)
+        // {
+        //       ShowStatIncreaseEffect("maxHealth", oldValue, newValue);
+        // }
+    }
+    private void ShowStatIncreaseEffect(string statName, float oldValue, float newValue)
+    {
+        if (statName == "maxHealth" && newValue > oldValue)
+        {
+            
+        }
+        maxHealthChange.text = "Health " + oldValue + "       " + newValue;
+        // if (statName == "maxHealth" && newValue < oldValue)
+        // {
+        //     maxHealthChange.text = "Health " + newValue + " " + oldValue;
+        // }
+       
+        // แสดง animation หรือ visual effect เพื่อเน้นย้ำการเปลี่ยนแปลงของสถิติ
+        // เช่น การส่องสว่างของไอคอนเกราะเมื่อค่า defense เพิ่มขึ้น
     }
     void Start()
     {
         // currentPower = basePower;
         // NotifyPowerChange();
         UpdatePowerFromStats();
-        powerChangeText.alpha = 0; // ซ่อนข้อความตอนเริ่ม
+        powerChangeCanvas.gameObject.SetActive(false);
+        //powerChangeText.alpha = 0; // ซ่อนข้อความตอนเริ่ม
        
     }
     private void OnStatsChanged()
     {
         UpdatePowerFromStats();
+       
     }
     public void UpdatePowerFromStats()
     {
@@ -100,12 +134,19 @@ public class PowerManager : MonoBehaviour
         NotifyPowerChange();
         ShowPowerChange(-amount);
     }
-    
+    private Coroutine myCoroutine;
     public void ShowPowerChange(int amount)
     {
         powerChangeText.text = "Power: " + (amount > 0 ? "+" : "") + amount;
         powerChangeText.color = amount < 0 ? Color.red : Color.green; // เปลี่ยนสีเป็นแดงถ้าติดลบ เขียวถ้าบวก
-        StartCoroutine(FadeText());
+        
+        
+      // StartCoroutine(DisplayPower());
+       if (myCoroutine != null)
+       {
+           StopCoroutine(myCoroutine); // หยุด Coroutine เดิมก่อน
+       }
+       myCoroutine = StartCoroutine(DisplayPower()); // เริ่มใหม่
     }
 
     private IEnumerator FadeText()
@@ -121,6 +162,14 @@ public class PowerManager : MonoBehaviour
             yield return null;
         }
         powerChangeText.alpha = 0; // ซ่อนเมื่อจบ
+    }
+    
+    private IEnumerator DisplayPower()
+    {
+        powerChangeCanvas.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f); // รอ 1 วิ
+       powerChangeCanvas.gameObject.SetActive(false);
+       
     }
     private void NotifyPowerChange()
     {
