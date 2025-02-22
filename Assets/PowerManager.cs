@@ -24,18 +24,14 @@ public static class PowerCalculator
 
         int powerFromHealth = Mathf.RoundToInt((currentStats.maxHealth - defaultHealth) * POWER_PER_HEALTH);
         int powerFromMana = Mathf.RoundToInt((currentStats.maxMana - defaultMana) * POWER_PER_MANA);
-        int powerFromDamage = Mathf.RoundToInt((currentStats.baseDamage + currentStats.weaponDamage - defaultDamage) *
-                                               POWER_PER_DAMAGE);
+        int powerFromDamage = Mathf.RoundToInt((currentStats.baseDamage + currentStats.weaponDamage - defaultDamage) * POWER_PER_DAMAGE);
+        int powerFromDefense = Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
         //int powerFormDefense = Mathf.RoundToInt((currentStats.defense - defaultDefense) * POWER_PER_DEFENSE);
         int powerFromCrit = Mathf.RoundToInt((currentStats.criticalChance - defaultCrit) * POWER_PER_CRIT);
 
         // Debug เพื่อเช็คค่าของแต่ละตัว
-        Debug.Log($"Power from Health: {powerFromHealth}");
-        Debug.Log($"Power from Mana: {powerFromMana}");
-        Debug.Log($"Power from Damage: {powerFromDamage}");
-        Debug.Log($"Power from Crit: {powerFromCrit}");
-        //Debug.Log($"Power from Defense: {powerFormDefense}");
-        int totalPower = powerFromHealth + powerFromMana + powerFromDamage + powerFromCrit;
+        
+        int totalPower = powerFromHealth + powerFromMana + powerFromDamage + powerFromCrit+powerFromDefense;
         return totalPower;
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerProperty : MonoBehaviour
 {
     public PlayerData playerData; // อ้างอิงไปยัง ScriptableObject เพื่อใช้เป็นค่าเริ่มต้น
-    
     public event Action OnStatsChanged;
     private bool statsChangedSinceLastFrame = false;
     [Header("----Health----")]
@@ -170,6 +169,8 @@ public class PlayerProperty : MonoBehaviour
     [Header("Elemental")]
     public ElementType elementType = ElementType.None;  // ธาตุเริ่มต้น
 
+    #region UpgradeCost
+
     [Header("----UpgradeCost----")]
     public int WeaponupgradeCost = 100;
     public int Weaponlevel = 1;
@@ -191,6 +192,9 @@ public class PlayerProperty : MonoBehaviour
     
     public int criticalDamageCost = 100;
     public int criticalDamageLevel = 1;
+
+    #endregion
+   
     
     // ค่าปัจจุบันของผู้เล่น (แยกต่างหากจากค่าสถานะ)
     private float _currentHealth;
