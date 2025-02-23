@@ -52,7 +52,7 @@ public enum ElementType
     Earth,
     Wind,
     Light,
-    Dark
+    Dark,Extra
 }
 public enum WeaponType
 {

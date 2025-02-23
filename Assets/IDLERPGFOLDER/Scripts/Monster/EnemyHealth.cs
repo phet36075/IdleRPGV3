@@ -421,7 +421,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             _playerManager.isCritical = false;
             _audioManager.PlayHitCritSound();
         }
-        else if (elementType == ElementType.None)
+        else if (elementType == ElementType.Extra)
         {
             _damageDisplay.DisplayDamage(damage,isWeakness);
         }
@@ -676,7 +676,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             var holyDamage = new DamageData
             {
                 damage = _playerManager.GetDamage() * holyMultipliers[i],
-                elementType = ElementType.None,
+                elementType = ElementType.Extra,
                 armorPenetration = 0,
                
             };
@@ -731,7 +731,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             var darknessDamage = new DamageData
             {
                 damage = damageAmount,
-                elementType = ElementType.None,
+                elementType = ElementType.Extra,
                 armorPenetration = 0,
                
             };

@@ -14,7 +14,8 @@ public enum StatType
 public class PlayerStats : MonoBehaviour
 {
     #region References
-
+    public AudioSource audioSource;
+    public AudioClip lvUpSFX;
     public PlayerProperty playerProperty;
     public CharacterStats baseStats;
     public SkillManager skillManager;
@@ -149,7 +150,11 @@ public class PlayerStats : MonoBehaviour
     {
         GameObject spawnedEffect = Instantiate(lvUpPrefab, transform.position, lvUpPrefab.transform.rotation);
         Destroy(spawnedEffect, 1f);
+        audioSource.PlayOneShot(lvUpSFX);
         level++;
+        PlayerManager playerManager = GetComponent<PlayerManager>();
+        playerManager.Heal(99999999f);
+        playerManager.RestoreMana(999999999f);
         availableStatPoints += POINTS_PER_LEVEL;
         OnLevelUp?.Invoke(level);
         NotifyStatPointsChanged();

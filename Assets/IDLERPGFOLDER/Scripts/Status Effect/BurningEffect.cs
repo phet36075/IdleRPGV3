@@ -61,7 +61,7 @@ public class BurningEffect : MonoBehaviour, IStatusEffect
         var damageData = new DamageData(
             damage: GetBurningDamage(),
             armorPenetration: 0f,
-            elementType: ElementType.None
+            elementType: ElementType.Extra
         );
 
         target.TakeDamage(damageData);
