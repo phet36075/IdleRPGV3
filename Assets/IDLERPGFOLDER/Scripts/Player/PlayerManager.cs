@@ -80,13 +80,14 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void HandleElementalInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeWeaponElement(ElementType.Fire);
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeWeaponElement(ElementType.Water);
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeWeaponElement(ElementType.Wind);
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeWeaponElement(ElementType.Earth);
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) ChangeWeaponElement(ElementType.Light);
-        else if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeWeaponElement(ElementType.Dark);
-        else if (Input.GetKeyDown(KeyCode.Alpha7)) RestoreMana(50f);
+        // if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeWeaponElement(ElementType.Fire);
+        // else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeWeaponElement(ElementType.Water);
+        // else if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeWeaponElement(ElementType.Wind);
+        // else if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeWeaponElement(ElementType.Earth);
+        // else if (Input.GetKeyDown(KeyCode.Alpha5)) ChangeWeaponElement(ElementType.Light);
+        // else if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeWeaponElement(ElementType.Dark);
+        
+        if (Input.GetKeyDown(KeyCode.Alpha7)) RestoreMana(50f);
     }
 
     public void RecalculateStats()
