@@ -16,8 +16,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -1110,8 +1108,7 @@ ModelImporter:
     - name: ribbon_L.001
       parentName: ribbon_L
       position: {x: -0.000000017229468, y: 0.015742868, z: -0.000000018859282}
-      rotation: {x: -0.00000010244548, y: -0.00000008381903, z: -0.000000063329935,
-        w: 1}
+      rotation: {x: -0.00000010244548, y: -0.00000008381903, z: -0.000000063329935, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: ribbon_L.001_end
       parentName: ribbon_L.001
@@ -1126,8 +1123,7 @@ ModelImporter:
     - name: ribbon_R.001
       parentName: ribbon_R
       position: {x: -0.000000013038516, y: 0.015742892, z: -0.000000048428774}
-      rotation: {x: -0.000000027939674, y: 0.00000006891786, z: 0.000000059604638,
-        w: 1}
+      rotation: {x: -0.000000027939674, y: 0.00000006891786, z: 0.000000059604638, w: 1}
       scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
     - name: ribbon_R.001_end
       parentName: ribbon_R.001

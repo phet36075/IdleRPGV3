@@ -1,69 +1,192 @@
 fileFormatVersion: 2
 guid: 0c468898f36c47847b7498725851ead5
+AssetOrigin:
+  serializedVersion: 1
+  productId: 175328
+  packageName: Monsters Fire Pack
+  packageVersion: 2.0
+  assetPath: Assets/Suriyun/Monster Pack Fire/Animations/Minotos/Anim_Minotos@Idle.fbx
+  uploadId: 687787
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: center
-    100004: claw_l1
-    100006: claw_l2
-    100008: claw_l3
-    100010: claw_l4
-    100012: claw_l5
-    100014: claw_l6
-    100016: claw_r1
-    100018: claw_r2
-    100020: claw_r3
-    100022: claw_r4
-    100024: claw_r5
-    100026: claw_r6
-    100028: finger_l1
-    100030: finger_l2
-    100032: finger_l3
-    100034: finger_r1
-    100036: finger_r2
-    100038: finger_r3
-    100040: hand_l
-    100042: hand_r
-    100044: head
-    100046: head_end
-    100048: root
-    100050: spine1
-    100052: spine2
-    100054: spine3
-    400000: //RootNode
-    400002: center
-    400004: claw_l1
-    400006: claw_l2
-    400008: claw_l3
-    400010: claw_l4
-    400012: claw_l5
-    400014: claw_l6
-    400016: claw_r1
-    400018: claw_r2
-    400020: claw_r3
-    400022: claw_r4
-    400024: claw_r5
-    400026: claw_r6
-    400028: finger_l1
-    400030: finger_l2
-    400032: finger_l3
-    400034: finger_r1
-    400036: finger_r2
-    400038: finger_r3
-    400040: hand_l
-    400042: hand_r
-    400044: head
-    400046: head_end
-    400048: root
-    400050: spine1
-    400052: spine2
-    400054: spine3
-    7400000: Idle
-    9500000: //RootNode
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: center
+  - first:
+      1: 100004
+    second: claw_l1
+  - first:
+      1: 100006
+    second: claw_l2
+  - first:
+      1: 100008
+    second: claw_l3
+  - first:
+      1: 100010
+    second: claw_l4
+  - first:
+      1: 100012
+    second: claw_l5
+  - first:
+      1: 100014
+    second: claw_l6
+  - first:
+      1: 100016
+    second: claw_r1
+  - first:
+      1: 100018
+    second: claw_r2
+  - first:
+      1: 100020
+    second: claw_r3
+  - first:
+      1: 100022
+    second: claw_r4
+  - first:
+      1: 100024
+    second: claw_r5
+  - first:
+      1: 100026
+    second: claw_r6
+  - first:
+      1: 100028
+    second: finger_l1
+  - first:
+      1: 100030
+    second: finger_l2
+  - first:
+      1: 100032
+    second: finger_l3
+  - first:
+      1: 100034
+    second: finger_r1
+  - first:
+      1: 100036
+    second: finger_r2
+  - first:
+      1: 100038
+    second: finger_r3
+  - first:
+      1: 100040
+    second: hand_l
+  - first:
+      1: 100042
+    second: hand_r
+  - first:
+      1: 100044
+    second: head
+  - first:
+      1: 100046
+    second: head_end
+  - first:
+      1: 100048
+    second: root
+  - first:
+      1: 100050
+    second: spine1
+  - first:
+      1: 100052
+    second: spine2
+  - first:
+      1: 100054
+    second: spine3
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: center
+  - first:
+      4: 400004
+    second: claw_l1
+  - first:
+      4: 400006
+    second: claw_l2
+  - first:
+      4: 400008
+    second: claw_l3
+  - first:
+      4: 400010
+    second: claw_l4
+  - first:
+      4: 400012
+    second: claw_l5
+  - first:
+      4: 400014
+    second: claw_l6
+  - first:
+      4: 400016
+    second: claw_r1
+  - first:
+      4: 400018
+    second: claw_r2
+  - first:
+      4: 400020
+    second: claw_r3
+  - first:
+      4: 400022
+    second: claw_r4
+  - first:
+      4: 400024
+    second: claw_r5
+  - first:
+      4: 400026
+    second: claw_r6
+  - first:
+      4: 400028
+    second: finger_l1
+  - first:
+      4: 400030
+    second: finger_l2
+  - first:
+      4: 400032
+    second: finger_l3
+  - first:
+      4: 400034
+    second: finger_r1
+  - first:
+      4: 400036
+    second: finger_r2
+  - first:
+      4: 400038
+    second: finger_r3
+  - first:
+      4: 400040
+    second: hand_l
+  - first:
+      4: 400042
+    second: hand_r
+  - first:
+      4: 400044
+    second: head
+  - first:
+      4: 400046
+    second: head_end
+  - first:
+      4: 400048
+    second: root
+  - first:
+      4: 400050
+    second: spine1
+  - first:
+      4: 400052
+    second: spine2
+  - first:
+      4: 400054
+    second: spine3
+  - first:
+      74: 7400000
+    second: Idle
+  - first:
+      95: 9500000
+    second: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -72,9 +195,8 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -92,6 +214,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Anim_Minotos@Idle
+      internalID: 0
       firstFrame: 1
       lastFrame: 150
       wrapMode: 0
@@ -124,25 +247,36 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -151,10 +285,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -164,21 +298,20 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 175328
-  packageName: Monsters Fire Pack
-  packageVersion: 2.0
-  assetPath: Assets/Suriyun/Monster Pack Fire/Animations/Minotos/Anim_Minotos@Idle.fbx
-  uploadId: 687787

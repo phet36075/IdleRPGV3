@@ -10,6 +10,9 @@ public class StageManager : MonoBehaviour
     private GameObject currentMap;
     public NavMeshSurface navMeshSurface;
     [SerializeField] private int startingMapIndex = 0;
+    
+    
+    
     private void Start()
     {
         // ตรวจสอบว่ามี NavMeshSurface ถูกกำหนดไว้หรือไม่
@@ -25,6 +28,7 @@ public class StageManager : MonoBehaviour
 
     public void ChangeMap(int mapIndex)
     {
+        
         if (currentMap != null)
         {
             Destroy(currentMap);
@@ -32,9 +36,9 @@ public class StageManager : MonoBehaviour
 
         if (mapIndex >= 0 && mapIndex < mapPrefabs.Count)
         {
-            currentMap = Instantiate(mapPrefabs[mapIndex], Vector3.zero, Quaternion.identity);
-           // StartCoroutine(BakeNavMeshCoroutine());
-             // BakeNavMesh();
+            currentMap = Instantiate(mapPrefabs[mapIndex-1], Vector3.zero, Quaternion.identity);
+            StartCoroutine(BakeNavMeshCoroutine());
+              //BakeNavMesh();
         }
         else
         {

@@ -1,234 +1,686 @@
 fileFormatVersion: 2
 guid: 9cf742a307148934b9f5d144e770b6b0
 ModelImporter:
-  serializedVersion: 22
-  fileIDToRecycleName:
-    100000: _hair
-    100002: _skirt
-    100004: Armature
-    100006: Body
-    100008: Chest
-    100010: foot.L
-    100012: foot.R
-    100014: hand.L
-    100016: hand.R
-    100018: Head
-    100020: Head.001
-    100022: head.001
-    100024: Head.002
-    100026: head.002
-    100028: Head.003
-    100030: hige_L
-    100032: hige_L.001
-    100034: hige_R
-    100036: hige_R.001
-    100038: Hips
-    100040: Index Proximal.L
-    100042: Index Proximal.L.001
-    100044: Index Proximal.L.002
-    100046: Index Proximal.R
-    100048: Index Proximal.R.001
-    100050: Index Proximal.R.002
-    100052: LeftEye
-    100054: Little Proximal.L
-    100056: Little Proximal.L.001
-    100058: Little Proximal.L.002
-    100060: Little Proximal.R
-    100062: Little Proximal.R.001
-    100064: Little Proximal.R.002
-    100066: lower_arm.L
-    100068: lower_arm.R
-    100070: lower_leg.L
-    100072: lower_leg.R
-    100074: ma
-    100076: ma.001
-    100078: mae_L
-    100080: mae_L.001
-    100082: mae_R
-    100084: mae_R.001
-    100086: Middle Proximal.L
-    100088: Middle Proximal.L.001
-    100090: Middle Proximal.L.002
-    100092: Middle Proximal.R
-    100094: Middle Proximal.R.001
-    100096: Middle Proximal.R.002
-    100098: //RootNode
-    100100: Neck
-    100102: ribon_L
-    100104: ribon_L.001
-    100106: ribon_R
-    100108: ribon_R.001
-    100110: RightEye
-    100112: Ring Proximal.L
-    100114: Ring Proximal.L.001
-    100116: Ring Proximal.L.002
-    100118: Ring Proximal.R
-    100120: Ring Proximal.R.001
-    100122: Ring Proximal.R.002
-    100124: shoulder.L
-    100126: shoulder.R
-    100128: side_L
-    100130: side_L.001
-    100132: side_L.002
-    100134: side_R
-    100136: side_R.001
-    100138: side_R.002
-    100140: Spine
-    100142: tail
-    100144: tail1
-    100146: tail2
-    100148: tail3
-    100150: tail4
-    100152: tail5
-    100154: tail6
-    100156: tail7
-    100158: tail7.001
-    100160: Thumb Proximal.L
-    100162: Thumb Proximal.L.001
-    100164: Thumb Proximal.L.002
-    100166: Thumb Proximal.R
-    100168: Thumb Proximal.R.001
-    100170: Thumb Proximal.R.002
-    100172: toe.L
-    100174: toe.R
-    100176: u
-    100178: u.001
-    100180: u.002
-    100182: u.003
-    100184: u.004
-    100186: upper_arm.L
-    100188: upper_arm.R
-    100190: upper_leg.L
-    100192: upper_leg.R
-    100194: usiro_L
-    100196: usiro_L.001
-    100198: usiro_L.002
-    100200: usiro_L.003
-    100202: usiro_L.004
-    100204: usiro_R
-    100206: usiro_R.001
-    100208: usiro_R.002
-    100210: usiro_R.003
-    100212: usiro_R.004
-    100214: yoko_L
-    100216: yoko_L.001
-    100218: yoko_R
-    100220: yoko_R.001
-    400000: _hair
-    400002: _skirt
-    400004: Armature
-    400006: Body
-    400008: Chest
-    400010: foot.L
-    400012: foot.R
-    400014: hand.L
-    400016: hand.R
-    400018: Head
-    400020: Head.001
-    400022: head.001
-    400024: Head.002
-    400026: head.002
-    400028: Head.003
-    400030: hige_L
-    400032: hige_L.001
-    400034: hige_R
-    400036: hige_R.001
-    400038: Hips
-    400040: Index Proximal.L
-    400042: Index Proximal.L.001
-    400044: Index Proximal.L.002
-    400046: Index Proximal.R
-    400048: Index Proximal.R.001
-    400050: Index Proximal.R.002
-    400052: LeftEye
-    400054: Little Proximal.L
-    400056: Little Proximal.L.001
-    400058: Little Proximal.L.002
-    400060: Little Proximal.R
-    400062: Little Proximal.R.001
-    400064: Little Proximal.R.002
-    400066: lower_arm.L
-    400068: lower_arm.R
-    400070: lower_leg.L
-    400072: lower_leg.R
-    400074: ma
-    400076: ma.001
-    400078: mae_L
-    400080: mae_L.001
-    400082: mae_R
-    400084: mae_R.001
-    400086: Middle Proximal.L
-    400088: Middle Proximal.L.001
-    400090: Middle Proximal.L.002
-    400092: Middle Proximal.R
-    400094: Middle Proximal.R.001
-    400096: Middle Proximal.R.002
-    400098: //RootNode
-    400100: Neck
-    400102: ribon_L
-    400104: ribon_L.001
-    400106: ribon_R
-    400108: ribon_R.001
-    400110: RightEye
-    400112: Ring Proximal.L
-    400114: Ring Proximal.L.001
-    400116: Ring Proximal.L.002
-    400118: Ring Proximal.R
-    400120: Ring Proximal.R.001
-    400122: Ring Proximal.R.002
-    400124: shoulder.L
-    400126: shoulder.R
-    400128: side_L
-    400130: side_L.001
-    400132: side_L.002
-    400134: side_R
-    400136: side_R.001
-    400138: side_R.002
-    400140: Spine
-    400142: tail
-    400144: tail1
-    400146: tail2
-    400148: tail3
-    400150: tail4
-    400152: tail5
-    400154: tail6
-    400156: tail7
-    400158: tail7.001
-    400160: Thumb Proximal.L
-    400162: Thumb Proximal.L.001
-    400164: Thumb Proximal.L.002
-    400166: Thumb Proximal.R
-    400168: Thumb Proximal.R.001
-    400170: Thumb Proximal.R.002
-    400172: toe.L
-    400174: toe.R
-    400176: u
-    400178: u.001
-    400180: u.002
-    400182: u.003
-    400184: u.004
-    400186: upper_arm.L
-    400188: upper_arm.R
-    400190: upper_leg.L
-    400192: upper_leg.R
-    400194: usiro_L
-    400196: usiro_L.001
-    400198: usiro_L.002
-    400200: usiro_L.003
-    400202: usiro_L.004
-    400204: usiro_R
-    400206: usiro_R.001
-    400208: usiro_R.002
-    400210: usiro_R.003
-    400212: usiro_R.004
-    400214: yoko_L
-    400216: yoko_L.001
-    400218: yoko_R
-    400220: yoko_R.001
-    2100000: "\u306A\u3064\u3053"
-    4300000: Body
-    9500000: //RootNode
-    13700000: Body
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: _hair
+  - first:
+      1: 100002
+    second: _skirt
+  - first:
+      1: 100004
+    second: Armature
+  - first:
+      1: 100006
+    second: Body
+  - first:
+      1: 100008
+    second: Chest
+  - first:
+      1: 100010
+    second: foot.L
+  - first:
+      1: 100012
+    second: foot.R
+  - first:
+      1: 100014
+    second: hand.L
+  - first:
+      1: 100016
+    second: hand.R
+  - first:
+      1: 100018
+    second: Head
+  - first:
+      1: 100020
+    second: Head.001
+  - first:
+      1: 100022
+    second: head.001
+  - first:
+      1: 100024
+    second: Head.002
+  - first:
+      1: 100026
+    second: head.002
+  - first:
+      1: 100028
+    second: Head.003
+  - first:
+      1: 100030
+    second: hige_L
+  - first:
+      1: 100032
+    second: hige_L.001
+  - first:
+      1: 100034
+    second: hige_R
+  - first:
+      1: 100036
+    second: hige_R.001
+  - first:
+      1: 100038
+    second: Hips
+  - first:
+      1: 100040
+    second: Index Proximal.L
+  - first:
+      1: 100042
+    second: Index Proximal.L.001
+  - first:
+      1: 100044
+    second: Index Proximal.L.002
+  - first:
+      1: 100046
+    second: Index Proximal.R
+  - first:
+      1: 100048
+    second: Index Proximal.R.001
+  - first:
+      1: 100050
+    second: Index Proximal.R.002
+  - first:
+      1: 100052
+    second: LeftEye
+  - first:
+      1: 100054
+    second: Little Proximal.L
+  - first:
+      1: 100056
+    second: Little Proximal.L.001
+  - first:
+      1: 100058
+    second: Little Proximal.L.002
+  - first:
+      1: 100060
+    second: Little Proximal.R
+  - first:
+      1: 100062
+    second: Little Proximal.R.001
+  - first:
+      1: 100064
+    second: Little Proximal.R.002
+  - first:
+      1: 100066
+    second: lower_arm.L
+  - first:
+      1: 100068
+    second: lower_arm.R
+  - first:
+      1: 100070
+    second: lower_leg.L
+  - first:
+      1: 100072
+    second: lower_leg.R
+  - first:
+      1: 100074
+    second: ma
+  - first:
+      1: 100076
+    second: ma.001
+  - first:
+      1: 100078
+    second: mae_L
+  - first:
+      1: 100080
+    second: mae_L.001
+  - first:
+      1: 100082
+    second: mae_R
+  - first:
+      1: 100084
+    second: mae_R.001
+  - first:
+      1: 100086
+    second: Middle Proximal.L
+  - first:
+      1: 100088
+    second: Middle Proximal.L.001
+  - first:
+      1: 100090
+    second: Middle Proximal.L.002
+  - first:
+      1: 100092
+    second: Middle Proximal.R
+  - first:
+      1: 100094
+    second: Middle Proximal.R.001
+  - first:
+      1: 100096
+    second: Middle Proximal.R.002
+  - first:
+      1: 100098
+    second: //RootNode
+  - first:
+      1: 100100
+    second: Neck
+  - first:
+      1: 100102
+    second: ribon_L
+  - first:
+      1: 100104
+    second: ribon_L.001
+  - first:
+      1: 100106
+    second: ribon_R
+  - first:
+      1: 100108
+    second: ribon_R.001
+  - first:
+      1: 100110
+    second: RightEye
+  - first:
+      1: 100112
+    second: Ring Proximal.L
+  - first:
+      1: 100114
+    second: Ring Proximal.L.001
+  - first:
+      1: 100116
+    second: Ring Proximal.L.002
+  - first:
+      1: 100118
+    second: Ring Proximal.R
+  - first:
+      1: 100120
+    second: Ring Proximal.R.001
+  - first:
+      1: 100122
+    second: Ring Proximal.R.002
+  - first:
+      1: 100124
+    second: shoulder.L
+  - first:
+      1: 100126
+    second: shoulder.R
+  - first:
+      1: 100128
+    second: side_L
+  - first:
+      1: 100130
+    second: side_L.001
+  - first:
+      1: 100132
+    second: side_L.002
+  - first:
+      1: 100134
+    second: side_R
+  - first:
+      1: 100136
+    second: side_R.001
+  - first:
+      1: 100138
+    second: side_R.002
+  - first:
+      1: 100140
+    second: Spine
+  - first:
+      1: 100142
+    second: tail
+  - first:
+      1: 100144
+    second: tail1
+  - first:
+      1: 100146
+    second: tail2
+  - first:
+      1: 100148
+    second: tail3
+  - first:
+      1: 100150
+    second: tail4
+  - first:
+      1: 100152
+    second: tail5
+  - first:
+      1: 100154
+    second: tail6
+  - first:
+      1: 100156
+    second: tail7
+  - first:
+      1: 100158
+    second: tail7.001
+  - first:
+      1: 100160
+    second: Thumb Proximal.L
+  - first:
+      1: 100162
+    second: Thumb Proximal.L.001
+  - first:
+      1: 100164
+    second: Thumb Proximal.L.002
+  - first:
+      1: 100166
+    second: Thumb Proximal.R
+  - first:
+      1: 100168
+    second: Thumb Proximal.R.001
+  - first:
+      1: 100170
+    second: Thumb Proximal.R.002
+  - first:
+      1: 100172
+    second: toe.L
+  - first:
+      1: 100174
+    second: toe.R
+  - first:
+      1: 100176
+    second: u
+  - first:
+      1: 100178
+    second: u.001
+  - first:
+      1: 100180
+    second: u.002
+  - first:
+      1: 100182
+    second: u.003
+  - first:
+      1: 100184
+    second: u.004
+  - first:
+      1: 100186
+    second: upper_arm.L
+  - first:
+      1: 100188
+    second: upper_arm.R
+  - first:
+      1: 100190
+    second: upper_leg.L
+  - first:
+      1: 100192
+    second: upper_leg.R
+  - first:
+      1: 100194
+    second: usiro_L
+  - first:
+      1: 100196
+    second: usiro_L.001
+  - first:
+      1: 100198
+    second: usiro_L.002
+  - first:
+      1: 100200
+    second: usiro_L.003
+  - first:
+      1: 100202
+    second: usiro_L.004
+  - first:
+      1: 100204
+    second: usiro_R
+  - first:
+      1: 100206
+    second: usiro_R.001
+  - first:
+      1: 100208
+    second: usiro_R.002
+  - first:
+      1: 100210
+    second: usiro_R.003
+  - first:
+      1: 100212
+    second: usiro_R.004
+  - first:
+      1: 100214
+    second: yoko_L
+  - first:
+      1: 100216
+    second: yoko_L.001
+  - first:
+      1: 100218
+    second: yoko_R
+  - first:
+      1: 100220
+    second: yoko_R.001
+  - first:
+      4: 400000
+    second: _hair
+  - first:
+      4: 400002
+    second: _skirt
+  - first:
+      4: 400004
+    second: Armature
+  - first:
+      4: 400006
+    second: Body
+  - first:
+      4: 400008
+    second: Chest
+  - first:
+      4: 400010
+    second: foot.L
+  - first:
+      4: 400012
+    second: foot.R
+  - first:
+      4: 400014
+    second: hand.L
+  - first:
+      4: 400016
+    second: hand.R
+  - first:
+      4: 400018
+    second: Head
+  - first:
+      4: 400020
+    second: Head.001
+  - first:
+      4: 400022
+    second: head.001
+  - first:
+      4: 400024
+    second: Head.002
+  - first:
+      4: 400026
+    second: head.002
+  - first:
+      4: 400028
+    second: Head.003
+  - first:
+      4: 400030
+    second: hige_L
+  - first:
+      4: 400032
+    second: hige_L.001
+  - first:
+      4: 400034
+    second: hige_R
+  - first:
+      4: 400036
+    second: hige_R.001
+  - first:
+      4: 400038
+    second: Hips
+  - first:
+      4: 400040
+    second: Index Proximal.L
+  - first:
+      4: 400042
+    second: Index Proximal.L.001
+  - first:
+      4: 400044
+    second: Index Proximal.L.002
+  - first:
+      4: 400046
+    second: Index Proximal.R
+  - first:
+      4: 400048
+    second: Index Proximal.R.001
+  - first:
+      4: 400050
+    second: Index Proximal.R.002
+  - first:
+      4: 400052
+    second: LeftEye
+  - first:
+      4: 400054
+    second: Little Proximal.L
+  - first:
+      4: 400056
+    second: Little Proximal.L.001
+  - first:
+      4: 400058
+    second: Little Proximal.L.002
+  - first:
+      4: 400060
+    second: Little Proximal.R
+  - first:
+      4: 400062
+    second: Little Proximal.R.001
+  - first:
+      4: 400064
+    second: Little Proximal.R.002
+  - first:
+      4: 400066
+    second: lower_arm.L
+  - first:
+      4: 400068
+    second: lower_arm.R
+  - first:
+      4: 400070
+    second: lower_leg.L
+  - first:
+      4: 400072
+    second: lower_leg.R
+  - first:
+      4: 400074
+    second: ma
+  - first:
+      4: 400076
+    second: ma.001
+  - first:
+      4: 400078
+    second: mae_L
+  - first:
+      4: 400080
+    second: mae_L.001
+  - first:
+      4: 400082
+    second: mae_R
+  - first:
+      4: 400084
+    second: mae_R.001
+  - first:
+      4: 400086
+    second: Middle Proximal.L
+  - first:
+      4: 400088
+    second: Middle Proximal.L.001
+  - first:
+      4: 400090
+    second: Middle Proximal.L.002
+  - first:
+      4: 400092
+    second: Middle Proximal.R
+  - first:
+      4: 400094
+    second: Middle Proximal.R.001
+  - first:
+      4: 400096
+    second: Middle Proximal.R.002
+  - first:
+      4: 400098
+    second: //RootNode
+  - first:
+      4: 400100
+    second: Neck
+  - first:
+      4: 400102
+    second: ribon_L
+  - first:
+      4: 400104
+    second: ribon_L.001
+  - first:
+      4: 400106
+    second: ribon_R
+  - first:
+      4: 400108
+    second: ribon_R.001
+  - first:
+      4: 400110
+    second: RightEye
+  - first:
+      4: 400112
+    second: Ring Proximal.L
+  - first:
+      4: 400114
+    second: Ring Proximal.L.001
+  - first:
+      4: 400116
+    second: Ring Proximal.L.002
+  - first:
+      4: 400118
+    second: Ring Proximal.R
+  - first:
+      4: 400120
+    second: Ring Proximal.R.001
+  - first:
+      4: 400122
+    second: Ring Proximal.R.002
+  - first:
+      4: 400124
+    second: shoulder.L
+  - first:
+      4: 400126
+    second: shoulder.R
+  - first:
+      4: 400128
+    second: side_L
+  - first:
+      4: 400130
+    second: side_L.001
+  - first:
+      4: 400132
+    second: side_L.002
+  - first:
+      4: 400134
+    second: side_R
+  - first:
+      4: 400136
+    second: side_R.001
+  - first:
+      4: 400138
+    second: side_R.002
+  - first:
+      4: 400140
+    second: Spine
+  - first:
+      4: 400142
+    second: tail
+  - first:
+      4: 400144
+    second: tail1
+  - first:
+      4: 400146
+    second: tail2
+  - first:
+      4: 400148
+    second: tail3
+  - first:
+      4: 400150
+    second: tail4
+  - first:
+      4: 400152
+    second: tail5
+  - first:
+      4: 400154
+    second: tail6
+  - first:
+      4: 400156
+    second: tail7
+  - first:
+      4: 400158
+    second: tail7.001
+  - first:
+      4: 400160
+    second: Thumb Proximal.L
+  - first:
+      4: 400162
+    second: Thumb Proximal.L.001
+  - first:
+      4: 400164
+    second: Thumb Proximal.L.002
+  - first:
+      4: 400166
+    second: Thumb Proximal.R
+  - first:
+      4: 400168
+    second: Thumb Proximal.R.001
+  - first:
+      4: 400170
+    second: Thumb Proximal.R.002
+  - first:
+      4: 400172
+    second: toe.L
+  - first:
+      4: 400174
+    second: toe.R
+  - first:
+      4: 400176
+    second: u
+  - first:
+      4: 400178
+    second: u.001
+  - first:
+      4: 400180
+    second: u.002
+  - first:
+      4: 400182
+    second: u.003
+  - first:
+      4: 400184
+    second: u.004
+  - first:
+      4: 400186
+    second: upper_arm.L
+  - first:
+      4: 400188
+    second: upper_arm.R
+  - first:
+      4: 400190
+    second: upper_leg.L
+  - first:
+      4: 400192
+    second: upper_leg.R
+  - first:
+      4: 400194
+    second: usiro_L
+  - first:
+      4: 400196
+    second: usiro_L.001
+  - first:
+      4: 400198
+    second: usiro_L.002
+  - first:
+      4: 400200
+    second: usiro_L.003
+  - first:
+      4: 400202
+    second: usiro_L.004
+  - first:
+      4: 400204
+    second: usiro_R
+  - first:
+      4: 400206
+    second: usiro_R.001
+  - first:
+      4: 400208
+    second: usiro_R.002
+  - first:
+      4: 400210
+    second: usiro_R.003
+  - first:
+      4: 400212
+    second: usiro_R.004
+  - first:
+      4: 400214
+    second: yoko_L
+  - first:
+      4: 400216
+    second: yoko_L.001
+  - first:
+      4: 400218
+    second: yoko_R
+  - first:
+      4: 400220
+    second: yoko_R.001
+  - first:
+      21: 2100000
+    second: "\u306A\u3064\u3053"
+  - first:
+      43: 4300000
+    second: Body
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Body
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -236,7 +688,7 @@ ModelImporter:
       name: "\u306A\u3064\u3053"
     second: {fileID: 2100000, guid: cf2b5195f3f0b2141afdf7e920b7b6e8, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -245,14 +697,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -267,32 +719,49 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Hips
       humanName: Hips
@@ -1233,14 +1702,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

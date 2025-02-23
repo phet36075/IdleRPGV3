@@ -20738,6 +20738,7 @@ MonoBehaviour:
   spawnVFXPosition: {fileID: 341788695251945249}
   staggerDuration: 0.5
   cooldownStagger: 5
+  damageVariation: 0.2
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
   enemyElementType: 6
@@ -20790,6 +20791,7 @@ MonoBehaviour:
   normalAttackHtibox: {fileID: 382267635312085833}
   dragonMovement: {fileID: 6069962521059985533}
   hitboxOffset: {x: 0, y: 0, z: 1}
+  enemyHealth: {fileID: 6516714565150914473}
 --- !u!114 &3296111079357254659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31099,6 +31101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aafee0c1f58eb645aa498a293bfe2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHealth: {fileID: 6516714565150914473}
 --- !u!1 &2659612309870947040
 GameObject:
   m_ObjectHideFlags: 0
@@ -57276,6 +57279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aafee0c1f58eb645aa498a293bfe2fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHealth: {fileID: 6516714565150914473}
 --- !u!1 &5337048853073049045
 GameObject:
   m_ObjectHideFlags: 0

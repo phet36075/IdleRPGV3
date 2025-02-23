@@ -134,26 +134,20 @@ public class EnemyAttack : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (distanceToPlayer <= attackRange)
         {
-            int finalDamage = CalculateDamage();
+            int finalDamage = _enemyData.CalculateAttackDamage();
             PlayerManager playerManager = player.GetComponent<PlayerManager>();
             
            // playerManager.TakeDamage(finalDamage,_enemyData.EnemyData.armorPenetration);
             
             DamageData damageData = new DamageData(
                 finalDamage,
-               10,
+               _enemyData.EnemyData.armorPenetration,
                 ElementType.None
             );
             playerManager.TakeDamage(damageData);
         }
     }
     
-    int CalculateDamage()
-    {
-        float randomFactor = Random.Range(1f - damageVariation, 1f + damageVariation);
-        int finalDamage = Mathf.RoundToInt(((_enemyData.EnemyData.BaseAttack * _enemySpawner.currentStage) * 1.25f) * randomFactor);
-        return finalDamage;
-        
-    }
+    
     
 }

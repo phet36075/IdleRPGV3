@@ -10,6 +10,7 @@ public class DragonEffect : MonoBehaviour
     public Collider normalAttackHtibox;
     [SerializeField] private DragonMovement dragonMovement;
     [SerializeField] private Vector3 hitboxOffset = Vector3.forward;  // ระยะห่างของ hitbox
+    [SerializeField] private EnemyHealth enemyHealth;
     public void EnableFlame()
     {
         if (flameEffect != null)
@@ -51,9 +52,10 @@ public class DragonEffect : MonoBehaviour
             IDamageable target = player.GetComponent<IDamageable>();
             if (target != null)
             {
+                int finalDamage = enemyHealth.CalculateAttackDamage();
                 DamageData damageData = new DamageData(
-                    20f,
-                    100f,
+                    finalDamage,
+                    enemyHealth.EnemyData.armorPenetration,
                     ElementType.Dark);
                 target.TakeDamage(damageData);
             }

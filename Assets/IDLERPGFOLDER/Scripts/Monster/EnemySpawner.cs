@@ -272,7 +272,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // สำหรับด่านอื่นๆ ใช้การคำนวณแพทเทิร์น 6 แบบที่วนซ้ำ
-        int pattern = ((currentStage - 1) % 6) + 1;
+        int pattern = ((currentStage - 1) % 7) + 1;
     
         switch (pattern)
         {
@@ -288,10 +288,10 @@ public class EnemySpawner : MonoBehaviour
             case 4:
                 MapIndex = 4; // น้ำ
                 break;
-            case 5:
+            case 6:
                 MapIndex = 6; // แสง
                 break;
-            case 6:
+            case 7:
                 MapIndex = 7; // มืด
                 break;
         }
@@ -366,6 +366,12 @@ public class EnemySpawner : MonoBehaviour
 
     public void TeleportPlayer()
     {
+        if (MapIndex == 6)
+        {
+            Vector3 newpos6 = new Vector3(2.9f, 2.1f, 42.4f);
+            _teleportPlayer.TeleportPlayer(newpos6);
+        }
+       
         Vector3 newpos = new Vector3(-8, 2.1f, -6);
         _teleportPlayer.TeleportPlayer(newpos);
     }

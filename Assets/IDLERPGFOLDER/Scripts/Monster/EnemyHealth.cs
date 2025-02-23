@@ -48,6 +48,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     [Header("Combat Settings")]
     public float staggerDuration = 0.5f;
     public float cooldownStagger = 4;
+    public float damageVariation = 0.2f;
     private float lastTimeStagger = 0;
     private bool isHurt;
     public bool isMultiplyingDamageNextHit = false; // Tracks if next hit should be buffed
@@ -345,6 +346,14 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         return finalDamage;
     }
 
+    public int CalculateAttackDamage()
+    {
+        float randomFactor = Random.Range(1f - damageVariation, 1f + damageVariation);
+        int finalDamage = Mathf.RoundToInt(((EnemyData.BaseAttack * _enemySpawner.currentStage) * 1.25f) * randomFactor);
+        return finalDamage;
+        
+    }
+    
     private void ApplyDamage(float damage)
     {
         currentHealth -= damage ;
