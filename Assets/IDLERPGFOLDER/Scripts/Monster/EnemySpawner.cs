@@ -396,7 +396,7 @@ public class EnemySpawner : MonoBehaviour
         currentStage += 1;
         UpdateStageSettings();
         _stageManager.ChangeMap(MapIndex);
-        volumeProfileChanger.ChangeVolumeProfile(MapIndex);
+        volumeProfileChanger.ChangeSceneSetup(MapIndex);
         ResetEnemyCount();
         StartSpawning();
     }
@@ -411,7 +411,7 @@ public class EnemySpawner : MonoBehaviour
         ClearAllEnemies();
         
         _stageManager.ChangeMap(MapIndex);
-        volumeProfileChanger.ChangeVolumeProfile(MapIndex);
+        volumeProfileChanger.ChangeSceneSetup(MapIndex);
         ResetEnemyCount();
         StartSpawning();
     }
