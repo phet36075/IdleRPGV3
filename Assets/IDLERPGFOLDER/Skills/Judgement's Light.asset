@@ -16,7 +16,7 @@ MonoBehaviour:
   StatusSkill: 0
   skillName: Judgement's Light
   animationTriggerName: JudgementsLightTrigger
-  skillIcon: {fileID: 21300000, guid: 10dafa228a4f58d45a85b308bb8345fd, type: 3}
+  skillIcon: {fileID: 21300000, guid: 21df9195ed43b004394e6d7913b03149, type: 3}
   cooldown: 5
   damage: 1
   baseSkillDamage: 110

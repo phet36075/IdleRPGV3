@@ -16,7 +16,7 @@ MonoBehaviour:
   StatusSkill: 0
   skillName: Flame Eruption
   animationTriggerName: FlameEruptionTrigger
-  skillIcon: {fileID: 21300000, guid: f5b5986af6c93e842a058ae9b4d72a69, type: 3}
+  skillIcon: {fileID: 21300000, guid: 8ec5b52b09d90074a83d61c1334190f9, type: 3}
   cooldown: 6
   damage: 0
   baseSkillDamage: 120
