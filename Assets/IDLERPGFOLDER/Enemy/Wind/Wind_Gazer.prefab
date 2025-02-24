@@ -612,6 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 7952280954961663678}
   IsthisBoss: 0
   isWeakness: 0
@@ -629,9 +630,10 @@ MonoBehaviour:
   spawnVFXPosition: {fileID: 2264781530704452523}
   staggerDuration: 0.5
   cooldownStagger: 5
+  damageVariation: 0.2
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
-  enemyElementType: 0
+  enemyElementType: 4
   elementalResistances: []
   CharacterHitEffect: {fileID: 6779511718162971189}
   _damageDisplay: {fileID: -5294034510265808078}
@@ -639,7 +641,7 @@ MonoBehaviour:
   statusEffectUI: {fileID: 5793154348235763569}
   waterSlowMultiplier: 0.7
   waterEffectDuration: 5
-  waterEffectChance: 0.9
+  waterEffectChance: 0.4
   holyEffectDuration: 3
   darkEffectDuration: 3
 --- !u!114 &-5294034510265808078

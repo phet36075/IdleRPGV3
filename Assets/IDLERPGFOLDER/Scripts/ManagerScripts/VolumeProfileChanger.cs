@@ -62,14 +62,14 @@ public class VolumeProfileChanger : MonoBehaviour
     // ตัวอย่างการใช้งาน
     void Update()
     {
-        // ตัวอย่างการกดปุ่ม 1, 2 เพื่อเปลี่ยน setup
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeSceneSetup(1); // setup ที่ 1
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ChangeSceneSetup(2); // setup ที่ 2
-        }
+        // // ตัวอย่างการกดปุ่ม 1, 2 เพื่อเปลี่ยน setup
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     ChangeSceneSetup(1); // setup ที่ 1
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     ChangeSceneSetup(2); // setup ที่ 2
+        // }
     }
 }

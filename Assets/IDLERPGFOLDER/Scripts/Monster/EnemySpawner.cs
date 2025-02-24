@@ -258,10 +258,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ClearAllEnemies();
-        }
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     ClearAllEnemies();
+        // }
     }
 
     public void StartSpawning()

@@ -1018,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_Name
-      value: Slime_Anim
+      value: Wind_RabbitSlime
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eb340672e17c0af4089e561b61cdc548, type: 3}
       propertyPath: m_Layer
@@ -1286,6 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 5179961636422445443}
   IsthisBoss: 0
   isWeakness: 0

@@ -20721,6 +20721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 352734a712f37fe4fb237689298a875f, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 2398958643165319850}
   IsthisBoss: 0
   isWeakness: 0
@@ -20741,7 +20742,7 @@ MonoBehaviour:
   damageVariation: 0.2
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
-  enemyElementType: 6
+  enemyElementType: 1
   elementalResistances: []
   CharacterHitEffect: {fileID: 1278746150568092622}
   _damageDisplay: {fileID: 3296111079357254659}

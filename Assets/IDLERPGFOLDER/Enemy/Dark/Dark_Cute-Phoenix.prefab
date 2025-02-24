@@ -363,6 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 1399317273525736352}
   IsthisBoss: 0
   isWeakness: 0
@@ -380,6 +381,7 @@ MonoBehaviour:
   spawnVFXPosition: {fileID: 6727728077837743892}
   staggerDuration: 0.5
   cooldownStagger: 5
+  damageVariation: 0.2
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
   enemyElementType: 6

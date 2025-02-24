@@ -70,9 +70,9 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-          ChangeMap(1);
-        }
+        // if (Input.GetKeyDown(KeyCode.L))
+        // {
+        //   ChangeMap(1);
+        // }
     }
 }

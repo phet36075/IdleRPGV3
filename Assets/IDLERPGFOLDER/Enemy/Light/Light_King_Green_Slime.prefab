@@ -567,6 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 1055968927502335082}
   IsthisBoss: 0
   isWeakness: 0
@@ -595,7 +596,7 @@ MonoBehaviour:
   statusEffectUI: {fileID: 5871572817600216830}
   waterSlowMultiplier: 0.7
   waterEffectDuration: 5
-  waterEffectChance: 0.9
+  waterEffectChance: 0.4
   holyEffectDuration: 3
   darkEffectDuration: 3
 --- !u!114 &1866569213122244201

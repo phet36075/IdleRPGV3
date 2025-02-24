@@ -99,11 +99,11 @@ public class TestTeleportPlayer : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Debug.Log("ปุ่ม K ถูกกด");
-            Vector3 newpos = new Vector3(-8, 2.1f, -6);
-            TeleportPlayer(newpos);
-        }
+        // if (Input.GetKeyDown(KeyCode.K))
+        // {
+        //     Debug.Log("ปุ่ม K ถูกกด");
+        //     Vector3 newpos = new Vector3(-8, 2.1f, -6);
+        //     TeleportPlayer(newpos);
+        // }
     }
 }

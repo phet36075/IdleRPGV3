@@ -1055,6 +1055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 3474617038956648516}
   IsthisBoss: 0
   isWeakness: 0
