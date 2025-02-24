@@ -22,7 +22,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     
     [Header("Health")]
     public EnemyData EnemyData;
-    private float maxHealth;
+    public float maxHealth;
     private float currentHealth;
     private float defense;
     public Slider healthBar;
@@ -837,7 +837,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         }
         else
         {
-            multiplier = 0.1f;
+            multiplier = 1f;
         }
 
         return (multiplier);
@@ -965,7 +965,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public bool IsAlive() => currentHealth > 0;
     public float GetCurrentHealth() => currentHealth;
     public bool IsFreeze() => isFreeze;
-    public float GetMaxHealth() => EnemyData.maxhealth;
+    public float GetMaxHealth() => maxHealth;
     public float GetCurrentMaxHealth() => maxHealth;
     public bool GetIsDead() => isDead;
    

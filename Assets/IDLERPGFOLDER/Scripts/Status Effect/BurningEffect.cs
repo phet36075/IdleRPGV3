@@ -6,7 +6,7 @@ public class BurningEffect : MonoBehaviour, IStatusEffect
     private IDamageable target;
     private float duration = 5f; // ระยะเวลาที่โดนเผา
     private float tickInterval = 0.5f; // ช่วงเวลาระหว่างการทำดาเมจแต่ละครั้ง
-    private float damagePercentage = 0.05f; // 2% ของ max HP
+    private float damagePercentage = 0.05f; 
     private float remainingDuration;
     private float nextTickTime;
     private bool isActive;

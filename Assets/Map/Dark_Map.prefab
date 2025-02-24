@@ -8827,6 +8827,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireFliesPurple (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234661331339690, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840985970103764, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4595511831047182, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.143
@@ -24612,6 +24624,18 @@ PrefabInstance:
     - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_Name
       value: FireFliesPurple (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234661331339690, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840985970103764, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4595511831047182, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_LocalScale.x
@@ -49047,6 +49071,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireFliesPurple
       objectReference: {fileID: 0}
+    - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234661331339690, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840985970103764, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4595511831047182, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.143
@@ -58881,6 +58917,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireFliesPurple (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234661331339690, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840985970103764, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4595511831047182, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.143
@@ -66707,6 +66755,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireFliesPurple (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234661331339690, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840985970103764, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4595511831047182, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.143
@@ -73628,6 +73688,18 @@ PrefabInstance:
     - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_Name
       value: FireFliesPurple (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193233124743208, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234661331339690, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1840985970103764, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4595511831047182, guid: fc0baf15a89ac4b45ac2678241761990, type: 3}
       propertyPath: m_LocalScale.x

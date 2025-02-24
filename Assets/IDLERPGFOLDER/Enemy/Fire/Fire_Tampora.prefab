@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: -3382018274365133213}
   - component: {fileID: 7053831414035765101}
   m_Layer: 9
-  m_Name: Tampora_B
+  m_Name: Fire_Tampora
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -376,9 +376,10 @@ MonoBehaviour:
   spawnVFXPosition: {fileID: 6794086039035761154}
   staggerDuration: 0.5
   cooldownStagger: 5
+  damageVariation: 0.2
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
-  enemyElementType: 6
+  enemyElementType: 1
   elementalResistances: []
   CharacterHitEffect: {fileID: 195707457318462525}
   _damageDisplay: {fileID: 6514018620227692061}

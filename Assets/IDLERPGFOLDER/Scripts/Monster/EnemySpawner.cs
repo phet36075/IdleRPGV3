@@ -74,22 +74,48 @@ public class EnemySpawner : MonoBehaviour
         {
             if (currentStage <= bossSets.Length * 5)
             {
-                // เลือกบอสตามชุดปัจจุบัน
                 int bossSetIndex = (currentStage / 5 - 1) % bossSets.Length;
                 var bossSet = bossSets[bossSetIndex];
                 return bossSet.bossIndices[random.Next(bossSet.bossIndices.Length)];
             }
             else
             {
-                // ถ้าเกินจำนวนชุดบอสที่มี ให้สุ่มจากชุดทั้งหมด
                 var lastBossSet = bossSets[bossSets.Length - 1];
                 return lastBossSet.bossIndices[random.Next(lastBossSet.bossIndices.Length)];
             }
         }
 
         // สำหรับด่านปกติ
-        int elementIndex = ((currentStage - 1) % 6);
-        if (elementIndex >= 0 && elementIndex < elementalGroups.Length)
+        int pattern = ((currentStage - 1) % 7) + 1;
+        int elementIndex;
+
+        switch (pattern)
+        {
+            case 1:
+                elementIndex = 0; // ไฟ
+                break;
+            case 2:
+                elementIndex = 1; // ลม
+                break;
+            case 3:
+                elementIndex = 2; // ดิน
+                break;
+            case 4:
+                elementIndex = 3; // น้ำ
+                break;
+            case 6:
+                elementIndex = 4; // แสง
+                break;
+            case 7:
+                elementIndex = 5; // มืด
+                break;
+            default:
+                elementIndex = 0;
+                break;
+        }
+
+        // เลือกมอนสเตอร์จาก Set ของธาตุนั้น
+        if (elementIndex < elementalGroups.Length)
         {
             var group = elementalGroups[elementIndex];
             if (group.monsterSets != null && currentSet < group.monsterSets.Length)
@@ -102,7 +128,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"No enemies found for stage {currentStage}, set {currentSet}");
+        Debug.LogWarning($"No enemies found for stage {currentStage}, pattern {pattern}, set {currentSet}");
         return 0;
     }
 
@@ -146,32 +172,42 @@ public class EnemySpawner : MonoBehaviour
     {
         UpdateStageSettings();
         int enemyIndex = GetEnemyIndexForStage();
-    
-        // เช็คว่า enemyIndex ไม่เกินขนาดของ enemyPrefab array
+
         if (enemyIndex >= 0 && enemyIndex < enemyPrefab.Length)
         {
             GameObject enemy = Instantiate(enemyPrefab[enemyIndex], spawnPos, Quaternion.identity);
-        
-            // Log สำหรับ Debug
+    
             if (debug)
             {
-                int elementIndex = ((currentStage - 1) % 6);
-                string elementName = elementIndex < elementalGroups.Length ? 
-                    elementalGroups[elementIndex].elementName : "Unknown";
-                string setName = "Regular Set " + currentSet;
+                // แก้การคำนวณ pattern และชื่อธาตุ
+                int pattern = ((currentStage - 1) % 7) + 1;
+                string elementName = "Unknown";
             
+                // แปลง pattern เป็นชื่อธาตุ
+                switch (pattern)
+                {
+                    case 1: elementName = "Fire"; break;
+                    case 2: elementName = "Wind"; break;
+                    case 3: elementName = "Earth"; break;
+                    case 4: elementName = "Water"; break;
+                    case 6: elementName = "Light"; break;
+                    case 7: elementName = "Dark"; break;
+                }
+
+                string setName = "Regular Set " + currentSet;
+        
                 if (currentStage % 5 == 0)
                 {
                     int bossSetIndex = (currentStage / 5 - 1) % bossSets.Length;
                     setName = "Boss Set " + bossSets[bossSetIndex].setName;
                 }
-            
+        
                 Debug.Log($"Stage {currentStage}: Spawned {elementName} enemy from {setName} (Index: {enemyIndex})");
             }
-        
+    
             return enemy;
         }
-    
+
         Debug.LogError($"Invalid enemy index: {enemyIndex}");
         return null;
     }

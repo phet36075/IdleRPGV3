@@ -16,8 +16,8 @@ public class UpgradeUI : MonoBehaviour
     public TextMeshProUGUI WeaponUpgradeCostTxT;
     public TextMeshProUGUI WeaponDmg;
 
-    public TextMeshProUGUI WeaponDmg2;
-    public TextMeshProUGUI Strtxt;
+   // public TextMeshProUGUI WeaponDmg2;
+  //  public TextMeshProUGUI Strtxt;
     public TextMeshProUGUI HealthUpgradeCostTxT;
     public TextMeshProUGUI HealthTxT;
     
@@ -55,8 +55,8 @@ public class UpgradeUI : MonoBehaviour
     {
         WeaponUpgradeCostTxT.text = playerProperty.WeaponupgradeCost.ToString();
         WeaponDmg.text = playerProperty.weaponDamage.ToString();
-        WeaponDmg2.text = playerProperty.baseDamage.ToString();
-        Strtxt.text = _PlayerStats.GetStat(StatType.Strength).ToString();
+//        WeaponDmg2.text = playerProperty.baseDamage.ToString();
+  //      Strtxt.text = _PlayerStats.GetStat(StatType.Strength).ToString();
         
         
         HealthUpgradeCostTxT.text = playerProperty.healthUpgradeCost.ToString();

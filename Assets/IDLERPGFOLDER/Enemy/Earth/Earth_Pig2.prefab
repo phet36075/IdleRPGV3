@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 2928274129893932385}
   - component: {fileID: 1218142733721202985}
   m_Layer: 9
-  m_Name: Fire_Pig_B2
+  m_Name: Earth_Pig2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -489,9 +489,10 @@ MonoBehaviour:
   spawnVFXPosition: {fileID: 6681282731008403392}
   staggerDuration: 0.5
   cooldownStagger: 5
+  damageVariation: 0.2
   isMultiplyingDamageNextHit: 0
   storedMultiplier: 1
-  enemyElementType: 6
+  enemyElementType: 3
   elementalResistances: []
   CharacterHitEffect: {fileID: 8492435996802558776}
   _damageDisplay: {fileID: 8871114733269064801}
@@ -760,7 +761,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20d41cd16c387db42aedc49d96c924d6, type: 2}
+  - {fileID: 2100000, guid: f12b3548109546b4fb804a56bc647ee3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
