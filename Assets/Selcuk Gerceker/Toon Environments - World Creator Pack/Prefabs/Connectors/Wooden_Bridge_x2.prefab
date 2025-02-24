@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 121547880524805961}
   - component: {fileID: 8218806268225055459}
   - component: {fileID: 7950835346354938114}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wooden_Bridge_x2_Rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4776445332309356692}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wooden_Bridge_x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 5747222095386413773}
   - component: {fileID: 6168809915647718009}
   - component: {fileID: 7772506286351884432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wooden_Bridge_x2_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

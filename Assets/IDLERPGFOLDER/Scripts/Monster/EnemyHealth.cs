@@ -891,9 +891,9 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         playerStats.AddExperience(GetMonsterExp(_enemySpawner.currentStage));
         
         
-        int randomAmount = Random.Range(0, 2); // ให้สังเกตว่าค่าสูงสุดจะไม่รวมในผลลัพธ์ (exclusive) จึงต้องใส่ 4
-        ItemSpawner.Instance.SpawnItemByGUI(randomAmount);
-        
+        //int randomAmount = Random.Range(0, 4); // ให้สังเกตว่าค่าสูงสุดจะไม่รวมในผลลัพธ์ (exclusive) จึงต้องใส่ 4
+        ItemSpawner.Instance.SpawnItemByGUI();
+       
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().enabled = false;
         Destroy(gameObject,3f);

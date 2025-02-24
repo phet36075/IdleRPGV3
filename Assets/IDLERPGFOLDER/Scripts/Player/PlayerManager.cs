@@ -99,13 +99,21 @@ public class PlayerManager : MonoBehaviour, IDamageable
         OnManaChanged?.Invoke(currentMana);
         UpdateHealthBar();
     }
-
+    public float healthBonus = 0f;      // โบนัสเลือด
+    public float defenseBonus = 0f;     // โบนัสป้องกัน
+    public float regenRateBonus = 0f;   // โบนัสฟื้นฟูเลือด
+    public float baseDamageBonus = 0f;  // โบนัสพลังโจมตี
+    public float criticalChanceBonus = 0f; // โบนัสโอกาสคริติคอล
+    public float criticalDamageBonus = 0f;
+    public float armorPenetrationBonus = 0f; // โบนัสเจาะเกราะ
+    public float maxManaBonus = 0f;     // โบนัสมานา
+    public float manaRegenRateBonus = 0f; // โบนัสฟื้นฟูมานา
     private void CalculateHealthStats()
     {
         float vitality = playerStats.GetStat(StatType.Vitality);
-        playerProperty.maxHealth = formula.baseHP + (vitality * formula.hpPerVit);
-        playerProperty.defense = formula.baseDefense + (vitality * formula.defensePerVit);
-        playerProperty.regenRate = formula.baseRegen + (vitality * formula.regenPerVit);
+        playerProperty.maxHealth = formula.baseHP + (vitality * formula.hpPerVit) + healthBonus;
+        playerProperty.defense = formula.baseDefense + (vitality * formula.defensePerVit) + defenseBonus;
+        playerProperty.regenRate = formula.baseRegen + (vitality * formula.regenPerVit) + regenRateBonus;
     }
 
     private void CalculateCombatStats()
@@ -114,19 +122,34 @@ public class PlayerManager : MonoBehaviour, IDamageable
         float dexterity = playerStats.GetStat(StatType.Dexterity);
         float agility = playerStats.GetStat(StatType.Agility);
 
-        playerProperty.baseDamage = formula.baseDamage + (strength * formula.damagePerStr);
+        playerProperty.baseDamage = formula.baseDamage + (strength * formula.damagePerStr) + baseDamageBonus;
         playerProperty.criticalChance = (dexterity * formula.criticalChancePerDex) + 
-                                        (agility * formula.criticalChancePerAgi);
-        playerProperty.armorPenetration = agility * formula.armorPenatrationPerAgi;
+                                        (agility * formula.criticalChancePerAgi) + criticalChanceBonus;
+        playerProperty.armorPenetration = (agility * formula.armorPenatrationPerAgi) + armorPenetrationBonus;
+     //   playerProperty.criticalDamage = agility * formula.criticalMultiplier + criticalDamageBonus;
     }
 
     private void CalculateManaStats()
     {
         float intelligence = playerStats.GetStat(StatType.Intelligence);
-        playerProperty.maxMana = formula.baseMana * (1 + (intelligence * formula.manaPerInt));
-        playerProperty.manaRegenRate = formula.baseManaRegen + (intelligence * formula.manaRegenPerInt);
+        playerProperty.maxMana = (formula.baseMana * (1 + (intelligence * formula.manaPerInt))) + maxManaBonus;
+        playerProperty.manaRegenRate = formula.baseManaRegen + (intelligence * formula.manaRegenPerInt) + manaRegenRateBonus;
     }
-
+    public void ResetAllBonuses() {
+        healthBonus = 0f;
+        defenseBonus = 0f;
+        regenRateBonus = 0f;
+        baseDamageBonus = 0f;
+        criticalChanceBonus = 0f;
+        armorPenetrationBonus = 0f;
+        maxManaBonus = 0f;
+        manaRegenRateBonus = 0f;
+    
+        // คำนวณค่าพลังใหม่ทั้งหมด
+        CalculateHealthStats();
+        CalculateCombatStats();
+        CalculateManaStats();
+    }
     private IEnumerator RegenerateHp()
     {
         while (true)

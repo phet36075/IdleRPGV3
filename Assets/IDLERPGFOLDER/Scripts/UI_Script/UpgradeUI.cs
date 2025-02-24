@@ -54,7 +54,7 @@ public class UpgradeUI : MonoBehaviour
     void Update()
     {
         WeaponUpgradeCostTxT.text = playerProperty.WeaponupgradeCost.ToString();
-        WeaponDmg.text = playerProperty.weaponDamage.ToString();
+        WeaponDmg.text = playerProperty.baseDamage.ToString();
 //        WeaponDmg2.text = playerProperty.baseDamage.ToString();
   //      Strtxt.text = _PlayerStats.GetStat(StatType.Strength).ToString();
         
@@ -86,8 +86,9 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.Weaponlevel++;
             _currencyManager.SpendMoney(playerProperty.WeaponupgradeCost);
-            playerProperty.weaponDamage += 5;
+            playerManager.baseDamageBonus += 5;
             playerProperty.WeaponupgradeCost = (int)Math.Round(100*( playerProperty.Weaponlevel * 1.5f));
+            playerManager.RecalculateStats();
         }
     }
 
@@ -97,9 +98,10 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.healthLevel++;
             _currencyManager.SpendMoney(playerProperty.healthUpgradeCost);
-            playerProperty.maxHealth += 150;
+            playerManager.healthBonus += 50;
             playerProperty.healthUpgradeCost= (int)Math.Round(100*( playerProperty.healthLevel * 1.25f));
             playerManager.UpdateHealthBar();
+            playerManager.RecalculateStats();
         }
     }
 
@@ -109,8 +111,9 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.regenRateLevel++;
             _currencyManager.SpendMoney(playerProperty.regenRateCost);
-            playerProperty.regenRate += 10;
+            playerManager.regenRateBonus += 10;
             playerProperty.regenRateCost= (int)Math.Round(100*( playerProperty.regenRateLevel * 1.5f));
+            playerManager.RecalculateStats();
         }
     }
     public void UpgradeCritical()
@@ -119,8 +122,9 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.criticalRateLevel++;
             _currencyManager.SpendMoney(playerProperty.criticalRateCost);
-            playerProperty.criticalChance += 0.01f;
+            playerManager.criticalChanceBonus += 0.01f;
             playerProperty.criticalRateCost= (int)Math.Round(100*( playerProperty.criticalRateLevel * 1.5f));
+            playerManager.RecalculateStats();
         }
     }
     
@@ -130,8 +134,9 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.defenseLevel++;
             _currencyManager.SpendMoney(playerProperty.defenseCost);
-            playerProperty.defense += 30f;
+            playerManager.defenseBonus += 30f;
             playerProperty.defenseCost= (int)Math.Round(100*( playerProperty.defenseLevel * 1.5f));
+            playerManager.RecalculateStats();
         }
     }
     
@@ -141,8 +146,9 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.armorPenetrationLevel++;
             _currencyManager.SpendMoney(playerProperty.armorPenetrationCost);
-            playerProperty.armorPenetration += 5f;
+            playerManager.armorPenetrationBonus += 5f;
             playerProperty.armorPenetrationCost= (int)Math.Round(100*( playerProperty.armorPenetrationLevel * 1.5f));
+            playerManager.RecalculateStats();
         }
     }
     
@@ -152,8 +158,9 @@ public class UpgradeUI : MonoBehaviour
         {
             playerProperty.criticalDamageLevel++;
             _currencyManager.SpendMoney(playerProperty.criticalDamageCost);
-            playerProperty.criticalDamage += 0.05f;
+            playerManager.criticalChanceBonus += 0.05f;
             playerProperty.criticalDamageCost= (int)Math.Round(100*( playerProperty.criticalDamageLevel * 1.5f));
+            playerManager.RecalculateStats();
         }
     }
     public void ToggleUpgradeUI()

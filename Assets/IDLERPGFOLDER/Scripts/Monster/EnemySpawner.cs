@@ -85,34 +85,14 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // สำหรับด่านปกติ
-        int pattern = ((currentStage - 1) % 7) + 1;
-        int elementIndex;
-
-        switch (pattern)
-        {
-            case 1:
-                elementIndex = 0; // ไฟ
-                break;
-            case 2:
-                elementIndex = 1; // ลม
-                break;
-            case 3:
-                elementIndex = 2; // ดิน
-                break;
-            case 4:
-                elementIndex = 3; // น้ำ
-                break;
-            case 6:
-                elementIndex = 4; // แสง
-                break;
-            case 7:
-                elementIndex = 5; // มืด
-                break;
-            default:
-                elementIndex = 0;
-                break;
-        }
+        // สร้าง pattern แบบตายตัวตามลำดับที่ต้องการ
+        // 0=ไฟ, 1=ลม, 2=ดิน, 3=น้ำ, 4=แสง, 5=มืด
+        int[] pattern = new int[] { 0, 0, 1, 2, 3, 0, 4, 5, 0, 1, 0, 2, 3, 4, 5, 0, 0, 1, 2, 3, 0, 4, 5, 0, 1, 0, 2, 3, 4, 5, 0 };
+    
+        int index = currentStage % 30;
+        if (index == 0) index = 30; // กรณีหารลงตัวพอดี (ยกเว้นบอส)
+    
+        int elementIndex = pattern[index];
 
         // เลือกมอนสเตอร์จาก Set ของธาตุนั้น
         if (elementIndex < elementalGroups.Length)
@@ -128,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"No enemies found for stage {currentStage}, pattern {pattern}, set {currentSet}");
+        Debug.LogWarning($"No enemies found for stage {currentStage}, element {elementIndex}, set {currentSet}");
         return 0;
     }
 
@@ -180,7 +160,7 @@ public class EnemySpawner : MonoBehaviour
             if (debug)
             {
                 // แก้การคำนวณ pattern และชื่อธาตุ
-                int pattern = ((currentStage - 1) % 7) + 1;
+                int pattern = ((currentStage - 1) % 6) + 1;
                 string elementName = "Unknown";
             
                 // แปลง pattern เป็นชื่อธาตุ
@@ -190,8 +170,8 @@ public class EnemySpawner : MonoBehaviour
                     case 2: elementName = "Wind"; break;
                     case 3: elementName = "Earth"; break;
                     case 4: elementName = "Water"; break;
-                    case 6: elementName = "Light"; break;
-                    case 7: elementName = "Dark"; break;
+                    case 5: elementName = "Light"; break;
+                    case 6: elementName = "Dark"; break;
                 }
 
                 string setName = "Regular Set " + currentSet;
@@ -299,6 +279,7 @@ public class EnemySpawner : MonoBehaviour
     private void UpdateStageSettings()
     {
         currentSet = GetCurrentSet();
+    
         // ถ้าเป็นด่านที่หาร 5 ลงตัว จะเป็นด่านบอส
         if (currentStage % 5 == 0)
         {
@@ -307,32 +288,16 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        // สำหรับด่านอื่นๆ ใช้การคำนวณแพทเทิร์น 6 แบบที่วนซ้ำ
-        int pattern = ((currentStage - 1) % 7) + 1;
+        // สร้าง pattern แบบตายตัวตามลำดับที่ต้องการ
+        // index 0 ไม่มีความหมาย เพราะเราจะใช้ currentStage % 30 เพื่อหา index
+        int[] pattern = new int[] { 0, 1, 2, 3, 4, 0, 6, 7, 1, 2, 0, 3, 4, 6, 7, 0, 1, 2, 3, 4, 0, 6, 7, 1, 2, 0, 3, 4, 6, 7, 0 };
     
-        switch (pattern)
-        {
-            case 1:
-                MapIndex = 1; // ไฟ
-                break;
-            case 2:
-                MapIndex = 2; // ลม
-                break;
-            case 3:
-                MapIndex = 3; // ดิน
-                break;
-            case 4:
-                MapIndex = 4; // น้ำ
-                break;
-            case 6:
-                MapIndex = 6; // แสง
-                break;
-            case 7:
-                MapIndex = 7; // มืด
-                break;
-        }
-        
-        maxEnemies = maxEnemiesForStage; // ด่านปกติมีศัตรู 5 ตัว
+        int index = currentStage % 30;
+        if (index == 0) index = 30; // กรณีหารลงตัวพอดี (ยกเว้นบอส)
+    
+        MapIndex = pattern[index];
+    
+        maxEnemies = maxEnemiesForStage; // ด่านปกติมีศัตรูตามที่กำหนด
     }
 
     public void ClearAllEnemies()

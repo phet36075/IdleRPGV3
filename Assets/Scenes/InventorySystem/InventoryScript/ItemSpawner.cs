@@ -45,7 +45,9 @@ public class ItemSpawner : MonoBehaviour
             Vector2 randPoint = Random.insideUnitCircle.normalized * distance;
             Vector3 offset = new Vector3(randPoint.x, 0, randPoint.y);
             ItemObject itemObjectSpawn = Instantiate(itemObjects[ind], itemPickerTf.position + offset, Quaternion.identity);
+            
             itemObjectSpawn.RandomAmount();
+            Destroy(itemObjectSpawn,10f);
         }
     }
     private void OnGUI()
