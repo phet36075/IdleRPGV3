@@ -265,7 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 10
   roamDelay: 3
-  walkingSound: {fileID: 8300000, guid: 27a301f33a684c84b8b9e40b8be209ad, type: 3}
+  walkingSound: {fileID: 8300000, guid: b83252da11c112f489efeaa956653597, type: 3}
 --- !u!195 &-6789254630646161384
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
+  maxHealth: 0
   healthBar: {fileID: 1141823883300560658}
   IsthisBoss: 0
   isWeakness: 0
@@ -434,8 +435,8 @@ MonoBehaviour:
   audioSource: {fileID: 2200472581914728464}
   hitSound: {fileID: 8300000, guid: d152b73a7f8eef742bad8a4cc1458b9c, type: 3}
   hitCritSound: {fileID: 8300000, guid: 199d7eede6a5930418e666b222d1ad36, type: 3}
-  MonsterPainSound: {fileID: 8300000, guid: cfc7c568b9e60364090ed1292d26c7e9, type: 3}
-  DieSound: {fileID: 8300000, guid: 2b6f8b6136b02894698fd3ce97f52206, type: 3}
+  MonsterPainSound: {fileID: 8300000, guid: 532b6f057987335448289a188269a4af, type: 3}
+  DieSound: {fileID: 8300000, guid: 8072ae54b111884449e7d6b0ac5f5cf5, type: 3}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
 --- !u!82 &2200472581914728464

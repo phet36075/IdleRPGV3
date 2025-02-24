@@ -741,7 +741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 10
   roamDelay: 3
-  walkingSound: {fileID: 8300000, guid: 27a301f33a684c84b8b9e40b8be209ad, type: 3}
+  walkingSound: {fileID: 8300000, guid: 8173dea1be945884a99848b24d91fa16, type: 3}
 --- !u!195 &-1305707620639877756
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -911,8 +911,8 @@ MonoBehaviour:
   audioSource: {fileID: -2914924080116426177}
   hitSound: {fileID: 8300000, guid: d152b73a7f8eef742bad8a4cc1458b9c, type: 3}
   hitCritSound: {fileID: 8300000, guid: 199d7eede6a5930418e666b222d1ad36, type: 3}
-  MonsterPainSound: {fileID: 8300000, guid: cfc7c568b9e60364090ed1292d26c7e9, type: 3}
-  DieSound: {fileID: 8300000, guid: 2b6f8b6136b02894698fd3ce97f52206, type: 3}
+  MonsterPainSound: {fileID: 8300000, guid: 96969e0fb75f2bd40b2e6206690d9ee9, type: 3}
+  DieSound: {fileID: 8300000, guid: 082a9ebcd80d47a40af4546657e521bf, type: 3}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
 --- !u!82 &-2914924080116426177
