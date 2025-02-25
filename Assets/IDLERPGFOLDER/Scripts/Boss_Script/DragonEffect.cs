@@ -8,9 +8,10 @@ public class DragonEffect : MonoBehaviour
     public GameObject screamEffect;
     private Transform player;
     public Collider normalAttackHtibox;
-    [SerializeField] private DragonMovement dragonMovement;
+   // [SerializeField] private DragonMovement dragonMovement;
     [SerializeField] private Vector3 hitboxOffset = Vector3.forward;  // ระยะห่างของ hitbox
     [SerializeField] private EnemyHealth enemyHealth;
+    public float attackRange = 2;
     public void EnableFlame()
     {
         if (flameEffect != null)
@@ -44,10 +45,16 @@ public class DragonEffect : MonoBehaviour
     {
         Vector3 spawnPosition = transform.position + transform.rotation *hitboxOffset;
         GameObject spawnedEffect = Instantiate(screamEffect, spawnPosition, screamEffect.transform.rotation);
-        
+
+        if (spawnedEffect != null)
+        {
+            BossSkillHitbox hitbox = spawnedEffect.GetComponent<BossSkillHitbox>();
+            hitbox.ActivateContinuouslyHiitbox(enemyHealth);
+        }
+        //spawnedEffect.GetComponent<BossSkillHitbox>().ActivateContinuouslyHiitbox(enemyHealth);
         Destroy(spawnedEffect,2f);
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer <= dragonMovement.attackRange)
+      //  float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+       /* if (distanceToPlayer <= attackRange)
         {
             IDamageable target = player.GetComponent<IDamageable>();
             if (target != null)
@@ -59,7 +66,7 @@ public class DragonEffect : MonoBehaviour
                     ElementType.Dark);
                 target.TakeDamage(damageData);
             }
-        }
+        }*/
     }
     IEnumerator animDealsDamage()
     {

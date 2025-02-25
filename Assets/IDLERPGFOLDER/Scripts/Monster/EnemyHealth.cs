@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     [Header("Health")]
     public EnemyData EnemyData;
     public float maxHealth;
-    private float currentHealth;
+    public float currentHealth;
     private float defense;
     public Slider healthBar;
    
