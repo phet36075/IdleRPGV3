@@ -47,7 +47,7 @@ public class ItemSpawner : MonoBehaviour
             ItemObject itemObjectSpawn = Instantiate(itemObjects[ind], itemPickerTf.position + offset, Quaternion.identity);
             
             itemObjectSpawn.RandomAmount();
-            Destroy(itemObjectSpawn,10f);
+           // Destroy(itemObjects[ind],10f);
         }
     }
     private void OnGUI()
