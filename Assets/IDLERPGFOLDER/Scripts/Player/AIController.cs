@@ -15,7 +15,7 @@ public class AIController : MonoBehaviour
     public GameObject indicatorPrefab; // Prefab ของ Indicator
     private GameObject currentIndicator;
     private Transform nextLevelTarget; 
-    private bool moveToNextLevel = false;
+   // private bool moveToNextLevel = false;
     public AllyRangedCombat _AllyRangedCombat;
     private SkillManager skillManager;
    
@@ -134,10 +134,9 @@ public class AIController : MonoBehaviour
             else
             {
                 // ทำงานตามปกติ
-                if (moveToNextLevel == false)
-                {
+                
                     agent.SetDestination(target.position);
-                }
+                
                
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
                 if (distanceToTarget <= attackRange)
@@ -166,12 +165,11 @@ public class AIController : MonoBehaviour
         else
         {
             // หาศัตรูใหม่เมื่อไม่มีเป้าหมาย
-            if (moveToNextLevel == false)
-            {
+            
                 FindNearestEnemy();
                 _AllyRangedCombat.CallAlliesToAttack();
                 Destroy(currentIndicator);
-            }
+            
         }
     }
 }
