@@ -18,6 +18,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         [Tooltip("If target is null then use the target position")]
         public SharedVector3 targetPosition;
 
+        public SharedTransform playerTransform;
         // Component references
         protected UnityEngine.AI.NavMeshAgent navMeshAgent;
 
@@ -26,6 +27,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         /// </summary>
         public override void OnAwake()
         {
+            playerTransform.Value = GameObject.FindGameObjectWithTag("Player").transform;
             navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 
@@ -36,25 +38,26 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         {
             navMeshAgent.speed = speed.Value;
             navMeshAgent.angularSpeed = angularSpeed.Value;
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+         //   player = GameObject.FindGameObjectWithTag("Player").transform;
 #if UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5
             navMeshAgent.Resume();
 #else
             navMeshAgent.isStopped = false;
 #endif
 
-            SetDestination(player.position);
+            SetDestination(playerTransform.Value.position);
         }
 
         // Seek the destination. Return success once the agent has reached the destination.
         // Return running if the agent hasn't reached the destination yet
         public override TaskStatus OnUpdate()
         {
+          //  player = GameObject.FindGameObjectWithTag("Player").transform;
             if (HasArrived()) {
                 return TaskStatus.Success;
             }
 
-            SetDestination(Target());
+            SetDestination(playerTransform.Value.position);
 
             return TaskStatus.Running;
         }

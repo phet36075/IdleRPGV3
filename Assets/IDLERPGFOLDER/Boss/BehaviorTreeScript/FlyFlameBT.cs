@@ -17,6 +17,7 @@ public class FlyFlameBT : Action
     private const float TARGET_REACHED_THRESHOLD = 10f;
     public SharedFloat speed = 5;
     public SharedFloat angularSpeed = 80;
+    public float FlyDuration;
     public override void OnAwake()
     {
        
@@ -37,6 +38,7 @@ public class FlyFlameBT : Action
         if (currentTarget == Vector3.zero || 
             Vector3.Distance(transform.position, currentTarget) < TARGET_REACHED_THRESHOLD)
         {
+            
             GenerateNewTarget();
         }
 
@@ -54,6 +56,7 @@ public class FlyFlameBT : Action
     
     private void GenerateNewTarget()
     {
+        Debug.Log("Generating Target");
         FlightCount++;
         float randomX = Random.Range(minX, maxX);
         float randomZ = Random.Range(minZ, maxZ);
@@ -66,7 +69,7 @@ public class FlyFlameBT : Action
     }
     private bool ShouldLand()
     {
-        if (stateTimer >= 12)
+        if (stateTimer >= FlyDuration)
         {
             return true;
         }

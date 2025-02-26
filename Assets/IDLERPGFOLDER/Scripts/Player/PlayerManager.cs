@@ -88,6 +88,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         // else if (Input.GetKeyDown(KeyCode.Alpha6)) ChangeWeaponElement(ElementType.Dark);
         
         if (Input.GetKeyDown(KeyCode.Alpha7)) RestoreMana(50f);
+        if (Input.GetKeyDown(KeyCode.Alpha8)) Heal(99999999f);
     }
 
     public void RecalculateStats()

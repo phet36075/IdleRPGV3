@@ -1,22 +1,24 @@
 using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 
-public class LowHealthBT : Action
+public class LowHealthBT : Conditional
 {
     public float LowHealthFirstValue = 0.70f;
     public float LowHealthSecondValue = 0.35f;
     public EnemyHealth enemyHealth;
+    protected UnityEngine.AI.NavMeshAgent navMeshAgent;
+    //private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void OnAwake()
     {
-        
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     public override TaskStatus OnUpdate()
     {
         if (ShouldSuccess())
         {
-            
+            navMeshAgent.ResetPath();
             return TaskStatus.Success;
         }
 

@@ -25,10 +25,12 @@ namespace BehaviorDesigner.Runtime.Tasks
         public SharedVector3 targetPosition;
         public float rotationSpeed = 4;
         protected UnityEngine.AI.NavMeshAgent navMeshAgent;
-        private Transform player;
+        //private Transform player;
         public SharedFloat speed = 3;
         public SharedFloat angularSpeed = 45;
-        
+
+        public SharedBool isCanUseFlameAttack;
+        public SharedTransform playerTransform;
         public override void OnAwake()
         {
             navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -41,8 +43,8 @@ namespace BehaviorDesigner.Runtime.Tasks
                 animator = currentGameObject.GetComponent<Animator>();
                 prevGameObject = currentGameObject;
             }
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-            SetDestination(player.position);
+          //  player = GameObject.FindGameObjectWithTag("Player").transform;
+            SetDestination(playerTransform.Value.position);
           
             navMeshAgent.speed = speed.Value;
             navMeshAgent.angularSpeed = angularSpeed.Value;
@@ -58,6 +60,7 @@ namespace BehaviorDesigner.Runtime.Tasks
        
         public override TaskStatus OnUpdate()
         {
+          
             if (animator == null) {
                 Debug.LogWarning("Animator is null");
                 return TaskStatus.Failure;
@@ -70,7 +73,7 @@ namespace BehaviorDesigner.Runtime.Tasks
           
           if (!CloseToPlayer())
           {
-              SetDestination(player.position);
+              SetDestination(playerTransform.Value.position);
           }
           else
           {
@@ -78,17 +81,20 @@ namespace BehaviorDesigner.Runtime.Tasks
               if (Time.time >= nextAttackTime)
                   Attack();
                   StartCoroutine(FacePlayer());
+              
                 
           }
               
-              
+          
+
           if (attackCount >= 3)
           {
+              isCanUseFlameAttack.Value = true;
               animator.ResetTrigger("ClawAttack");
               attackCount = 0;
               return TaskStatus.Success;
-             
           }
+          
                // animator.SetTrigger(paramaterName.Value);
                return TaskStatus.Running;
         }
@@ -106,10 +112,10 @@ namespace BehaviorDesigner.Runtime.Tasks
         }
         IEnumerator FacePlayer()
         {
-            if (player != null)
+            if (playerTransform.Value != null)
             {
                 // คำนวณทิศทางไปยัง player
-                Vector3 direction = player.position - transform.position;
+                Vector3 direction = playerTransform.Value.position - transform.position;
                 direction.y = 0; // ไม่หมุนในแกน y (ขึ้น-ลง)
         
                 if (direction != Vector3.zero)
