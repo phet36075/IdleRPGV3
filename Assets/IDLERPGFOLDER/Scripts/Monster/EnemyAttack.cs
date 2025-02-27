@@ -107,7 +107,7 @@ public class EnemyAttack : MonoBehaviour
            
             //Debug.Log("Attacking player at time: " + Time.time);
             animator.SetTrigger("Attack");
-            animator.SetBool("IsWalking",false);    
+           // animator.SetBool("IsWalking",false);    
             
             lastAttackTime = Time.time;
         }else

@@ -101501,7 +101501,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.2
+  - time: 2.4
     functionName: DarkBolt_OnSkillEnd
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -94,14 +94,7 @@ public class AIController : MonoBehaviour
     {
         target = newTarget;
     }
-    void Attack()
-    {
-        // เรียกใช้อนิเมชันการโจมตี
-        
-        animator.SetTrigger("Attack1");
-
-        // คุณสามารถเพิ่มโค้ดสำหรับคำนวณความเสียหายและอื่น ๆ ที่นี่
-    }
+   
     
     void RotateTowardsTarget()
     {
@@ -148,7 +141,7 @@ public class AIController : MonoBehaviour
                     if (Time.time >= nextAttackTime)
                     {
                         PlayerAttack playerAttack = this.GetComponent<PlayerAttack>();
-                        playerAttack.Attack();
+                        playerAttack.TryAttack();
                         nextAttackTime = Time.time + attackCooldown;
                     }
                 }

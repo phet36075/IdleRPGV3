@@ -67175,7 +67175,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.4666667
+  - time: 2.5666666
     functionName: HeavenlyStrike_OnSkillEnd
     data: 
     objectReferenceParameter: {fileID: 0}

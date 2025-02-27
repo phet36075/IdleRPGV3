@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 // Base class สำหรับทุกสกิล
 public abstract class BaseSkill : MonoBehaviour
@@ -12,6 +13,7 @@ public abstract class BaseSkill : MonoBehaviour
     protected PlayerManager playerManager;  
     protected PlayerMovement playerMovement;
     protected WeaponSystem weaponSystem;
+    protected NavMeshAgent agent;
     public SkillData SkillData => skillData != null ? skillData : null;
     
     // Events สำหรับ cooldown
@@ -36,6 +38,7 @@ public abstract class BaseSkill : MonoBehaviour
         playerManager = GetComponentInParent<PlayerManager>();  // หา PlayerManager ตอน start
         playerMovement = GetComponentInParent<PlayerMovement>();  
         weaponSystem = GetComponentInParent<WeaponSystem>();
+        agent = GetComponentInParent<NavMeshAgent>();
     }
 
     public virtual bool CanUseSkill()
@@ -44,7 +47,7 @@ public abstract class BaseSkill : MonoBehaviour
         
         // เช็คทั้ง cooldown และ mana
         return !isOnCooldown && 
-             //  !isSkillActive && 
+               !isSkillActive && 
                playerManager.HasEnoughMana(skillData.manaCost) && weaponSystem.GetIsDrawn;
     }
     public virtual void UseSkill()
@@ -87,8 +90,11 @@ public abstract class BaseSkill : MonoBehaviour
     public virtual void OnSkillStart()
     {
         isSkillActive = true;
+        
         ElementalCheck();
         playerMovement.isTakingAction = true;
+        playerMovement.isUsingSkill = true;
+        agent.isStopped = true;
         Debug.Log($"Skill {skillData.skillName} started");
         Invoke(nameof(OnSkillEnd),4f);
     }
@@ -107,6 +113,8 @@ public abstract class BaseSkill : MonoBehaviour
     {
         isSkillActive = false;
         playerMovement.isTakingAction = false;
+        playerMovement.isUsingSkill = false;
+        agent.isStopped = false;
         Debug.Log($"Skill {skillData.skillName} ended");
     }
 

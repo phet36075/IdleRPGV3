@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeed = 10f;
     public Transform cam;
     public bool isTakingAction =false;
+    public bool isUsingSkill = false;
     [Header("Jump Settings")]
     public float jumpHeight = 3f;
     public float gravity = -9.81f;
@@ -54,14 +55,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+       
         CheckGrounded();
         if (!isRolling)
         {
             if (!isTakingAction)
             {
-                HandleMovementInput();
+               
                 HandleSprintInput();
-                HandleMovement();
+                if (!isUsingSkill)
+                {
+                    HandleMovementInput();
+                    HandleMovement();
+                }
+               
                 HandleJump();
                 HandleRollInput();
             }
