@@ -52,8 +52,8 @@ public class EnemyAttack : MonoBehaviour
                         agent.SetDestination(player.position);
                     }
                    
-                    animator.SetBool("IsWalking",true);
-                    animator.SetBool("IsAttacking",false);
+                   // animator.SetBool("IsWalking",true);
+                  //  animator.SetBool("IsAttacking",false);
                 }
             }
             else
@@ -68,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
                     }
                    
                     // agent.isStopped = true;
-                    animator.SetBool("IsWalking",false);
+                   // animator.SetBool("IsWalking",false);
                     RotateTowardsTarget();
                     AttackPlayer();
                 }
@@ -79,8 +79,8 @@ public class EnemyAttack : MonoBehaviour
         {
             GetComponent<EnemyRoaming>().enabled = true;
             
-            animator.SetBool("IsWalking",false);
-            animator.SetBool("IsAttacking",false);
+           // animator.SetBool("IsWalking",false);
+          //  animator.SetBool("IsAttacking",false);
         }
         
         
@@ -100,7 +100,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void AttackPlayer()
     {
-        animator.SetBool("IsAttacking",true);
+       // animator.SetBool("IsAttacking",true);
       
         if (Time.time >= lastAttackTime + attackCooldown)
         {

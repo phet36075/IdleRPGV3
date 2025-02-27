@@ -21,13 +21,14 @@ namespace BehaviorDesigner.Runtime.Tasks.Tutorials
         public SharedTransform playerTransform;
         // Component references
         protected UnityEngine.AI.NavMeshAgent navMeshAgent;
+        public string targetTag;
 
         /// <summary>
         /// Cache the component references.
         /// </summary>
         public override void OnAwake()
         {
-            playerTransform.Value = GameObject.FindGameObjectWithTag("Player").transform;
+            playerTransform.Value = GameObject.FindGameObjectWithTag(targetTag).transform;
             navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 

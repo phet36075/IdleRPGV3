@@ -114,6 +114,7 @@ MonoBehaviour:
   roamRadius: 10
   roamDelay: 3
   walkingSound: {fileID: 8300000, guid: 2d920d704d549ee48a9ed3dbcd060313, type: 3}
+  delayBetweenSounds: 1
 --- !u!195 &-2144230295664751305
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -218,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
   maxHealth: 0
+  currentHealth: 0
   healthBar: {fileID: 7370401753055843571}
   IsthisBoss: 0
   isWeakness: 0

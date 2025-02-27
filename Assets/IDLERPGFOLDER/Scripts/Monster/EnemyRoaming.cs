@@ -15,6 +15,11 @@ public class EnemyRoaming : MonoBehaviour
     
     public AudioClip walkingSound; // คลิปเสียงสำหรับการเดิน
     private AudioSource audioSource;
+
+    [Header("Sound Settings")]
+    [SerializeField] private float delayBetweenSounds = 0.5f; // ระยะเวลาดีเลย์ระหว่างการเล่นเสียง (วินาที)
+    
+    public bool canPlaySound = true; // ตัวแปรเช็คว่าสามารถเล่นเสียงได้หรือไม่
     // Start is called before the first frame update
     void Start()
     {
@@ -60,35 +65,46 @@ public class EnemyRoaming : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
-    {
-        float speed = navMeshAgent.velocity.magnitude; // คำนวณความเร็ว
-        animator.SetFloat("Speed", speed); // อัปเดตพารามิเตอร์ Speed ใน Animator
-        if (navMeshAgent.velocity.magnitude > 0.1f)
-        {
-            animator.SetBool("IsWalking", true);  // เริ่มเล่นอนิเมชั่นเดิน
-            PlayWalkSound();
-        }
-        else
-        {
-            animator.SetBool("IsWalking", false); // หยุดเล่นอนิเมชั่นเดิน
-            StopWalkSound();
-        }
-    }
-
     void PlayWalkSound()
     {
-        if (!audioSource.isPlaying) // ถ้าเสียงยังไม่เล่น ให้เล่นเสียง
+        if (canPlaySound && !audioSource.isPlaying) // ถ้าสามารถเล่นเสียงได้และเสียงยังไม่เล่น
         {
-            audioSource.Play();
+            audioSource.PlayOneShot(walkingSound);
+            canPlaySound = false; // ตั้งค่าให้ไม่สามารถเล่นเสียงได้ชั่วคราว
+            StartCoroutine(SoundDelay()); // เริ่ม Coroutine สำหรับดีเลย์
         }
     }
-
+    
+    IEnumerator SoundDelay()
+    {
+        // รอเวลาตามที่กำหนดไว้ในตัวแปร delayBetweenSounds
+        yield return new WaitForSeconds(delayBetweenSounds);
+        canPlaySound = true; // อนุญาตให้เล่นเสียงได้อีกครั้งหลังจากรอครบตามเวลาที่กำหนด
+    }
+    
     void StopWalkSound()
     {
         if (audioSource.isPlaying) // ถ้าเสียงกำลังเล่นอยู่ ให้หยุดเสียง
         {
             audioSource.Stop();
+            audioSource.clip = null;
+        }
+    }
+    
+    void Update()
+    {
+        float speed = navMeshAgent.velocity.magnitude; // คำนวณความเร็ว
+        animator.SetFloat("Speed", speed); // อัปเดตพารามิเตอร์ Speed ใน Animator
+        
+        if (speed > 0.1f)
+        {
+            //animator.SetBool("IsWalking", true);  // เริ่มเล่นอนิเมชั่นเดิน
+            PlayWalkSound();
+        }
+        else
+        {
+            //animator.SetBool("IsWalking", false); // หยุดเล่นอนิเมชั่นเดิน
+            StopWalkSound();
         }
     }
 }
