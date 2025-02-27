@@ -161,7 +161,7 @@ public class PlayerAttack : MonoBehaviour
         animator.ResetTrigger(_attack3Hash);
         
         // เก็บข้อมูลเพื่อ Debug
-        Debug.Log($"Execute Attack: ComboStep = {_comboStep}, Time = {Time.time}");
+      
         
         // ตั้ง trigger ตาม combo step
         switch (_comboStep)
@@ -183,7 +183,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_comboStep != 0)
         {
-            Debug.Log($"Reset Combo: {_comboStep} -> 0, Time = {Time.time}");
+           
         }
         
         _comboStep = 0;
@@ -221,8 +221,7 @@ public class PlayerAttack : MonoBehaviour
     // เรียกจาก Animation Event เมื่อแอนิเมชันการโจมตีจบ
     public void EndAttack()
     {
-        Debug.Log($"End Attack: ComboStep = {_comboStep}, Time = {Time.time}");
-        
+       
         // ถ้าเป็นท่าสุดท้าย (3) ให้รีเซ็ตคอมโบ
         if (_comboStep == 0 || _comboStep == 3)
         {
@@ -240,7 +239,7 @@ public class PlayerAttack : MonoBehaviour
     // เรียกจาก Animation Event เมื่อแอนิเมชันการโจมตีเริ่ม
     public void StartAttack()
     {
-        Debug.Log($"Start Attack: ComboStep = {_comboStep}, Time = {Time.time}");
+       
         
         if(agent.enabled)
             agent.isStopped = true;
@@ -250,10 +249,5 @@ public class PlayerAttack : MonoBehaviour
         _animationDelayTimer = 0f;
     }
     
-    // ฟังก์ชันสำหรับตรวจสอบสถานะเพื่อ debug
-    public void PrintDebugState()
-    {
-        Debug.Log($"Debug State: ComboStep={_comboStep}, isAttacking={isAttacking}, " +
-                  $"waitingForAnim={_waitingForAnimationToStart}, isInTransition={_isInTransition}");
-    }
+   
 }

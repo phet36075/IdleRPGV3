@@ -126,6 +126,11 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             ApplyWaterBurst();
             waterEffectStacks = 0; // Reset stacks
         }
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     private void InitializeComponents()

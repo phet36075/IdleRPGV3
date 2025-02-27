@@ -140,9 +140,10 @@ public class AIController : MonoBehaviour
                     RotateTowardsTarget();
                     if (Time.time >= nextAttackTime)
                     {
-                        PlayerAttack playerAttack = this.GetComponent<PlayerAttack>();
-                        playerAttack.TryAttack();
-                        nextAttackTime = Time.time + attackCooldown;
+                            PlayerAttack playerAttack = GetComponent<PlayerAttack>();
+                            playerAttack.TryAttack();
+                            nextAttackTime = Time.time + attackCooldown;
+                            
                     }
                 }
                 else

@@ -9,7 +9,7 @@ public class SkillManager : MonoBehaviour
    
 // Event สำหรับแจ้งเมื่อมีการเปลี่ยนแปลง skills
     private const int MAX_SKILLS = 3;
-    [SerializeField] private List<BaseSkill> skills = new List<BaseSkill>();
+    [SerializeField] public List<BaseSkill> skills = new List<BaseSkill>();
     public event System.Action OnSkillsChanged;
     [SerializeField] private SkillInventoryManager skillInventory;
     [SerializeField] private SkillData skillsToUnlock,skilltoUnlock2;  // ลาก SkillData ที่จะปลดล็อคใส่ใน inspector
