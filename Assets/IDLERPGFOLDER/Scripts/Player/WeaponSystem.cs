@@ -127,14 +127,16 @@ public class WeaponSystem : MonoBehaviour
         if (!isDrawn && !isSheathing)
         {
             characterAnimator.SetTrigger("DrawWeapon");
-                
+            characterAnimator.SetBool("isDrawingWeapon",true);    
+            characterAnimator.SetBool("isSheathingWeapon",false);    
         }
     }
     public void SheathWeaponAnim()
     {
         if (isDrawn)
         {
-            
+            characterAnimator.SetBool("isSheathingWeapon",true);    
+            characterAnimator.SetBool("isDrawingWeapon",false);    
             characterAnimator.SetTrigger("SheathWeapon");
                 
         }
