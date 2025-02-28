@@ -80,7 +80,7 @@ namespace BehaviorDesigner.Runtime.Tasks
               navMeshAgent.isStopped = true;
               if (Time.time >= nextAttackTime)
                   Attack();
-                  StartCoroutine(FacePlayer());
+                 
               
                 
           }
@@ -110,44 +110,44 @@ namespace BehaviorDesigner.Runtime.Tasks
             targetGameObject = null;
             paramaterName = "";
         }
-        IEnumerator FacePlayer()
-        {
-            if (playerTransform.Value != null)
-            {
-                // คำนวณทิศทางไปยัง player
-                Vector3 direction = playerTransform.Value.position - transform.position;
-                direction.y = 0; // ไม่หมุนในแกน y (ขึ้น-ลง)
-        
-                if (direction != Vector3.zero)
-                {
-                    // คำนวณ rotation เป้าหมาย
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-            
-                    // หมุนช้าๆ จนกว่าจะถึงเป้าหมาย
-                    float angle = Quaternion.Angle(transform.rotation, targetRotation);
-            
-                    // ทำการหมุนจนกว่าจะหันไปหา player เกือบสมบูรณ์ (น้อยกว่า 2 องศา)
-                    while (angle > 2f)
-                    {
-                        // ค่อยๆ หมุนด้วย Slerp
-                        transform.rotation = Quaternion.Slerp(
-                            transform.rotation, 
-                            targetRotation, 
-                            rotationSpeed * Time.deltaTime
-                        );
-                
-                        // คำนวณมุมที่เหลืออยู่
-                        angle = Quaternion.Angle(transform.rotation, targetRotation);
-                
-                        // รอจนกว่าจะถึงเฟรมถัดไป
-                        yield return null;
-                    }
-            
-                    // หมุนให้ตรงกับเป้าหมายเมื่อใกล้ถึง
-                    transform.rotation = targetRotation;
-                }
-            }
-        }
+        // IEnumerator FacePlayer()
+        // {
+        //     if (playerTransform.Value != null)
+        //     {
+        //         // คำนวณทิศทางไปยัง player
+        //         Vector3 direction = playerTransform.Value.position - transform.position;
+        //         direction.y = 0; // ไม่หมุนในแกน y (ขึ้น-ลง)
+        //
+        //         if (direction != Vector3.zero)
+        //         {
+        //             // คำนวณ rotation เป้าหมาย
+        //             Quaternion targetRotation = Quaternion.LookRotation(direction);
+        //     
+        //             // หมุนช้าๆ จนกว่าจะถึงเป้าหมาย
+        //             float angle = Quaternion.Angle(transform.rotation, targetRotation);
+        //     
+        //             // ทำการหมุนจนกว่าจะหันไปหา player เกือบสมบูรณ์ (น้อยกว่า 2 องศา)
+        //             while (angle > 2f)
+        //             {
+        //                 // ค่อยๆ หมุนด้วย Slerp
+        //                 transform.rotation = Quaternion.Slerp(
+        //                     transform.rotation, 
+        //                     targetRotation, 
+        //                     rotationSpeed * Time.deltaTime
+        //                 );
+        //         
+        //                 // คำนวณมุมที่เหลืออยู่
+        //                 angle = Quaternion.Angle(transform.rotation, targetRotation);
+        //         
+        //                 // รอจนกว่าจะถึงเฟรมถัดไป
+        //                 yield return null;
+        //             }
+        //     
+        //             // หมุนให้ตรงกับเป้าหมายเมื่อใกล้ถึง
+        //             transform.rotation = targetRotation;
+        //         }
+        //     }
+        // }
         private bool CloseToPlayer()
         {
             navMeshAgent.isStopped = false;

@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     public float rollSpeed = 15f;
     public float rollDuration = 0.5f;
     public float rollCooldown = 1f;
+
+    public Collider playerCollider;
     // Private Components
     private CharacterController controller;
     private Animator animator;
@@ -181,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isRolling = true;
         rollTimeRemaining = rollDuration;
-        
+        playerCollider.enabled = false;
         // Store current movement direction for the roll
         Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
@@ -203,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // End roll
             isRolling = false;
+            playerCollider.enabled = true;
             rollCooldownRemaining = rollCooldown;
         }
     }

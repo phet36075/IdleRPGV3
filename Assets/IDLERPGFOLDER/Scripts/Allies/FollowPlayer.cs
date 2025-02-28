@@ -32,31 +32,32 @@ public class FollowPlayer : MonoBehaviour
         {
             agent.isStopped = true;
             agent.SetDestination(transform.position);
+            
         }
         else if(ally.AllyisAttacking == false)
         {
             agent.isStopped = false;
-            
+            animator.SetFloat("Speed",agent.velocity.magnitude);
             agent.SetDestination(player.position);
             
             if (distance >= followDistance)
             {
-                animator.SetBool("IsRunning",true);
+                //animator.SetBool("IsRunning",true);
                 agent.speed = sprintSpeed;
             }
             else
             {
-                animator.SetBool("IsRunning",false);
+               // animator.SetBool("IsRunning",false);
                 agent.speed = defaultSpeed;
             }
 
             if (agent.velocity.magnitude > 0.1f)
             {
-                animator.SetBool("isWalking", true);
+                //animator.SetBool("isWalking", true);
             }
             else
             {
-                animator.SetBool("isWalking", false);
+               // animator.SetBool("isWalking", false);
             }
 
         }

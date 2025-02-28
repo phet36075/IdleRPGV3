@@ -1,3 +1,4 @@
+using System.Collections;
 using Tiny;
 using UnityEngine;
 using UnityEngine.AI;
@@ -35,7 +36,9 @@ public class PlayerAttack : MonoBehaviour
     private int _attack2Hash;
     private int _attack3Hash;
     private int _isAttackingHash;
-    
+    public bool WaitForCombo3 = false;
+    [SerializeField] private Vector3 hitboxOffset = Vector3.forward;  // ระยะห่างของ hitbox
+    public GameObject slashEffect;
     void Start()
     {
         _allyManager = GetComponent<AllyManager>();
@@ -51,6 +54,14 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (WaitForCombo3)
+        {
+            _comboStep = 0;
+            animator.ResetTrigger(_attack1Hash);
+            animator.ResetTrigger(_attack2Hash);
+            animator.ResetTrigger(_attack3Hash);
+        }
+            
         // ตรวจสอบการเปลี่ยนแปลงแอนิเมชัน
         CheckAnimationTransition();
         
@@ -124,7 +135,7 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
         
-        if (!isAttacking && _weaponSystem.GetIsDrawn == true)
+        if (!isAttacking && _weaponSystem.GetIsDrawn == true && !WaitForCombo3)
         {
             Attack();
         }
@@ -132,25 +143,29 @@ public class PlayerAttack : MonoBehaviour
     
     public void Attack()
     {
-        _weaponSystem.ResetIdleTimer();
-        playerMovement.isTakingAction = true;
-        _lastAttackTime = Time.time;
-        isAttacking = true;
-        animator.SetBool(_isAttackingHash, true);
         
-        // ตั้งค่าว่ากำลังรอแอนิเมชันเริ่ม
-        _waitingForAnimationToStart = true;
-        _animationDelayTimer = 0f;
+            _weaponSystem.ResetIdleTimer();
+            playerMovement.isTakingAction = true;
+            _lastAttackTime = Time.time;
+            isAttacking = true;
+            animator.SetBool(_isAttackingHash, true);
         
-        // เพิ่มขั้นตอนคอมโบ
-        _comboStep++;
-        if (_comboStep > 3)
-        {
-            _comboStep = 1; // รีเซ็ตเป็น 1 เมื่อเกิน 3
-        }
+            // ตั้งค่าว่ากำลังรอแอนิเมชันเริ่ม
+            _waitingForAnimationToStart = true;
+            _animationDelayTimer = 0f;
+        
+            // เพิ่มขั้นตอนคอมโบ
+            _comboStep++;
+            
+            if (_comboStep > 3)
+            {
+                _comboStep = 1; // รีเซ็ตเป็น 1 เมื่อเกิน 3
+            }
 
-        _allyManager.CallAllAllies();
-        PerformAttackAnimation();
+            _allyManager.CallAllAllies();
+            PerformAttackAnimation();
+        
+        
     }
     
     private void PerformAttackAnimation()
@@ -199,6 +214,14 @@ public class PlayerAttack : MonoBehaviour
         float effectDuration = 0.2f;
         Invoke("StopEffect", effectDuration);
 
+        if (_comboStep == 3)
+        {
+            Vector3 spawnPosition = transform.position + transform.rotation * hitboxOffset;
+            GameObject spawnedEffect =  Instantiate(slashEffect, spawnPosition, transform.rotation);
+            Destroy(spawnedEffect,1f);
+        }
+        
+        
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRadius, enemyLayers);
         foreach (Collider enemy in hitEnemies)
         {
@@ -227,13 +250,39 @@ public class PlayerAttack : MonoBehaviour
         {
             _comboStep = 0;
         }
+
+       
+        if(agent.enabled)
+            agent.isStopped = false;
         
         isAttacking = false;
         _waitingForAnimationToStart = false;
         _animationDelayTimer = 0f;
         
-        if(agent.enabled)
-            agent.isStopped = false;
+        
+    }
+
+    public void EnableMovement()
+    {
+        
+    }
+
+    public void EndAttack3()
+    {
+            StartCoroutine(WaitCombo3());
+            isAttacking = false;
+            _waitingForAnimationToStart = false;
+            _animationDelayTimer = 0f;
+        
+            if(agent.enabled)
+                agent.isStopped = false;
+    }
+    IEnumerator WaitCombo3()
+    {
+        WaitForCombo3 = true;
+        yield return new WaitForSeconds(1);
+        WaitForCombo3 = false;
+        
     }
     
     // เรียกจาก Animation Event เมื่อแอนิเมชันการโจมตีเริ่ม

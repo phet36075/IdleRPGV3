@@ -7,7 +7,7 @@ public class AllyRangedCombat : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform player;
     public Transform firePoint;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     public bool AllyisAttacking = false;
     public float fireRate = 1f;
     public float followDistance =3f; // ระยะที่ไม่อยากให้ player ห่างเกินไป
@@ -99,10 +99,12 @@ public class AllyRangedCombat : MonoBehaviour
         {
             if (animator != null)
             {
+                agent.isStopped = true;
                 AllyisAttacking = true;
                 animator.SetTrigger("Attack");
-                animator.SetBool("IsRunning",false);
-                animator.SetBool("isWalking",false);
+              //  animator.SetBool("IsRunning",false);
+              //  animator.SetBool("isWalking",false);
+            
             }
         }
     }
