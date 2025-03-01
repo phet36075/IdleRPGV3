@@ -31,6 +31,7 @@ public class UIContainer : MonoBehaviour
         {
             skillInventoryPanel.SetActive(false);
         }
+        
         if (isStatsOpened)
         {
             skillInventoryPanel.SetActive(false);
@@ -42,7 +43,7 @@ public class UIContainer : MonoBehaviour
             statsPanel.SetActive(false);
         }
 
-        if (!isAllySkillsInventoyryOpened)
+        if (isAllySkillsInventoyryOpened)
         {
             allySkillInventoryPanel.SetActive(true);
             
@@ -50,7 +51,34 @@ public class UIContainer : MonoBehaviour
         else
         {
             allySkillInventoryPanel.SetActive(false);
+            allyDetailWindow.Hide();
         }
+
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+           Hide();
+        }
+    }
+
+    public void OnStatsClick()
+    {
+        isStatsOpened = true;
+        isSkillsInventoyryOpened = false;
+        isAllySkillsInventoyryOpened = false;
+    }
+    public void OnSkillInventoryClick()
+    {
+        isStatsOpened = false;
+        isSkillsInventoyryOpened = true;
+        isAllySkillsInventoyryOpened = false;
+    }
+    public void OnAllySkillInventoryClick()
+    {
+        isStatsOpened = false;
+        isSkillsInventoyryOpened = false;
+        isAllySkillsInventoyryOpened = true;
     }
     
     public void Show()
@@ -65,6 +93,7 @@ public class UIContainer : MonoBehaviour
         uiContainerPanel.SetActive(false);
         isStatsOpened = false;
         isSkillsInventoyryOpened = false;
+        isAllySkillsInventoyryOpened = false;
     }
     // public void Toggle()
     // {

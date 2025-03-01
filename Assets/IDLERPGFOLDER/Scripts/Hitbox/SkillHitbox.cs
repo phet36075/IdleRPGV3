@@ -112,7 +112,13 @@ public class SkillHitbox : MonoBehaviour
             
         }
 
-        playerManager.Heal(50f);
+        if (other.CompareTag("Player"))
+        {
+            if(isHealingSkill)
+                playerManager.Heal(50f);
+        }
+       
+       
         // เช็คว่าชนกับ enemy ไหม
        
            
