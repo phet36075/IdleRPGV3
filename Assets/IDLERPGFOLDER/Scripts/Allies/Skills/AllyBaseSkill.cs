@@ -4,19 +4,21 @@ using UnityEngine.AI;
 
 public class AllyBaseSkill : MonoBehaviour
 {
-    [SerializeField] protected AllySkillData skillData;
+    [SerializeField] protected AllySkillData allySkillData;
     protected bool isOnCooldown = false;
     protected Animator animator;
     protected bool isSkillActive = false;
-    public event System.Action<float> OnCooldownStart;
-    public event System.Action OnCooldownEnd;
+    public event System.Action<float> OnAllyCooldownStart;
+    public event System.Action OnAllyCooldownEnd;
     protected NavMeshAgent agent;
     public bool IsOnCooldown => isOnCooldown;
     public bool IsSkillActive => isSkillActive;
+    
+    public AllySkillData AllySkillData => allySkillData != null ? allySkillData : null;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void SetSkillData(AllySkillData data)
     {
-        skillData = data;
+        allySkillData = data;
     }
    
     protected virtual void Start()
@@ -39,7 +41,7 @@ public class AllyBaseSkill : MonoBehaviour
         if (CanUseSkill())
         {
             isSkillActive = true;
-            animator.SetTrigger(skillData.animationTriggerName);
+            animator.SetTrigger(allySkillData.animationTriggerName);
             StartCoroutine(CooldownRoutine());
         }
     }
@@ -47,35 +49,35 @@ public class AllyBaseSkill : MonoBehaviour
     {
         isSkillActive = true;
         agent.isStopped = true;
-        Debug.Log($"Skill {skillData.skillName} started");
+        Debug.Log($"Skill {allySkillData.skillName} started");
         Invoke(nameof(OnSkillEnd),4f);
     }
 
     public virtual void OnHitboxActivate()
     {
-        Debug.Log($"Skill {skillData.skillName} hitbox activated");
+        Debug.Log($"Skill {allySkillData.skillName} hitbox activated");
     }
 
     public virtual void OnEffectSpawn()
     {
-        Debug.Log($"Skill {skillData.skillName} effect spawned");
+        Debug.Log($"Skill {allySkillData.skillName} effect spawned");
     }
 
     public virtual void OnSkillEnd()
     {
         isSkillActive = false;
         agent.isStopped = false;
-        Debug.Log($"Skill {skillData.skillName} ended");
+        Debug.Log($"Skill {allySkillData.skillName} ended");
     }
     protected IEnumerator CooldownRoutine()
     {
         
         isOnCooldown = true;
-        //OnCooldownStart?.Invoke(skillData.cooldown);
+        OnAllyCooldownStart?.Invoke(allySkillData.cooldown);
         
-        yield return new WaitForSeconds(skillData.cooldown);
+        yield return new WaitForSeconds(allySkillData.cooldown);
         
         isOnCooldown = false;
-       // OnCooldownEnd?.Invoke();
+        OnAllyCooldownEnd?.Invoke();
     }
 }

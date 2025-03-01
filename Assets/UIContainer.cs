@@ -4,10 +4,13 @@ using UnityEngine;
 public class UIContainer : MonoBehaviour
 {
     [SerializeField] private SkillDetailWindow detailWindow;
+    [SerializeField] private AllySkillDetailWindow allyDetailWindow;
     public GameObject statsPanel;
     public GameObject skillInventoryPanel;
+    public GameObject allySkillInventoryPanel;
     public bool isSkillsInventoyryOpened;
     public bool isStatsOpened;
+    public bool isAllySkillsInventoyryOpened;
     private bool isInventoryOpen = false;
     [SerializeField] private GameObject uiContainerPanel;  // Panel หลักของ inventory
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -37,6 +40,16 @@ public class UIContainer : MonoBehaviour
         else
         {
             statsPanel.SetActive(false);
+        }
+
+        if (!isAllySkillsInventoyryOpened)
+        {
+            allySkillInventoryPanel.SetActive(true);
+            
+        }
+        else
+        {
+            allySkillInventoryPanel.SetActive(false);
         }
     }
     

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 [System.Serializable]
+
 public class SkillSlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;

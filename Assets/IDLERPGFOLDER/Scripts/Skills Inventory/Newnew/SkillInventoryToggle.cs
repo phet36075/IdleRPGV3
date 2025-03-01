@@ -3,6 +3,7 @@ using UnityEngine;
 public class SkillInventoryToggle : MonoBehaviour
 {
     [SerializeField] private SkillInventoryUI inventoryUI;
+    [SerializeField] private AllySkillInventoryUI AllyinventoryUI;
     [SerializeField] private KeyCode toggleKey = KeyCode.I;  // ปุ่มลัดสำหรับเปิด/ปิด
 
     private void Update()
@@ -17,5 +18,10 @@ public class SkillInventoryToggle : MonoBehaviour
     public void OnShowButtonClick()
     {
         inventoryUI.Show();
+    }
+
+    public void OnShowAllyButtonClick()
+    {
+        AllyinventoryUI.Show();
     }
 }
