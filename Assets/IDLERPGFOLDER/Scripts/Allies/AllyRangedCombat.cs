@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class AllyRangedCombat : MonoBehaviour
 {
+    public AllySkillManager allySkillManager;
     public GameObject projectilePrefab;
     public Transform player;
     public Transform firePoint;
@@ -16,9 +17,12 @@ public class AllyRangedCombat : MonoBehaviour
     private Transform target;
     public Animator animator;
     private float nextFireTime =1f;
-
+    
+    private float lastSkillUseTime;
+    public float skillUseInterval = 2f; // ระยะเวลาระหว่างการใช้สกิล
     public void AttackEnemy(Transform enemy)
     {
+        TryUseSkill();
         target = enemy;
         InvokeRepeating("ContinueAttacking", 0f, fireRate);
         
@@ -26,6 +30,14 @@ public class AllyRangedCombat : MonoBehaviour
         {
             FireProjectile();
             nextFireTime = Time.time + 1f/fireRate; // กำหนดเวลาการยิงครั้งถัดไป
+        }
+    }
+    private void TryUseSkill()
+    {
+        if (Time.time >= lastSkillUseTime + skillUseInterval)
+        {
+            allySkillManager.UseNextAvailableSkill();
+            lastSkillUseTime = Time.time;
         }
     }
     public void CallAlliesToAttack()
@@ -139,7 +151,18 @@ public class AllyRangedCombat : MonoBehaviour
                 RotateTowardsTarget();
         }
     }
-    
+
+    public void EndAttack()
+    {
+        agent.isStopped = false;
+        AllyisAttacking = false;
+    }
+
+    public void StartAttack()
+    {
+        agent.isStopped = true;
+        AllyisAttacking = true;
+    }
     void RotateTowardsTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;

@@ -49,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
         _attack1Hash = Animator.StringToHash("Attack1");
         _attack2Hash = Animator.StringToHash("Attack2");
         _attack3Hash = Animator.StringToHash("Attack3");
-        _isAttackingHash = Animator.StringToHash("IsAttacking"); // ต้องเพิ่ม IsAttacking เป็น bool parameter ใน Animator
+        //_isAttackingHash = Animator.StringToHash("IsAttacking"); // ต้องเพิ่ม IsAttacking เป็น bool parameter ใน Animator
     }
 
     void Update()
@@ -91,7 +91,7 @@ public class PlayerAttack : MonoBehaviour
         {
             playerMovement.isTakingAction = false;
             isAttacking = false;
-            animator.SetBool(_isAttackingHash, false);
+            //animator.SetBool(_isAttackingHash, false);
         }
 
         // ตรวจสอบการกดปุ่ม
@@ -148,7 +148,7 @@ public class PlayerAttack : MonoBehaviour
             playerMovement.isTakingAction = true;
             _lastAttackTime = Time.time;
             isAttacking = true;
-            animator.SetBool(_isAttackingHash, true);
+         //   animator.SetBool(_isAttackingHash, true);
         
             // ตั้งค่าว่ากำลังรอแอนิเมชันเริ่ม
             _waitingForAnimationToStart = true;

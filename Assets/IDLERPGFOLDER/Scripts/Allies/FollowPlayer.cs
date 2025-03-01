@@ -28,7 +28,7 @@ public class FollowPlayer : MonoBehaviour
     {
         float distance = Vector3.Distance(player.position, transform.position);
         AllyRangedCombat ally = this.GetComponent<AllyRangedCombat>();
-        if (ally.AllyisAttacking == true)
+        if (ally.AllyisAttacking)
         {
             agent.isStopped = true;
             agent.SetDestination(transform.position);
@@ -36,7 +36,7 @@ public class FollowPlayer : MonoBehaviour
         }
         else if(ally.AllyisAttacking == false)
         {
-            agent.isStopped = false;
+            //agent.isStopped = false;
             animator.SetFloat("Speed",agent.velocity.magnitude);
             agent.SetDestination(player.position);
             
