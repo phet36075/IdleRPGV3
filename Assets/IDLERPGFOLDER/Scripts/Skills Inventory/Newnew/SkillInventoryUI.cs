@@ -15,7 +15,8 @@ public class SkillInventoryUI : MonoBehaviour
     [SerializeField] private Button nextPageButton;
     [SerializeField] private Button previousPageButton;
     [SerializeField] private TextMeshProUGUI pageText;  // แสดงเลขหน้า
-    
+    [SerializeField] private GameObject UIContainer;
+    [SerializeField] private UIContainer uiContainer;
     private List<SkillInventorySlotUI> slots = new List<SkillInventorySlotUI>();
     private bool isInventoryOpen = false;
     private void Start()
@@ -24,17 +25,23 @@ public class SkillInventoryUI : MonoBehaviour
         skillManager.OnSkillsChanged += UpdateInventoryUI;
         UpdateInventoryUI();
         closeButton.onClick.AddListener(Hide);
-        Hide();  // ซ่อนตอนเริ่มเกม
+      //  Hide();  // ซ่อนตอนเริ่มเกม
     }
     public void Show()
     {
-        inventoryPanel.SetActive(true);
-        isInventoryOpen = true;
+        uiContainer.isSkillsInventoyryOpened = true;
+        uiContainer.isStatsOpened = false;
+        UIContainer.SetActive(true);
+        
+        
+       // inventoryPanel.SetActive(true);
+       // isInventoryOpen = true;
         UpdateInventoryUI();
     }
 
     public void Hide()
     {
+        uiContainer.isSkillsInventoyryOpened = false;
         inventoryPanel.SetActive(false);
         isInventoryOpen = false;
         detailWindow.Hide();  // ปิด detail window ด้วย

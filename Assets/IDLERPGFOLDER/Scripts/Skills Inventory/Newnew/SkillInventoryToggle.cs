@@ -14,8 +14,8 @@ public class SkillInventoryToggle : MonoBehaviour
     }
 
     // สำหรับปุ่มใน UI
-    public void OnToggleButtonClick()
+    public void OnShowButtonClick()
     {
-        inventoryUI.Toggle();
+        inventoryUI.Show();
     }
 }

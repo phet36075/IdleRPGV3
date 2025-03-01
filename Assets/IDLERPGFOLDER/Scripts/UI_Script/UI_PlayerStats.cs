@@ -10,6 +10,8 @@ public class UIPlayerStats : MonoBehaviour
     public GameObject UI_Stats;
     public PlayerStats playerStats;
     public PlayerProperty playerProperty;
+    public UIContainer uiContainer;
+    [SerializeField] private GameObject UIContainer;
     [Header("Button")]
     public Button strengthButton; // ประกาศตัวแปรสำหรับปุ่ม
     public Button dexterityButton;
@@ -47,6 +49,7 @@ public class UIPlayerStats : MonoBehaviour
     [Header("Remaining Points Text")]
     public TextMeshProUGUI txtRemainPoints;
 
+    private bool isStatsOpen;
     [Header("Exp Bar")] public Slider expBar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -129,6 +132,42 @@ public class UIPlayerStats : MonoBehaviour
     {
         UI_Stats.SetActive(!UI_Stats.activeSelf);
     }
+    
+    public void Show()
+    {
+        uiContainer.isStatsOpened = true;
+        uiContainer.isSkillsInventoyryOpened = false;
+        UIContainer.SetActive(true);
+        
+        
+       // UI_Stats.SetActive(true);
+      //  isStatsOpen = true;
+        //UpdateInventoryUI();
+    }
+
+    public void Hide()
+    {
+       
+       // uiContainer.isStatsOpened = false;
+      //  UI_Stats.SetActive(false);
+        //isStatsOpen = false;
+     
+    }
+
+    public void Toggle()
+    {
+        if (isStatsOpen)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
+    }
+    
+    
+    
     private void OnEnable()
     {
         PowerManager.OnPowerChanged += UpdatePowerText;

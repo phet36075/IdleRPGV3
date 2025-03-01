@@ -6,9 +6,12 @@ using UnityEngine.AI;
 public class FollowPlayer : MonoBehaviour
 {
     public Transform player;
-
+    [Header("Ground Check Settings")]
+    public LayerMask groundMask;
+    public Transform groundCheck;
+    public float groundDistance;
     private NavMeshAgent agent;
-
+    private bool isGrounded;
     private Animator animator;
 
     public float defaultSpeed = 1f;
@@ -26,6 +29,12 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+        CheckGrounded();
+        HandleJump();
+        
+        
         float distance = Vector3.Distance(player.position, transform.position);
         AllyRangedCombat ally = this.GetComponent<AllyRangedCombat>();
         if (ally.AllyisAttacking)
@@ -63,10 +72,27 @@ public class FollowPlayer : MonoBehaviour
         }
        
 
-      
         
 
 
+    }
+    private void CheckGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        animator.SetBool("IsGrounded", isGrounded);
+
+        // if (isGrounded && verticalVelocity.y < 0)
+        // {
+        //    verticalVelocity.y = -2f;
+        // }
+    }
+    private void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            animator.SetTrigger("JumpStart");
+            //verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
     }
 }
 
