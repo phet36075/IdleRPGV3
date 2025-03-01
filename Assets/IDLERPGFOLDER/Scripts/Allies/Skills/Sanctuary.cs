@@ -35,22 +35,22 @@ public class Sanctuary : AllyBaseSkill
         // ปรับขนาดตามธาตุ
         spawnedEffect.transform.localScale = effectScale; 
         // **Delay 0.5 วินาทีก่อนเปิด Hitbox**
-      //  Invoke(nameof(JudgementsLight_OnHitboxActivate), hitboxSpawnDelay);
+        Invoke(nameof(Sanctuary_OnHitboxActivate), hitboxSpawnDelay);
         Destroy(spawnedEffect, 5f);
     }
-    // public void JudgementsLight_OnHitboxActivate()
-    // {
-    //     if (spawnedEffect != null) // ตรวจสอบว่า Effect ถูกสร้างขึ้นหรือยัง
-    //     {
-    //         SkillHitbox hitbox = spawnedEffect.GetComponent<SkillHitbox>();
-    //         if (hitbox != null)
-    //         {
-    //             hitbox.SetDamageMultiplier(skillData.baseSkillDamage,playerManager.GetMaxMana(),skillData.manaMultiplier,skillData.weaponMultiplier);
-    //             hitbox.ActivateMultipleHitbox(); // เปิดใช้งาน Hitbox
-    //         }
-    //     }
-    //     
-    // }
+    public void Sanctuary_OnHitboxActivate()
+    {
+        if (spawnedEffect != null) // ตรวจสอบว่า Effect ถูกสร้างขึ้นหรือยัง
+        {
+            SkillHitbox hitbox = spawnedEffect.GetComponent<SkillHitbox>();
+            if (hitbox != null)
+            {
+               // hitbox.SetDamageMultiplier(skillData.baseSkillDamage,playerManager.GetMaxMana(),skillData.manaMultiplier,skillData.weaponMultiplier);
+                hitbox.ActivateMultipleHitbox(); // เปิดใช้งาน Hitbox
+            }
+        }
+        
+    }
   
     public  void SanctuaryPrefab_OnSkillEnd()
     {

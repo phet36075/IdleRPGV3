@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioSource audioSource;
-    public AudioClip hitSound,hitCritSound , MonsterPainSound,DieSound;
+    public AudioClip hitSound, hitCritSound, MonsterPainSound, DieSound, HealSound;
 
     public AudioClip maceHitSound;
     public AudioClip spellHitSound;
@@ -20,7 +20,11 @@ public class AudioManager : MonoBehaviour
     {
         
     }
-    
+
+    public void PlayHealSound()
+    {
+        audioSource.PlayOneShot(HealSound);
+    }
     public void PlayHitSound()
     {
         audioSource.PlayOneShot(MonsterPainSound);

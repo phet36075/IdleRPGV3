@@ -51,7 +51,7 @@ public class SkillManager : MonoBehaviour
         }*/
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-           // skillInventory.UnlockSkill(skilltoUnlock2);
+           // skillInventory.UnlockSkill(skilltoUnlock2); // เพิ่มสกิลใหม่เลย
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {

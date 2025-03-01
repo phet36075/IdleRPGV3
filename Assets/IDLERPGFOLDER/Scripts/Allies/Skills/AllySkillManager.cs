@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class AllySkillManager : MonoBehaviour
 {
     [SerializeField] public List<AllyBaseSkill> skills = new List<AllyBaseSkill>();
+    private const int MAX_SKILLS = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,5 +44,19 @@ public class AllySkillManager : MonoBehaviour
 
         Debug.Log("No available skills to use!");
         return false;
+    }
+    public void AddSkill(AllyBaseSkill skill)
+    {
+        if (skills.Count < MAX_SKILLS && !skills.Contains(skill))
+        {
+            skills.Add(skill);
+            //  powerManager.IncreasePower(skill.GetPowerBonus());
+            // playerStats.RecalculatePower(); // อัปเดตค่าพลังใหม่ทุกครั้งที่เพิ่มสกิล
+            //OnSkillsChanged?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Cannot add more skills. Maximum limit reached or skill already exists!");
+        }
     }
 }

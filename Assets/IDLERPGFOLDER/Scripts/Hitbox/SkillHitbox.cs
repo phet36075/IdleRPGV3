@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SkillHitbox : MonoBehaviour
 {
+    public bool isHealingSkill;
     private PlayerManager playerManager;
     private float damageMultiplier = 1f;  // ถ้าต้องการให้สกิลทำดาเมจต่างกัน
     private float weaponMultiplier;
@@ -69,32 +70,34 @@ public class SkillHitbox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // เช็คว่าไม่ใช่ Player
-        if (other.CompareTag("Player"))
+        if (!isHealingSkill)
         {
-            return; 
-        }
-        // เช็คว่าชนกับ enemy ไหม
-        IDamageable target = other.GetComponent<IDamageable>();
-        if (target != null && playerManager != null)
-        {
-            float attackDamage = playerManager.CalculatePlayerAttackDamage()  * weaponMultiplier + damageMultiplier ;
+            if (other.CompareTag("Player"))
+            {
+                return; 
+            }
             
-           // Status status = Status.None; // กำหนดค่าเริ่มต้น
-            Multiple multiple = Multiple.None;
-          /*  if (StatusSkill == Status.Freezing)
+            IDamageable target = other.GetComponent<IDamageable>();
+            if (target != null && playerManager != null)
             {
-                status = Status.Freezing;
-            }
+                float attackDamage = playerManager.CalculatePlayerAttackDamage()  * weaponMultiplier + damageMultiplier ;
+            
+                // Status status = Status.None; // กำหนดค่าเริ่มต้น
+                Multiple multiple = Multiple.None;
+                /*  if (StatusSkill == Status.Freezing)
+                  {
+                      status = Status.Freezing;
+                  }
 
-            if (StatusSkill == Status.Radiant)
-            {
-                status = Status.Radiant;
-            }*/
-            if (isMultiplierNextHit)
-            {
-                multiple = Multiple.Yes;
-                multiplierNextHit = 1.8f;
-            }
+                  if (StatusSkill == Status.Radiant)
+                  {
+                      status = Status.Radiant;
+                  }*/
+                if (isMultiplierNextHit)
+                {
+                    multiple = Multiple.Yes;
+                    multiplierNextHit = 1.8f;
+                }
             
                 DamageData damageData = new DamageData(
                     attackDamage,
@@ -102,12 +105,18 @@ public class SkillHitbox : MonoBehaviour
                     playerManager.playerProperty.elementType,StatusSkill,multiple,multiplierNextHit
                 );
                 target.TakeDamage(damageData);
-            
-            
                 
            
-           
+            
+            }
+            
         }
+
+        playerManager.Heal(50f);
+        // เช็คว่าชนกับ enemy ไหม
+       
+           
+       
 
         if (isPulling)
         {

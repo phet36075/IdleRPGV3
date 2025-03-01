@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     
     [Header("References")]
     public PlayerProperty playerProperty;
+    
     public Animator allyAnimator;
     public PlayerStats playerStats;
     public StatsFormula formula;
@@ -160,6 +161,8 @@ public class PlayerManager : MonoBehaviour, IDamageable
             if (currentHealth < playerProperty.maxHealth && !isPlayerDie)
             {
                 SpawnRegenEffect();
+                audioManager.PlayHealSound();
+               
                 RegenerateHealth();
             }
         }
@@ -175,6 +178,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     private void RegenerateHealth()
     {
         currentHealth = Mathf.Min(currentHealth + playerProperty.regenRate, playerProperty.maxHealth);
+        damageDisplay.DisplayHealing(playerProperty.regenRate);
         UpdateHealthBar();
     }
 
@@ -286,7 +290,10 @@ public class PlayerManager : MonoBehaviour, IDamageable
     public void Heal(float amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, playerProperty.maxHealth);
+        audioManager.PlayHealSound();
         UpdateHealthBar();
+        SpawnRegenEffect();
+        damageDisplay.DisplayHealing(amount);
     }
 
     public void UseMana(float amount)
