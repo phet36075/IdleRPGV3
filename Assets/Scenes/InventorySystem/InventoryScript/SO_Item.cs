@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using Unity.VisualScripting;
 using UnityEngine;
 public enum ItemType
 {
     Default,
     Weapon,
+    Skill
     
 }
 
@@ -18,12 +20,12 @@ public class SO_Item : ScriptableObject
     public string description;
     public int maxStack;
     public ItemType itemType;
-
     [Header("In Game Object")]
     public GameObject gamePrefab;
     
     public virtual void Use()
     {
+        
         Debug.Log($"Using {itemName}");
         
     }

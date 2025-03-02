@@ -6,7 +6,7 @@ public class Sanctuary : AllyBaseSkill
     [SerializeField] private GameObject SanctuaryPrefab;
     //[SerializeField] private float damageMultiplier = 1f;  // ตัวคูณดาเมจของสกิลนี้
     [SerializeField] private Vector3 hitboxOffset = Vector3.forward;  // ระยะห่างของ hitbox
-   
+    private Transform playerTranform;
     [SerializeField] private float hitboxSpawnDelay = 0.5f; // ระยะเวลาหน่วงก่อนเริ่มโจมตี
     // เพิ่มตัวแปรสำหรับปรับขนาด
     [Header("Size Settings")]
@@ -16,7 +16,7 @@ public class Sanctuary : AllyBaseSkill
     protected override void Start()
     {
         base.Start();
-        //playerManager = GetComponent<PlayerManager>();
+        playerTranform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void JudgementsLight_OnSkillStart()
@@ -30,7 +30,9 @@ public class Sanctuary : AllyBaseSkill
     {
         base.OnEffectSpawn();
         Vector3 spawnPosition = transform.position + transform.rotation * hitboxOffset;
-        spawnedEffect = Instantiate(SanctuaryPrefab, spawnPosition, SanctuaryPrefab.transform.rotation);
+        Vector3 spawnPositionPlayer =
+            playerTranform.transform.position + playerTranform.transform.rotation * hitboxOffset;
+        spawnedEffect = Instantiate(SanctuaryPrefab, spawnPositionPlayer, SanctuaryPrefab.transform.rotation);
     
         // ปรับขนาดตามธาตุ
         spawnedEffect.transform.localScale = effectScale; 
