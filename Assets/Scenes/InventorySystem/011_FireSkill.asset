@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ae5c3e9a56f420458496b9305462e22, type: 3}
-  m_Name: 010_FireSkill
+  m_Name: 011_FireSkill
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 03e6f50b7a998ed46a4c3f9f8cb0855e, type: 3}
-  id: 005
+  id: 011
   itemName: Fire Skill Book
   description: 
   maxStack: 10

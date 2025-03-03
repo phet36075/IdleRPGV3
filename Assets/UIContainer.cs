@@ -94,6 +94,8 @@ public class UIContainer : MonoBehaviour
         isStatsOpened = false;
         isSkillsInventoyryOpened = false;
         isAllySkillsInventoyryOpened = false;
+        allyDetailWindow.Hide();
+        detailWindow.Hide();
     }
     // public void Toggle()
     // {
