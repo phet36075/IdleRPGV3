@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4510e4f998986674b9200056aabe7588, type: 3}
   id: 010
   itemName: DarkSword
-  description: 
+  description: Black hole +2s
   maxStack: 1
   itemType: 1
   gamePrefab: {fileID: 5877404349276986909, guid: 7d5acb6e43409fe4191d13acc0067003, type: 3}

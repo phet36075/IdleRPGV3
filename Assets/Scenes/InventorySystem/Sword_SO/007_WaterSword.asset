@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a71252e4992eb014796b88e50bed20ad, type: 3}
   id: 007
   itemName: WaterSword
-  description: 
+  description: Flood +7s
   maxStack: 1
   itemType: 1
   gamePrefab: {fileID: 7823755851359155732, guid: 9e685f277355f3b4fb824a0159343d7c, type: 3}

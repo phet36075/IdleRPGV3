@@ -7,11 +7,15 @@ public enum ItemType
 {
     Default,
     Weapon,
+    Hat,
+    Armor,
+    Boot,
+    Ring,
     Skill
     
 }
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Create new Item", order = 4) ]
+[CreateAssetMenu(fileName = "New Item", menuName = "Create SO_Item", order = 4) ]
 public class SO_Item : ScriptableObject
 {
     public Sprite icon;

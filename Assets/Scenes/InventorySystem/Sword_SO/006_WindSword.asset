@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 30208dd2f74e24844838f69d78a7cdf6, type: 3}
   id: 006
   itemName: WindSword
-  description: 
+  description: Wind Storm +5s
   maxStack: 1
   itemType: 1
   gamePrefab: {fileID: 8619133333658594807, guid: 8ea6e5ed774e9414387b84737d55d717, type: 3}

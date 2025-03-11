@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class Inventory : MonoBehaviour
     [Space(5)]
     public int slotAmount = 30;
     public InventorySlot[] inventorySlots;
-  
+    public InventorySlot currentSelectedSlot;
+
 
     [Header("Mini Canvas")]
     public RectTransform miniCanvas;
@@ -28,9 +30,47 @@ public class Inventory : MonoBehaviour
     private bool isVisible = false;
     [SerializeField] private float fadeSpeed = 5f;
 
+
+    [SerializeField] private PlayerManager playerManager;
+
+    [Header("5 EquippedSlot")]
+    [Header("equippedItemSlot")]
     [SerializeField] public InventorySlot equippedItemSlot;
     public Image myEqImage;
-    [SerializeField] private PlayerManager playerManager;
+    public TextMeshProUGUI itemNameText; //  UI 
+
+    [Header("equippedHatSlot")]
+    public InventorySlot equippedHatSlot;
+    public Image myEqImageHat;
+    public TextMeshProUGUI itemNameTextHat;
+
+    [Header("equippedArmorSlot")]
+    public InventorySlot equippedArmorSlot;
+    public Image myEqImageArmor;
+    public TextMeshProUGUI itemNameTextArmor;
+
+
+    [Header("equippedBootSlot")]
+    public InventorySlot equippedBootSlot;
+    public Image myEqImageBoot;
+    public TextMeshProUGUI itemNameTextBoot;
+
+    [Header("equippedRingSlot")]
+    public InventorySlot equippedRingSlot;
+    public Image myEqImageRing;
+    public TextMeshProUGUI itemNameTextRing;
+
+
+    [Header("Detail UI")]
+    public GameObject detailPanel; // หน้าต่าง detail
+    public Image detailIcon; // รูปไอเทมใน detail
+    public TextMeshProUGUI detailName; // ชื่อไอเทมใน detail
+    public TextMeshProUGUI detailDescription; // คำอธิบายไอเทมใน detail
+    public TextMeshProUGUI detailStackText;
+
+    public Button equipButton;
+    public TextMeshProUGUI equipButtonText;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +81,10 @@ public class Inventory : MonoBehaviour
 
         gridLayoutGroup = InventoryPanel.GetComponent<GridLayoutGroup>();
         CreateInventorySlots();
+
+        detailPanel.SetActive(false);
+
+        
     }
 
     private void Update()
@@ -64,8 +108,10 @@ public class Inventory : MonoBehaviour
     #region Inventory Methods
 
 
-    public TextMeshProUGUI itemNameText; //  UI 
+    
 
+  
+    //5 equipment
     public void ShowItemName(string name)
     {
         itemNameText.text = name; // แสดงชื่อไอเทม
@@ -76,39 +122,45 @@ public class Inventory : MonoBehaviour
         itemNameText.text = ""; // clear ชื่อไอเทม
     }
 
+    public void ShowItemNameHat(string name)
+    {
+        itemNameTextHat.text = name; // แสดงชื่อไอเทม
+    }
+
+    /*
+    public void ClearItemNameHat()
+    {
+        itemNameTextHat.text = ""; // clear ชื่อไอเทม
+    }
+    */
+    public void ShowItemNameArmor(string name)
+    {
+        itemNameTextArmor.text = name; // แสดงชื่อไอเทม
+    }
+
+   
+
+    public void ShowItemNameBoot(string name)
+    {
+        itemNameTextBoot.text = name; // แสดงชื่อไอเทม
+    }
+
+    
+
+    public void ShowItemNameRing(string name)
+    {
+        itemNameTextRing.text = name; // แสดงชื่อไอเทม
+    }
+
+    
+
 
     public void ToggleInventory()
     {
         isVisible = !isVisible;
         SetInventoryVisibility(isVisible);
     }
-  //  public TextMeshProUGUI itemNameText;
-    public TextMeshProUGUI itemDescriptionText;
-    public TextMeshProUGUI itemTypeText;
-    public TextMeshProUGUI itemMaxStackText;
 
-    public void ShowItemDetail(SO_Item item)
-    {
-        if (itemNameText != null)
-        {
-            itemNameText.text = item.itemName;
-        }
-
-        if (itemDescriptionText != null)
-        {
-            itemDescriptionText.text = item.description;
-        }
-
-        if (itemTypeText != null)
-        {
-            itemTypeText.text = item.itemType.ToString();
-        }
-
-        if (itemMaxStackText != null)
-        {
-            itemMaxStackText.text = $"Max Stack: {item.maxStack}";
-        }
-    }
     private void SetInventoryVisibility(bool visible)
     {
         isVisible = visible;
@@ -122,6 +174,62 @@ public class Inventory : MonoBehaviour
         isVisible = show;
         SetInventoryVisibility(show);
     }
+
+    public void ShowItemDetail(InventorySlot slot)
+    {
+        /*
+        if (slot.item == EMPTY_ITEM)
+            return;
+
+        // อัปเดต UI ด้วยข้อมูลจาก SO_Item
+        detailIcon.sprite = slot.item.icon;
+        detailIcon.color = Color.white;
+        detailName.text = slot.item.itemName;
+        detailDescription.text = slot.item.description;
+
+        // แสดงหน้าต่าง detail
+        detailPanel.SetActive(true);
+
+        */
+        detailPanel.SetActive(true);
+        detailIcon.sprite = slot.item.icon;
+        detailIcon.color = Color.white;
+        detailName.text = slot.item.itemName;
+        detailDescription.text = slot.item.description;
+        
+
+        // อัปเดตจำนวน Stack
+        if (slot.stack > 1)
+        {
+            detailStackText.gameObject.SetActive(true);
+            detailStackText.text = slot.stack.ToString();
+        }
+        else
+        {
+            detailStackText.gameObject.SetActive(false);
+        }
+
+        
+    }
+
+    public void HideItemDetail()
+    {
+        // ซ่อนหน้าต่าง detail
+        detailPanel.SetActive(false);
+    }
+
+  
+
+    public bool IsItemEquipped(InventorySlot slot)
+    {
+        return equippedItemSlot == slot;
+    }
+
+
+
+
+
+
     public void AddItem(SO_Item item, int amount)
     {
         InventorySlot slot = IsEmptySlotLeft(item);
@@ -134,11 +242,17 @@ public class Inventory : MonoBehaviour
         slot.MergeThisSlot(item, amount);
     }
 
+
+
+
+
     public void UseItem() //OnClick Event
     {
-        // use
-        rightClickSlot.UseItem();
-        OnFinishMiniCanvas();
+
+
+        if (currentSelectedSlot == null) return; // ป้องกัน null reference
+
+        currentSelectedSlot.UseItem();
     }
     public void DestroyItem() //OnClick Event
     {
@@ -166,25 +280,6 @@ public class Inventory : MonoBehaviour
         DestroyItem();
     }
 
-    public void UnequipItem() //OnCLick Event
-    {
-        if (rightClickSlot == equippedItemSlot)
-        {
-            if (rightClickSlot.item.itemType == ItemType.Weapon)
-            {
-                playerManager.ChangeWeaponElement(ElementType.None);
-            }
-            // ลบรูปภาพใน myEqImage
-            myEqImage.sprite = null;  // ลบไอคอนของไอเทม
-            myEqImage.color = new Color(1f, 1f, 1f, 0f);  // ทำให้ภาพเป็นโปร่งใส
-            ShowItemName(""); // ล้างชื่อไอเทม
-        }
-
-        // สร้างไอเทมใหม่ที่ถูกทิ้ง
-
-        OnFinishMiniCanvas();
-    }
-
 
     public void DropItem(SO_Item item, int amount)
     {
@@ -194,7 +289,7 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(InventorySlot slot)
     {
-       
+
         slot.SetThislot(EMPTY_ITEM, 0);
     }
     public void SortItem(bool Ascending = true)
@@ -223,6 +318,16 @@ public class Inventory : MonoBehaviour
             AddItem(slot.item, slot.stack);
         }
     }
+
+
+
+
+
+    
+
+
+
+
     public void CreateInventorySlots()
     {
         inventorySlots = new InventorySlot[slotAmount];

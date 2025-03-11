@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 1ac92906682881349affc0051e180c30, type: 3}
   id: 008
   itemName: EarthSword
-  description: 
+  description: Earthquake +8
   maxStack: 1
   itemType: 1
   gamePrefab: {fileID: 5639522219204817107, guid: bd3067f60e9c7d249b06f3207a0f4189, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 9510c9d070504de48baf8636e3ac5fd9, type: 3}
   id: 005
   itemName: FireSword
-  description: 
+  description: Fire Burn +10s
   maxStack: 1
   itemType: 1
   gamePrefab: {fileID: 651261306725553612, guid: c52b6982f15e2044bb14f6e6a4d4aca6, type: 3}

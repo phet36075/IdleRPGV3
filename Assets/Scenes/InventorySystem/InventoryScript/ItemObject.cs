@@ -23,7 +23,7 @@ public class ItemObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             //Add Item
             other.GetComponent<ItemPicker>().inventory.AddItem(item, amount);
