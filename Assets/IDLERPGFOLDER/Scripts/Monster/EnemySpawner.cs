@@ -482,7 +482,16 @@ public class EnemySpawner : MonoBehaviour
     public void NextStage()
     { 
         ClearAllEnemies();
-        TeleportPlayer();
+        if (currentStage == 5)
+        {
+            Vector3 newpos6 = new Vector3(2.9f, 2.1f, 42.4f);
+            _teleportPlayer.TeleportPlayer(newpos6);
+        }
+        else
+        {
+            TeleportPlayer();
+        }
+    
         
         currentStage += 1;
         UpdateStageSettings();

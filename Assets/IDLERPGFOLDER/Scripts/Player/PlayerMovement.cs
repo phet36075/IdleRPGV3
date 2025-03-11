@@ -106,13 +106,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            currentSpeed = sprintSpeed;
-            isSprinting = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            currentSpeed = walkSpeed;
-            isSprinting = false;
+            // Toggle sprint state
+            isSprinting = !isSprinting;
+        
+            // Update speed based on sprint state
+            currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
         }
     }
 
@@ -148,13 +146,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool isJumping = false;
+
     private void HandleJump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && !isJumping)
         {
+            isJumping = true;
             animator.SetTrigger("JumpStart");
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+    }
+    public void OnJumpAnimationComplete()
+    {
+        isJumping = false;
     }
 
     private void ApplyGravity()

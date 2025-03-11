@@ -82,7 +82,33 @@ public class Inventory : MonoBehaviour
         isVisible = !isVisible;
         SetInventoryVisibility(isVisible);
     }
+  //  public TextMeshProUGUI itemNameText;
+    public TextMeshProUGUI itemDescriptionText;
+    public TextMeshProUGUI itemTypeText;
+    public TextMeshProUGUI itemMaxStackText;
 
+    public void ShowItemDetail(SO_Item item)
+    {
+        if (itemNameText != null)
+        {
+            itemNameText.text = item.itemName;
+        }
+
+        if (itemDescriptionText != null)
+        {
+            itemDescriptionText.text = item.description;
+        }
+
+        if (itemTypeText != null)
+        {
+            itemTypeText.text = item.itemType.ToString();
+        }
+
+        if (itemMaxStackText != null)
+        {
+            itemMaxStackText.text = $"Max Stack: {item.maxStack}";
+        }
+    }
     private void SetInventoryVisibility(bool visible)
     {
         isVisible = visible;

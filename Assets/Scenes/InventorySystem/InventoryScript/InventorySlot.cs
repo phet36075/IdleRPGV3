@@ -102,8 +102,16 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.OpenMiniCanvas(eventData.position);
             inventory.SetRightClickSlot(this);
         }
+        else if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            if (item == inventory.EMPTY_ITEM)
+                return;
 
+            // เรียกเมธอดเพื่อแสดงรายละเอียดของไอเทมในหน้าต่าง Detail
+            inventory.ShowItemDetail(item);
+        }
     }
+   
 
     #endregion
 

@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class EnemyHealth : MonoBehaviour,IDamageable
 {
-    public SO_Item skillDrop;
+   // public SO_Item skillDrop;
     #region Variables
   /*  [Header("Stats")]
     public float baseAttack = 1.0f;
@@ -899,7 +899,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         
         //int randomAmount = Random.Range(0, 4); // ให้สังเกตว่าค่าสูงสุดจะไม่รวมในผลลัพธ์ (exclusive) จึงต้องใส่ 4
         ItemSpawner.Instance.SpawnItemByGUI();
-       ItemSpawner.Instance.SpawnItem(skillDrop,1);
+      // ItemSpawner.Instance.SpawnItem(skillDrop,1);
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().enabled = false;
         Destroy(gameObject,3f);
