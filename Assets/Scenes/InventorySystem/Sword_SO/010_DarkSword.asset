@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 4510e4f998986674b9200056aabe7588, type: 3}
   id: 010
-  itemName: DarkSword
+  itemName: Dark Sword
   description: Black hole +2s
   maxStack: 1
   itemType: 1

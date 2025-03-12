@@ -63,7 +63,7 @@ public class PowerManager : MonoBehaviour
     public GameObject powerChangePrefab;
     public float fadeDuration = 1.5f; // ระยะเวลาที่ข้อความจะหายไป
 
-    public Animator animator;
+ //   public Animator animator;
     private int currentPower;
     private int previousPower;
     public static event Action<int> OnPowerChanged;
@@ -319,7 +319,7 @@ public class PowerManager : MonoBehaviour
         powerChangeText.text = "Power: " + (amount > 0 ? "+" : "") + amount;
         powerChangeText.color = amount < 0 ? Color.red : Color.green; // เปลี่ยนสีเป็นแดงถ้าติดลบ เขียวถ้าบวก
         
-        animator.Play("PowerDisplay_Anim", 0, 0f);
+   //     animator.Play("PowerDisplay_Anim", 0, 0f);
        // animator.SetTrigger("DisplayTrigger");
         
       // StartCoroutine(DisplayPower());

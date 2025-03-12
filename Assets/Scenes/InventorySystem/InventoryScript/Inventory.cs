@@ -191,25 +191,54 @@ public class Inventory : MonoBehaviour
         detailPanel.SetActive(true);
 
         */
+
+        /*latest
         detailPanel.SetActive(true);
         detailIcon.sprite = slot.item.icon;
         detailIcon.color = Color.white;
         detailName.text = slot.item.itemName;
-        detailDescription.text = slot.item.description;
-        
+        detailDescription.text = "Description: " + slot.item.description;
+
+       
+
 
         // อัปเดตจำนวน Stack
         if (slot.stack > 1)
         {
             detailStackText.gameObject.SetActive(true);
-            detailStackText.text = slot.stack.ToString();
+            detailStackText.text ="Amount: " + slot.stack.ToString();
+        }
+        else
+        {
+            detailStackText.gameObject.SetActive(false);
+        }
+        */
+
+        //GEMINI
+        detailPanel.SetActive(true);
+        detailIcon.sprite = slot.item.icon;
+        detailIcon.color = Color.white;
+        detailName.text = slot.item.itemName;
+        detailDescription.text = "Description: " + slot.item.description;
+
+        // อัปเดตจำนวน Stack
+        if (slot.stack > 1)
+        {
+            detailStackText.gameObject.SetActive(true);
+            detailStackText.text = "Amount: " + slot.stack.ToString();
         }
         else
         {
             detailStackText.gameObject.SetActive(false);
         }
 
-        
+        // อัปเดตปุ่ม Equip/Unequip
+        if (currentSelectedSlot != null)
+        {
+            currentSelectedSlot.UpdateEquipButton();
+        }
+
+
     }
 
     public void HideItemDetail()
@@ -249,10 +278,11 @@ public class Inventory : MonoBehaviour
     public void UseItem() //OnClick Event
     {
 
-
+        
         if (currentSelectedSlot == null) return; // ป้องกัน null reference
 
         currentSelectedSlot.UseItem();
+        
     }
     public void DestroyItem() //OnClick Event
     {

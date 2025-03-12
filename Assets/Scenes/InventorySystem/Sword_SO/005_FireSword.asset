@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 9510c9d070504de48baf8636e3ac5fd9, type: 3}
   id: 005
-  itemName: FireSword
+  itemName: Fire Sword
   description: Fire Burn +10s
   maxStack: 1
   itemType: 1
