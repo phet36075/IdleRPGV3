@@ -43,8 +43,7 @@ public class GameOverUI : MonoBehaviour
       _playerManager.ResetDie();
       _enemySpawner.ClearAllEnemies();
       _enemySpawner.StartSpawning();
-     Vector3 newpos = new Vector3(-8, 2.1f, -6);
-      _teleportPlayer.TeleportPlayer(newpos);
+     _enemySpawner.TeleportPlayer();
      timeRemaining = 10;
     gameObject.SetActive(false);
       

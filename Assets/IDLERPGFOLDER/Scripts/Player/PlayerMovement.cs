@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-       
+        HandleJumpCooldown();
         CheckGrounded();
         if (!isRolling)
         {
@@ -149,17 +149,22 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCooldown = 2.0f; // Cooldown time in seconds
     private float jumpCooldownTimer = 0f; // Timer to track cooldown
 
-    private void HandleJump()
+    private void HandleJumpCooldown()
     {
         // Decrease cooldown timer if it's active
         if (jumpCooldownTimer > 0)
         {
             jumpCooldownTimer -= Time.deltaTime;
         }
+        
+    }
+    private void HandleJump()
+    {
+        
 
-        if (Input.GetButtonDown("Jump") && isGrounded && !isJumping && jumpCooldownTimer <= 0)
+        if (Input.GetButtonDown("Jump") && isGrounded /*&& !isJumping*/ && jumpCooldownTimer <= 0)
         {
-            isJumping = true;
+           // isJumping = true;
             animator.SetTrigger("JumpStart");
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         
@@ -169,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnJumpAnimationComplete()
     {
-        isJumping = false;
+       // isJumping = false;
         // Note: The cooldown will continue independently of the animation
     }
 

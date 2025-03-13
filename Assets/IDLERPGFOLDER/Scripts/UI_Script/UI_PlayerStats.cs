@@ -65,14 +65,29 @@ public class UIPlayerStats : MonoBehaviour
         expBar.value = playerStats.CurrentExp;
         if (playerStats != null)
         {
-            // Subscribe to mana change event
-          //  playerManager.OnManaChanged += UpdateManaUI;
+            // Subscribe to stat points change event
+            playerStats.OnStatPointsChanged += UpdateButtonVisibility;
+            
             // Update UI ครั้งแรก
             UpdateExpUI(playerStats.CurrentExp);
+            UpdateButtonVisibility(playerStats.AvailableStatPoints);
         }
 
        // StartCoroutine(RegenerateMana());
     }
+    
+    // New method to update button visibility based on available points
+    private void UpdateButtonVisibility(int availablePoints)
+    {
+        bool showButtons = availablePoints > 0;
+        
+        strengthButton.gameObject.SetActive(showButtons);
+        dexterityButton.gameObject.SetActive(showButtons);
+        vitalityButton.gameObject.SetActive(showButtons);
+        intelligenceButton.gameObject.SetActive(showButtons);
+        agilityButton.gameObject.SetActive(showButtons);
+    }
+    
     public void UpdateExpUI(float currentExp)
     {
         // อัพเดทแถบ mana
@@ -125,7 +140,6 @@ public class UIPlayerStats : MonoBehaviour
         txtExp.text = playerStats.CurrentExp.ToString()  + "/ " + playerStats.CalculateExpForNextLevel().ToString();
 
         txtRemainPoints.text = playerStats.AvailableStatPoints.ToString();
-
     }
    
     public void ToggleUI()
@@ -171,11 +185,28 @@ public class UIPlayerStats : MonoBehaviour
     private void OnEnable()
     {
         PowerManager.OnPowerChanged += UpdatePowerText;
+        if (playerStats != null)
+        {
+            playerStats.OnStatPointsChanged += UpdateButtonVisibility;
+            playerStats.OnStatsChanged += HandleStatsChanged;
+        }
     }
 
     private void OnDisable()
     {
         PowerManager.OnPowerChanged -= UpdatePowerText;
+        if (playerStats != null)
+        {
+            playerStats.OnStatPointsChanged -= UpdateButtonVisibility;
+            playerStats.OnStatsChanged -= HandleStatsChanged;
+        }
+    }
+    
+    // Added method to handle stats reset
+    private void HandleStatsChanged()
+    {
+        // Update button visibility after stats change (including reset)
+        UpdateButtonVisibility(playerStats.AvailableStatPoints);
     }
 
     private void UpdatePowerText(int newPower)
