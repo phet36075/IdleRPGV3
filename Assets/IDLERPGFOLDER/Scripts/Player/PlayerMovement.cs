@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
                 ref turnSmoothVelocity, 
                 turnSmoothTime
             );
-            
+        
             // Apply rotation
             transform.rotation = Quaternion.Euler(0f, smoothedAngle, 0f);
 
@@ -137,29 +137,40 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
 
             // Update animation
-           // animator.SetFloat("Speed", isSprinting ? 2f : 1f);
-           animator.SetFloat("Speed", currentSpeed,0.1f,Time.deltaTime);
+            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime);
         }
         else
         {
-            animator.SetFloat("Speed", 0f,0.1f,Time.deltaTime);
+            animator.SetFloat("Speed", 0f, 0.1f, Time.deltaTime);
         }
     }
 
     private bool isJumping = false;
+    private float jumpCooldown = 2.0f; // Cooldown time in seconds
+    private float jumpCooldownTimer = 0f; // Timer to track cooldown
 
     private void HandleJump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded && !isJumping)
+        // Decrease cooldown timer if it's active
+        if (jumpCooldownTimer > 0)
+        {
+            jumpCooldownTimer -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown("Jump") && isGrounded && !isJumping && jumpCooldownTimer <= 0)
         {
             isJumping = true;
             animator.SetTrigger("JumpStart");
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        
+            // Start the cooldown
+            jumpCooldownTimer = jumpCooldown;
         }
     }
     public void OnJumpAnimationComplete()
     {
         isJumping = false;
+        // Note: The cooldown will continue independently of the animation
     }
 
     private void ApplyGravity()
