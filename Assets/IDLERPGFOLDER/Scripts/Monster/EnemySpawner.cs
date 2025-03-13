@@ -4,94 +4,241 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
+#region Data Structures
 [Serializable]
 public class MonsterSet
 {
-    public string setName; // ชื่อชุด เช่น "Easy", "Normal", "Hard"
-    public int[] enemyIndices; // ดัชนีมอนสเตอร์ในชุดนี้
+    public string setName;
+    public int[] enemyIndices;
 }
 
 [Serializable]
 public class ElementalGroup
 {
-    public string elementName; // ชื่อธาตุ
-    public MonsterSet[] monsterSets; // แต่ละธาตุมีหลายชุด
+    public string elementName;
+    public MonsterSet[] monsterSets;
 }
 
-// เพิ่ม enum สำหรับประเภทบอส
-public enum BossType
-{
-    MiniBoss,
-    MainBoss
-}
+public enum BossType { MiniBoss, MainBoss }
 
-// เพิ่ม enum สำหรับธาตุต่างๆ (เรียงตามลำดับที่กำหนด)
-public enum BossElementType
-{
-    Earth,  // ดิน
-    Water,  // น้ำ
-    Wind,   // ลม
-    Fire,   // ไฟ
-    Dark,   // มืด
-    Light   // แสง
-}
+public enum BossElementType { Earth, Water, Wind, Fire, Dark, Light }
 
-// ปรับปรุง BossSet เพื่อเพิ่มข้อมูลแมพและธาตุ
 [Serializable]
 public class BossSet
 {
     public string setName;
-    public int[] bossIndices; // บอสในชุดนี้
-    public int mapIndex; // แมพที่ใช้สำหรับบอสชุดนี้
-    public BossType bossType; // ประเภทบอส (มินิบอส หรือ บอสใหญ่)
-    public BossElementType elementType; // ธาตุของบอส
+    public int[] bossIndices;
+    public int mapIndex;
+    public BossType bossType;
+    public BossElementType elementType;
 }
 
 [Serializable]
 public class StageSpawnPointSet
 {
     public string setName;
-    public int stageIndex; // ด่านที่จะใช้จุดเกิดนี้
-    public List<Transform> spawnPoints; // จุดเกิดสำหรับด่านนี้
+    public int stageIndex; // ใช้ค่าติดลบเพื่อระบุ MapIndex แทน Stage, -999 สำหรับบอส
+    public List<Transform> spawnPoints;
 }
 
 [Serializable]
 public class StageMapRange
 {
-    public string rangeName; // ชื่อของช่วงด่าน
-    public int startStage; // ด่านเริ่มต้นของช่วง
-    public int endStage;   // ด่านสิ้นสุดของช่วง
-    public int mapIndex;   // ดัชนีแมพที่จะใช้สำหรับช่วงด่านนี้
+    public string rangeName;
+    public int startStage;
+    public int endStage;
+    public int mapIndex;
 }
+
+[Serializable]
+public class MapTeleportPosition
+{
+    public string positionName;
+    public int mapIndex;
+    public Vector3 position;
+}
+#endregion
 
 public class EnemySpawner : MonoBehaviour
 {
+    #region Inspector Fields
     [Header("Element Groups")]
     [SerializeField] private ElementalGroup[] elementalGroups;
 
     [Header("Boss Sets")]
     [SerializeField] private BossSet[] bossSets;
-    [SerializeField] private int defaultBossMapIndex = 5; // แมพบอสเริ่มต้นในกรณีที่ไม่พบบอสเซ็ต
+    [SerializeField] private int defaultBossMapIndex = 5;
     
-    [Header("Stage Spawn Points")]
+    [Header("Spawn Points")]
     [SerializeField] private StageSpawnPointSet[] stageSpawnPointSets;
-    [SerializeField] private List<Transform> defaultSpawnPoints; // จุดเกิดเริ่มต้นถ้าไม่มีจุดเฉพาะ
+    [SerializeField] private List<Transform> defaultSpawnPoints;
 
+    [Header("Teleport Positions")]
+    [SerializeField] private MapTeleportPosition[] mapTeleportPositions;
+    [SerializeField] private Vector3 defaultTeleportPosition = new Vector3(-8, 2.1f, -6);
+    
     [Header("Map Selection")]
     [SerializeField] private StageMapRange[] stageMapRanges;
-    [SerializeField] private int defaultMapIndex = 1; // แมพเริ่มต้นถ้าไม่มีการกำหนด range
+    [SerializeField] private int defaultMapIndex = 1;
 
     [Header("Difficulty Settings")]
-    [SerializeField] private int stagesPerDifficultyIncrease = 10; // จำนวนด่านก่อนเพิ่มความยาก
-    [SerializeField] private bool randomizeSetSelection = false; // สุ่มเลือกชุดหรือไม่
-    [SerializeField] private bool useBossPattern = true; // ใช้รูปแบบมินิบอส -> บอสใหญ่ หรือไม่
+    [SerializeField] private int stagesPerDifficultyIncrease = 10;
+    [SerializeField] private bool randomizeSetSelection = false;
+    [SerializeField] private bool useBossPattern = true;
 
     [Header("Enemy Prefabs")]
     [SerializeField] private GameObject[] enemyPrefab;
+    
+    [Header("Stage Settings")]
+    public int currentStage = 1;
+    public int MapIndex;
+    
+    [Header("Spawn Settings")]
+    public float spawnInterval = 2f;
+    public float spawnRadius = 10f;
+    public int maxEnemies = 10;
+    [SerializeField] private int maxEnemiesForStage;
+    
+    [Header("Enemy Tracking")]
+    public int enemiesSpawned = 0;
+    public int enemiesDefeated = 0;
+    
+    [Header("UI Elements")]
+    public GameObject WinUI;
+    public GameObject BossUI;
 
+    [Header("Dependencies")]
+    [SerializeField] private StageSelectionManager stageSelectionManager;
+    [SerializeField] private VolumeProfileChanger volumeProfileChanger;
+    
+    [Header("Debug")]
+    [SerializeField] private bool debug = false;
+    #endregion
+
+    #region Private Fields
     private System.Random random = new System.Random();
     private int currentSet;
+    private TestTeleportPlayer _teleportPlayer;
+    private StageManager _stageManager;
+    private bool isClearing = false;
+    #endregion
+
+    #region Unity Lifecycle
+    private void Start()
+    {
+        InitializeComponents();
+        StartSpawning();
+    }
+
+    private void OnValidate()
+    {
+        ValidateElementalGroups();
+        ValidateBossSets();
+        ValidateSpawnPointSets();
+        ValidateMapRanges();
+        ValidateTeleportPositions();
+    }
+    #endregion
+
+    #region Initialization
+    private void InitializeComponents()
+    {
+        _teleportPlayer = FindObjectOfType<TestTeleportPlayer>();
+        _stageManager = FindObjectOfType<StageManager>();
+    }
+    #endregion
+
+    #region Validation
+    private void ValidateElementalGroups()
+    {
+        if (elementalGroups == null) return;
+        
+        for (int i = 0; i < elementalGroups.Length; i++)
+        {
+            if (string.IsNullOrEmpty(elementalGroups[i].elementName))
+            {
+                elementalGroups[i].elementName = $"Element {i + 1}";
+            }
+
+            if (elementalGroups[i].monsterSets != null)
+            {
+                for (int j = 0; j < elementalGroups[i].monsterSets.Length; j++)
+                {
+                    if (string.IsNullOrEmpty(elementalGroups[i].monsterSets[j].setName))
+                    {
+                        elementalGroups[i].monsterSets[j].setName = $"Set {j + 1}";
+                    }
+                }
+            }
+        }
+    }
+
+    private void ValidateBossSets()
+    {
+        if (bossSets == null) return;
+        
+        for (int i = 0; i < bossSets.Length; i++)
+        {
+            if (string.IsNullOrEmpty(bossSets[i].setName))
+            {
+                string typeStr = bossSets[i].bossType.ToString();
+                string elementStr = bossSets[i].elementType.ToString();
+                bossSets[i].setName = $"{elementStr} {typeStr} Set";
+            }
+        }
+    }
+
+    private void ValidateSpawnPointSets()
+    {
+        if (stageSpawnPointSets == null) return;
+        
+        for (int i = 0; i < stageSpawnPointSets.Length; i++)
+        {
+            if (string.IsNullOrEmpty(stageSpawnPointSets[i].setName))
+            {
+                stageSpawnPointSets[i].setName = $"Spawn Set for Stage {stageSpawnPointSets[i].stageIndex}";
+            }
+        }
+    }
+
+    private void ValidateMapRanges()
+    {
+        if (stageMapRanges == null) return;
+        
+        for (int i = 0; i < stageMapRanges.Length; i++)
+        {
+            if (string.IsNullOrEmpty(stageMapRanges[i].rangeName))
+            {
+                stageMapRanges[i].rangeName = $"Map Range {i + 1} (Stage {stageMapRanges[i].startStage}-{stageMapRanges[i].endStage})";
+            }
+            
+            if (stageMapRanges[i].startStage > stageMapRanges[i].endStage)
+            {
+                Debug.LogWarning($"Stage range {stageMapRanges[i].rangeName} has startStage > endStage. Auto-fixing.");
+                int temp = stageMapRanges[i].startStage;
+                stageMapRanges[i].startStage = stageMapRanges[i].endStage;
+                stageMapRanges[i].endStage = temp;
+            }
+        }
+    }
     
+    // Add validation for teleport positions
+    private void ValidateTeleportPositions()
+    {
+        if (mapTeleportPositions == null) return;
+        
+        for (int i = 0; i < mapTeleportPositions.Length; i++)
+        {
+            if (string.IsNullOrEmpty(mapTeleportPositions[i].positionName))
+            {
+                mapTeleportPositions[i].positionName = $"Map {mapTeleportPositions[i].mapIndex} Position";
+            }
+        }
+    }
+    
+    #endregion
+
+    #region Difficulty Management
     private int GetCurrentSet()
     {
         if (randomizeSetSelection)
@@ -111,8 +258,9 @@ public class EnemySpawner : MonoBehaviour
         }
         return maxSets;
     }
+    #endregion
 
-    // เพิ่มฟังก์ชันเพื่อหา BossSet ที่เหมาะสมสำหรับด่านบอส
+    #region Boss Management
     private BossSet GetBossSetForStage(int stage)
     {
         if (bossSets == null || bossSets.Length == 0)
@@ -121,26 +269,14 @@ public class EnemySpawner : MonoBehaviour
             return null;
         }
 
-        // กำหนดรูปแบบของบอส: มินิบอส -> บอสใหญ่ -> มินิบอส -> บอสใหญ่...
+        // กำหนดรูปแบบของบอส: มินิบอส -> บอสใหญ่
         BossType bossTypeForStage = (stage % 10 == 5) ? BossType.MiniBoss : BossType.MainBoss;
 
-        // กำหนดรูปแบบของธาตุตามด่าน
-        // ด่าน 5, 10: ธาตุดิน; ด่าน 15, 20: ธาตุน้ำ; ด่าน 25, 30: ธาตุลม; ด่าน 35, 40: ธาตุไฟ; ฯลฯ
-        BossElementType elementForStage;
-        int elementCycle = ((stage - 5) / 10) % 6; // วนรอบทุก 60 ด่าน (6 ธาตุ × 10 ด่าน)
-        
-        switch (elementCycle)
-        {
-            case 0: elementForStage = BossElementType.Earth; break; // ดิน
-            case 1: elementForStage = BossElementType.Water; break; // น้ำ
-            case 2: elementForStage = BossElementType.Wind; break;  // ลม
-            case 3: elementForStage = BossElementType.Fire; break;  // ไฟ
-            case 4: elementForStage = BossElementType.Dark; break;  // มืด
-            case 5: elementForStage = BossElementType.Light; break; // แสง
-            default: elementForStage = BossElementType.Earth; break;
-        }
+        // กำหนดธาตุตามด่าน (วนรอบทุก 60 ด่าน)
+        int elementCycle = ((stage - 5) / 10) % 6;
+        BossElementType elementForStage = GetElementTypeForCycle(elementCycle);
 
-        // ค้นหา BossSet ที่ตรงกับประเภทและธาตุที่ต้องการ
+        // ค้นหา BossSet ที่ตรงกับประเภทและธาตุ
         foreach (var bossSet in bossSets)
         {
             if (bossSet.bossType == bossTypeForStage && bossSet.elementType == elementForStage)
@@ -149,7 +285,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // ถ้าไม่พบ BossSet ที่ตรงกับทั้งประเภทและธาตุ ให้ค้นหาเฉพาะประเภท
+        // ถ้าไม่พบ ค้นหาเฉพาะประเภท
         foreach (var bossSet in bossSets)
         {
             if (bossSet.bossType == bossTypeForStage)
@@ -158,10 +294,26 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // ถ้ายังไม่พบอีก ให้ใช้ BossSet แรก
+        // ถ้ายังไม่พบ ใช้ BossSet แรก
         return bossSets[0];
     }
 
+    private BossElementType GetElementTypeForCycle(int elementCycle)
+    {
+        switch (elementCycle)
+        {
+            case 0: return BossElementType.Earth;
+            case 1: return BossElementType.Water;
+            case 2: return BossElementType.Wind;
+            case 3: return BossElementType.Fire;
+            case 4: return BossElementType.Dark;
+            case 5: return BossElementType.Light;
+            default: return BossElementType.Earth;
+        }
+    }
+    #endregion
+
+    #region Enemy Selection
     private int GetEnemyIndexForStage()
     {
         currentSet = GetCurrentSet();
@@ -181,7 +333,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // ด่านปกติ (ไม่ใช่บอส)
+        // ด่านปกติ
         int elementIndex = (currentStage - 1) % elementalGroups.Length;
 
         // เลือกมอนสเตอร์จาก Set ของธาตุนั้น
@@ -201,162 +353,9 @@ public class EnemySpawner : MonoBehaviour
         Debug.LogWarning($"No enemies found for stage {currentStage}, element {elementIndex}, set {currentSet}");
         return 0;
     }
+    #endregion
 
-    // ฟังก์ชันตรวจสอบความถูกต้อง
-    private void OnValidate()
-    {
-        if (elementalGroups != null)
-        {
-            for (int i = 0; i < elementalGroups.Length; i++)
-            {
-                if (string.IsNullOrEmpty(elementalGroups[i].elementName))
-                {
-                    elementalGroups[i].elementName = $"Element {i + 1}";
-                }
-
-                if (elementalGroups[i].monsterSets != null)
-                {
-                    for (int j = 0; j < elementalGroups[i].monsterSets.Length; j++)
-                    {
-                        if (string.IsNullOrEmpty(elementalGroups[i].monsterSets[j].setName))
-                        {
-                            elementalGroups[i].monsterSets[j].setName = $"Set {j + 1}";
-                        }
-                    }
-                }
-            }
-        }
-
-        if (bossSets != null)
-        {
-            for (int i = 0; i < bossSets.Length; i++)
-            {
-                if (string.IsNullOrEmpty(bossSets[i].setName))
-                {
-                    string typeStr = bossSets[i].bossType.ToString();
-                    string elementStr = bossSets[i].elementType.ToString();
-                    bossSets[i].setName = $"{elementStr} {typeStr} Set";
-                }
-            }
-        }
-        
-        if (stageSpawnPointSets != null)
-        {
-            for (int i = 0; i < stageSpawnPointSets.Length; i++)
-            {
-                if (string.IsNullOrEmpty(stageSpawnPointSets[i].setName))
-                {
-                    stageSpawnPointSets[i].setName = $"Spawn Set for Stage {stageSpawnPointSets[i].stageIndex}";
-                }
-            }
-        }
-
-        if (stageMapRanges != null)
-        {
-            for (int i = 0; i < stageMapRanges.Length; i++)
-            {
-                if (string.IsNullOrEmpty(stageMapRanges[i].rangeName))
-                {
-                    stageMapRanges[i].rangeName = $"Map Range {i + 1} (Stage {stageMapRanges[i].startStage}-{stageMapRanges[i].endStage})";
-                }
-                
-                if (stageMapRanges[i].startStage > stageMapRanges[i].endStage)
-                {
-                    Debug.LogWarning($"Stage range {stageMapRanges[i].rangeName} has startStage > endStage. Auto-fixing.");
-                    int temp = stageMapRanges[i].startStage;
-                    stageMapRanges[i].startStage = stageMapRanges[i].endStage;
-                    stageMapRanges[i].endStage = temp;
-                }
-            }
-        }
-    }
-    
-    private GameObject CreateEnemy(Vector3 spawnPos)
-    {
-        UpdateStageSettings();
-        int enemyIndex = GetEnemyIndexForStage();
-
-        if (enemyIndex >= 0 && enemyIndex < enemyPrefab.Length)
-        {
-            GameObject enemy = Instantiate(enemyPrefab[enemyIndex], spawnPos, Quaternion.identity);
-    
-            if (debug)
-            {
-                string enemyInfo;
-                
-                if (currentStage % 5 == 0)
-                {
-                    BossSet bossSet = GetBossSetForStage(currentStage);
-                    string bossType = bossSet?.bossType.ToString() ?? "Unknown";
-                    string elementType = bossSet?.elementType.ToString() ?? "Unknown";
-                    enemyInfo = $"Stage {currentStage}: Spawned {elementType} {bossType} (Index: {enemyIndex}) on Map {MapIndex}";
-                }
-                else
-                {
-                    int elementIndex = (currentStage - 1) % elementalGroups.Length;
-                    string elementName = elementIndex < elementalGroups.Length ? elementalGroups[elementIndex].elementName : "Unknown";
-                    enemyInfo = $"Stage {currentStage}: Spawned {elementName} enemy from Set {currentSet} (Index: {enemyIndex}) on Map {MapIndex}";
-                }
-                
-                Debug.Log(enemyInfo);
-            }
-    
-            return enemy;
-        }
-
-        Debug.LogError($"Invalid enemy index: {enemyIndex}");
-        return null;
-    }
-    
-    [Header("Debug")]
-    [SerializeField] private bool debug = false; // เพิ่มตัวเลือกสำหรับ debug
-    
-    [SerializeField] private StageSelectionManager stageSelectionManager;
-    
-    [Header("Stage Settings")]
-    public int currentStage = 1;
-    public int MapIndex;
-    
-    [Header("Spawn Settings")]
-    public float spawnInterval = 2f;
-    public float spawnRadius = 10f;
-    public int maxEnemies = 10;
-    
-    [Header("Enemy Tracking")]
-    public int enemiesSpawned = 0;
-    public int enemiesDefeated = 0;
-    
-    [Header("UI Elements")]
-    public GameObject WinUI;
-    public GameObject BossUI;
-    
-    private TestTeleportPlayer _teleportPlayer;
-    private StageManager _stageManager;
-    private bool isClearing = false;
-    [SerializeField] private VolumeProfileChanger volumeProfileChanger;
-
-    [SerializeField] private int maxEnemiesForStage;
-
-    private void Start()
-    {
-        InitializeComponents();
-        StartSpawning();
-    }
-
-    private void InitializeComponents()
-    {
-        _teleportPlayer = FindObjectOfType<TestTeleportPlayer>();
-        _stageManager = FindObjectOfType<StageManager>();
-    }
-
-    private void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.P))
-        // {
-        //     ClearAllEnemies();
-        // }
-    }
-
+    #region Spawning
     public void StartSpawning()
     {
         InvokeRepeating(nameof(SpawnEnemy), 0f, spawnInterval);
@@ -376,116 +375,144 @@ public class EnemySpawner : MonoBehaviour
         enemiesSpawned++;
     }
 
-    private Vector3 GetSpawnPosition()
+    private GameObject CreateEnemy(Vector3 spawnPos)
     {
-        // ตรวจสอบว่ามีจุดเกิดเฉพาะสำหรับด่านนี้หรือไม่
-        if (stageSpawnPointSets != null)
+        UpdateStageSettings();
+        int enemyIndex = GetEnemyIndexForStage();
+
+        if (enemyIndex >= 0 && enemyIndex < enemyPrefab.Length)
         {
-            foreach (var spawnSet in stageSpawnPointSets)
+            GameObject enemy = Instantiate(enemyPrefab[enemyIndex], spawnPos, Quaternion.identity);
+    
+            if (debug)
             {
-                if (spawnSet.stageIndex == currentStage && spawnSet.spawnPoints != null && spawnSet.spawnPoints.Count > 0)
-                {
-                    Transform selectedPoint = spawnSet.spawnPoints[Random.Range(0, spawnSet.spawnPoints.Count)];
-                    if (selectedPoint != null)
-                    {
-                        if (debug)
-                        {
-                            Debug.Log($"Using custom spawn point for stage {currentStage} from set {spawnSet.setName}");
-                        }
-                        return selectedPoint.position;
-                    }
-                }
+                LogSpawnInfo(enemyIndex);
             }
+    
+            return enemy;
         }
+
+        Debug.LogError($"Invalid enemy index: {enemyIndex}");
+        return null;
+    }
+
+    private void LogSpawnInfo(int enemyIndex)
+    {
+        string enemyInfo;
         
-        // ตรวจสอบตาม MapIndex ถ้าไม่มีการตั้งค่าเฉพาะสำหรับ Stage
-        if (stageSpawnPointSets != null)
-        {
-            foreach (var spawnSet in stageSpawnPointSets)
-            {
-                // ใช้ stageIndex ติดลบเพื่อระบุว่าเป็นการอ้างอิงถึง MapIndex แทน Stage
-                if (spawnSet.stageIndex == -MapIndex && spawnSet.spawnPoints != null && spawnSet.spawnPoints.Count > 0)
-                {
-                    Transform selectedPoint = spawnSet.spawnPoints[Random.Range(0, spawnSet.spawnPoints.Count)];
-                    if (selectedPoint != null)
-                    {
-                        if (debug)
-                        {
-                            Debug.Log($"Using custom spawn point for MapIndex {MapIndex} from set {spawnSet.setName}");
-                        }
-                        return selectedPoint.position;
-                    }
-                }
-            }
-        }
-        
-        // ถ้าเป็นบอส ใช้จุดเกิดพิเศษ
         if (currentStage % 5 == 0)
         {
-            // ตรวจสอบว่ามีจุดเกิดเฉพาะสำหรับบอสหรือไม่
-            foreach (var spawnSet in stageSpawnPointSets)
+            BossSet bossSet = GetBossSetForStage(currentStage);
+            string bossType = bossSet?.bossType.ToString() ?? "Unknown";
+            string elementType = bossSet?.elementType.ToString() ?? "Unknown";
+            enemyInfo = $"Stage {currentStage}: Spawned {elementType} {bossType} (Index: {enemyIndex}) on Map {MapIndex}";
+        }
+        else
+        {
+            int elementIndex = (currentStage - 1) % elementalGroups.Length;
+            string elementName = elementIndex < elementalGroups.Length ? elementalGroups[elementIndex].elementName : "Unknown";
+            enemyInfo = $"Stage {currentStage}: Spawned {elementName} enemy from Set {currentSet} (Index: {enemyIndex}) on Map {MapIndex}";
+        }
+        
+        Debug.Log(enemyInfo);
+    }
+
+    private Vector3 GetSpawnPosition()
+    {
+        // ตรวจสอบจุดเกิดเฉพาะสำหรับด่าน
+        foreach (var spawnSet in stageSpawnPointSets ?? new StageSpawnPointSet[0])
+        {
+            // จุดเกิดเฉพาะสำหรับด่าน
+            if (spawnSet.stageIndex == currentStage && HasValidSpawnPoints(spawnSet))
             {
-                if (spawnSet.stageIndex == -999 && spawnSet.spawnPoints != null && spawnSet.spawnPoints.Count > 0) // ใช้ค่าพิเศษ -999 สำหรับบอส
-                {
-                    Transform selectedPoint = spawnSet.spawnPoints[Random.Range(0, spawnSet.spawnPoints.Count)];
-                    if (selectedPoint != null)
-                    {
-                        if (debug)
-                        {
-                            Debug.Log($"Using boss spawn point for stage {currentStage}");
-                        }
-                        return selectedPoint.position;
-                    }
-                }
+                return GetRandomSpawnPoint(spawnSet, $"custom spawn point for stage {currentStage}");
+            }
+            
+            // จุดเกิดเฉพาะสำหรับแมพ
+            if (spawnSet.stageIndex == -MapIndex && HasValidSpawnPoints(spawnSet))
+            {
+                return GetRandomSpawnPoint(spawnSet, $"custom spawn point for MapIndex {MapIndex}");
+            }
+            
+            // จุดเกิดเฉพาะสำหรับบอส
+            if (currentStage % 5 == 0 && spawnSet.stageIndex == -999 && HasValidSpawnPoints(spawnSet))
+            {
+                return GetRandomSpawnPoint(spawnSet, $"boss spawn point for stage {currentStage}");
             }
         }
         
-        // ถ้าไม่มีจุดเกิดเฉพาะ ใช้จุดเกิดเริ่มต้น
+        // ใช้จุดเกิดเริ่มต้น
         if (defaultSpawnPoints != null && defaultSpawnPoints.Count > 0)
         {
             return defaultSpawnPoints[Random.Range(0, defaultSpawnPoints.Count)].position;
         }
         
-        // ถ้าไม่มีจุดเกิดเริ่มต้น ใช้การสุ่มรอบตำแหน่งปัจจุบัน
+        // สุ่มรอบตำแหน่งปัจจุบัน
         Vector2 randomPos = Random.insideUnitCircle * spawnRadius;
         return new Vector3(randomPos.x, 0, randomPos.y) + transform.position;
     }
 
-    // ปรับปรุงฟังก์ชัน UpdateStageSettings เพื่อใช้แมพตาม BossSet
+    private bool HasValidSpawnPoints(StageSpawnPointSet spawnSet)
+    {
+        return spawnSet.spawnPoints != null && spawnSet.spawnPoints.Count > 0;
+    }
+
+    private Vector3 GetRandomSpawnPoint(StageSpawnPointSet spawnSet, string debugMessage)
+    {
+        Transform selectedPoint = spawnSet.spawnPoints[Random.Range(0, spawnSet.spawnPoints.Count)];
+        if (selectedPoint != null)
+        {
+            if (debug)
+            {
+                Debug.Log($"Using {debugMessage} from set {spawnSet.setName}");
+            }
+            return selectedPoint.position;
+        }
+        
+        // Fallback to default position if something went wrong
+        return transform.position;
+    }
+    #endregion
+
+    #region Stage Management
     private void UpdateStageSettings()
     {
         currentSet = GetCurrentSet();
     
-        // ถ้าเป็นด่านที่หาร 5 ลงตัว จะเป็นด่านบอส
+        // ตรวจสอบด่านบอส
         if (currentStage % 5 == 0)
         {
-            BossSet bossSet = GetBossSetForStage(currentStage);
-            if (bossSet != null)
-            {
-                MapIndex = bossSet.mapIndex; // ใช้แมพตามที่กำหนดใน BossSet
-                if (debug)
-                {
-                    Debug.Log($"Using map {MapIndex} for {bossSet.elementType} {bossSet.bossType} at stage {currentStage}");
-                }
-            }
-            else
-            {
-                MapIndex = defaultBossMapIndex; // ใช้แมพบอสเริ่มต้น
-            }
-            
-            maxEnemies = 1; // บอสมี 1 ตัว
+            SetBossStageSettings();
             return;
         }
 
         // หาแมพที่ตรงกับช่วงด่านปัจจุบัน
         MapIndex = GetMapIndexForCurrentStage();
-    
-        maxEnemies = maxEnemiesForStage; // ด่านปกติมีศัตรูตามที่กำหนด
+        maxEnemies = maxEnemiesForStage;
+    }
+
+    private void SetBossStageSettings()
+    {
+        BossSet bossSet = GetBossSetForStage(currentStage);
+        if (bossSet != null)
+        {
+            MapIndex = bossSet.mapIndex;
+            if (debug)
+            {
+                Debug.Log($"Using map {MapIndex} for {bossSet.elementType} {bossSet.bossType} at stage {currentStage}");
+            }
+        }
+        else
+        {
+            MapIndex = defaultBossMapIndex;
+        }
+        
+        maxEnemies = 1; // บอสมี 1 ตัว
     }
 
     private int GetMapIndexForCurrentStage()
     {
-        if (stageMapRanges != null && stageMapRanges.Length > 0)
+        if (stageMapRanges != null)
         {
             foreach (var range in stageMapRanges)
             {
@@ -497,30 +524,6 @@ public class EnemySpawner : MonoBehaviour
         }
         
         return defaultMapIndex;
-    }
-
-    public void ClearAllEnemies()
-    {
-        isClearing = true;
-        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in allEnemies)
-        {
-            Destroy(enemy);
-        }
-        ResetEnemyCount();
-        StartCoroutine(WaitAndResetClear());
-    }
-
-    private void ResetEnemyCount()
-    {
-        enemiesSpawned = 0;
-        enemiesDefeated = 0;
-    }
-
-    private IEnumerator WaitAndResetClear()
-    {
-        yield return new WaitForSeconds(5f);
-        isClearing = false;
     }
 
     public void EnemyDefeated()
@@ -563,21 +566,73 @@ public class EnemySpawner : MonoBehaviour
         BossUI.SetActive(false);
         WinUI.SetActive(true);
     }
+    #endregion
 
+    #region Player Movement
     public void TeleportPlayer()
     {
-        // ตรวจสอบแมพพิเศษ
-        if (MapIndex == 6)
+        // Find the teleport position for the current map index
+        Vector3 teleportPosition = GetTeleportPositionForMap(MapIndex);
+        _teleportPlayer.TeleportPlayer(teleportPosition);
+    }
+    
+    private Vector3 GetTeleportPositionForMap(int mapIndex)
+    {
+        // Check if we have a specific position defined for this map
+        if (mapTeleportPositions != null)
         {
-            Vector3 newpos6 = new Vector3(2.9f, 2.1f, 42.4f);
-            _teleportPlayer.TeleportPlayer(newpos6);
-            return;
+            foreach (var teleportPos in mapTeleportPositions)
+            {
+                if (teleportPos.mapIndex == mapIndex)
+                {
+                    if (debug)
+                    {
+                        Debug.Log($"Using teleport position for map {mapIndex}: {teleportPos.position}");
+                    }
+                    return teleportPos.position;
+                }
+            }
         }
-       
-        Vector3 newpos = new Vector3(-8, 2.1f, -6);
-        _teleportPlayer.TeleportPlayer(newpos);
+        
+        // If no position found for the current map, use the default
+        if (debug)
+        {
+            Debug.Log($"No teleport position found for map {mapIndex}, using default position");
+        }
+        return defaultTeleportPosition;
+    }
+    
+    #endregion
+
+    #region Public Methods
+    public void ClearAllEnemies()
+    {
+        isClearing = true;
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in allEnemies)
+        {
+            Destroy(enemy);
+        }
+        ResetEnemyCount();
+        StartCoroutine(WaitAndResetClear());
     }
 
+    // Replace the existing NextStage method to use the new TeleportPlayer
+    public void NextStage()
+    { 
+        ClearAllEnemies();
+        TeleportPlayer();
+    
+        currentStage += 1;
+        UpdateStageSettings();
+        _stageManager.ChangeMap(MapIndex);
+        volumeProfileChanger.ChangeSceneSetup(MapIndex);
+        ResetEnemyCount();
+        StartSpawning();
+        BossUI.SetActive(false);
+    }
+
+    // Replace the existing GotoBoss method to use the new TeleportPlayer
     public void GotoBoss()
     {
         ClearAllEnemies();
@@ -592,32 +647,10 @@ public class EnemySpawner : MonoBehaviour
         BossUI.SetActive(false);
     }
 
-    public void NextStage()
-    { 
-        ClearAllEnemies();
-        if (currentStage == 5)
-        {
-            Vector3 newpos6 = new Vector3(2.9f, 2.1f, 42.4f);
-            _teleportPlayer.TeleportPlayer(newpos6);
-        }
-        else
-        {
-            TeleportPlayer();
-        }
-    
-        currentStage += 1;
-        UpdateStageSettings();
-        _stageManager.ChangeMap(MapIndex);
-        volumeProfileChanger.ChangeSceneSetup(MapIndex);
-        ResetEnemyCount();
-        StartSpawning();
-        BossUI.SetActive(false);
-    }
-
     public void SetStage(int stageIndex)
     {
         currentStage = stageIndex;
-        UpdateStageSettings(); // อัพเดทค่า MapIndex ตามด่านที่เลือก
+        UpdateStageSettings();
         TeleportPlayer();
         ClearAllEnemies();
         
@@ -633,6 +666,21 @@ public class EnemySpawner : MonoBehaviour
     {
         enemiesDefeated = 0;
     }
+    #endregion
+
+    #region Helper Methods
+    private void ResetEnemyCount()
+    {
+        enemiesSpawned = 0;
+        enemiesDefeated = 0;
+    }
+
+    private IEnumerator WaitAndResetClear()
+    {
+        yield return new WaitForSeconds(5f);
+        isClearing = false;
+    }
+    #endregion
 }
 
 public class EnemyDefeatedNotifier : MonoBehaviour
