@@ -26,9 +26,11 @@ public class Inventory : MonoBehaviour
     public RectTransform miniCanvas;
     [SerializeField] protected InventorySlot rightClickSlot;
 
+    [Header("Toggle Inventory")]
     private CanvasGroup inventoryCanvasGroup;
     private bool isVisible = false;
     [SerializeField] private float fadeSpeed = 5f;
+    public GameObject canvasCam;
 
 
     [SerializeField] private PlayerManager playerManager;
@@ -157,8 +159,10 @@ public class Inventory : MonoBehaviour
 
     public void ToggleInventory()
     {
+        
         isVisible = !isVisible;
         SetInventoryVisibility(isVisible);
+        canvasCam.SetActive(isVisible);
     }
 
     private void SetInventoryVisibility(bool visible)
