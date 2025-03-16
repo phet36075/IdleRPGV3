@@ -33,30 +33,5 @@ public class PowerStatsSlots : MonoBehaviour
     }
 }
 
-// ตัวอย่าง: แสดงการแจ้งเตือนเมื่อค่า HP สูงสุดเพิ่มขึ้น
-        // if (statName == "maxHealth" && newValue > oldValue)
-        // {
-        //       ShowStatIncreaseEffect("maxHealth", oldValue, newValue);
-        // }
-    
-    // private void ShowStatIncreaseEffect(string statName, float oldValue, float newValue)
-    // {
-    //
-    //     switch (statName)
-    //     {
-    //         case "maxHealth":
-    //           
-    //             // อาจจะเพิ่ม animation สีเขียวที่ตัวเลข
-    //             break;
-    //     }
-
-       
-        // if (statName == "maxHealth" && newValue < oldValue)
-        // {
-        //     maxHealthChange.text = "Health " + newValue + " " + oldValue;
-        // }
-       
-        // แสดง animation หรือ visual effect เพื่อเน้นย้ำการเปลี่ยนแปลงของสถิติ
-        // เช่น การส่องสว่างของไอคอนเกราะเมื่อค่า defense เพิ่มขึ้น
     
 

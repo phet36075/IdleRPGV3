@@ -24,11 +24,6 @@ public class LowHealthBT : Conditional
 
         return TaskStatus.Failure;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private bool hasTriggered70 = false;
     private bool hasTriggered30 = false;
     public bool ShouldSuccess()

@@ -15,17 +15,10 @@ public class AIController : MonoBehaviour
     public GameObject indicatorPrefab; // Prefab ของ Indicator
     private GameObject currentIndicator;
     private Transform nextLevelTarget; 
-   // private bool moveToNextLevel = false;
     public AllyRangedCombat _AllyRangedCombat;
     private SkillManager skillManager;
-   
-    
-    
     private float lastSkillUseTime;
     public float skillUseInterval = 2f; // ระยะเวลาระหว่างการใช้สกิล
-    
-    
-    
     
     private void OnDisable()
     {
@@ -34,7 +27,6 @@ public class AIController : MonoBehaviour
             Destroy(currentIndicator);
         }
     }
-    
     void Start()
     {
         skillManager = GetComponent<SkillManager>();
@@ -94,7 +86,6 @@ public class AIController : MonoBehaviour
     {
         target = newTarget;
     }
-   
     
     void RotateTowardsTarget()
     {
