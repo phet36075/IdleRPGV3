@@ -30,6 +30,7 @@ public class UIContainer : MonoBehaviour
         else
         {
             skillInventoryPanel.SetActive(false);
+            detailWindow.Hide();
         }
         
         if (isStatsOpened)
