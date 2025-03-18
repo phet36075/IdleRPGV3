@@ -17,4 +17,5 @@ MonoBehaviour:
   itemName: Speed Potion
   description: Speed Up
   maxStack: 5
+  itemType: 6
   gamePrefab: {fileID: 3817268936339179899, guid: 1974ee5284e245e4b84b207e5277e382, type: 3}

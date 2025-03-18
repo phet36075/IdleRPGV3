@@ -11,6 +11,7 @@ public enum ItemType
     Armor,
     Boot,
     Ring,
+    Consumable,
     Skill
     
 }

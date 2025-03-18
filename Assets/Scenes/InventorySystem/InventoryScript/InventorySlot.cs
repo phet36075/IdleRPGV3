@@ -174,12 +174,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.currentSelectedSlot = this;
 
             inventory.ShowItemDetail(this);
-            /*
-            Debug.Log($"Item clicked: {item.itemName}");
-            Debug.Log($"Item ID: {item.id}");
-            Debug.Log($"Item Description: {item.description}");
-            */
-            // อัปเดตปุ่ม Equip/Unequip
+            
             UpdateEquipButton();
         }
     }
@@ -253,24 +248,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
     public void UpdateEquipButton()
     {
-        /*
-        if (inventory.equipButton == null || inventory.equipButton == null)
-            return;
-
-        if (inventory.IsItemEquipped(this))
-        {
-            inventory.equipButtonText.text = "Unequip";
-            inventory.equipButton.onClick.RemoveAllListeners();
-            //inventory.equipButton.onClick.AddListener(inventory.UnequipItem);
-            inventory.equipButton.onClick.AddListener(Unequip);
-        }
-        else
-        {
-            inventory.equipButtonText.text = "Equip";
-            inventory.equipButton.onClick.RemoveAllListeners();
-            inventory.equipButton.onClick.AddListener(UseItem);
-        }
-        */
+        
         if (inventory.equipButton == null || inventory.equipButtonText == null)
             return;
 
@@ -310,47 +288,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
     public void UseItem()
     {
-        /*
-        if (item.itemType == ItemType.Weapon)
-        {
-            inventory.equippedItemSlot = this; // ตั้งค่าช่องที่กำลังใช้อยู่
-
-            if (inventory.myEqImage != null)
-            {
-                inventory.myEqImage.sprite = item.icon;
-                inventory.myEqImage.color = Color.white; // ทำให้รูปไม่โปร่งใส
-            }
-            Debug.Log($"Equipped {item.itemName}");
-
-            inventory.ShowItemName(item.itemName); // แสดงชื่อไอเทมใน UI
-            if (item.itemName == "Fire Sword")
-            {
-                playerManager.ChangeWeaponElement(ElementType.Fire);
-            }
-            else if (item.itemName == "Water Sword")
-            {
-                playerManager.ChangeWeaponElement(ElementType.Water);
-            }
-            else if (item.itemName == "Wind Sword")
-            {
-                playerManager.ChangeWeaponElement(ElementType.Wind);
-            }
-            else if (item.itemName == "Earth Sword")
-            {
-                playerManager.ChangeWeaponElement(ElementType.Earth);
-            }
-            else if (item.itemName == "Light Sword")
-            {
-                playerManager.ChangeWeaponElement(ElementType.Light);
-            }
-            else if (item.itemName == "Dark Sword")
-            {
-                playerManager.ChangeWeaponElement(ElementType.Dark);
-            }
-            UpdateEquipButton();
-            return; // **ออกจากเมทอดทันที ไม่ลด stack**
-        }
-        */
+        
         if (item.itemType == ItemType.Weapon)
         {
             // ตรวจสอบว่ามีอาวุธถูกสวมใส่อยู่หรือไม่
@@ -400,24 +338,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
         }
 
 
-        /*
-
-        else if (item.itemType == ItemType.Hat) //   Hat
-        {
-            inventory.equippedHatSlot = this;
-
-            if (inventory.myEqImageHat != null)
-            {
-                inventory.myEqImageHat.sprite = item.icon;
-                inventory.myEqImageHat.color = Color.white;
-            }
-            Debug.Log($"Equipped {item.itemName} (Hat)");
-
-            inventory.ShowItemNameHat(item.itemName);
-            UpdateEquipButton();
-            return;
-        }
-        */
         else if (item.itemType == ItemType.Hat) //  Hat
         {
             // ตรวจสอบว่ามีหมวกถูกสวมใส่อยู่หรือไม่
@@ -442,23 +362,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             return;
         }
 
-        /*
-        else if (item.itemType == ItemType.Armor) //   Armor
-        {
-            inventory.equippedArmorSlot = this;
-
-            if (inventory.myEqImageArmor != null)
-            {
-                inventory.myEqImageArmor.sprite = item.icon;
-                inventory.myEqImageArmor.color = Color.white;
-            }
-            Debug.Log($"Equipped {item.itemName} (Armor)");
-
-            inventory.ShowItemNameArmor(item.itemName);
-            UpdateEquipButton();
-            return;
-        }
-        */
+   
         else if (item.itemType == ItemType.Armor) //  Armor
         {
             // ตรวจสอบว่ามีเกราะถูกสวมใส่อยู่หรือไม่
@@ -497,23 +401,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             return;
         }
 
-        /*
-        else if (item.itemType == ItemType.Boot) //   Boot
-        {
-            inventory.equippedBootSlot = this;
-
-            if (inventory.myEqImageBoot != null)
-            {
-                inventory.myEqImageBoot.sprite = item.icon;
-                inventory.myEqImageBoot.color = Color.white;
-            }
-            Debug.Log($"Equipped {item.itemName} (Boot)");
-
-            inventory.ShowItemNameBoot(item.itemName);
-            UpdateEquipButton();
-            return;
-        }
-        */
+    
 
         else if (item.itemType == ItemType.Boot) //  Boot
         {
@@ -539,23 +427,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             return;
         }
 
-        /*
-        else if (item.itemType == ItemType.Ring) //   Ring
-        {
-            inventory.equippedRingSlot = this;
-
-            if (inventory.myEqImageRing != null)
-            {
-                inventory.myEqImageRing.sprite = item.icon;
-                inventory.myEqImageRing.color = Color.white;
-            }
-            Debug.Log($"Equipped {item.itemName} (Ring)");
-
-            inventory.ShowItemNameRing(item.itemName);
-            UpdateEquipButton();
-            return;
-        }
-        */
 
         else if (item.itemType == ItemType.Ring) //  Ring
         {
@@ -618,68 +489,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
     }
 
-    /*
-    public void Unequip()
-    {
-
-        if (inventory.currentSelectedSlot == null) return; // ป้องกัน null reference
-
-        if (inventory.currentSelectedSlot == inventory.equippedItemSlot) // ตรวจสอบว่าช่องที่เลือกเป็นอันเดียวกับที่ใส่อุปกรณ์อยู่หรือไม่
-        {
-            if (inventory.currentSelectedSlot.item.itemType == ItemType.Weapon)
-            {
-                playerManager.ChangeWeaponElement(ElementType.None); // รีเซ็ตธาตุอาวุธ
-            }
-
-            // ลบรูปอาวุธใน UI
-            inventory.myEqImage.sprite = null;
-            inventory.myEqImage.color = new Color(0f, 0f, 0f, 177f / 255f);  // grey
-            Debug.Log($"Unequipped {item.itemName} (Weapon)");
-            inventory.ShowItemName(""); // ล้างชื่อไอเทมที่แสดงอยู่
-
-            // ตั้งค่าช่องอุปกรณ์ให้เป็นว่าง
-            inventory.equippedItemSlot = null;
-
-        }
-        else if (inventory.currentSelectedSlot == inventory.equippedHatSlot) //   Hat
-        {
-            inventory.myEqImageHat.sprite = null;
-            inventory.myEqImageHat.color = new Color(0f, 0f, 0f, 177f / 255f);
-            inventory.equippedHatSlot = null;
-            Debug.Log($"Unequipped {item.itemName} (Hat)");
-            inventory.ShowItemNameHat(""); // ล้างชื่อไอเทมที่แสดงอยู่
-        }
-        else if (inventory.currentSelectedSlot == inventory.equippedArmorSlot) //   Armor
-        {
-            inventory.myEqImageArmor.sprite = null;
-            inventory.myEqImageArmor.color = new Color(0f, 0f, 0f, 177f / 255f);
-            inventory.equippedArmorSlot = null;
-            Debug.Log($"Unequipped {item.itemName} (Armor)");
-            inventory.ShowItemNameArmor(""); // ล้างชื่อไอเทมที่แสดงอยู่
-        }
-
-        else if (inventory.currentSelectedSlot == inventory.equippedBootSlot) //   Boot
-        {
-            inventory.myEqImageBoot.sprite = null;
-            inventory.myEqImageBoot.color = new Color(0f, 0f, 0f, 177f / 255f);
-            inventory.equippedBootSlot = null;
-            Debug.Log($"Unequipped {item.itemName} (Boot)");
-            inventory.ShowItemNameBoot(""); // ล้างชื่อไอเทมที่แสดงอยู่
-        }
-
-        else if (inventory.currentSelectedSlot == inventory.equippedRingSlot) //   Ring
-        {
-            inventory.myEqImageRing.sprite = null;
-            inventory.myEqImageRing.color = new Color(0f, 0f, 0f, 177f / 255f);
-            inventory.equippedRingSlot = null;
-            Debug.Log($"Unequipped {item.itemName} (Ring)");
-            inventory.ShowItemNameRing(""); // ล้างชื่อไอเทมที่แสดงอยู่
-        }
-
-        UpdateEquipButton();
-    }
-    */
-
+  
     public void Unequip()
     {
         if (inventory.equippedItemSlot != null && inventory.equippedItemSlot == this) // ถอดอาวุธ
@@ -747,96 +557,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
     }
 
 
+    
 
 
-
-
-    //Old Swap
-    /*
-    public void SwapSlot(InventorySlot newSlot)
-    {
-        
-
-        //GEMINI2
-        SO_Item keepItem = item;
-        int keepstack = stack;
-
-        SetSwap(newSlot.item, newSlot.stack);
-        newSlot.SetSwap(keepItem, keepstack);
-
-        // อัปเดตสถานะ currentSelectedSlot
-        if (inventory.currentSelectedSlot == this)
-        {
-            inventory.currentSelectedSlot = newSlot;
-        }
-        else if (inventory.currentSelectedSlot == newSlot)
-        {
-            inventory.currentSelectedSlot = this;
-        }
-
-        // อัปเดตสถานะ equippedItemSlot (ถ้าเกี่ยวข้อง)
-        if (inventory.equippedItemSlot == this)
-        {
-            inventory.equippedItemSlot = newSlot;
-            UpdateEquippedSlotUI(inventory.equippedItemSlot, inventory.myEqImage, inventory.itemNameText);
-        }
-        else if (inventory.equippedItemSlot == newSlot)
-        {
-            inventory.equippedItemSlot = this;
-            UpdateEquippedSlotUI(inventory.equippedItemSlot, inventory.myEqImage, inventory.itemNameText);
-        }
-        //เช็คหมวก
-        if (inventory.equippedHatSlot == this)
-        {
-            inventory.equippedHatSlot = newSlot;
-            UpdateEquippedSlotUI(inventory.equippedHatSlot, inventory.myEqImageHat, inventory.itemNameTextHat);
-        }
-        else if (inventory.equippedHatSlot == newSlot)
-        {
-            inventory.equippedHatSlot = this;
-            UpdateEquippedSlotUI(inventory.equippedHatSlot, inventory.myEqImageHat, inventory.itemNameTextHat);
-        }
-        //เช็คเกราะ
-        if (inventory.equippedArmorSlot == this)
-        {
-            inventory.equippedArmorSlot = newSlot;
-            UpdateEquippedSlotUI(inventory.equippedArmorSlot, inventory.myEqImageArmor, inventory.itemNameTextArmor);
-        }
-        else if (inventory.equippedArmorSlot == newSlot)
-        {
-            inventory.equippedArmorSlot = this;
-            UpdateEquippedSlotUI(inventory.equippedArmorSlot, inventory.myEqImageArmor, inventory.itemNameTextArmor);
-        }
-        //เช็ครองเท้า
-        if (inventory.equippedBootSlot == this)
-        {
-            inventory.equippedBootSlot = newSlot;
-            UpdateEquippedSlotUI(inventory.equippedBootSlot, inventory.myEqImageBoot, inventory.itemNameTextBoot);
-        }
-        else if (inventory.equippedBootSlot == newSlot)
-        {
-            inventory.equippedBootSlot = this;
-            UpdateEquippedSlotUI(inventory.equippedBootSlot, inventory.myEqImageBoot, inventory.itemNameTextBoot);
-        }
-        //เช็คแหวน
-        if (inventory.equippedRingSlot == this)
-        {
-            inventory.equippedRingSlot = newSlot;
-            UpdateEquippedSlotUI(inventory.equippedRingSlot, inventory.myEqImageRing, inventory.itemNameTextRing);
-        }
-        else if (inventory.equippedRingSlot == newSlot)
-        {
-            inventory.equippedRingSlot = this;
-            UpdateEquippedSlotUI(inventory.equippedRingSlot, inventory.myEqImageRing, inventory.itemNameTextRing);
-        }
-
-        // อัปเดตปุ่ม Equip/Unequip
-        inventory.currentSelectedSlot.UpdateEquipButton();
-        newSlot.UpdateEquipButton();
-
-
-    }
-    */
 
     public void SwapSlot(InventorySlot newSlot)
     {

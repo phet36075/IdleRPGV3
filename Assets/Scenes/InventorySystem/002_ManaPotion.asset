@@ -17,5 +17,5 @@ MonoBehaviour:
   itemName: Mana Potion
   description: Heal Mana
   maxStack: 10
-  itemType: 0
+  itemType: 6
   gamePrefab: {fileID: 6453305798437322960, guid: 281a04f5562a2e24e8c83727190a138e, type: 3}

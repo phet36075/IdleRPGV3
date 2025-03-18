@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool isJumping = false;
-    private float jumpCooldown = 2.0f; // Cooldown time in seconds
+    public float jumpCooldown = 2.0f; // Cooldown time in seconds
     private float jumpCooldownTimer = 0f; // Timer to track cooldown
 
     private void HandleJumpCooldown()

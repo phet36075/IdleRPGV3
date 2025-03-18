@@ -10,7 +10,10 @@ using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
-
+    [Header("Player Animation")]
+    public GameObject canvasCam;
+    public Animator playerAnim;
+    
     [Header("Inventory")]
     public SO_Item EMPTY_ITEM;
     public Transform slotPrefab;
@@ -30,7 +33,7 @@ public class Inventory : MonoBehaviour
     private CanvasGroup inventoryCanvasGroup;
     private bool isVisible = false;
     [SerializeField] private float fadeSpeed = 5f;
-    public GameObject canvasCam;
+   
 
 
     [SerializeField] private PlayerManager playerManager;
@@ -72,6 +75,8 @@ public class Inventory : MonoBehaviour
 
     public Button equipButton;
     public TextMeshProUGUI equipButtonText;
+
+    public Button dropButton;
 
 
     // Start is called before the first frame update
@@ -163,6 +168,8 @@ public class Inventory : MonoBehaviour
         isVisible = !isVisible;
         SetInventoryVisibility(isVisible);
         canvasCam.SetActive(isVisible);
+        if(isVisible)
+        playerAnim.SetTrigger("Wave");
     }
 
     private void SetInventoryVisibility(bool visible)
@@ -181,44 +188,7 @@ public class Inventory : MonoBehaviour
 
     public void ShowItemDetail(InventorySlot slot)
     {
-        /*
-        if (slot.item == EMPTY_ITEM)
-            return;
-
-        // อัปเดต UI ด้วยข้อมูลจาก SO_Item
-        detailIcon.sprite = slot.item.icon;
-        detailIcon.color = Color.white;
-        detailName.text = slot.item.itemName;
-        detailDescription.text = slot.item.description;
-
-        // แสดงหน้าต่าง detail
-        detailPanel.SetActive(true);
-
-        */
-
-        /*latest
-        detailPanel.SetActive(true);
-        detailIcon.sprite = slot.item.icon;
-        detailIcon.color = Color.white;
-        detailName.text = slot.item.itemName;
-        detailDescription.text = "Description: " + slot.item.description;
-
-       
-
-
-        // อัปเดตจำนวน Stack
-        if (slot.stack > 1)
-        {
-            detailStackText.gameObject.SetActive(true);
-            detailStackText.text ="Amount: " + slot.stack.ToString();
-        }
-        else
-        {
-            detailStackText.gameObject.SetActive(false);
-        }
-        */
-
-        //GEMINI
+        
         detailPanel.SetActive(true);
         detailIcon.sprite = slot.item.icon;
         detailIcon.color = Color.white;
@@ -242,6 +212,42 @@ public class Inventory : MonoBehaviour
             currentSelectedSlot.UpdateEquipButton();
         }
 
+        // เพิ่ม listener ให้กับ dropButton
+        dropButton.onClick.RemoveAllListeners();
+        dropButton.onClick.AddListener(() => DropSelectedItem(slot));
+    }
+
+    public void DropSelectedItem(InventorySlot slot) // potion ไม่สมบูรณ์
+    {
+        
+        // ตรวจสอบว่าไอเทมเป็นอุปกรณ์ที่ถูกสวมใส่อยู่หรือไม่
+        if (slot == equippedItemSlot || slot == equippedHatSlot || slot == equippedArmorSlot || slot == equippedBootSlot || slot == equippedRingSlot)
+        {
+            Debug.Log("Dropping equippedSlot Start: " + slot.item.itemName + ", amount: " + slot.stack);
+            // ถอดอุปกรณ์ก่อนทิ้ง
+            slot.Unequip();
+            DropItem(slot.item, slot.stack); // ส่ง slot.item และ slot.stack
+            RemoveItem(slot);
+            HideItemDetail();
+            Debug.Log("Drop complete");
+        }
+        if (slot.item.itemType == ItemType.Weapon || slot.item.itemType == ItemType.Hat || slot.item.itemType == ItemType.Armor || slot.item.itemType == ItemType.Boot || slot.item.itemType == ItemType.Ring)
+        {
+            Debug.Log("Dropping Wear itemType Start: " + slot.item.itemName + ", amount: " + slot.stack);
+            DropItem(slot.item, slot.stack); // ส่ง slot.item และ slot.stack
+            RemoveItem(slot);
+            HideItemDetail();
+            Debug.Log("Drop complete");
+        }
+        if (slot.item.itemType == ItemType.Consumable)
+        {
+            Debug.Log("Dropping Consumable itemType Start: " + slot.item.itemName + ", amount: " + slot.stack);
+            DropItem(slot.item, slot.stack);
+            RemoveItem(slot);
+            HideItemDetail();
+            Debug.Log("Drop complete");
+            return;
+        }
 
     }
 
@@ -265,14 +271,18 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(SO_Item item, int amount)
     {
+        //Debug.Log("Attempting to add item: " + item.itemName + ", amount: " + amount); // เพิ่ม Debug.Log() ก่อน
+
         InventorySlot slot = IsEmptySlotLeft(item);
         if (slot == null)
         {
             //full
+            Debug.Log("Inventory is full. Dropping item: " + item.itemName + ", amount: " + amount); // เพิ่ม Debug.Log() เมื่อ inventory เต็ม
             DropItem(item, amount);
             return;
         }
         slot.MergeThisSlot(item, amount);
+        Debug.Log("Item added: " + item.itemName + ", amount: " + amount + " to slot: " + slot.name); // เพิ่ม Debug.Log() เมื่อเพิ่มไอเทมสำเร็จ
     }
 
 
@@ -299,21 +309,15 @@ public class Inventory : MonoBehaviour
         rightClickSlot.SetThislot(EMPTY_ITEM, 0);
         OnFinishMiniCanvas();
     }
+    /*
     public void DropItem() //OnCLick Event
     {
-        if (rightClickSlot == equippedItemSlot)
-        {
-            // ลบรูปภาพใน myEqImage
-            myEqImage.sprite = null;  // ลบไอคอนของไอเทม
-            myEqImage.color = new Color(1f, 1f, 1f, 0f);  // ทำให้ภาพเป็นโปร่งใส
-            ShowItemName(""); // clear ชื่อไอเทม
-        }
 
-        // สร้างไอเทมใหม่ที่ถูกทิ้ง
-        ItemSpawner.Instance.SpawnItem(rightClickSlot.item, rightClickSlot.stack);
-        DestroyItem();
+        ItemSpawner.Instance.SpawnItem(slot.item, slot.stack);
+        RemoveItem(slot); // ลบไอเทมออกจาก slot
+        HideItemDetail(); // ซ่อน detail panel
     }
-
+    */
 
     public void DropItem(SO_Item item, int amount)
     {
