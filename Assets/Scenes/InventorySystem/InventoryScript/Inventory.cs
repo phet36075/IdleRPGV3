@@ -13,6 +13,8 @@ public class Inventory : MonoBehaviour
     [Header("Player Animation")]
     public GameObject canvasCam;
     public Animator playerAnim;
+    public GameObject gameplayUI;
+    public GameObject skillUI;
     
     [Header("Inventory")]
     public SO_Item EMPTY_ITEM;
@@ -168,6 +170,8 @@ public class Inventory : MonoBehaviour
         isVisible = !isVisible;
         SetInventoryVisibility(isVisible);
         canvasCam.SetActive(isVisible);
+        gameplayUI.SetActive(!isVisible);
+        skillUI.SetActive(!isVisible);
         if(isVisible)
         playerAnim.SetTrigger("Wave");
     }
