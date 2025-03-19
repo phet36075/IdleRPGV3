@@ -447,8 +447,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 10
   roamDelay: 3
+  animator: {fileID: 0}
   walkingSound: {fileID: 8300000, guid: 3d77d08cf495793418b0316f5c80b8cf, type: 3}
+  audioSource: {fileID: 7053831414035765101}
   delayBetweenSounds: 1
+  canPlaySound: 1
 --- !u!195 &-3630011052608029280
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -600,6 +603,7 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 8058489753668129861, guid: 9db87d97486b99c44824f5688f7c2f37, type: 3}
   damageTextPrefabCritical: {fileID: 8058489753668129861, guid: 7d73b485ef3239141b8a5090c1d603dc, type: 3}
   damageTextPrefabWinElement: {fileID: 8058489753668129861, guid: 7b6b7e854eeffae4aa91cb54c560e91d, type: 3}
+  healingTextPrefab: {fileID: 0}
   textLocation: {fileID: 1237739811580437320}
   randomOffsetRange: {x: 0.5, y: 0.5, z: 0.5}
   textToDisplay: 
@@ -621,6 +625,7 @@ MonoBehaviour:
   hitCritSound: {fileID: 8300000, guid: 199d7eede6a5930418e666b222d1ad36, type: 3}
   MonsterPainSound: {fileID: 8300000, guid: 5d252ce1d2d5eed40833a97580b7057b, type: 3}
   DieSound: {fileID: 8300000, guid: 8ad826bf509ac9d49ab1dff5a4dc0c53, type: 3}
+  HealSound: {fileID: 0}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
 --- !u!82 &7053831414035765101
@@ -632,7 +637,7 @@ AudioSource:
   m_GameObject: {fileID: 907979567928687122}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4331468625148266853, guid: 99b4b844afb101a4aaf457192ed88eff, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

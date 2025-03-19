@@ -239,6 +239,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     private void HandleDamageEffects(float damage)
     {
         audioManager.PlayHitSound();
+        audioManager.PlayPlayerPainSounds();
         damageDisplay.DisplayDamage(damage);
         
         Quaternion rotation = Quaternion.Euler(-90f, 0, 0f);

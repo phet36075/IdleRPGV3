@@ -259,7 +259,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 10
   roamDelay: 3
+  animator: {fileID: 0}
   walkingSound: {fileID: 8300000, guid: 956a05e482766f140bc4ef08a73935bd, type: 3}
+  audioSource: {fileID: 224037560463228746}
   delayBetweenSounds: 1
   canPlaySound: 1
 --- !u!195 &-3921844102715532942
@@ -438,6 +440,8 @@ MonoBehaviour:
   HealSound: {fileID: 0}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
+  jumpSounds: []
+  attackSounds: []
 --- !u!82 &224037560463228746
 AudioSource:
   m_ObjectHideFlags: 0
@@ -447,11 +451,11 @@ AudioSource:
   m_GameObject: {fileID: 1988588137541088770}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4331468625148266853, guid: 99b4b844afb101a4aaf457192ed88eff, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.139
   m_Pitch: 1
   Loop: 0
   Mute: 0

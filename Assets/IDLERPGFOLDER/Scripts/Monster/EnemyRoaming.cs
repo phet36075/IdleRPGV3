@@ -8,13 +8,13 @@ public class EnemyRoaming : MonoBehaviour
     public float roamRadius = 10f;
 
     public float roamDelay = 3f;
-    private Animator animator;
+    public Animator animator;
     private NavMeshAgent navMeshAgent;
 
     private Vector3 startingPosition;
     
     public AudioClip walkingSound; // คลิปเสียงสำหรับการเดิน
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     [Header("Sound Settings")]
     [SerializeField] private float delayBetweenSounds = 0.5f; // ระยะเวลาดีเลย์ระหว่างการเล่นเสียง (วินาที)
@@ -26,10 +26,10 @@ public class EnemyRoaming : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         startingPosition = transform.position;
         RoamToNewPosition();
-        animator = GetComponent<Animator>();
+      
         
         // กำหนดค่า AudioSource สำหรับเสียงแบบ 3D
-        audioSource = gameObject.AddComponent<AudioSource>();
+       // audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = walkingSound;
         audioSource.loop = true; // ให้เสียงเล่นวนซ้ำ
         audioSource.spatialBlend = 1.0f; // ตั้งค่า spatialBlend ให้เป็น 1 เพื่อใช้เสียงแบบ 3D
@@ -94,7 +94,7 @@ public class EnemyRoaming : MonoBehaviour
     void Update()
     {
         float speed = navMeshAgent.velocity.magnitude; // คำนวณความเร็ว
-        animator.SetFloat("Speed", speed); // อัปเดตพารามิเตอร์ Speed ใน Animator
+//        animator.SetFloat("Speed", speed); // อัปเดตพารามิเตอร์ Speed ใน Animator
         
         if (speed > 0.1f)
         {

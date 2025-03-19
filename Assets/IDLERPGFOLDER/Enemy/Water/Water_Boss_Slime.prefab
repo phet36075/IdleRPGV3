@@ -609,7 +609,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 10
   roamDelay: 3
+  animator: {fileID: 0}
   walkingSound: {fileID: 8300000, guid: 27a301f33a684c84b8b9e40b8be209ad, type: 3}
+  audioSource: {fileID: -4258508313235340768}
   delayBetweenSounds: 1
   canPlaySound: 1
 --- !u!195 &4538342689422508882
@@ -797,7 +799,7 @@ AudioSource:
   m_GameObject: {fileID: 6173172085731050060}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4331468625148266853, guid: 99b4b844afb101a4aaf457192ed88eff, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

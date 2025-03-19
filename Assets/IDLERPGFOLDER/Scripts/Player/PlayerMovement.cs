@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     public float rollCooldown = 1f;
 
     public Collider playerCollider;
+
+    [Header("Sounds")] [SerializeField] private AudioManager audioManager;
     // Private Components
     private CharacterController controller;
     private Animator animator;
@@ -164,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded /*&& !isJumping*/ && jumpCooldownTimer <= 0)
         {
+            audioManager.PlayJumpSound();
            // isJumping = true;
             animator.SetTrigger("JumpStart");
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -202,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartRoll()
     {
+        audioManager.PlayJumpSound();
         isRolling = true;
         rollTimeRemaining = rollDuration;
         playerCollider.enabled = false;
