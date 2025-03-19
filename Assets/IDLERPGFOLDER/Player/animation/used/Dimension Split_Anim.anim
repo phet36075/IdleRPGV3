@@ -111160,6 +111160,20 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1.2666667
+    functionName: PlaySoundEffect
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 390f02225c6d3eb4293489288005e0fa, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.8666667
+    functionName: PlaySoundEffect
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: ed64b051c889db945a796a4786a07705, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.8666667
     functionName: DimensionSplit_OnEffectSpawn
     data: 

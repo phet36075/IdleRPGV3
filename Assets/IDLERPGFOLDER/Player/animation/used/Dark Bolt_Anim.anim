@@ -101494,8 +101494,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.1
+    functionName: PlaySoundEffect
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 4e7a94202b3ba1b42a73499eb8b4a8ab, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.2666667
     functionName: DarkBolt_OnEffectSpawn
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.3
+    functionName: PlayAttackSound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

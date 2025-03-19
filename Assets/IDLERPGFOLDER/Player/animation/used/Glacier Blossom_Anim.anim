@@ -72755,6 +72755,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.8
+    functionName: PlaySoundEffect
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: f5dc2c72be55cc342b34397c52f82e7a, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.6
     functionName: GlacierBlossom_OnSkillEnd
     data: 

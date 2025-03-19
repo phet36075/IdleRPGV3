@@ -84430,12 +84430,26 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.2
+    functionName: PlaySoundEffect
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 18f8fbe1e69a08d43b45d139b81e007b, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.1
     functionName: FlameEruption_OnEffectSpawn
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
+    messageOptions: 0
+  - time: 1.2
+    functionName: PlayAttackSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
     messageOptions: 0
   - time: 2.1666667
     functionName: FlameEruption_OnSingleHitboxActivate

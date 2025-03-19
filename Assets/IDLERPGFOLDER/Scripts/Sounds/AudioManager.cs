@@ -16,7 +16,8 @@ public class AudioManager : MonoBehaviour
     public List<AudioClip> jumpSounds;
     public List<AudioClip> attackSounds;
     public List<AudioClip> playerPainSounds;
-
+    
+    
     public void PlayJumpSound()
     {
       if (jumpSounds == null || jumpSounds.Count == 0 || audioSource == null)
@@ -76,7 +77,10 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.PlayOneShot(attackSounds[index]);
     }
-   
-    
+
+    public void PlaySoundEffect(AudioClip audioClip)
+    {
+        audioSource.PlayOneShot(audioClip);
+    }
     
 }
