@@ -94,7 +94,7 @@ public class EnemyRoaming : MonoBehaviour
     void Update()
     {
         float speed = navMeshAgent.velocity.magnitude; // คำนวณความเร็ว
-//        animator.SetFloat("Speed", speed); // อัปเดตพารามิเตอร์ Speed ใน Animator
+        animator.SetFloat("Speed", speed); // อัปเดตพารามิเตอร์ Speed ใน Animator
         
         if (speed > 0.1f)
         {

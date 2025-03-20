@@ -8,9 +8,11 @@ public class UIContainer : MonoBehaviour
     public GameObject statsPanel;
     public GameObject skillInventoryPanel;
     public GameObject allySkillInventoryPanel;
+    public GameObject upgradeCanvas;
     public bool isSkillsInventoyryOpened;
     public bool isStatsOpened;
     public bool isAllySkillsInventoyryOpened;
+    public bool isUpgradeCanvasOpened;
     private bool isInventoryOpen = false;
     [SerializeField] private GameObject uiContainerPanel;  // Panel หลักของ inventory
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,6 +57,15 @@ public class UIContainer : MonoBehaviour
             allyDetailWindow.Hide();
         }
 
+        if (isUpgradeCanvasOpened)
+        {
+            upgradeCanvas.SetActive(true);
+        }
+        else
+        {
+            upgradeCanvas.SetActive(false);
+        }
+
 
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -65,23 +76,27 @@ public class UIContainer : MonoBehaviour
 
     public void OnStatsClick()
     {
+        HideOnlySubUI();
         isStatsOpened = true;
-        isSkillsInventoyryOpened = false;
-        isAllySkillsInventoyryOpened = false;
+       
     }
     public void OnSkillInventoryClick()
     {
-        isStatsOpened = false;
+        HideOnlySubUI();
         isSkillsInventoyryOpened = true;
-        isAllySkillsInventoyryOpened = false;
+        
     }
     public void OnAllySkillInventoryClick()
     {
-        isStatsOpened = false;
-        isSkillsInventoyryOpened = false;
+        HideOnlySubUI();
         isAllySkillsInventoyryOpened = true;
     }
-    
+
+    public void OnUpgradeCanvasClick()
+    {
+        HideOnlySubUI();
+        isUpgradeCanvasOpened = true;
+    }
     public void Show()
     {
        
@@ -97,6 +112,18 @@ public class UIContainer : MonoBehaviour
         isAllySkillsInventoyryOpened = false;
         allyDetailWindow.Hide();
         detailWindow.Hide();
+        isUpgradeCanvasOpened = false;
+
+    }
+
+    public void HideOnlySubUI()
+    {
+        isStatsOpened = false;
+        isSkillsInventoyryOpened = false;
+        isAllySkillsInventoyryOpened = false;
+        allyDetailWindow.Hide();
+        detailWindow.Hide();
+        isUpgradeCanvasOpened = false;
     }
     // public void Toggle()
     // {

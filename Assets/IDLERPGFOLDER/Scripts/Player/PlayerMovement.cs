@@ -194,8 +194,8 @@ public class PlayerMovement : MonoBehaviour
     private void HandleRollInput()
     {
         // Check if can roll (grounded, not in cooldown, and moving)
-        if (Input.GetKey(KeyCode.LeftControl) && 
-            isGrounded && 
+        if (Input.GetKey(KeyCode.LeftControl) //&& isGrounded
+           && 
             rollCooldownRemaining <= 0 && 
             movementInput.magnitude > 0.1f)
         {
