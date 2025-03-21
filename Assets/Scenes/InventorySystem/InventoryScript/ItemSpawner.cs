@@ -50,19 +50,19 @@ public class ItemSpawner : MonoBehaviour
            // Destroy(itemObjects[ind],10f);
         }
     }
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Spawn 1 Random Item"))
-        {
-            SpawnItemByGUI();
-        }
-        if (GUILayout.Button("Spawn 10 Random Items"))
-        {
-            SpawnItemByGUI(10);
-        }
-        if (GUILayout.Button("Spawn 50 Random Items"))
-        {
-            SpawnItemByGUI(50);
-        }
-    }
+    // private void OnGUI()
+    // {
+    //     if (GUILayout.Button("Spawn 1 Random Item"))
+    //     {
+    //         SpawnItemByGUI();
+    //     }
+    //     if (GUILayout.Button("Spawn 10 Random Items"))
+    //     {
+    //         SpawnItemByGUI(10);
+    //     }
+    //     if (GUILayout.Button("Spawn 50 Random Items"))
+    //     {
+    //         SpawnItemByGUI(50);
+    //     }
+    // }
 }

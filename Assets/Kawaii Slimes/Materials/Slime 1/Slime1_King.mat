@@ -840,6 +840,7 @@ Material:
     - _egc6: {r: 1, g: 1, b: 1, a: 0}
     - _egc7: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &1279713253239269728
 MonoBehaviour:
   m_ObjectHideFlags: 11
