@@ -318,7 +318,7 @@ public class EnemySpawner : MonoBehaviour
     {
         currentSet = GetCurrentSet();
 
-        // ตรวจสอบด่านบอส
+        // ตรวจสอบด่านบอส (ยังคงใช้ currentStage)
         if (currentStage % 5 == 0)
         {
             BossSet bossSet = GetBossSetForStage(currentStage);
@@ -333,11 +333,11 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // ด่านปกติ
-        int elementIndex = (currentStage - 1) % elementalGroups.Length;
+        // ด่านปกติ (ใช้ MapIndex แทน currentStage)
+        int elementIndex = (MapIndex - 1) % elementalGroups.Length;
 
         // เลือกมอนสเตอร์จาก Set ของธาตุนั้น
-        if (elementIndex < elementalGroups.Length)
+        if (elementIndex < elementalGroups.Length && elementIndex >= 0)
         {
             var group = elementalGroups[elementIndex];
             if (group.monsterSets != null && currentSet < group.monsterSets.Length)
@@ -350,7 +350,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"No enemies found for stage {currentStage}, element {elementIndex}, set {currentSet}");
+        Debug.LogWarning($"No enemies found for MapIndex {MapIndex}, element {elementIndex}, set {currentSet}");
         return 0;
     }
     #endregion
