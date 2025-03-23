@@ -397,7 +397,7 @@ MonoBehaviour:
   holyVFX: {fileID: 2921660880735257758}
   JudgementVFX: {fileID: 1251970232510534, guid: ca66454a31c7af1488eff2308dc407fe, type: 3}
   DarkVFX: {fileID: 8341435452364551098}
-  darknessVFX: {fileID: 5183142654397024018}
+  darknessVFX: {fileID: 1126160920730200, guid: 51a3482aa12d7374f9a8214d5277529d, type: 3}
   IceEffect: {fileID: 8963946332722717220}
   darnessVFXPosition: {fileID: 5180805666385103240}
   spawnVFXPosition: {fileID: 6727728077837743892}
@@ -1903,11 +1903,6 @@ PrefabInstance:
 --- !u!4 &5180805666385103240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4454917936141506, guid: 51a3482aa12d7374f9a8214d5277529d, type: 3}
-  m_PrefabInstance: {fileID: 5182016944452230474}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5183142654397024018 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1126160920730200, guid: 51a3482aa12d7374f9a8214d5277529d, type: 3}
   m_PrefabInstance: {fileID: 5182016944452230474}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6656729757295192438
