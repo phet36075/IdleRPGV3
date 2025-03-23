@@ -251,6 +251,7 @@ public class StageSelectionManager : MonoBehaviour
             // ตัวอย่าง: YourLevelLoader.LoadLevel(selectedStageIndex);
             Debug.Log($"Entering stage {selectedStageIndex}");
             CloseStageDetails();
+            Hide();
         }
     }
     

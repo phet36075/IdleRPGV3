@@ -2741,7 +2741,7 @@ Material:
     - _OutlineVertexColorMask: 0
     - _OutlineVertexColorMaskStrength: 1
     - _OutlineVertexR2Width: 0
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.004
     - _OutlineWidthAffectedByViewDistance: 0
     - _OutlineZBias: 0
     - _OutlineZClip: 1

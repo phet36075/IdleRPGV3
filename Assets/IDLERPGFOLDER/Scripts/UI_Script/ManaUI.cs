@@ -9,6 +9,7 @@ public class ManaUI : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
    // [SerializeField] private Image manaBarFill;
     [SerializeField] private TextMeshProUGUI manaText;
+    [SerializeField] private PlayerProperty playerProperty;
     public Slider manaBar;
     private void Start()
     {
@@ -30,8 +31,11 @@ public class ManaUI : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(5);
-
-           playerManager.RestoreMana(playerManager.playerProperty.manaRegenRate);
+            if (playerManager.GetCurrentMana() < playerProperty.maxMana)
+            {
+                playerManager.RestoreMana(playerManager.playerProperty.manaRegenRate);
+            }
+         
         }
         
     }

@@ -45,28 +45,33 @@ public class Inventory : MonoBehaviour
     [SerializeField] public InventorySlot equippedItemSlot;
     public Image myEqImage;
     public TextMeshProUGUI itemNameText; //  UI 
+    public GameObject equipStripWeapon;
 
     [Header("equippedHatSlot")]
     public InventorySlot equippedHatSlot;
     public Image myEqImageHat;
     public TextMeshProUGUI itemNameTextHat;
+    public GameObject equipStripHat;
+
 
     [Header("equippedArmorSlot")]
     public InventorySlot equippedArmorSlot;
     public Image myEqImageArmor;
     public TextMeshProUGUI itemNameTextArmor;
+    public GameObject equipStripArmor;
 
 
     [Header("equippedBootSlot")]
     public InventorySlot equippedBootSlot;
     public Image myEqImageBoot;
     public TextMeshProUGUI itemNameTextBoot;
+    public GameObject equipStripBoot;
 
     [Header("equippedRingSlot")]
     public InventorySlot equippedRingSlot;
     public Image myEqImageRing;
     public TextMeshProUGUI itemNameTextRing;
-
+    public GameObject equipStripRing;
 
     [Header("Detail UI")]
     public GameObject detailPanel; // หน้าต่าง detail
@@ -92,8 +97,12 @@ public class Inventory : MonoBehaviour
         CreateInventorySlots();
 
         detailPanel.SetActive(false);
+        equipStripWeapon.SetActive(false);
+        equipStripHat.SetActive(false);
+        equipStripArmor.SetActive(false);
+        equipStripBoot.SetActive(false);
+        equipStripRing.SetActive(false);
 
-        
     }
 
     private void Update()
@@ -219,6 +228,18 @@ public class Inventory : MonoBehaviour
         // เพิ่ม listener ให้กับ dropButton
         dropButton.onClick.RemoveAllListeners();
         dropButton.onClick.AddListener(() => DropSelectedItem(slot));
+    }
+
+    public void UpdateEquipStrip(InventorySlot slot, GameObject equipStrip)
+    {
+        if (slot != null && slot.item != EMPTY_ITEM)
+        {
+            equipStrip.SetActive(true);
+        }
+        else
+        {
+            equipStrip.SetActive(false);
+        }
     }
 
     public void DropSelectedItem(InventorySlot slot) // potion ไม่สมบูรณ์

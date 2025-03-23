@@ -8,7 +8,14 @@ using Random = UnityEngine.Random;
 
 public class EnemyHealth : MonoBehaviour,IDamageable
 {
-   // public SO_Item skillDrop;
+    [Header("Item Templates")]
+    public SO_Item[] itemTemplatesArmor; // ใส่ SO_Item ต้นแบบที่สร้างไว้ใน editor
+
+    [Header("Generated Items")]
+    public List<SO_Item> generatedItems = new List<SO_Item>();
+    
+    
+    
     #region Variables
   /*  [Header("Stats")]
     public float baseAttack = 1.0f;
@@ -67,6 +74,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     public DamageDisplay _damageDisplay;
     public AudioManager _audioManager;
     private NavMeshAgent agent;
+    private ShowDropItem showDropItem;
     [SerializeField] private StatusEffectUI statusEffectUI;
     
     [Header("Water Effect Settings")]
@@ -141,6 +149,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         spawner = FindObjectOfType<EnemySpawner>();
         _playerManager = FindObjectOfType<PlayerManager>();
         agent = GetComponent<NavMeshAgent>();
+        showDropItem = FindAnyObjectByType<ShowDropItem>();
        // statusEffectUI = GetComponent<StatusEffectUI>();
     }
 
@@ -895,9 +904,21 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         CurrencyManager.Instance.AddMoney( Mathf.RoundToInt((EnemyData.moneyDrop * _enemySpawner.currentStage) *1.25f));
         // add exp
         playerStats.AddExperience(GetMonsterExp(_enemySpawner.currentStage));
+
+        //Drop  
+       // int potionAmount;
+      //  potionAmount = Random.Range(0, 5);
+      
+      
+        GenerateRandomItems(3);
+        _playerManager.GetComponent<ItemPicker>().inventory.AddItem(generatedItems[0],1);
+        showDropItem.ShowDrop(generatedItems[0],1);
+        
+        generatedItems.Clear();
         
         
         //int randomAmount = Random.Range(0, 4); // ให้สังเกตว่าค่าสูงสุดจะไม่รวมในผลลัพธ์ (exclusive) จึงต้องใส่ 4
+        //
         ItemSpawner.Instance.SpawnItemByGUI();
       // ItemSpawner.Instance.SpawnItem(skillDrop,1);
         animator.SetTrigger("Die");
@@ -915,6 +936,27 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         float multiplier = EnemyData.expMultiplier;
         return Mathf.FloorToInt(baseExp * Mathf.Log(monsterLevel + 1) * multiplier);
     }
+    
+    public void GenerateRandomItems(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            // สุ่มเลือก template
+            int randomIndex = Random.Range(0, itemTemplatesArmor.Length);
+            
+            // สร้างไอเท็มใหม่จาก template และสุ่ม stats
+            SO_Item newItem = itemTemplatesArmor[randomIndex].CreateInstance();
+            
+            // เพิ่มเข้าลิสต์
+            generatedItems.Add(newItem);
+            
+            // แสดงผลลัพธ์
+            Debug.Log($"Generated {newItem.itemName} - Health: {newItem.bonusHealth}, Defense: {newItem.bonusDefense}");
+           newItem.UpdateDescription();
+        }
+    }
+    
+    
     #region Modifier
 
   /*  private enum Modifier

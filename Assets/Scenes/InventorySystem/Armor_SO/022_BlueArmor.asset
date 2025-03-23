@@ -19,3 +19,5 @@ MonoBehaviour:
   maxStack: 1
   itemType: 3
   gamePrefab: {fileID: 963848200104817514, guid: 2bec6c437020ef54bbd3f2c5f1fa6068, type: 3}
+  bonusHealth: 200
+  bonusDefense: 0

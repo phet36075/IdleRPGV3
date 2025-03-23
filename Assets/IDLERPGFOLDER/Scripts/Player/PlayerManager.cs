@@ -307,6 +307,8 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         currentMana = Mathf.Min(playerProperty.maxMana, currentMana + amount);
         OnManaChanged?.Invoke(currentMana);
+        audioManager.PlayRestoreManaSound();
+        damageDisplay.DisplayRestoreMana(amount);
     }
 
     private void Die()

@@ -35,7 +35,7 @@ public class ItemObject : MonoBehaviour
         {
             //Add Item
             other.GetComponent<ItemPicker>().inventory.AddItem(item, amount);
-            showDropItem.ShowDrop(item);
+            showDropItem.ShowDrop(item,amount);
             Destroy(gameObject);
         }
     }

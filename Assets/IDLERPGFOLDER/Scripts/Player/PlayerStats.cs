@@ -153,8 +153,8 @@ public class PlayerStats : MonoBehaviour
         audioSource.PlayOneShot(lvUpSFX);
         level++;
         PlayerManager playerManager = GetComponent<PlayerManager>();
-        playerManager.Heal(99999999f);
-        playerManager.RestoreMana(999999999f);
+        playerManager.currentHealth = playerProperty.maxHealth;
+        playerManager.currentMana = playerProperty.maxMana;
         availableStatPoints += POINTS_PER_LEVEL;
         OnLevelUp?.Invoke(level);
         NotifyStatPointsChanged();

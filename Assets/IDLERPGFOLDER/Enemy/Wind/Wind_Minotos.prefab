@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamRadius: 10
   roamDelay: 3
-  animator: {fileID: 0}
+  animator: {fileID: 1954406165806618963}
   walkingSound: {fileID: 8300000, guid: 2d920d704d549ee48a9ed3dbcd060313, type: 3}
   audioSource: {fileID: 1218142733721202985}
   delayBetweenSounds: 1
@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1218142733721202985}
+  uiAudioSource: {fileID: 0}
   hitSound: {fileID: 8300000, guid: d152b73a7f8eef742bad8a4cc1458b9c, type: 3}
   hitCritSound: {fileID: 8300000, guid: 199d7eede6a5930418e666b222d1ad36, type: 3}
   MonsterPainSound: {fileID: 8300000, guid: e00dc23cb9b764342a4967ea8bf56cce, type: 3}
@@ -294,6 +295,9 @@ MonoBehaviour:
   HealSound: {fileID: 0}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
+  jumpSounds: []
+  attackSounds: []
+  playerPainSounds: []
 --- !u!82 &1218142733721202985
 AudioSource:
   m_ObjectHideFlags: 0

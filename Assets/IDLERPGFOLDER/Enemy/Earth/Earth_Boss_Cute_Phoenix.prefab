@@ -366,6 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3cfe2111aee4c43a330e8f4abfa05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemTemplates:
+  - {fileID: 11400000, guid: 08face2a87ab14744abaa8d8d370cac2, type: 2}
+  generatedItems: []
   EnemyData: {fileID: 11400000, guid: 352734a712f37fe4fb237689298a875f, type: 2}
   maxHealth: 0
   currentHealth: 0
@@ -416,6 +419,7 @@ MonoBehaviour:
   damageTextPrefabCritical: {fileID: 8058489753668129861, guid: 7d73b485ef3239141b8a5090c1d603dc, type: 3}
   damageTextPrefabWinElement: {fileID: 8058489753668129861, guid: 7b6b7e854eeffae4aa91cb54c560e91d, type: 3}
   healingTextPrefab: {fileID: 0}
+  restoreManaTextPrefab: {fileID: 0}
   textLocation: {fileID: 2689348012346016003}
   randomOffsetRange: {x: 0.5, y: 0.5, z: 0.5}
   textToDisplay: 
@@ -439,6 +443,7 @@ MonoBehaviour:
   MonsterPainSound: {fileID: 8300000, guid: a62b9bc4ca4f41f4c90edf45a88386e7, type: 3}
   DieSound: {fileID: 8300000, guid: dbbb21467587e0041ba08474e44a8877, type: 3}
   HealSound: {fileID: 0}
+  RestoreManaSound: {fileID: 0}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
   jumpSounds: []

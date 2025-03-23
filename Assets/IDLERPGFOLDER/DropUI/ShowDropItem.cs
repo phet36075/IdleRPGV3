@@ -10,11 +10,11 @@ public class ShowDropItem : MonoBehaviour
    
 
     // Show drop item UI
-    public void ShowDrop(SO_Item item)
+    public void ShowDrop(SO_Item item, int amount =1)
     {
         // Instantiate the UI prefab
         GameObject dropInstance = Instantiate(dropUIPrefab, uiContainer);
-        dropInstance.GetComponent<DropItemSlots>().HandleStatsSlots(item);
+        dropInstance.GetComponent<DropItemSlots>().HandleStatsSlots(item,amount);
         Destroy(dropInstance, displayTime);
     }
 }

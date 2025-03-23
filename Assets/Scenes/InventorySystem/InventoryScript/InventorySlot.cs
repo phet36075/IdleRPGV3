@@ -42,6 +42,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
         siblingIndex = transform.GetSiblingIndex();
         playerManager = FindObjectOfType<PlayerManager>();
 
+
         //5 Equipment
         if (inventory.myEqImage != null)
         {
@@ -334,6 +335,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
                 playerManager.ChangeWeaponElement(ElementType.Dark);
             }
             UpdateEquipButton();
+            inventory.UpdateEquipStrip(this, inventory.equipStripWeapon);
             return; // **ออกจากเมทอดทันที ไม่ลด stack**
         }
 
@@ -359,6 +361,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
             inventory.ShowItemNameHat(item.itemName);
             UpdateEquipButton();
+
+            inventory.UpdateEquipStrip(this, inventory.equipStripHat);
+
             return;
         }
 
@@ -373,20 +378,25 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
                 inventory.equippedArmorSlot.Unequip();
             }
 
-            if (item.itemName == "Red Armor")
-            {
-                playerManager.healthBonus += 50;
-                playerManager.defenseBonus += 10;
-            }
-
-            if (item.itemName == "Blue Armor")
-            {
-                playerManager.healthBonus += 30;
-                playerManager.defenseBonus += 50;
-            }
+          
+            // if (item.itemName == "Red Armor")
+            // {
+            //     playerManager.healthBonus += 50;
+            //     playerManager.defenseBonus += 10;
+            // }
+            //
+            // if (item.itemName == "Blue Armor")
+            // {
+            //     playerManager.healthBonus += 30;
+            //     playerManager.defenseBonus += 50;
+            // }
 
             inventory.equippedArmorSlot = this;
-
+            
+            //Equip
+            playerManager.healthBonus += inventory.equippedArmorSlot.item.bonusHealth;
+            playerManager.defenseBonus += inventory.equippedArmorSlot.item.bonusDefense;
+            
             if (inventory.myEqImageArmor != null)
             {
                 inventory.myEqImageArmor.sprite = item.icon;
@@ -398,6 +408,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             UpdateEquipButton();
             playerManager.UpdateHealthBar();
             playerManager.RecalculateStats();
+            inventory.UpdateEquipStrip(this, inventory.equipStripArmor);
             return;
         }
 
@@ -424,6 +435,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
             inventory.ShowItemNameBoot(item.itemName);
             UpdateEquipButton();
+            inventory.UpdateEquipStrip(this, inventory.equipStripBoot);
             return;
         }
 
@@ -449,30 +461,33 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
             inventory.ShowItemNameRing(item.itemName);
             UpdateEquipButton();
+            inventory.UpdateEquipStrip(this, inventory.equipStripRing);
             return;
         }
+        item.Use();
+        if (item.itemName == "Healing Potion")
+        {
+            playerManager.Heal(110f);
+        }
+        if (item.itemName == "Mana Potion")
+        {
+            playerManager.RestoreMana(10f);
+        }
+
+        if (item.itemName == "Fire Skill Book")
+        {
+
+        }
+
         // ลด stack ตามปกติ
         stack = Mathf.Clamp(stack - 1, 0, item.maxStack);
 
         if (stack > 0)
         {
             CheckShowText();
-            Debug.Log("Use Item");
-            item.Use();
-
-            // if (item.itemName == "Healing Potion")
-            // {
-            //     playerManager.Heal(110f);
-            // }
-            if (item.itemName == "Mana Potion")
-            {
-                playerManager.RestoreMana(50f);
-            }
-
-            if (item.itemName == "Fire Skill Book")
-            {
-
-            }
+            //Debug.Log("Use Item");
+            Debug.Log("UseItem() called, stack: " + stack);
+            
         }
         else
         {
@@ -486,7 +501,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.HideItemDetail();
 
         }
-
+        
+       
     }
 
   
@@ -505,6 +521,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             Debug.Log($"Unequipped {inventory.equippedItemSlot.item.itemName} (Weapon)");
             inventory.ShowItemName("");
             inventory.equippedItemSlot = null;
+            inventory.UpdateEquipStrip(null, inventory.equipStripWeapon);
         }
         else if (inventory.equippedHatSlot != null && inventory.equippedHatSlot == this) // ถอดหมวก
         {
@@ -513,6 +530,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             Debug.Log($"Unequipped {inventory.equippedHatSlot.item.itemName} (Hat)");
             inventory.ShowItemNameHat("");
             inventory.equippedHatSlot = null;
+
+            inventory.UpdateEquipStrip(null, inventory.equipStripHat);
         }
         else if (inventory.equippedArmorSlot != null && inventory.equippedArmorSlot == this) // ถอดเกราะ
         {
@@ -520,21 +539,34 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.myEqImageArmor.color = new Color(0f, 0f, 0f, 177f / 255f);
             Debug.Log($"Unequipped {inventory.equippedArmorSlot.item.itemName} (Armor)");
             inventory.ShowItemNameArmor("");
+            //Unequip
+            
+            
+            playerManager.healthBonus -= inventory.equippedArmorSlot.item.bonusHealth;
+            playerManager.defenseBonus -= inventory.equippedArmorSlot.item.bonusDefense;
+            
+            
+            
             inventory.equippedArmorSlot = null;
             
-            if (item.itemName == "Red Armor")
-            {
-                playerManager.healthBonus -= 50;
-                playerManager.defenseBonus -= 10;
-            }
+            inventory.UpdateEquipStrip(null, inventory.equipStripArmor);
 
-            if (item.itemName == "Blue Armor")
-            {
-                playerManager.healthBonus -= 30;
-                playerManager.defenseBonus -= 50;
-            }
+           
+            
+            // if (item.itemName == "Red Armor")
+            // {
+            //     playerManager.healthBonus -= 50;
+            //     playerManager.defenseBonus -= 10;
+            // }
+            //
+            // if (item.itemName == "Blue Armor")
+            // {
+            //     playerManager.healthBonus -= 30;
+            //     playerManager.defenseBonus -= 50;
+            // }
             playerManager.UpdateHealthBar();
             playerManager.RecalculateStats();
+
         }
         else if (inventory.equippedBootSlot != null && inventory.equippedBootSlot == this) // ถอดรองเท้า
         {
@@ -543,6 +575,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             Debug.Log($"Unequipped {inventory.equippedBootSlot.item.itemName} (Boot)");
             inventory.ShowItemNameBoot("");
             inventory.equippedBootSlot = null;
+            inventory.UpdateEquipStrip(null, inventory.equipStripBoot);
         }
         else if (inventory.equippedRingSlot != null && inventory.equippedRingSlot == this) // ถอดแหวน
         {
@@ -551,6 +584,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             Debug.Log($"Unequipped {inventory.equippedRingSlot.item.itemName} (Ring)");
             inventory.ShowItemNameRing("");
             inventory.equippedRingSlot = null;
+            inventory.UpdateEquipStrip(null, inventory.equipStripRing);
         }
 
         UpdateEquipButton();

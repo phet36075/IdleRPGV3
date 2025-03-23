@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioSource uiAudioSource;
     
-    public AudioClip hitSound, hitCritSound, MonsterPainSound, DieSound, HealSound;
+    public AudioClip hitSound, hitCritSound, MonsterPainSound, DieSound, HealSound,RestoreManaSound;
 
     public AudioClip maceHitSound;
     public AudioClip spellHitSound;
@@ -32,6 +32,11 @@ public class AudioManager : MonoBehaviour
     public void PlayHealSound()
     {
         uiAudioSource.PlayOneShot(HealSound);
+    }
+
+    public void PlayRestoreManaSound()
+    {
+        uiAudioSource.PlayOneShot(RestoreManaSound);
     }
     public void PlayHitSound()
     {

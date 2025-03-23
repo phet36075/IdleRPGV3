@@ -16,6 +16,6 @@ MonoBehaviour:
   id: 001
   itemName: Healing Potion
   description: Heal 10 hp
-  maxStack: 10
+  maxStack: 100
   itemType: 6
   gamePrefab: {fileID: 6322094368310765072, guid: c0dc0c448ff0ae64e856c93847848b89, type: 3}
