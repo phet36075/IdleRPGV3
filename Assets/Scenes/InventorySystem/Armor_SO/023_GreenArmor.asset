@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Armor is Green
   maxStack: 1
   itemType: 3
+  rarity: 0
   gamePrefab: {fileID: 5797782414694089015, guid: 955e3253a5f45f540b5681000e5dfda0, type: 3}
+  baseHealth: 45
+  baseDefense: 23
+  basePen: 10
+  baseHealthRegen: 45
+  baseDamage: 32
+  baseCritChance: 3
+  baseMana: 64
+  baseManaRegen: 54
+  baseCritDamage: 1
+  healthRange:
+    minValue: 10
+    maxValue: 300
+  defenseRange:
+    minValue: 5
+    maxValue: 50
+  penRange:
+    minValue: 5
+    maxValue: 50
+  healthRegenRange:
+    minValue: 5
+    maxValue: 30
+  damageRange:
+    minValue: 5
+    maxValue: 100
+  critChanceRange:
+    minValue: 1
+    maxValue: 15
+  manaRange:
+    minValue: 5
+    maxValue: 100
+  manaRegenRange:
+    minValue: 5
+    maxValue: 20
+  critDamageRange:
+    minValue: 0
+    maxValue: 2
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

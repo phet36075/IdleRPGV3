@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Shine Bright like a Blue
   maxStack: 1
   itemType: 5
+  rarity: 0
   gamePrefab: {fileID: 8610284443706874921, guid: fb8970a12dae71c4c892704ddcd53df1, type: 3}
+  baseHealth: 6
+  baseDefense: 5
+  basePen: 21
+  baseHealthRegen: 21
+  baseDamage: 34
+  baseCritChance: 4
+  baseMana: 21
+  baseManaRegen: 12
+  baseCritDamage: 1
+  healthRange:
+    minValue: 5
+    maxValue: 40
+  defenseRange:
+    minValue: 5
+    maxValue: 20
+  penRange:
+    minValue: 5
+    maxValue: 90
+  healthRegenRange:
+    minValue: 5
+    maxValue: 100
+  damageRange:
+    minValue: 5
+    maxValue: 50
+  critChanceRange:
+    minValue: 1
+    maxValue: 15
+  manaRange:
+    minValue: 30
+    maxValue: 200
+  manaRegenRange:
+    minValue: 30
+    maxValue: 100
+  critDamageRange:
+    minValue: 1
+    maxValue: 3
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

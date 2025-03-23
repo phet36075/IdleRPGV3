@@ -1058,6 +1058,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3cfe2111aee4c43a330e8f4abfa05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemTemplatesArmor:
+  - {fileID: 11400000, guid: 08face2a87ab14744abaa8d8d370cac2, type: 2}
+  - {fileID: 11400000, guid: 3619f454641980b42958cc013222d8f1, type: 2}
+  - {fileID: 11400000, guid: 1933254c205963a4c9fc292ea4f9efc5, type: 2}
+  - {fileID: 11400000, guid: da450fd4f853e8642b35953730c833e2, type: 2}
+  - {fileID: 11400000, guid: 827733a423a86e04da303bcd10d41f8a, type: 2}
+  - {fileID: 11400000, guid: f64bd081379e2834f912ef0fdb9f2b1d, type: 2}
+  - {fileID: 11400000, guid: 79f5142f9604ebd4180088bc089b1dbc, type: 2}
+  - {fileID: 11400000, guid: dc67876822c115344820ad61d0d31e57, type: 2}
+  - {fileID: 11400000, guid: 452a3dd7d9c33a144af25122bb05294a, type: 2}
+  - {fileID: 11400000, guid: d9f5f8ee263d9f9469519185f1827fbe, type: 2}
+  - {fileID: 11400000, guid: 0af0ea11206ad0344889bc659ea3b4b9, type: 2}
+  - {fileID: 11400000, guid: 73c493844868960438bd7f13d7c371c3, type: 2}
+  potions:
+  - {fileID: 11400000, guid: 1c7b240b471049442a8a2e4cf3f84f22, type: 2}
+  - {fileID: 11400000, guid: 79cf505333ae4334f918a755b44b3fec, type: 2}
+  generatedItems: []
   EnemyData: {fileID: 11400000, guid: 83bb35b548d1bda4a89d3925dbaa19f9, type: 2}
   maxHealth: 0
   currentHealth: 0
@@ -1108,6 +1125,7 @@ MonoBehaviour:
   damageTextPrefabCritical: {fileID: 8058489753668129861, guid: 7d73b485ef3239141b8a5090c1d603dc, type: 3}
   damageTextPrefabWinElement: {fileID: 8058489753668129861, guid: 7b6b7e854eeffae4aa91cb54c560e91d, type: 3}
   healingTextPrefab: {fileID: 0}
+  restoreManaTextPrefab: {fileID: 0}
   textLocation: {fileID: 2870316263218687902, guid: 7fe54cac938fe8e469ae8892588a6942, type: 3}
   randomOffsetRange: {x: 0.5, y: 0.5, z: 0.5}
   textToDisplay: 
@@ -1131,6 +1149,7 @@ MonoBehaviour:
   MonsterPainSound: {fileID: 8300000, guid: cfc7c568b9e60364090ed1292d26c7e9, type: 3}
   DieSound: {fileID: 8300000, guid: 2b6f8b6136b02894698fd3ce97f52206, type: 3}
   HealSound: {fileID: 0}
+  RestoreManaSound: {fileID: 0}
   maceHitSound: {fileID: 8300000, guid: 3453d82d6a2446446af6b3be838da422, type: 3}
   spellHitSound: {fileID: 8300000, guid: 6001aa2bcb2be814bb34b4533b8fb0a2, type: 3}
   jumpSounds: []

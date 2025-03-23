@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Cool with Blue
   maxStack: 1
   itemType: 2
+  rarity: 0
   gamePrefab: {fileID: 6851039828680205479, guid: cdca1fc37ffbaf047a5ad997274c91f3, type: 3}
+  baseHealth: 34
+  baseDefense: 21
+  basePen: 43
+  baseHealthRegen: 21
+  baseDamage: 54
+  baseCritChance: 7
+  baseMana: 43
+  baseManaRegen: 21
+  baseCritDamage: 1
+  healthRange:
+    minValue: 5
+    maxValue: 165
+  defenseRange:
+    minValue: 5
+    maxValue: 34
+  penRange:
+    minValue: 5
+    maxValue: 54
+  healthRegenRange:
+    minValue: 0
+    maxValue: 5
+  damageRange:
+    minValue: 5
+    maxValue: 90
+  critChanceRange:
+    minValue: 1
+    maxValue: 9
+  manaRange:
+    minValue: 5
+    maxValue: 54
+  manaRegenRange:
+    minValue: 5
+    maxValue: 40
+  critDamageRange:
+    minValue: 1
+    maxValue: 2
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

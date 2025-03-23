@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Boot is Blue
   maxStack: 1
   itemType: 4
+  rarity: 0
   gamePrefab: {fileID: 7773026133875188041, guid: 5597a9f608794f441ae20c92d91a4441, type: 3}
+  baseHealth: 32
+  baseDefense: 12
+  basePen: 43
+  baseHealthRegen: 76
+  baseDamage: 65
+  baseCritChance: 4
+  baseMana: 54
+  baseManaRegen: 21
+  baseCritDamage: 1
+  healthRange:
+    minValue: 5
+    maxValue: 200
+  defenseRange:
+    minValue: 5
+    maxValue: 30
+  penRange:
+    minValue: 5
+    maxValue: 60
+  healthRegenRange:
+    minValue: 2
+    maxValue: 60
+  damageRange:
+    minValue: 5
+    maxValue: 200
+  critChanceRange:
+    minValue: 1
+    maxValue: 7
+  manaRange:
+    minValue: 5
+    maxValue: 56
+  manaRegenRange:
+    minValue: 3
+    maxValue: 50
+  critDamageRange:
+    minValue: 1
+    maxValue: 2
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

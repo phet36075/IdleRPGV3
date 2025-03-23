@@ -351,7 +351,16 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             }
 
             inventory.equippedHatSlot = this;
-
+            //Equip
+            playerManager.healthBonus += inventory.equippedHatSlot.item.bonusHealth;
+            playerManager.defenseBonus += inventory.equippedHatSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus += inventory.equippedHatSlot.item.bonusPen;
+            playerManager.regenRateBonus += inventory.equippedHatSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus += inventory.equippedHatSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus += inventory.equippedHatSlot.item.bonusCritChance;
+            playerManager.maxManaBonus += inventory.equippedHatSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus += inventory.equippedHatSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus += inventory.equippedHatSlot.item.bonusCritDamage;
             if (inventory.myEqImageHat != null)
             {
                 inventory.myEqImageHat.sprite = item.icon;
@@ -363,7 +372,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             UpdateEquipButton();
 
             inventory.UpdateEquipStrip(this, inventory.equipStripHat);
-
+            playerManager.UpdateHealthBar();
+            playerManager.RecalculateStats();
             return;
         }
 
@@ -378,24 +388,20 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
                 inventory.equippedArmorSlot.Unequip();
             }
 
-          
-            // if (item.itemName == "Red Armor")
-            // {
-            //     playerManager.healthBonus += 50;
-            //     playerManager.defenseBonus += 10;
-            // }
-            //
-            // if (item.itemName == "Blue Armor")
-            // {
-            //     playerManager.healthBonus += 30;
-            //     playerManager.defenseBonus += 50;
-            // }
+            
 
             inventory.equippedArmorSlot = this;
             
             //Equip
             playerManager.healthBonus += inventory.equippedArmorSlot.item.bonusHealth;
             playerManager.defenseBonus += inventory.equippedArmorSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus += inventory.equippedArmorSlot.item.bonusPen;
+            playerManager.regenRateBonus += inventory.equippedArmorSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus += inventory.equippedArmorSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus += inventory.equippedArmorSlot.item.bonusCritChance;
+            playerManager.maxManaBonus += inventory.equippedArmorSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus += inventory.equippedArmorSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus += inventory.equippedArmorSlot.item.bonusCritDamage;
             
             if (inventory.myEqImageArmor != null)
             {
@@ -426,6 +432,19 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
             inventory.equippedBootSlot = this;
 
+            //Equip
+            playerManager.healthBonus += inventory.equippedBootSlot.item.bonusHealth;
+            playerManager.defenseBonus += inventory.equippedBootSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus += inventory.equippedBootSlot.item.bonusPen;
+            playerManager.regenRateBonus += inventory.equippedBootSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus += inventory.equippedBootSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus += inventory.equippedBootSlot.item.bonusCritChance;
+            playerManager.maxManaBonus += inventory.equippedBootSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus += inventory.equippedBootSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus += inventory.equippedBootSlot.item.bonusCritDamage;
+            
+            
+            
             if (inventory.myEqImageBoot != null)
             {
                 inventory.myEqImageBoot.sprite = item.icon;
@@ -435,6 +454,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
             inventory.ShowItemNameBoot(item.itemName);
             UpdateEquipButton();
+            playerManager.UpdateHealthBar();
+            playerManager.RecalculateStats();
             inventory.UpdateEquipStrip(this, inventory.equipStripBoot);
             return;
         }
@@ -452,6 +473,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
 
             inventory.equippedRingSlot = this;
 
+            //Equip
+            playerManager.healthBonus += inventory.equippedRingSlot.item.bonusHealth;
+            playerManager.defenseBonus += inventory.equippedRingSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus += inventory.equippedRingSlot.item.bonusPen;
+            playerManager.regenRateBonus += inventory.equippedRingSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus += inventory.equippedRingSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus += inventory.equippedRingSlot.item.bonusCritChance;
+            playerManager.maxManaBonus += inventory.equippedRingSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus += inventory.equippedRingSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus += inventory.equippedRingSlot.item.bonusCritDamage;
+            
             if (inventory.myEqImageRing != null)
             {
                 inventory.myEqImageRing.sprite = item.icon;
@@ -462,6 +494,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.ShowItemNameRing(item.itemName);
             UpdateEquipButton();
             inventory.UpdateEquipStrip(this, inventory.equipStripRing);
+            playerManager.UpdateHealthBar();
+            playerManager.RecalculateStats();
             return;
         }
         item.Use();
@@ -529,9 +563,22 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.myEqImageHat.color = new Color(0f, 0f, 0f, 177f / 255f);
             Debug.Log($"Unequipped {inventory.equippedHatSlot.item.itemName} (Hat)");
             inventory.ShowItemNameHat("");
+            
+            playerManager.healthBonus -= inventory.equippedHatSlot.item.bonusHealth;
+            playerManager.defenseBonus -= inventory.equippedHatSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus -= inventory.equippedHatSlot.item.bonusPen;
+            playerManager.regenRateBonus -= inventory.equippedHatSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus -= inventory.equippedHatSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus -= inventory.equippedHatSlot.item.bonusCritChance;
+            playerManager.maxManaBonus -= inventory.equippedHatSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus -= inventory.equippedHatSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus -= inventory.equippedHatSlot.item.bonusCritDamage;
+            
             inventory.equippedHatSlot = null;
 
             inventory.UpdateEquipStrip(null, inventory.equipStripHat);
+            playerManager.UpdateHealthBar();
+            playerManager.RecalculateStats();
         }
         else if (inventory.equippedArmorSlot != null && inventory.equippedArmorSlot == this) // ถอดเกราะ
         {
@@ -544,26 +591,20 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             
             playerManager.healthBonus -= inventory.equippedArmorSlot.item.bonusHealth;
             playerManager.defenseBonus -= inventory.equippedArmorSlot.item.bonusDefense;
-            
+            playerManager.armorPenetrationBonus -= inventory.equippedArmorSlot.item.bonusPen;
+            playerManager.regenRateBonus -= inventory.equippedArmorSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus -= inventory.equippedArmorSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus -= inventory.equippedArmorSlot.item.bonusCritChance;
+            playerManager.maxManaBonus -= inventory.equippedArmorSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus -= inventory.equippedArmorSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus -= inventory.equippedArmorSlot.item.bonusCritDamage;
             
             
             inventory.equippedArmorSlot = null;
             
             inventory.UpdateEquipStrip(null, inventory.equipStripArmor);
 
-           
             
-            // if (item.itemName == "Red Armor")
-            // {
-            //     playerManager.healthBonus -= 50;
-            //     playerManager.defenseBonus -= 10;
-            // }
-            //
-            // if (item.itemName == "Blue Armor")
-            // {
-            //     playerManager.healthBonus -= 30;
-            //     playerManager.defenseBonus -= 50;
-            // }
             playerManager.UpdateHealthBar();
             playerManager.RecalculateStats();
 
@@ -574,8 +615,21 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.myEqImageBoot.color = new Color(0f, 0f, 0f, 177f / 255f);
             Debug.Log($"Unequipped {inventory.equippedBootSlot.item.itemName} (Boot)");
             inventory.ShowItemNameBoot("");
+            
+            playerManager.healthBonus -= inventory.equippedBootSlot.item.bonusHealth;
+            playerManager.defenseBonus -= inventory.equippedBootSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus -= inventory.equippedBootSlot.item.bonusPen;
+            playerManager.regenRateBonus -= inventory.equippedBootSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus -= inventory.equippedBootSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus -= inventory.equippedBootSlot.item.bonusCritChance;
+            playerManager.maxManaBonus -= inventory.equippedBootSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus -= inventory.equippedBootSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus -= inventory.equippedBootSlot.item.bonusCritDamage;
+            
             inventory.equippedBootSlot = null;
             inventory.UpdateEquipStrip(null, inventory.equipStripBoot);
+            playerManager.UpdateHealthBar();
+            playerManager.RecalculateStats();
         }
         else if (inventory.equippedRingSlot != null && inventory.equippedRingSlot == this) // ถอดแหวน
         {
@@ -583,10 +637,22 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IDragHandler, IBeginDr
             inventory.myEqImageRing.color = new Color(0f, 0f, 0f, 177f / 255f);
             Debug.Log($"Unequipped {inventory.equippedRingSlot.item.itemName} (Ring)");
             inventory.ShowItemNameRing("");
+            
+            playerManager.healthBonus -= inventory.equippedRingSlot.item.bonusHealth;
+            playerManager.defenseBonus -= inventory.equippedRingSlot.item.bonusDefense;
+            playerManager.armorPenetrationBonus -= inventory.equippedRingSlot.item.bonusPen;
+            playerManager.regenRateBonus -= inventory.equippedRingSlot.item.bonusHealthRegen;
+            playerManager.baseDamageBonus -= inventory.equippedRingSlot.item.bonusDamage;
+            playerManager.criticalChanceBonus -= inventory.equippedRingSlot.item.bonusCritChance;
+            playerManager.maxManaBonus -= inventory.equippedRingSlot.item.bonusMana;
+            playerManager.manaRegenRateBonus -= inventory.equippedRingSlot.item.bonusManaRegen;
+            playerManager.criticalDamageBonus -= inventory.equippedRingSlot.item.bonusCritDamage;
+            
             inventory.equippedRingSlot = null;
             inventory.UpdateEquipStrip(null, inventory.equipStripRing);
         }
-
+        playerManager.UpdateHealthBar();
+        playerManager.RecalculateStats();
         UpdateEquipButton();
     }
 

@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Boot is Green
   maxStack: 1
   itemType: 4
+  rarity: 0
   gamePrefab: {fileID: 8156377434581445762, guid: efa8cf5fd1eb3a146ae4cac8a26d596a, type: 3}
+  baseHealth: 5
+  baseDefense: 5
+  basePen: 5
+  baseHealthRegen: 5
+  baseDamage: 5
+  baseCritChance: 5
+  baseMana: 5
+  baseManaRegen: 5
+  baseCritDamage: 5
+  healthRange:
+    minValue: 5
+    maxValue: 200
+  defenseRange:
+    minValue: 5
+    maxValue: 30
+  penRange:
+    minValue: 5
+    maxValue: 60
+  healthRegenRange:
+    minValue: 2
+    maxValue: 60
+  damageRange:
+    minValue: 5
+    maxValue: 200
+  critChanceRange:
+    minValue: 1
+    maxValue: 7
+  manaRange:
+    minValue: 5
+    maxValue: 56
+  manaRegenRange:
+    minValue: 3
+    maxValue: 50
+  critDamageRange:
+    minValue: 1
+    maxValue: 2
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

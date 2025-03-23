@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3974870503687485565}
   - component: {fileID: 3434168019382766572}
   - component: {fileID: 2710726433201078282}
+  - component: {fileID: 5405143123630244267}
   m_Layer: 0
   m_Name: RedRing-obj
   m_TagString: Untagged
@@ -125,6 +126,19 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: d9f5f8ee263d9f9469519185f1827fbe, type: 2}
   amount: 1
   amountText: {fileID: 2337896037986241233}
+--- !u!114 &5405143123630244267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857320978745790605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
 --- !u!1 &2580520744462292610
 GameObject:
   m_ObjectHideFlags: 0

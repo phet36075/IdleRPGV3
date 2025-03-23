@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Shine Bright like a Green
   maxStack: 1
   itemType: 5
+  rarity: 0
   gamePrefab: {fileID: 7616359971182791963, guid: b25f0375576888e42a4aef365b230490, type: 3}
+  baseHealth: 17
+  baseDefense: 2
+  basePen: 23
+  baseHealthRegen: 21
+  baseDamage: 16
+  baseCritChance: 5
+  baseMana: 14
+  baseManaRegen: 21
+  baseCritDamage: 1
+  healthRange:
+    minValue: 5
+    maxValue: 40
+  defenseRange:
+    minValue: 5
+    maxValue: 20
+  penRange:
+    minValue: 5
+    maxValue: 90
+  healthRegenRange:
+    minValue: 5
+    maxValue: 100
+  damageRange:
+    minValue: 5
+    maxValue: 50
+  critChanceRange:
+    minValue: 1
+    maxValue: 15
+  manaRange:
+    minValue: 30
+    maxValue: 200
+  manaRegenRange:
+    minValue: 30
+    maxValue: 100
+  critDamageRange:
+    minValue: 1
+    maxValue: 3
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

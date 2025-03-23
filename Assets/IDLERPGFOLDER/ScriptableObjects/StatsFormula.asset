@@ -22,7 +22,8 @@ MonoBehaviour:
   manaRegenPerInt: 2
   baseDamage: 10
   damagePerStr: 2
-  criticalMultiplier: 0.1
+  baseCriticalDamage: 1.5
+  criticalDamagePerAgi: 0.01
   criticalChancePerDex: 1.5
   criticalChancePerAgi: 0.5
   armorPenatrationPerAgi: 2

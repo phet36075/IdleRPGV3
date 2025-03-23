@@ -18,4 +18,50 @@ MonoBehaviour:
   description: Boot is Red
   maxStack: 1
   itemType: 4
+  rarity: 0
   gamePrefab: {fileID: 2440994156980666226, guid: e32b731ad688a0b4eba25e3ac8babecc, type: 3}
+  baseHealth: 32
+  baseDefense: 54
+  basePen: 43
+  baseHealthRegen: 54
+  baseDamage: 21
+  baseCritChance: 5
+  baseMana: 42
+  baseManaRegen: 12
+  baseCritDamage: 1
+  healthRange:
+    minValue: 5
+    maxValue: 200
+  defenseRange:
+    minValue: 5
+    maxValue: 30
+  penRange:
+    minValue: 5
+    maxValue: 60
+  healthRegenRange:
+    minValue: 2
+    maxValue: 60
+  damageRange:
+    minValue: 5
+    maxValue: 200
+  critChanceRange:
+    minValue: 1
+    maxValue: 7
+  manaRange:
+    minValue: 5
+    maxValue: 56
+  manaRegenRange:
+    minValue: 3
+    maxValue: 50
+  critDamageRange:
+    minValue: 1
+    maxValue: 2
+  bonusHealth: 0
+  bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

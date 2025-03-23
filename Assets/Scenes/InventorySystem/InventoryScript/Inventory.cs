@@ -206,7 +206,7 @@ public class Inventory : MonoBehaviour
         detailIcon.sprite = slot.item.icon;
         detailIcon.color = Color.white;
         detailName.text = slot.item.itemName;
-        detailDescription.text = "Description: " + slot.item.description;
+        detailDescription.text = "Description: \n" + slot.item.description;
 
         // อัปเดตจำนวน Stack
         if (slot.stack > 1)

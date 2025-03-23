@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 110175175006472267}
   - component: {fileID: 7226393969044648200}
   - component: {fileID: 2381880020750083768}
+  - component: {fileID: -5372736926879554404}
   m_Layer: 0
   m_Name: BlueBoot-obj
   m_TagString: Untagged
@@ -338,6 +339,19 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: dc67876822c115344820ad61d0d31e57, type: 2}
   amount: 1
   amountText: {fileID: 2627058656688987562}
+--- !u!114 &-5372736926879554404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7773026133875188041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
 --- !u!1 &8716692913426899490
 GameObject:
   m_ObjectHideFlags: 0

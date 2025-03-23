@@ -22,21 +22,31 @@ namespace Petchcious.GameDev3.Chapter11
        
         void Start()
         {
-        InitialiseVolume();
-        isVisible = false;
+            InitialiseVolume();
+            isVisible = false;
         }
+
         public void ToggleSoundPanel()
         {
             isVisible = !isVisible;
-           soundPanel.gameObject.SetActive(isVisible);
+            soundPanel.gameObject.SetActive(isVisible);
         }
+
         private void InitialiseVolume()
         {
-            SetMasterVolume(m_SoundSettings.MasterVolume);
-             SetMusicVolume(m_SoundSettings.MusicVolume);
-             SetMasterSFXVolume(m_SoundSettings.MasterSFXVolume);
-             SetSFXVolume(m_SoundSettings.SFXVolume);
-             SetUIVolume(m_SoundSettings.UIVolume);
+            // กำหนดค่า slider จาก ScriptableObject
+            m_SliderMasterVolume.value = m_SoundSettings.MasterVolume;
+            m_SliderMusicVolume.value = m_SoundSettings.MusicVolume;
+            m_SliderMasterSFXVolume.value = m_SoundSettings.MasterSFXVolume;
+            m_SliderSFXVolume.value = m_SoundSettings.SFXVolume;
+            m_SliderUIVolume.value = m_SoundSettings.UIVolume;
+
+            // ตั้งค่า mixer จาก ScriptableObject
+            m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.MasterVolumeName, m_SoundSettings.MasterVolume);
+            m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.MusicVolumeName, m_SoundSettings.MusicVolume);
+            m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.MasterSFXVolumeName, m_SoundSettings.MasterSFXVolume);
+            m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.SFXVolumeName, m_SoundSettings.SFXVolume);
+            m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.UIVolumeName, m_SoundSettings.UIVolume);
         }
 
 
@@ -48,8 +58,6 @@ namespace Petchcious.GameDev3.Chapter11
             
             //set float to SO to persist the value although the game is closed
             m_SoundSettings.MasterVolume = vol;
-            // set the slider bar's value
-            //m_SliderMasterVolume.value = m_SoundSettings.MasterVolume;
         }
 
         public void SetMusicVolume(float vol)
@@ -57,10 +65,7 @@ namespace Petchcious.GameDev3.Chapter11
             vol = m_SliderMusicVolume.value;
             m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.MusicVolumeName, vol);
             
-            m_SoundSettings.MasterVolume = vol;
-
-          //  m_SliderMusicVolume.value = m_SoundSettings.MusicVolume;
-            
+            m_SoundSettings.MusicVolume = vol;  // แก้ไข - ต้องเป็น MusicVolume ไม่ใช่ MasterVolume
         }
 
         public void SetMasterSFXVolume(float vol)
@@ -69,17 +74,14 @@ namespace Petchcious.GameDev3.Chapter11
             m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.MasterSFXVolumeName, vol);
             
             m_SoundSettings.MasterSFXVolume = vol;
-
-           // m_SliderMasterSFXVolume.value = m_SoundSettings.MasterSFXVolume;
         }
+
         public void SetSFXVolume(float vol)
         {
             vol = m_SliderSFXVolume.value;
             m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.SFXVolumeName, vol);
             
             m_SoundSettings.SFXVolume = vol;
-
-          //  m_SliderSFXVolume.value = m_SoundSettings.SFXVolume;
         }
         
         public void SetUIVolume(float vol)
@@ -88,9 +90,6 @@ namespace Petchcious.GameDev3.Chapter11
             m_SoundSettings.AudioMixer.SetFloat(m_SoundSettings.UIVolumeName, vol);
             
             m_SoundSettings.UIVolume = vol;
-
-          //  m_SliderUIVolume.value = m_SoundSettings.UIVolume;
         }
     }
 }
-

@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 2801033375225604042}
   - component: {fileID: 5671411503692434514}
   - component: {fileID: 616285716328980980}
+  - component: {fileID: -5986452088080493338}
   m_Layer: 0
   m_Name: GreenHelmet-obj
   m_TagString: Untagged
@@ -303,6 +304,19 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: f64bd081379e2834f912ef0fdb9f2b1d, type: 2}
   amount: 1
   amountText: {fileID: 3950246040120437790}
+--- !u!114 &-5986452088080493338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743927008004091275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
 --- !u!1 &8592172968649784927
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,11 +24,46 @@ MonoBehaviour:
   gamePrefab: {fileID: 7147454035752772575, guid: 0f0488d13b6085c44b8c112d73624cbc, type: 3}
   baseHealth: 100
   baseDefense: 20
+  basePen: 23
+  baseHealthRegen: 20
+  baseDamage: 23
+  baseCritChance: 2
+  baseMana: 65
+  baseManaRegen: 32
+  baseCritDamage: 1
   healthRange:
-    minValue: 5
-    maxValue: 200
+    minValue: 10
+    maxValue: 300
   defenseRange:
     minValue: 5
-    maxValue: 500
+    maxValue: 50
+  penRange:
+    minValue: 5
+    maxValue: 50
+  healthRegenRange:
+    minValue: 5
+    maxValue: 30
+  damageRange:
+    minValue: 5
+    maxValue: 100
+  critChanceRange:
+    minValue: 1
+    maxValue: 15
+  manaRange:
+    minValue: 5
+    maxValue: 100
+  manaRegenRange:
+    minValue: 5
+    maxValue: 20
+  critDamageRange:
+    minValue: 0
+    maxValue: 2
   bonusHealth: 100
   bonusDefense: 50
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

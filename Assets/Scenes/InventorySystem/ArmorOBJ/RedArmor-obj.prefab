@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 8619001416461004646}
   - component: {fileID: 6892163377460026047}
   - component: {fileID: 5096786624309931968}
+  - component: {fileID: 6906170570642674104}
   m_Layer: 0
   m_Name: RedArmor-obj
   m_TagString: Untagged
@@ -305,6 +306,19 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 08face2a87ab14744abaa8d8d370cac2, type: 2}
   amount: 1
   amountText: {fileID: 1419052884245239448}
+--- !u!114 &6906170570642674104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7147454035752772575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
 --- !u!1 &8029806624947705899
 GameObject:
   m_ObjectHideFlags: 0

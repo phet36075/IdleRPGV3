@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3256113318977492869}
   - component: {fileID: 1267616762452836484}
   - component: {fileID: 1767128011471375226}
+  - component: {fileID: 6441664206804291752}
   m_Layer: 0
   m_Name: GreenArmor-obj
   m_TagString: Untagged
@@ -127,6 +128,19 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 1933254c205963a4c9fc292ea4f9efc5, type: 2}
   amount: 1
   amountText: {fileID: 1936517905897691029}
+--- !u!114 &6441664206804291752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5797782414694089015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
 --- !u!1 &7909957644732649301
 GameObject:
   m_ObjectHideFlags: 0

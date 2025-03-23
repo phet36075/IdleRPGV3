@@ -18,6 +18,50 @@ MonoBehaviour:
   description: Armor is Blue
   maxStack: 1
   itemType: 3
+  rarity: 0
   gamePrefab: {fileID: 963848200104817514, guid: 2bec6c437020ef54bbd3f2c5f1fa6068, type: 3}
+  baseHealth: 140
+  baseDefense: 30
+  basePen: 43
+  baseHealthRegen: 32
+  baseDamage: 12
+  baseCritChance: 2
+  baseMana: 21
+  baseManaRegen: 43
+  baseCritDamage: 1
+  healthRange:
+    minValue: 10
+    maxValue: 300
+  defenseRange:
+    minValue: 5
+    maxValue: 50
+  penRange:
+    minValue: 5
+    maxValue: 50
+  healthRegenRange:
+    minValue: 5
+    maxValue: 30
+  damageRange:
+    minValue: 5
+    maxValue: 100
+  critChanceRange:
+    minValue: 1
+    maxValue: 15
+  manaRange:
+    minValue: 5
+    maxValue: 100
+  manaRegenRange:
+    minValue: 5
+    maxValue: 20
+  critDamageRange:
+    minValue: 0
+    maxValue: 2
   bonusHealth: 200
   bonusDefense: 0
+  bonusPen: 0
+  bonusHealthRegen: 0
+  bonusDamage: 0
+  bonusCritChance: 0
+  bonusMana: 0
+  bonusManaRegen: 0
+  bonusCritDamage: 0

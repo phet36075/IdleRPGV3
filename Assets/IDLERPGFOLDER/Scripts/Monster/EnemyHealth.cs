@@ -11,6 +11,7 @@ public class EnemyHealth : MonoBehaviour,IDamageable
     [Header("Item Templates")]
     public SO_Item[] itemTemplatesArmor; // ใส่ SO_Item ต้นแบบที่สร้างไว้ใน editor
 
+    public List<SO_Item> potions;
     [Header("Generated Items")]
     public List<SO_Item> generatedItems = new List<SO_Item>();
     
@@ -906,20 +907,30 @@ public class EnemyHealth : MonoBehaviour,IDamageable
         playerStats.AddExperience(GetMonsterExp(_enemySpawner.currentStage));
 
         //Drop  
-       // int potionAmount;
-      //  potionAmount = Random.Range(0, 5);
-      
-      
-        GenerateRandomItems(3);
-        _playerManager.GetComponent<ItemPicker>().inventory.AddItem(generatedItems[0],1);
-        showDropItem.ShowDrop(generatedItems[0],1);
+        int potionAmount;
+        int potionIndex;
+        potionIndex = Random.Range(0, 2);
+        potionAmount = Random.Range(1, 8);
         
-        generatedItems.Clear();
+        _playerManager.GetComponent<ItemPicker>().inventory.AddItem(potions[potionIndex],potionAmount);
+        showDropItem.ShowDrop(potions[potionIndex],potionAmount);
+      
+        float randomValue = Random.value; // สุ่มค่าระหว่าง 0-1
+
+        if (randomValue < 0.80)
+        {
+            GenerateRandomItems(1);
+            _playerManager.GetComponent<ItemPicker>().inventory.AddItem(generatedItems[0],1);
+            showDropItem.ShowDrop(generatedItems[0],1);
+        
+            generatedItems.Clear();
+        }
+      
         
         
         //int randomAmount = Random.Range(0, 4); // ให้สังเกตว่าค่าสูงสุดจะไม่รวมในผลลัพธ์ (exclusive) จึงต้องใส่ 4
         //
-        ItemSpawner.Instance.SpawnItemByGUI();
+        //ItemSpawner.Instance.SpawnItemByGUI();
       // ItemSpawner.Instance.SpawnItem(skillDrop,1);
         animator.SetTrigger("Die");
         GetComponent<NavMeshAgent>().enabled = false;
@@ -952,7 +963,10 @@ public class EnemyHealth : MonoBehaviour,IDamageable
             
             // แสดงผลลัพธ์
             Debug.Log($"Generated {newItem.itemName} - Health: {newItem.bonusHealth}, Defense: {newItem.bonusDefense}");
-           newItem.UpdateDescription();
+            
+            newItem.UpdateDescription();
+            
+          
         }
     }
     

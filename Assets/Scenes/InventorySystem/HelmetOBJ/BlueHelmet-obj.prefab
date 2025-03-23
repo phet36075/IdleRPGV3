@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 7812333673621124605}
   - component: {fileID: 2521698491173622636}
   - component: {fileID: 8519425715088534059}
+  - component: {fileID: 8095273923375483462}
   m_Layer: 0
   m_Name: BlueHelmet-obj
   m_TagString: Untagged
@@ -439,3 +440,16 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 827733a423a86e04da303bcd10d41f8a, type: 2}
   amount: 1
   amountText: {fileID: 725908221834497134}
+--- !u!114 &8095273923375483462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6851039828680205479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10

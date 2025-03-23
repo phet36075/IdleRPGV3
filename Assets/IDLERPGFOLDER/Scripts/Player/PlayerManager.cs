@@ -128,7 +128,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         playerProperty.criticalChance = (dexterity * formula.criticalChancePerDex) + 
                                         (agility * formula.criticalChancePerAgi) + criticalChanceBonus;
         playerProperty.armorPenetration = (agility * formula.armorPenatrationPerAgi) + armorPenetrationBonus;
-     //   playerProperty.criticalDamage = agility * formula.criticalMultiplier + criticalDamageBonus;
+        playerProperty.criticalDamage =  formula.baseCriticalDamage + (agility * formula.criticalDamagePerAgi) + criticalDamageBonus;
     }
 
     private void CalculateManaStats()
@@ -146,6 +146,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         armorPenetrationBonus = 0f;
         maxManaBonus = 0f;
         manaRegenRateBonus = 0f;
+        criticalDamageBonus = 0f;
     
         // คำนวณค่าพลังใหม่ทั้งหมด
         CalculateHealthStats();

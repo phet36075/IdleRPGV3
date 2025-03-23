@@ -27,7 +27,7 @@ public static class PowerCalculator
         float defaultDamage = 12f;
         float defaultDefense = 6f;
         float defaultCrit = 2f;
-        float defaultCritDamage = 2f;
+        float defaultCritDamage = 1.51f;
         float defaultArmorPen = 2f;
        
 

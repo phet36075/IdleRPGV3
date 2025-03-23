@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2469715782093195775}
   - component: {fileID: 6969648064071064843}
   - component: {fileID: 6894835688716522044}
+  - component: {fileID: -6122765602293369049}
   m_Layer: 0
   m_Name: BlueArmor-obj
   m_TagString: Untagged
@@ -127,6 +128,19 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 3619f454641980b42958cc013222d8f1, type: 2}
   amount: 1
   amountText: {fileID: 3180916091908309777}
+--- !u!114 &-6122765602293369049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963848200104817514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
 --- !u!1 &2338338232853756583
 GameObject:
   m_ObjectHideFlags: 0

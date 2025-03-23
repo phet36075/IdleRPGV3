@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 7446425998290205475}
   - component: {fileID: 3379902173633170173}
   - component: {fileID: 5572743468869418242}
+  - component: {fileID: -3411075716743498641}
   m_Layer: 0
   m_Name: GreenRing-obj
   m_TagString: Untagged
@@ -439,3 +440,16 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 73c493844868960438bd7f13d7c371c3, type: 2}
   amount: 1
   amountText: {fileID: 7646178422423177539}
+--- !u!114 &-3411075716743498641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7616359971182791963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4222ddb83c120549b959e065b0d7fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SecToDestory: 10
