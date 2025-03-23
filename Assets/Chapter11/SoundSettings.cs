@@ -25,6 +25,11 @@ namespace Petchcious.GameDev3.Chapter11
             
          [Header("UIVolume")] public string UIVolumeName = "UIVolume";
          [Range(-80,20)]public float UIVolume;
+
+         void OnAwake()
+         {
+             MasterVolume = -40;
+         }
     }
 
 }
