@@ -181498,7 +181498,7 @@ MonoBehaviour:
     stageButton: {fileID: 1723425121}
     isEnabled: 1
     zoneIndex: 5
-  currentStage: 99
+  currentStage: 1
   stageDetailPanel: {fileID: 1370395150}
   stagePanel: {fileID: 744890692}
   backButton: {fileID: 1862622201}
